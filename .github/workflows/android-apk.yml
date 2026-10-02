@@ -1,0 +1,61 @@
+# Baut die Android-App (APK) für Tablets. Ergebnis: Artefakt „notuebernachtung-apk“ im Lauf.
+# Das APK ist mit dem Debug-Schlüssel signiert: zum Testen direkt installierbar, nicht für den Play Store.
+name: Android-APK
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'app/**'
+      - '.github/workflows/android-apk.yml'
+
+concurrency:
+  group: android-apk-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: android-actions/setup-android@v3
+
+      - name: Abhängigkeiten
+        run: npm ci
+
+      - name: Typprüfung und Tests
+        run: npm run pruefen
+
+      - name: Android-Projekt erzeugen
+        run: npx expo prebuild --platform android --no-install
+        env:
+          CI: 1
+
+      - name: APK bauen
+        working-directory: app/android
+        run: ./gradlew assembleRelease --no-daemon
+
+      - name: APK umbenennen
+        run: cp android/app/build/outputs/apk/release/app-release.apk Notuebernachtung-${{ github.run_number }}.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: notuebernachtung-apk
+          path: app/Notuebernachtung-*.apk
+          retention-days: 30

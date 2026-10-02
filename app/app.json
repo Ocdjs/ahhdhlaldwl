@@ -1,0 +1,52 @@
+{
+  "expo": {
+    "name": "Notübernachtung",
+    "slug": "notuebernachtung",
+    "version": "1.0.0",
+    "orientation": "default",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "backgroundColor": "#EEF1F3",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#EEF1F3"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "requireFullScreen": true,
+      "bundleIdentifier": "de.kaeltehilfe.notuebernachtung",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Für Fotos von Läuseschein, Papier-Hausordnung und Dienstplan.",
+        "NSPhotoLibraryUsageDescription": "Um ein Foto als Dokument oder Dienstplan auszuwählen.",
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "de.kaeltehilfe.notuebernachtung",
+      "adaptiveIcon": {
+        "backgroundColor": "#121A1F",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "softwareKeyboardLayoutMode": "pan"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-sharing",
+      "expo-font",
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "Für Fotos von Läuseschein, Papier-Hausordnung und Dienstplan.",
+          "photosPermission": "Um ein Foto als Dokument oder Dienstplan auszuwählen.",
+          "microphonePermission": false
+        }
+      ]
+    ]
+  }
+}
