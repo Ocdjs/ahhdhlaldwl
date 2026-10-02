@@ -1,0 +1,1276 @@
+<title>Bettenplan Haus &amp; St. Nikolaus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400;600&family=Atkinson+Hyperlegible+Next:wght@400;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,600&display=swap">
+<style>
+/* Layout: schlanke Kopfzeile mit drei Ansichten. Übersicht = Zahlen, darunter der Hausplan, darunter
+   eine schmale Spalte mit Einzelplätzen (Loggien, Notbett, Tiny House) neben St. Nikolaus.
+   Minimalistisch: flach, keine Schatten, Abstand und Farbton statt Trennlinien, Farbe nur für Belegung. */
+:root{
+  --paper:#EFF2F1;   /* Seitenhintergrund */
+  --sheet:#FFFFFF;   /* Karten, Planflächen */
+  --ink:#1B2422;     /* Text, Hauptknopf */
+  --ink-2:#5B6764;   /* Nebentext */
+  --ink-3:#86918E;   /* Hinweise */
+  --rule:#D9E0DE;    /* Kissen, Schaltergleis */
+  --wall:#29332F;    /* Wände */
+  --fixture:#E6EAE9; /* nicht zugängliche Räume */
+  --acc:#2E6A65;     /* belegt, einziger kräftiger Ton */
+  --acc-ink:#FFFFFF;
+  --acc-soft:#E1EDEB;
+  --res:#A87728;     /* reserviert */
+  --res-soft:#F7EEDC;
+  --res-ink:#6B4C14;
+  --free:#FFFFFF;
+  --free-line:#B5C0BD;
+  --off:#EDF0EF;
+  --hatch:#C9D1CE;
+  --danger:#A3412F;
+  --knob:#FFFFFF;
+  --scrim:rgba(14,22,20,.38);
+
+  --f-display:"Bricolage Grotesque", "Atkinson Hyperlegible Next", system-ui, sans-serif;
+  --f-body:"Atkinson Hyperlegible Next", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --f-mono:"Atkinson Hyperlegible Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --r-card:14px;
+  --r-field:10px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#111615; --sheet:#1A2120; --ink:#E4EBE8; --ink-2:#A0ACA8; --ink-3:#6E7A76;
+    --rule:#2E3836; --wall:#C3CDC9; --fixture:#252D2C;
+    --acc:#62A69D; --acc-ink:#0C1816; --acc-soft:#1D3330;
+    --res:#D6AB5C; --res-soft:#372C18; --res-ink:#F0D39B;
+    --free:#1F2726; --free-line:#4A5754; --off:#161C1B; --hatch:#34403D;
+    --danger:#E27D6C; --knob:#E4EBE8; --scrim:rgba(0,0,0,.55);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#111615; --sheet:#1A2120; --ink:#E4EBE8; --ink-2:#A0ACA8; --ink-3:#6E7A76;
+  --rule:#2E3836; --wall:#C3CDC9; --fixture:#252D2C;
+  --acc:#62A69D; --acc-ink:#0C1816; --acc-soft:#1D3330;
+  --res:#D6AB5C; --res-soft:#372C18; --res-ink:#F0D39B;
+  --free:#1F2726; --free-line:#4A5754; --off:#161C1B; --hatch:#34403D;
+  --danger:#E27D6C; --knob:#E4EBE8; --scrim:rgba(0,0,0,.55);
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 15px/1.5 var(--f-body);-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+h1,h2,h3{text-wrap:balance}
+
+/* Kopfzeile */
+.app-head{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--paper);background:color-mix(in srgb,var(--paper) 92%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.app-head-in{max-width:1180px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px 16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font:600 18px/1 var(--f-display);letter-spacing:-.01em}
+.brand svg{width:26px;height:26px;color:var(--acc)}
+.tabs{display:flex;gap:2px;background:var(--sheet);border-radius:999px;padding:3px}
+.tab{min-height:40px;padding:0 15px;border:0;background:transparent;border-radius:999px;font-weight:600;font-size:14px;color:var(--ink-2);cursor:pointer;transition:background .15s,color .15s}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--sheet)}
+
+main{max-width:1180px;margin:0 auto;padding:20px 20px 72px}
+.view{display:grid;gap:20px}
+
+/* Zustandsmuster, überall gleich */
+.sw{display:inline-block;width:14px;height:14px;border-radius:4px;flex:none}
+.sw[data-s="frei"]{background:var(--free);border:1.5px solid var(--free-line)}
+.sw[data-s="reserviert"]{background:var(--res-soft);border:1.5px dashed var(--res)}
+.sw[data-s="belegt"]{background:var(--acc)}
+.sw[data-s="aus"]{background:repeating-linear-gradient(45deg,var(--hatch) 0 1.5px,var(--off) 1.5px 5px);border:1px solid var(--hatch)}
+
+/* Zusammenfassung */
+.summary{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr);gap:18px 40px;align-items:end;padding:22px 24px;background:var(--sheet);border-radius:var(--r-card)}
+.summary h1{margin:0;font:600 30px/1.05 var(--f-display);letter-spacing:-.02em}
+.summary .date{margin:6px 0 0;color:var(--ink-2)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.stat{display:grid;grid-template-columns:auto 1fr;align-items:center;column-gap:8px;row-gap:2px}
+.stat-label{font-size:13px;color:var(--ink-2)}
+.stat-num{grid-column:1 / -1;font:600 28px/1.1 var(--f-display);font-variant-numeric:tabular-nums}
+.bar{grid-column:1 / -1;display:flex;gap:2px;height:8px;border-radius:999px;overflow:hidden;background:var(--off)}
+.bar span{display:block;height:100%;min-width:2px}
+.bar [data-s="belegt"]{background:var(--acc)}
+.bar [data-s="reserviert"]{background:var(--res)}
+.bar [data-s="frei"]{background:var(--free-line);opacity:.55}
+.summary-foot{grid-column:1 / -1;margin:-8px 0 0;font-size:13px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+
+.notice{display:flex;align-items:center;justify-content:space-between;gap:8px 16px;flex-wrap:wrap;padding:10px 12px 10px 16px;background:var(--acc-soft);border-radius:12px;color:var(--ink);font-size:14px}
+.notice p{margin:0}
+.notice-actions{display:flex;gap:8px;flex-wrap:wrap}
+.notice .btn.ghost{background:var(--sheet)}
+
+/* Planblätter */
+.plan-card{background:var(--sheet);border-radius:var(--r-card);padding:18px 20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.plan-head{display:flex;align-items:baseline;justify-content:space-between;gap:4px 16px;flex-wrap:wrap}
+.plan-head.has-switch{align-items:center}
+.plan-head h2{margin:0;font:700 19px/1.25 var(--f-body)}
+.plan-head h2 small{font-weight:400;font-size:14px;color:var(--ink-2);margin-left:6px}
+.head-side{display:flex;align-items:center;gap:10px}
+.meta{font-size:13.5px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-inline:-4px;padding:2px 4px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;min-height:44px;padding:0 15px;border-radius:999px;border:0;background:var(--paper);font-weight:600;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;color:var(--ink);transition:background .15s,color .15s}
+.chip:hover{background:var(--rule)}
+.chip .n{font:400 12px var(--f-mono);color:var(--ink-3)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--sheet)}
+.chip[aria-pressed="true"] .n{color:inherit;opacity:.7}
+.plan-body{flex:1;display:grid;place-items:center}
+.plan{display:block;width:100%;height:auto;max-width:100%;touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+#plan-haus{aspect-ratio:971 / 800}
+#plan-nikolaus{max-width:440px}
+.plan-foot{margin:0;font-size:12.5px;color:var(--ink-3)}
+.pair{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:20px;align-items:start}
+.stack{display:grid;gap:20px;align-content:start;min-width:0}
+.tile-list{display:grid;gap:8px;width:100%;max-width:420px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+.slot-svg{display:block;width:100%;height:auto;overflow:visible}
+.off-note{margin:0;font-size:14px;color:var(--ink-2)}
+
+/* SVG-Planzeichen */
+.wall{fill:none;stroke:var(--wall);stroke-width:6;stroke-linecap:square;stroke-linejoin:miter}
+.door{fill:none;stroke:var(--ink-3);stroke-width:1.25}
+.door-leaf{fill:none;stroke:var(--ink-2);stroke-width:2;stroke-linecap:round}
+.blocked{fill:var(--fixture)}
+.floor{fill:transparent}
+.floor.zoomable{cursor:zoom-in}
+.floor.off{fill:url(#hatch);opacity:.7}
+.hatch-bg{fill:var(--off)}
+.hatch-line{stroke:var(--hatch);stroke-width:2}
+.plan-note{font:600 10.5px var(--f-body);letter-spacing:.12em;fill:var(--ink-3)}
+.entrance-mark{fill:var(--ink-3)}
+.room-label{font:600 11.5px var(--f-body);letter-spacing:.09em;fill:var(--ink-2)}
+.room-count{font:400 12px var(--f-mono);fill:var(--ink-3)}
+.room-tag,.room-tag-sub{display:none;fill:var(--ink-3);opacity:.6;pointer-events:none}
+.room-tag{font:600 64px var(--f-display)}
+.room-tag-sub{font:600 20px var(--f-body);letter-spacing:.06em}
+.plan.compact .room-tag,.plan.compact .room-tag-sub{display:inline}
+.plan.compact .bed text,.plan.compact .room-label,.plan.compact .room-count,.plan.compact .plan-note{display:none}
+.flur2{fill:transparent}
+.flur2-locked{display:none}
+.plan.flur-locked .flur2{fill:url(#hatch);opacity:.7}
+.plan.flur-locked .flur2-open{display:none}
+.plan.flur-locked .flur2-locked{display:inline}
+.room-label,.room-count,.plan-note,.bed text{pointer-events:none}
+
+.bunk-frame{fill:var(--sheet);stroke:var(--free-line);stroke-width:1.25}
+.bed{cursor:pointer;outline:none;transform-box:fill-box;transform-origin:center;transition:transform .12s ease}
+.bed:active{transform:scale(.97)}
+.bed.is-set{animation:settle .5s cubic-bezier(.2,.8,.2,1)}
+.bed-hit{fill:transparent;stroke:transparent;stroke-width:12;pointer-events:all}
+.bed-body{stroke-width:1.5;transition:fill .2s ease,stroke .2s ease}
+.bed-pillow{transition:fill .2s ease}
+.bed-focus{fill:none;stroke:var(--ink);stroke-width:2.5;opacity:0}
+.bed:focus-visible .bed-focus,.bed.is-open .bed-focus{opacity:1}
+.bed:hover .bed-body{stroke-width:2.25}
+.bed-id{font:600 12.5px var(--f-mono);fill:var(--ink-2)}
+.bed-name{font:600 14px var(--f-body);fill:var(--ink)}
+.bed-name.is-empty{font-weight:400;fill:var(--ink-3)}
+.bed-pos{font:400 9.5px var(--f-body);fill:var(--ink-3)}
+.bed-note{font:600 11px var(--f-body);letter-spacing:.02em;fill:var(--res-ink)}
+.k-slot .bed-id{font-size:12px}
+.k-slot .bed-name{font-size:13px}
+.k-tile .bed-id{font-size:14px}
+.k-tile .bed-name{font-size:15px}
+
+.bed[data-s="frei"] .bed-body{fill:var(--free);stroke:var(--free-line)}
+.bed[data-s="frei"] .bed-pillow{fill:var(--rule)}
+.bed[data-s="reserviert"] .bed-body{fill:var(--res-soft);stroke:var(--res);stroke-dasharray:5 3.5}
+.bed[data-s="reserviert"] .bed-pillow{fill:var(--res);opacity:.22}
+.bed[data-s="reserviert"] text{fill:var(--res-ink)}
+.bed[data-s="belegt"] .bed-body{fill:var(--acc);stroke:var(--acc)}
+.bed[data-s="belegt"] .bed-pillow{fill:var(--acc-ink);opacity:.2}
+.bed[data-s="belegt"] text{fill:var(--acc-ink)}
+.bed[data-s="belegt"] .bed-id,.bed[data-s="belegt"] .bed-pos,.bed[data-s="belegt"] .bed-note{opacity:.75}
+.bed[data-s="aus"]{cursor:default;pointer-events:none}
+.bed[data-s="aus"] .bed-body{fill:url(#hatch);stroke:var(--hatch)}
+.bed[data-s="aus"] .bed-pillow{fill:none}
+.bed[data-s="aus"] text{fill:var(--ink-3)}
+.bed[data-s="aus"] .bed-name{font-weight:400}
+
+/* Bett-Blatt */
+.scrim{position:fixed;inset:0;background:var(--scrim);z-index:40;animation:fade .2s ease}
+.sheet{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(440px,100%);z-index:50;background:var(--sheet);border-radius:18px 18px 0 0;padding:10px 20px calc(20px + env(safe-area-inset-bottom,0px));display:grid;gap:16px;animation:sheet-in .24s cubic-bezier(.2,.8,.2,1)}
+.sheet-grip{width:36px;height:4px;border-radius:2px;background:var(--rule);justify-self:center}
+.sheet-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.sheet-kicker{margin:0;font-size:13px;color:var(--ink-2)}
+.sheet-title{margin:2px 0 0;font:600 34px/1 var(--f-mono);letter-spacing:-.01em}
+.sheet-note{margin:-6px 0 0;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--res-ink);background:var(--res-soft);border-radius:999px;padding:5px 12px;justify-self:start}
+.icon-btn{width:44px;height:44px;border-radius:999px;border:0;background:var(--paper);display:grid;place-items:center;cursor:pointer;color:var(--ink-2);flex:none}
+.icon-btn svg{width:18px;height:18px}
+.seg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;background:var(--paper);border-radius:12px;padding:4px}
+.seg button{min-height:52px;border:0;border-radius:9px;background:transparent;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:14.5px;color:var(--ink-2);cursor:pointer;padding:0 6px;transition:background .15s,color .15s}
+.seg button[aria-checked="true"]{background:var(--sheet);color:var(--ink);outline:1.5px solid var(--ink);outline-offset:-1.5px}
+.field{display:grid;gap:6px}
+.field label{font-size:13px;font-weight:600;color:var(--ink-2)}
+.field input{min-height:52px;width:100%;padding:0 14px;border:1.5px solid transparent;border-radius:var(--r-field);background:var(--paper);color:var(--ink);font:400 17px var(--f-body)}
+.field input:focus{outline:none;border-color:var(--acc)}
+.field input::placeholder{color:var(--ink-3)}
+.sheet-meta{margin:-8px 0 0;font-size:12.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.sheet-foot{display:flex;gap:10px;justify-content:space-between}
+.sheet-foot .btn.primary{margin-left:auto}
+
+.btn{min-height:44px;padding:0 18px;border-radius:var(--r-field);border:0;font-weight:600;font-size:15px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:background .15s,color .15s}
+.btn.sm{min-height:40px;padding:0 14px;font-size:14px}
+.btn.primary{background:var(--ink);color:var(--sheet)}
+.btn.ghost{background:var(--paper);color:var(--ink)}
+.btn.ghost:hover{background:var(--rule)}
+.btn.danger{background:var(--paper);color:var(--danger)}
+.btn.danger.solid{background:var(--danger);color:var(--sheet)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+
+/* Einstellungen */
+.page-head{display:grid;gap:6px;max-width:66ch}
+.page-head h1{margin:0;font:600 30px/1.1 var(--f-display);letter-spacing:-.02em}
+.page-head p{margin:0;color:var(--ink-2)}
+.set-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:start}
+.set-card{background:var(--sheet);border-radius:var(--r-card);padding:8px 20px 10px}
+.set-card > h2{margin:14px 0 0;font:600 12px/1.3 var(--f-body);letter-spacing:.09em;text-transform:uppercase;color:var(--ink-2)}
+.set-hint{margin:4px 0 0}
+.set-room{display:grid;gap:12px;padding:16px 0}
+.set-room-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.set-room-name{margin:0;font-weight:700;font-size:16px}
+.set-room-sub{margin:0;font-size:13px;color:var(--ink-2)}
+.switch-wrap{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-2)}
+.switch{position:relative;width:52px;height:44px;border:0;background:transparent;cursor:pointer;flex:none;padding:0}
+.switch::before{content:"";position:absolute;left:0;top:6px;width:52px;height:32px;border-radius:999px;background:var(--rule);transition:background .2s}
+.switch::after{content:"";position:absolute;left:3px;top:9px;width:26px;height:26px;border-radius:999px;background:var(--knob);transition:transform .2s}
+.switch[aria-checked="true"]::before,.switch.on::before{background:var(--acc)}
+.switch[aria-checked="true"]::after,.switch.on::after{transform:translateX(20px)}
+.pills{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px}
+.pill{min-height:52px;border-radius:10px;border:0;background:var(--paper);display:grid;align-content:center;justify-items:start;gap:1px;padding:6px 10px;cursor:pointer;text-align:left}
+.pill-id{font:600 14px var(--f-mono);display:flex;align-items:center;gap:6px}
+.pill-st{font-size:11.5px;color:var(--ink-3)}
+.pill[aria-pressed="false"]{background:repeating-linear-gradient(45deg,var(--hatch) 0 1.5px,var(--off) 1.5px 6px)}
+.pill[aria-pressed="false"] .pill-id{color:var(--ink-3)}
+.pill:disabled{cursor:not-allowed;opacity:.45}
+.set-room.is-off .set-room-name{color:var(--ink-3)}
+.set-actions{display:grid;gap:12px;padding:14px 0 12px}
+.set-actions p{margin:0;font-size:13.5px;color:var(--ink-2);max-width:60ch}
+.set-actions .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.x-row{display:flex;align-items:center;gap:10px;padding:8px 0;flex-wrap:wrap}
+.x-row .pill-id{min-width:2.4em}
+.x-name{flex:1 1 160px;min-width:0;min-height:44px;padding:0 12px;border:1.5px solid transparent;border-radius:var(--r-field);background:var(--paper);color:var(--ink);font:400 15px var(--f-body)}
+.x-name:focus{outline:none;border-color:var(--acc)}
+.x-add{display:grid;gap:6px;padding:12px 0 14px}
+.x-add label{font-size:13px;font-weight:600;color:var(--ink-2)}
+.x-add .row{display:flex;gap:8px;flex-wrap:wrap}
+.confirm{display:flex;gap:8px 12px;flex-wrap:wrap;align-items:center;padding:10px 12px;border-radius:10px;background:var(--paper);font-size:14px}
+.confirm p{margin:0;color:var(--ink)}
+.fine{font-size:12.5px;color:var(--ink-3);margin:0}
+
+/* Styleguide */
+.sg{display:grid;gap:48px}
+.sg section{display:grid;gap:16px;min-width:0}
+.sg h2{margin:0;font:600 24px/1.15 var(--f-display);letter-spacing:-.015em}
+.sg h3{margin:0;font:700 15px/1.3 var(--f-body)}
+.sg p{margin:0}
+.lede{max-width:64ch;color:var(--ink-2)}
+.tile{background:var(--sheet);border-radius:12px;padding:16px;display:grid;gap:8px;align-content:start;min-width:0}
+.tile p{font-size:14px;color:var(--ink-2)}
+.tok{font:400 12px var(--f-mono);color:var(--ink-3)}
+.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.grid-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.spec{display:block;width:100%;height:auto;max-height:96px}
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.swatch{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:center;padding:10px;background:var(--sheet);border-radius:12px}
+.swatch .pair2{display:flex;border-radius:8px;overflow:hidden;outline:1px solid var(--rule)}
+.swatch .pair2 i{display:block;width:24px;height:44px}
+.swatch b{display:block;font-size:14px}
+.swatch span{display:block;font-size:12.5px;color:var(--ink-2);line-height:1.35}
+.type-rows{background:var(--sheet);border-radius:12px;padding:6px 18px}
+.type-row{display:grid;grid-template-columns:220px minmax(0,1fr);gap:6px 20px;padding:14px 0;align-items:baseline}
+.type-row .tok{line-height:1.5}
+.symbols{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.symbol{background:var(--sheet);border-radius:12px;padding:12px 12px 14px;display:grid;gap:10px;align-content:start}
+.symbol svg{display:block;width:100%;height:96px}
+.symbol b{font-size:14px}
+.symbol span{display:block;font-size:12.5px;color:var(--ink-2);line-height:1.35}
+.measures{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.mlist{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:14px}
+.mlist li{display:flex;justify-content:space-between;gap:12px}
+.mlist code{font:400 13px var(--f-mono);color:var(--ink-2)}
+.space-row{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap}
+.space-row div{display:grid;gap:4px;justify-items:center;font:400 11px var(--f-mono);color:var(--ink-3)}
+.space-row i{display:block;background:var(--acc-soft);border-radius:2px}
+.rules{margin:0;padding-left:20px;display:grid;gap:8px;max-width:70ch}
+.rules li::marker{color:var(--ink-3)}
+.words{margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.words div{background:var(--sheet);border-radius:12px;padding:12px 14px}
+.words dt{font-weight:700}
+.words dd{margin:2px 0 0;font-size:14px;color:var(--ink-2)}
+.comp-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.code{margin:0;background:var(--sheet);border-radius:12px;padding:16px 18px;overflow-x:auto;font:400 13px/1.65 var(--f-mono);color:var(--ink)}
+.code .c{color:var(--ink-3)}
+.assume{margin:0;padding-left:20px;display:grid;gap:6px;max-width:72ch;font-size:14.5px}
+.source{font-size:13px;color:var(--ink-3)}
+
+@keyframes sheet-in{from{transform:translate(-50%,24px);opacity:0}}
+@keyframes fade{from{opacity:0}}
+@keyframes settle{0%{transform:scale(.93)}55%{transform:scale(1.03)}100%{transform:scale(1)}}
+@media (min-width:720px){.sheet{bottom:24px;border-radius:18px}}
+@media (max-width:900px){.set-grid{grid-template-columns:1fr}.grid-4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:700px){.pair{grid-template-columns:1fr}.tile-list{max-width:none}}
+@media (max-width:720px){
+  .summary{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid-3{grid-template-columns:1fr}
+  .type-row{grid-template-columns:1fr}
+}
+@media (max-width:480px){
+  main{padding:14px 16px 64px}
+  .app-head-in{padding:8px 16px}
+  .tab{padding:0 11px;font-size:13.5px}
+  .plan-card{padding:16px 14px}
+  .summary{padding:16px}
+  .grid-4{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect class="hatch-bg" width="7" height="7"/>
+      <line class="hatch-line" x1="0" y1="0" x2="0" y2="7"/>
+    </pattern>
+  </defs>
+</svg>
+
+<header class="app-head">
+  <div class="app-head-in">
+    <div class="brand">
+      <svg viewBox="0 0 26 26" aria-hidden="true"><rect x="3" y="6" width="20" height="14" rx="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="6.5" y="9.5" width="4" height="7" rx="1.4" fill="currentColor"/></svg>
+      <span>Bettenplan</span>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Ansicht">
+      <button type="button" class="tab" role="tab" id="tab-overview" data-view="overview" aria-controls="view-overview" aria-selected="true">Übersicht</button>
+      <button type="button" class="tab" role="tab" id="tab-settings" data-view="settings" aria-controls="view-settings" aria-selected="false">Einstellungen</button>
+      <button type="button" class="tab" role="tab" id="tab-style" data-view="style" aria-controls="view-style" aria-selected="false">Styleguide</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- ÜBERSICHT -->
+  <section class="view" id="view-overview" role="tabpanel" aria-labelledby="tab-overview">
+    <div class="summary">
+      <div>
+        <h1>Belegung</h1>
+        <p class="date" id="today">Heute</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><span class="sw" data-s="frei"></span><span class="stat-label">Frei</span><span class="stat-num" id="n-frei">0</span></div>
+        <div class="stat"><span class="sw" data-s="reserviert"></span><span class="stat-label">Reserviert</span><span class="stat-num" id="n-reserviert">0</span></div>
+        <div class="stat"><span class="sw" data-s="belegt"></span><span class="stat-label">Belegt</span><span class="stat-num" id="n-belegt">0</span></div>
+        <div class="stat"><span class="sw" data-s="aus"></span><span class="stat-label">Aus</span><span class="stat-num" id="n-aus">0</span></div>
+      </div>
+      <div class="bar" id="bar" aria-hidden="true"></div>
+      <p class="summary-foot" id="summary-foot"></p>
+    </div>
+
+    <div class="notice" id="notice">
+      <p>Der Plan zeigt erfundene Beispielnamen.</p>
+      <div class="notice-actions">
+        <button type="button" class="btn ghost sm" id="notice-clear">Beispiele entfernen</button>
+        <button type="button" class="btn ghost sm" id="notice-keep">Ausblenden</button>
+      </div>
+    </div>
+
+    <article class="plan-card" aria-labelledby="h-haus">
+      <header class="plan-head"><h2 id="h-haus">Haus</h2><span class="meta" id="meta-haus"></span></header>
+      <div class="chips" id="chips-haus" role="toolbar" aria-label="Zimmer vergrößern"></div>
+      <svg class="plan" id="plan-haus" viewBox="-10 -10 971 800" preserveAspectRatio="xMidYMid meet" role="group" aria-label="Grundriss Haus">
+        <g id="haus-floors"></g>
+        <!-- Räume ohne Tür: gesperrt -->
+        <rect class="blocked" x="333" y="13" width="188" height="309"/>
+        <path class="blocked" d="M527 13 H740 V287 H664 V322 H527 Z"/>
+        <rect class="blocked" x="578" y="451" width="86" height="279"/>
+        <text class="plan-note" x="427" y="172" text-anchor="middle">PRIVAT</text>
+        <text class="plan-note" x="633" y="172" text-anchor="middle">PRIVAT</text>
+        <text class="plan-note" x="621" y="594" text-anchor="middle">PRIVAT</text>
+        <!-- Flur 2: gesperrt, wenn T-Zimmer und Zimmer F aus sind -->
+        <rect class="flur2" x="333" y="328" width="331" height="117"/>
+        <g>
+          <path class="wall" d="M336 733 H10 V10 H951 V733 H428"/>
+          <path class="wall" d="M170 10 V248 M170 316 V325"/>
+          <path class="wall" d="M330 10 V640 M330 712 V733"/>
+          <path class="wall" d="M524 10 V325"/>
+          <path class="wall" d="M743 10 V290"/>
+          <path class="wall" d="M10 325 H210 M282 325 H667"/>
+          <path class="wall" d="M667 290 H840 M912 290 H951"/>
+          <path class="wall" d="M667 290 V338 M667 410 V733"/>
+          <path class="wall" d="M330 448 H355 M427 448 H667"/>
+          <path class="wall" d="M458 448 V590 M458 662 V733"/>
+          <path class="wall" d="M575 448 V733"/>
+        </g>
+        <g>
+          <path class="door" d="M170 248 A68 68 0 0 0 102 316"/><path class="door-leaf" d="M170 316 H102"/>
+          <path class="door" d="M210 325 A72 72 0 0 1 282 253"/><path class="door-leaf" d="M282 325 V253"/>
+          <path class="door" d="M840 290 A72 72 0 0 1 912 218"/><path class="door-leaf" d="M912 290 V218"/>
+          <path class="door" d="M667 410 A72 72 0 0 0 739 338"/><path class="door-leaf" d="M667 338 H739"/>
+          <path class="door" d="M427 448 A72 72 0 0 1 355 520"/><path class="door-leaf" d="M355 448 V520"/>
+          <path class="door" d="M330 712 A72 72 0 0 1 258 640"/><path class="door-leaf" d="M330 640 H258"/>
+          <path class="door" d="M458 590 A72 72 0 0 0 386 662"/><path class="door-leaf" d="M458 662 H386"/>
+        </g>
+        <text class="plan-note flur2-open" x="498" y="392" text-anchor="middle">FLUR</text>
+        <text class="plan-note flur2-locked" x="498" y="392" text-anchor="middle">FLUR GESPERRT</text>
+        <text class="plan-note" x="394" y="566" text-anchor="middle">FLUR</text>
+        <text class="plan-note" x="516" y="594" text-anchor="middle">BAD</text>
+        <path class="entrance-mark" d="M382 747 l-7 10 h14 z"/>
+        <text class="plan-note" x="382" y="775" text-anchor="middle">TREPPE</text>
+        <g id="haus-labels"></g>
+        <g id="haus-beds"></g>
+      </svg>
+      <p class="plan-foot">Zimmer antippen zum Vergrößern, Bett antippen zum Eintragen.</p>
+    </article>
+
+    <div class="pair">
+      <div class="stack">
+        <article class="plan-card" aria-labelledby="h-loggien">
+          <header class="plan-head"><h2 id="h-loggien">Loggien<small>und Notbett</small></h2><span class="meta" id="meta-loggien"></span></header>
+          <div class="tile-list" id="plan-loggien" role="group" aria-label="Loggien und Notbett"></div>
+        </article>
+
+        <article class="plan-card" id="card-extra" aria-labelledby="h-extra" hidden>
+          <header class="plan-head"><h2 id="h-extra">Weitere Plätze</h2><span class="meta" id="meta-extra"></span></header>
+          <div class="tile-list" id="plan-extra" role="group" aria-label="Weitere Plätze"></div>
+        </article>
+
+        <article class="plan-card" id="card-tiny" aria-labelledby="h-tiny">
+          <header class="plan-head has-switch">
+            <h2 id="h-tiny">Tiny House<small>optional</small></h2>
+            <div class="head-side"><button type="button" class="switch" role="switch" id="tiny-switch" aria-checked="true" aria-label="Tiny House an"></button></div>
+          </header>
+          <div class="tile-list" id="plan-tiny" role="group" aria-label="Tiny House"></div>
+          <p class="off-note" id="tiny-off" hidden>Das Tiny House ist aus.</p>
+        </article>
+      </div>
+
+      <article class="plan-card" aria-labelledby="h-nikolaus">
+        <header class="plan-head"><h2 id="h-nikolaus">St. Nikolaus<small>5–8 Betten</small></h2><span class="meta" id="meta-nikolaus"></span></header>
+        <div class="plan-body">
+          <svg class="plan" id="plan-nikolaus" viewBox="-10 -10 380 440" role="group" aria-label="Grundriss St. Nikolaus">
+            <g id="nikolaus-floors"></g>
+            <rect class="wall" x="10" y="10" width="340" height="400"/>
+            <g id="nikolaus-labels"></g>
+            <g id="nikolaus-beds"></g>
+          </svg>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- EINSTELLUNGEN -->
+  <section class="view" id="view-settings" role="tabpanel" aria-labelledby="tab-settings" hidden>
+    <div class="page-head">
+      <h1>Einstellungen</h1>
+      <p>Ausgeschaltete Zimmer und Plätze erscheinen im Plan schraffiert und lassen sich nicht belegen. Eingetragene Namen bleiben gespeichert und sind wieder da, sobald der Platz an ist.</p>
+    </div>
+    <div class="set-grid" id="settings-list"></div>
+  </section>
+
+  <!-- STYLEGUIDE -->
+  <section class="view" id="view-style" role="tabpanel" aria-labelledby="tab-style" hidden>
+    <div class="sg">
+      <div class="page-head">
+        <h1>Styleguide</h1>
+        <p>Regeln für den Bettenplan. Alles im Bild hat eine Aufgabe, das Wichtige steht vorne, der Rest tritt zurück.</p>
+        <p class="source">Grundlage: „How Minimalist UI Design is Shaping App Design“, Design Studio UI/UX, Dezember 2024.</p>
+      </div>
+
+      <section aria-labelledby="sg-principles">
+        <h2 id="sg-principles">Grundsätze</h2>
+        <div class="grid-4">
+          <div class="tile"><h3>Weniger ist mehr</h3><p>Jedes Element hat eine Aufgabe. Hinweise und Schalter erscheinen dort, wo man sie braucht, und nicht vorher.</p></div>
+          <div class="tile"><h3>Klare Rangfolge</h3><p>Zuerst die Zahlen, dann der Plan, dann das einzelne Bett. Große Schrift nur für das, was man zuerst sehen soll.</p></div>
+          <div class="tile"><h3>Weißraum statt Linien</h3><p>Abschnitte trennt Abstand oder ein leichter Farbton. Linien zeichnen nur Wände, Türen und Betten.</p></div>
+          <div class="tile"><h3>Wenige Farben</h3><p>Petrol heißt belegt, Ocker heißt reserviert, alles andere bleibt grau. Jeder Zustand hat zusätzlich eine eigene Form.</p></div>
+          <div class="tile"><h3>Flach</h3><p>Keine Schatten, keine Verläufe. Flächen, Kanten und eine Schraffur für „aus“ reichen.</p></div>
+          <div class="tile"><h3>Klare Schrift</h3><p>Drei Schriften mit festen Rollen und festen Größen. In der Nummernschrift sehen 0 und O, 1 und l verschieden aus.</p></div>
+          <div class="tile"><h3>Wenig Aufwand</h3><p>Ein Tipp öffnet ein Bett, Änderungen gelten sofort. Jedes Ziel ist mindestens 44 × 44 pt groß.</p></div>
+          <div class="tile"><h3>Rückmeldung</h3><p>Ein Bett gibt beim Antippen kurz nach und federt nach dem Speichern einmal. Mehr Bewegung gibt es nicht.</p></div>
+        </div>
+      </section>
+
+      <section aria-labelledby="sg-words">
+        <h2 id="sg-words">Wortliste</h2>
+        <p class="lede">Wenige Wörter, immer dieselben. Keine Fachbegriffe und keine Abkürzungen außer den Platznummern.</p>
+        <dl class="words">
+          <div><dt>Platz</dt><dd>Ein Bett, eine Loggia oder ein Notbett.</dd></div>
+          <div><dt>Frei</dt><dd>Niemand ist eingetragen.</dd></div>
+          <div><dt>Reserviert</dt><dd>Jemand ist angekündigt, aber noch nicht da.</dd></div>
+          <div><dt>Belegt</dt><dd>Jemand schläft dort. Der Vorname steht im Bett.</dd></div>
+          <div><dt>Aus</dt><dd>Platz oder Zimmer wird gerade nicht genutzt. Gilt auch für das Tiny House.</dd></div>
+          <div><dt>Notbett</dt><dd>Platz für Notfälle: Loggia L3 und das Esszimmer.</dd></div>
+        </dl>
+        <ul class="rules">
+          <li>Positiv zählen: „3 von 5 frei“.</li>
+          <li>Knöpfe sagen, was passiert: „Bett freigeben“, „Alles einschalten“, „Beispiele entfernen“.</li>
+          <li>Freundlich und knapp, im Aktiv, ohne Ausrufezeichen.</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="sg-states">
+        <h2 id="sg-states">Belegungszustände</h2>
+        <p class="lede">Vier Zustände, jeder mit eigener Füllung und Kante. Die Nummer steht oben, der Vorname darunter.</p>
+        <div class="grid-4" id="sg-states-grid"></div>
+      </section>
+
+      <section aria-labelledby="sg-colors">
+        <h2 id="sg-colors">Farben</h2>
+        <p class="lede">Ein kühles, leicht grünliches Grau als Grundton, dazu zwei Farben mit Bedeutung. Rot erscheint nur beim Löschen. Links in jedem Feld der helle, rechts der dunkle Wert.</p>
+        <div class="swatches" id="sg-swatches"></div>
+      </section>
+
+      <section aria-labelledby="sg-type">
+        <h2 id="sg-type">Schrift</h2>
+        <p class="lede">Atkinson Hyperlegible wurde für Menschen mit eingeschränkter Sehkraft entwickelt und hilft bei wenig Licht im Nachtdienst. Bricolage Grotesque erscheint nur in großen Überschriften und Zahlen.</p>
+        <div class="type-rows">
+          <div class="type-row"><span class="tok">Anzeige · Bricolage Grotesque 600<br>30 / 33, −0,02 em</span><span style="font:600 30px/1.1 var(--f-display);letter-spacing:-.02em">Belegung heute</span></div>
+          <div class="type-row"><span class="tok">Titel · Atkinson Next 700<br>19 / 24</span><span style="font:700 19px/1.25 var(--f-body)">Zimmer D</span></div>
+          <div class="type-row"><span class="tok">Text · Atkinson Next 400<br>15 / 22</span><span>Bett antippen, Status wählen, Vorname eintragen. Änderungen gelten sofort.</span></div>
+          <div class="type-row"><span class="tok">Plan-Label · Atkinson Next 600<br>11,5, Versalien, +0,09 em</span><span style="font:600 11.5px var(--f-body);letter-spacing:.09em;color:var(--ink-2)">ZIMMER D · T-ZIMMER</span></div>
+          <div class="type-row"><span class="tok">Nummer · Atkinson Mono 600<br>12,5, Ziffern gleich breit</span><span style="font:600 16px var(--f-mono)">D1 L3 E1 TH1 · 0 O 1 l I</span></div>
+        </div>
+      </section>
+
+      <section aria-labelledby="sg-symbols">
+        <h2 id="sg-symbols">Planzeichen</h2>
+        <p class="lede">Der Hausplan folgt dem Grundriss mit Flächenangaben, leicht vereinfacht. Betten sind Symbole und nicht maßstäblich. Das Kissen zeigt das Kopfende an der Wand.</p>
+        <div class="symbols" id="sg-symbols-grid">
+          <div class="symbol"><svg viewBox="0 0 120 72" aria-hidden="true"><path class="wall" d="M8 36 H112"/></svg><div><b>Wand</b><span>6 pt, Ton „Wand“</span></div></div>
+          <div class="symbol"><svg viewBox="0 0 120 72" aria-hidden="true"><path class="wall" d="M6 62 H36 M86 62 H114"/><path class="door" d="M36 62 A50 50 0 0 1 86 12"/><path class="door-leaf" d="M86 62 V12"/></svg><div><b>Tür</b><span>Öffnung mit Aufschlag, 1,25 pt</span></div></div>
+        </div>
+      </section>
+
+      <section aria-labelledby="sg-measure">
+        <h2 id="sg-measure">Maße</h2>
+        <div class="measures">
+          <div class="tile"><h3>Abstände</h3><p>Raster von 4 pt. In Karten 8, 12 und 16, zwischen Karten 20, zwischen Abschnitten 48.</p>
+            <div class="space-row"><div><i style="width:4px;height:4px"></i>4</div><div><i style="width:8px;height:8px"></i>8</div><div><i style="width:12px;height:12px"></i>12</div><div><i style="width:16px;height:16px"></i>16</div><div><i style="width:20px;height:20px"></i>20</div><div><i style="width:32px;height:32px"></i>32</div><div><i style="width:48px;height:48px"></i>48</div></div>
+          </div>
+          <div class="tile"><h3>Radien</h3>
+            <ul class="mlist"><li>Bett<code>5</code></li><li>Stockbett-Rahmen<code>7</code></li><li>Platz-Kachel<code>10</code></li><li>Feld, Knopf<code>10</code></li><li>Karte<code>14</code></li><li>Chip, Schalter<code>voll rund</code></li></ul>
+          </div>
+          <div class="tile"><h3>Linien</h3>
+            <ul class="mlist"><li>Wand<code>6</code></li><li>Bettkante<code>1,5</code></li><li>Reserviert, Strich<code>5 / 3,5</code></li><li>Tür<code>1,25</code></li><li>Fokus<code>2,5</code></li></ul>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="sg-touch">
+        <h2 id="sg-touch">Bedienung</h2>
+        <ol class="rules">
+          <li>Ein Tipp auf ein Bett öffnet das Blatt mit Status und Vorname. Änderungen gelten sofort, es gibt keinen Speichern-Knopf.</li>
+          <li>Wer in ein freies Bett einen Vornamen tippt, setzt es auf „Belegt“. „Frei“ löscht den Vornamen.</li>
+          <li>Ist der Plan zu klein für sichere Treffer, vergrößert der erste Tipp das Zimmer. Die Zimmer-Knöpfe über dem Plan tun dasselbe.</li>
+          <li>Plätze, die aus sind, reagieren nicht auf Tipps. Eingeschaltet werden sie in den Einstellungen.</li>
+          <li>Sind T-Zimmer und Zimmer F beide aus, ist auch der Flur dorthin gesperrt und schraffiert.</li>
+          <li>Das Tiny House hat seinen Schalter direkt auf der Karte. Ist es aus, klappt die Karte zu.</li>
+          <li>Betten ohne festen Ort, zum Beispiel ein Sofa, legt man in den Einstellungen unter „Weitere Plätze“ mit eigenem Namen an. Sie erscheinen als Kachel unter dem Notbett und tragen die Nummern Z1, Z2 und so weiter.</li>
+          <li>„Alle Plätze freigeben“ braucht eine zweite Bestätigung direkt am Knopf.</li>
+        </ol>
+      </section>
+
+      <section aria-labelledby="sg-comp">
+        <h2 id="sg-comp">Bausteine</h2>
+        <div class="grid-3">
+          <div class="tile"><h3>Knöpfe</h3><div class="comp-row"><span class="btn primary" aria-hidden="true">Fertig</span><span class="btn ghost" aria-hidden="true">Bett freigeben</span></div><p>Ein dunkler Hauptknopf pro Ansicht, alle anderen auf leichtem Grau. Rot nur für Löschen.</p></div>
+          <div class="tile"><h3>Zimmer-Knöpfe</h3><div class="comp-row"><span class="chip" aria-hidden="true" style="background:var(--ink);color:var(--sheet)">Ganzes Haus</span><span class="chip" aria-hidden="true">Zimmer B<span class="n">2 frei</span></span></div><p>Vergrößern den Plan. Die Zahl zeigt freie Plätze.</p></div>
+          <div class="tile"><h3>Schalter und Plätze</h3><div class="comp-row"><span class="switch on" aria-hidden="true" style="display:inline-block"></span><span class="pill" aria-hidden="true" style="pointer-events:none"><span class="pill-id">D1</span><span class="pill-st">an</span></span><span class="pill" aria-hidden="true" style="pointer-events:none;background:repeating-linear-gradient(45deg,var(--hatch) 0 1.5px,var(--off) 1.5px 6px)"><span class="pill-id" style="color:var(--ink-3)">N4</span><span class="pill-st">aus</span></span></div><p>Schalter für ganze Zimmer, Kacheln für einzelne Plätze.</p></div>
+        </div>
+      </section>
+
+      <section aria-labelledby="sg-data">
+        <h2 id="sg-data">Benennung und Daten</h2>
+        <p class="lede">Nummern übernehmen die Skizze: Buchstabe des Zimmers plus Nummer. Ein Stockbett hat zwei Nummern, die kleinere liegt oben. Im Plan trägt jedes Bett seine Nummer als <code class="tok">data-id</code> und seinen Zustand als <code class="tok">data-s</code>.</p>
+<pre class="code"><span class="c">// ein Platz</span>
+{
+  "id": "D2",
+  "zimmer": "D",
+  "art": "stockbett-oben",   <span class="c">// einzelbett | stockbett-oben | stockbett-unten | kachel</span>
+  "status": "belegt",        <span class="c">// frei | reserviert | belegt</span>
+  "vorname": "Mira",
+  "aus": false,
+  "geaendert": "2026-10-02T09:41"
+}
+
+<span class="c">// im Plan</span>
+&lt;g class="bed" data-id="D2" data-s="belegt"&gt; … &lt;/g&gt;</pre>
+        <h3>Grundlage und Annahmen</h3>
+        <ul class="assume">
+          <li>Der Hausplan folgt dem Grundriss mit Flächenangaben, ungefähr: Zimmer D 5,03 und 5,69 m², T-Zimmer 6,24 m², B 14,49 m², F 13,94 m².</li>
+          <li>Räume ohne Tür (zwei Privaträume und das Privatbad) sind immer gesperrt.</li>
+          <li>Von der Treppe kommt man in den Flur. Von dort gehen Zimmer B, das Bad mit Dusche und eine Tür nach Norden in den Flur 2 ab.</li>
+          <li>Flur 2 führt nach Osten in Zimmer F, das T-Zimmer erreicht man nur über F. Sind T und F beide aus, ist Flur 2 gesperrt.</li>
+          <li>Zimmer D sind zwei Räume mit demselben Namen, jeder etwa eine Bettlänge (2,10 m) breit. Eine Wand trennt die Stockbetten. Den rechten Raum erreicht man über Zimmer B, den linken über eine Tür unter dem Stockbett.</li>
+          <li>Das Stockbett im T-Zimmer steht im Südwesten, links neben der Tür.</li>
+          <li>Die Bettnummern D1 bis D6 und die Lage der Betten stammen aus der ersten Skizze.</li>
+          <li>Loggien L1 bis L5, das Notbett im Esszimmer (E1) und das Tiny House (TH1) sind gleich große Plätze. L3 ist für Neuaufnahmen und als Notbett vorgesehen.</li>
+          <li>St. Nikolaus hat 8 Plätze. N4 ist zu Beginn aus, weil die Skizze 7 Betten zeigt und die Notiz 5–8 nennt.</li>
+        </ul>
+      </section>
+    </div>
+  </section>
+</main>
+
+<div class="scrim" id="scrim" hidden></div>
+<section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" hidden>
+  <div class="sheet-grip" aria-hidden="true"></div>
+  <div class="sheet-head">
+    <div>
+      <p class="sheet-kicker" id="sheet-kicker">Zimmer</p>
+      <h2 class="sheet-title" id="sheet-title">D1</h2>
+    </div>
+    <button type="button" class="icon-btn" id="sheet-close" aria-label="Schließen"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M4 4 L14 14 M14 4 L4 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+  </div>
+  <p class="sheet-note" id="sheet-note" hidden></p>
+  <div class="seg" role="radiogroup" aria-label="Status" id="sheet-status">
+    <button type="button" role="radio" data-s="frei" aria-checked="false"><span class="sw" data-s="frei"></span>Frei</button>
+    <button type="button" role="radio" data-s="reserviert" aria-checked="false"><span class="sw" data-s="reserviert"></span>Reserviert</button>
+    <button type="button" role="radio" data-s="belegt" aria-checked="false"><span class="sw" data-s="belegt"></span>Belegt</button>
+  </div>
+  <div class="field">
+    <label for="sheet-name">Vorname</label>
+    <input id="sheet-name" type="text" autocomplete="off" autocapitalize="words" spellcheck="false" enterkeyhint="done" maxlength="24" placeholder="Vorname eintragen">
+  </div>
+  <p class="sheet-meta" id="sheet-meta"></p>
+  <div class="sheet-foot">
+    <button type="button" class="btn ghost" id="sheet-clear">Bett freigeben</button>
+    <button type="button" class="btn primary" id="sheet-done">Fertig</button>
+  </div>
+</section>
+
+<script>
+(function(){
+  "use strict";
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+  const STATUS = {frei:"Frei", reserviert:"Reserviert", belegt:"Belegt", aus:"Aus"};
+  const BASE_VB = [-10, -10, 971, 800];
+
+  // ---------- Räume ----------
+  // Maße nach dem Grundriss mit Flächenangaben (1 m ≈ 91 Einheiten), Betten als Symbole
+  const ROOMS = {
+    D:{area:"haus", name:"Zimmer D", floor:[13,13,314,309], label:[19,258], tags:[[56,180,"D"],[280,204,"D"]]},
+    B:{area:"haus", name:"Zimmer B", floor:[13,328,314,402], label:[22,356], tag:[150,600]},
+    T:{area:"haus", name:"T-Zimmer", floor:[746,13,202,274], label:[756,40], tag:[790,118]},
+    F:{area:"haus", name:"Zimmer F", floor:[670,293,278,437], label:[752,326], tag:[810,420]},
+    L:{area:"loggien", name:"Loggien"},
+    E:{area:"loggien", name:"Esszimmer"},
+    N:{area:"nikolaus", name:"St. Nikolaus", floor:[13,13,334,394], label:[180,206,"middle"]},
+    TH:{area:"tiny", name:"Tiny House"},
+    X:{area:"extra", name:"Weitere Plätze"}
+  };
+  const AREAS = [
+    {id:"haus", name:"Haus", rooms:["D","B","T","F"]},
+    {id:"loggien", name:"Loggien", rooms:["L","E"]},
+    {id:"nikolaus", name:"St. Nikolaus", rooms:["N"]},
+    {id:"tiny", name:"Tiny House", rooms:["TH"]},
+    {id:"extra", name:"Weitere Plätze", rooms:["X"]}
+  ];
+  const TILE_AREAS = ["loggien","tiny","extra"];
+
+  // ---------- Plätze ----------
+  const BEDS = [], BUNKS = [];
+  const single = (id, room, x, y, w, h, head) => BEDS.push({id, room, kind:"single", x, y, w, h, head});
+  const bunk = (top, bottom, room, x, y, w, h) => {
+    BUNKS.push({room, x, y, w, h});
+    const sh = (h - 9) / 2;
+    BEDS.push({id:top, room, kind:"slot", pos:"oben", x:x+3, y:y+3, w:w-6, h:sh});
+    BEDS.push({id:bottom, room, kind:"slot", pos:"unten", x:x+3, y:y+6+sh, w:w-6, h:sh});
+  };
+  // Einzelplätze außerhalb des Hausplans: alle gleich groß
+  const TILE = {w:300, h:60};
+  const tile = (id, room, desc, side, note) => BEDS.push({id, room, kind:"tile", x:0, y:0, w:TILE.w, h:TILE.h, desc, side, note});
+
+  single("D1","D", 16,16,136,56,"l");
+  bunk("D2","D3","D", 106,82,60,140);
+  bunk("D4","D5","D", 174,82,60,140);
+  single("D6","D", 188,16,136,56,"r");
+  single("B1","B", 16,670,136,56,"l");
+  single("B2","B", 16,420,136,56,"l");
+  bunk("B3","B4","B", 264,360,60,140);
+  bunk("T1","T2","T", 752,144,60,140);
+  single("T3","T", 890,16,56,136,"t");
+  single("F1","F", 674,450,136,56,"l");
+  single("F2","F", 674,670,136,56,"l");
+  bunk("F3","F4","F", 884,470,60,140);
+
+  ["L1","L2","L3","L4","L5"].forEach(id => id === "L3"
+    ? tile(id, "L", "Loggia · außerhalb", "Neuaufnahme · Notbett", "Neuaufnahme · Notbett")
+    : tile(id, "L", "Loggia · außerhalb"));
+  tile("E1", "E", "Esszimmer · Notbett", "Esszimmer · Notbett");
+  tile("TH1", "TH", "Tiny House · außerhalb");
+
+  [35,113,191,269].forEach((x,i) => single("N"+(i+1),"N", x,16,56,130,"t"));
+  [35,113,191,269].forEach((x,i) => single("N"+(i+5),"N", x,274,56,130,"b"));
+
+  const BED = Object.fromEntries(BEDS.map(b => [b.id, b]));
+  const byId = (a, b) => a.id.localeCompare(b.id, "de", {numeric:true});
+  const roomBeds = r => BEDS.filter(b => b.room === r);
+  const areaBeds = a => BEDS.filter(b => ROOMS[b.room].area === a);
+
+  function describe(b){
+    if(b.kind === "tile") return b.desc;
+    if(b.kind === "slot") return ROOMS[b.room].name + " · Stockbett " + b.pos;
+    return ROOMS[b.room].name + " · Einzelbett";
+  }
+
+  // ---------- Zustand ----------
+  const KEY = "bettenplan-v1";
+  const EXAMPLE = {
+    D1:["belegt","Jonas"], D2:["belegt","Mira"], D4:["reserviert","Lea"], D6:["belegt","Tarek"],
+    B1:["belegt","Paul"], B3:["belegt","Sina"], T1:["belegt","Noah"], T3:["reserviert","Elif"],
+    F2:["belegt","Ben"], F3:["belegt","Lina"], L1:["belegt","Emil"], L4:["reserviert","Jana"],
+    N1:["belegt","Max"], N2:["belegt","Ida"], N5:["belegt","Finn"], N7:["reserviert","Zoe"],
+    TH1:["belegt","Ole"]
+  };
+  function defaultState(){
+    const beds = {};
+    BEDS.forEach(b => { const e = EXAMPLE[b.id]; beds[b.id] = e ? {s:e[0], n:e[1], t:0} : {s:"frei", n:"", t:0}; });
+    return {v:1, beds, offRooms:{}, offBeds:{N4:true}, example:true, extra:[]};
+  }
+  function load(){
+    try{
+      const raw = localStorage.getItem(KEY);
+      if(raw){
+        const s = JSON.parse(raw);
+        if(s && s.v === 1 && s.beds){
+          BEDS.forEach(b => { if(!s.beds[b.id]) s.beds[b.id] = {s:"frei", n:"", t:0}; });
+          s.offRooms = s.offRooms || {}; s.offBeds = s.offBeds || {};
+          // frühere Fassungen: ein Zimmer D, eigener Tiny-House-Schalter
+          if(s.offRooms.DL || s.offRooms.DR) s.offRooms.D = true;
+          delete s.offRooms.DL; delete s.offRooms.DR;
+          if(s.tiny === false) s.offRooms.TH = true;
+          delete s.tiny;
+          s.extra = Array.isArray(s.extra) ? s.extra.filter(x => x && typeof x.id === "string" && typeof x.name === "string") : [];
+          return s;
+        }
+      }
+    }catch(e){}
+    return defaultState();
+  }
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+  let state = load();
+
+  // Weitere Plätze: frei benannt, ohne Ort im Plan, Nummern Z1, Z2, …
+  function rebuildExtras(){
+    for(let i = BEDS.length - 1; i >= 0; i--) if(BEDS[i].room === "X"){ delete BED[BEDS[i].id]; BEDS.splice(i, 1); }
+    state.extra.forEach(x => {
+      tile(x.id, "X", x.name, x.name);
+      BED[x.id] = BEDS[BEDS.length - 1];
+      if(!state.beds[x.id]) state.beds[x.id] = {s:"frei", n:"", t:0};
+    });
+  }
+  function nextExtraId(){
+    const n = state.extra.reduce((m, x) => Math.max(m, parseInt(x.id.slice(1), 10) || 0), 0);
+    return "Z" + (n + 1);
+  }
+  rebuildExtras();
+
+  const isOff = b => !!(state.offRooms[b.room] || state.offBeds[b.id]);
+  // Flur 2 führt nur zu T-Zimmer und Zimmer F
+  const flurLocked = () => !!(state.offRooms.T && state.offRooms.F);
+  function count(beds){
+    const c = {frei:0, reserviert:0, belegt:0, aus:0};
+    beds.forEach(b => { c[isOff(b) ? "aus" : state.beds[b.id].s]++; });
+    c.active = c.frei + c.reserviert + c.belegt;
+    return c;
+  }
+  function toggleRoom(r){ if(state.offRooms[r]) delete state.offRooms[r]; else state.offRooms[r] = true; commit(); }
+
+  // ---------- Zeichnen ----------
+  let openId = null, justSet = null;
+
+  function bedSVG(b, o = {}){
+    const st = o.st || state.beds[b.id];
+    const off = o.off !== undefined ? o.off : isOff(b);
+    const s = off ? "aus" : st.s;
+    const {x, y, w, h} = b;
+    const rx = b.kind === "tile" ? 10 : 5;
+    let pillow = null, tx, idY, nameY, maxW;
+    if(b.kind === "single"){
+      if(b.head === "l"){ pillow = [x+5, y+5, 11, h-10]; tx = x+24; idY = y+23; nameY = y+42; maxW = w-30; }
+      else if(b.head === "r"){ pillow = [x+w-16, y+5, 11, h-10]; tx = x+10; idY = y+23; nameY = y+42; maxW = w-30; }
+      else if(b.head === "t"){ pillow = [x+5, y+5, w-10, 11]; tx = x+8; idY = y+36; nameY = y+55; maxW = w-14; }
+      else { pillow = [x+5, y+h-16, w-10, 11]; tx = x+8; idY = y+22; nameY = y+41; maxW = w-14; }
+    } else if(b.kind === "slot"){ tx = x+7; idY = y+19; nameY = y+44; maxW = w-12; }
+    else { tx = x+14; idY = y+24; nameY = y+47; maxW = w-28; }
+
+    const wide = maxW >= 60;
+    let name;
+    if(off) name = "aus";
+    else if(st.n) name = st.n;
+    else name = s === "frei" ? "frei" : (wide ? STATUS[s].toLowerCase() : "");
+    const empty = off || !st.n;
+    const interactive = !off && !o.static;
+    const noun = b.kind === "tile" ? "Platz" : "Bett";
+    const aria = noun + " " + b.id + ", " + STATUS[s] + ((!off && st.n) ? ", " + st.n : "");
+    const cls = (!o.static && b.id === openId ? " is-open" : "") + (!o.static && b.id === justSet ? " is-set" : "");
+
+    return '<g class="bed k-' + b.kind + cls + '" data-id="' + b.id + '" data-s="' + s + '"' +
+      (interactive ? ' tabindex="0" role="button"' : ' role="img"') + ' aria-label="' + esc(aria) + '">' +
+      '<rect class="bed-hit" x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="' + rx + '"/>' +
+      '<rect class="bed-body" x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="' + rx + '"/>' +
+      (pillow ? '<rect class="bed-pillow" x="' + pillow[0] + '" y="' + pillow[1] + '" width="' + pillow[2] + '" height="' + pillow[3] + '" rx="3"/>' : '') +
+      '<rect class="bed-focus" x="' + (x-3.5) + '" y="' + (y-3.5) + '" width="' + (w+7) + '" height="' + (h+7) + '" rx="' + (rx+3) + '"/>' +
+      '<text class="bed-id" x="' + tx + '" y="' + idY + '">' + b.id + '</text>' +
+      (b.kind === "slot" ? '<text class="bed-pos" x="' + (x+w-6) + '" y="' + idY + '" text-anchor="end">' + b.pos + '</text>' : '') +
+      (b.side ? '<text class="bed-note" x="' + (x+w-14) + '" y="' + idY + '" text-anchor="end">' + esc(b.side) + '</text>' : '') +
+      '<text class="bed-name' + (empty ? ' is-empty' : '') + '" x="' + tx + '" y="' + nameY + '" data-max="' + maxW + '" data-full="' + esc(name) + '">' + esc(name) + '</text>' +
+      '</g>';
+  }
+
+  function roomLabel(r){
+    const R = ROOMS[r];
+    if(!R.label) return "";
+    const [x, y, anchor = "start"] = R.label;
+    const c = count(roomBeds(r));
+    const sub = state.offRooms[r] ? "aus" : c.frei + " von " + c.active + " frei";
+    const lines = R.lines || [R.name.toUpperCase()];
+    let out = lines.map((l, i) => '<text class="room-label" x="' + x + '" y="' + (y + i*15) + '" text-anchor="' + anchor + '">' + esc(l) + '</text>').join("") +
+              '<text class="room-count" x="' + x + '" y="' + (y + (lines.length-1)*15 + 17) + '" text-anchor="' + anchor + '">' + sub + '</text>';
+    (R.tags || (R.tag ? [R.tag] : [])).forEach(([gx, gy, gt = r, gs]) => {
+      out += '<text class="room-tag" x="' + gx + '" y="' + gy + '" text-anchor="middle">' + esc(gt) + '</text>';
+      if(gs) out += '<text class="room-tag-sub" x="' + gx + '" y="' + (gy+24) + '" text-anchor="middle">' + esc(gs) + '</text>';
+    });
+    return out;
+  }
+
+  function renderArea(area){
+    if(TILE_AREAS.includes(area)){
+      const p = 6;
+      $("#plan-" + area).innerHTML = areaBeds(area).map(b =>
+        '<svg class="slot-svg" viewBox="' + (b.x-p) + ' ' + (b.y-p) + ' ' + (b.w+2*p) + ' ' + (b.h+2*p) + '">' + bedSVG(b) + '</svg>').join("");
+      return;
+    }
+    const rooms = AREAS.find(a => a.id === area).rooms;
+    const fl = $("#" + area + "-floors"), lb = $("#" + area + "-labels"), bd = $("#" + area + "-beds");
+    if(fl) fl.innerHTML = rooms.filter(r => ROOMS[r].floor).map(r => {
+      const [x, y, w, h] = ROOMS[r].floor;
+      return '<rect class="floor' + (state.offRooms[r] ? ' off' : '') + (area === "haus" ? ' zoomable' : '') + '" data-room="' + r + '" x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '"/>';
+    }).join("");
+    if(lb) lb.innerHTML = rooms.map(roomLabel).join("");
+    bd.innerHTML = BUNKS.filter(k => ROOMS[k.room].area === area)
+      .map(k => '<rect class="bunk-frame" x="' + k.x + '" y="' + k.y + '" width="' + k.w + '" height="' + k.h + '" rx="7"/>').join("") +
+      areaBeds(area).map(b => bedSVG(b)).join("");
+  }
+
+  function fitText(root){
+    $$("text[data-max]", root).forEach(t => {
+      const full = t.getAttribute("data-full");
+      t.textContent = full;
+      const max = +t.getAttribute("data-max");
+      let len = 0;
+      try{ len = t.getComputedTextLength(); }catch(e){ return; }
+      if(!len || len <= max) return;
+      let s = full;
+      while(s.length > 1 && t.getComputedTextLength() > max){ s = s.slice(0, -1); t.textContent = s.trimEnd() + "…"; }
+    });
+  }
+
+  // ---------- Übersicht ----------
+  function areaMeta(a){
+    const rooms = AREAS.find(x => x.id === a).rooms;
+    if(rooms.every(r => state.offRooms[r])) return "aus";
+    const c = count(areaBeds(a));
+    return c.frei + " von " + c.active + " frei";
+  }
+  function renderSummary(){
+    const c = count(BEDS);
+    ["frei","reserviert","belegt","aus"].forEach(k => { $("#n-" + k).textContent = c[k]; });
+    $("#bar").innerHTML = ["belegt","reserviert","frei"].filter(k => c[k])
+      .map(k => '<span data-s="' + k + '" style="flex:' + c[k] + ' 1 0"></span>').join("");
+    const tot = c.active || 1;
+    let foot = c.active + " Plätze · Auslastung " + Math.round(c.belegt / tot * 100) + " %";
+    if(c.reserviert) foot += " · mit Reservierungen " + Math.round((c.belegt + c.reserviert) / tot * 100) + " %";
+    $("#summary-foot").textContent = foot;
+    AREAS.forEach(a => { const m = $("#meta-" + a.id); if(m) m.textContent = areaMeta(a.id); });
+    $("#notice").hidden = !state.example;
+  }
+  function renderExtraCard(){ $("#card-extra").hidden = !state.extra.length; }
+  function renderTiny(){
+    const on = !state.offRooms.TH;
+    $("#tiny-switch").setAttribute("aria-checked", String(on));
+    $("#plan-tiny").hidden = !on;
+    $("#tiny-off").hidden = on;
+  }
+  $("#tiny-switch").addEventListener("click", () => toggleRoom("TH"));
+
+  // Zoom im Haus-Plan
+  const house = $("#plan-haus");
+  let vb = BASE_VB.slice(), focusRoom = null, anim = 0;
+  const reduceMotion = window.matchMedia ? matchMedia("(prefers-reduced-motion: reduce)") : {matches:false};
+
+  function syncLock(){ house.classList.toggle("flur-locked", flurLocked()); }
+  function buildChips(){
+    const el = $("#chips-haus");
+    el.innerHTML = '<button type="button" class="chip" data-room="">Ganzes Haus</button>' +
+      AREAS[0].rooms.map(r => '<button type="button" class="chip" data-room="' + r + '">' + ROOMS[r].name + '<span class="n"></span></button>').join("");
+    el.addEventListener("click", e => {
+      const c = e.target.closest(".chip"); if(!c) return;
+      zoomTo(c.dataset.room || null);
+    });
+  }
+  function updateChips(){
+    $$("#chips-haus .chip").forEach(c => {
+      const r = c.dataset.room || null;
+      c.setAttribute("aria-pressed", String(r === focusRoom));
+      if(r){
+        const cnt = count(roomBeds(r));
+        $(".n", c).textContent = state.offRooms[r] ? "aus" : cnt.frei + " frei";
+      }
+    });
+  }
+  function roomBox(r){ const [x, y, w, h] = ROOMS[r].floor, p = 18; return [x-p, y-p, w+2*p, h+2*p]; }
+  function zoomTo(r){
+    focusRoom = r;
+    updateChips();
+    const target = r ? roomBox(r) : BASE_VB.slice();
+    const from = vb.slice();
+    cancelAnimationFrame(anim);
+    if(reduceMotion.matches){ vb = target; applyVB(); fitText(house); return; }
+    const t0 = performance.now(), dur = 340;
+    const step = now => {
+      const k = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      vb = from.map((v, i) => v + (target[i] - v) * e);
+      applyVB();
+      if(k < 1) anim = requestAnimationFrame(step); else fitText(house);
+    };
+    anim = requestAnimationFrame(step);
+  }
+  function applyVB(){
+    house.setAttribute("viewBox", vb.map(n => n.toFixed(2)).join(" "));
+    const W = house.getBoundingClientRect().width;
+    if(!W) return;
+    const maxH = Math.max(300, window.innerHeight * 0.74);
+    const h = Math.min(W * vb[3] / vb[2], maxH);
+    house.style.height = h + "px";
+    const scale = Math.min(W / vb[2], h / vb[3]);
+    house.classList.toggle("compact", scale < 0.55);
+  }
+
+  function planClick(area){
+    return e => {
+      const g = e.target.closest(".bed");
+      if(g && g.dataset.s !== "aus"){
+        if(area === "haus" && house.classList.contains("compact")){ zoomTo(BED[g.dataset.id].room); return; }
+        openSheet(g.dataset.id);
+        return;
+      }
+      const f = e.target.closest(".floor");
+      if(f && area === "haus" && focusRoom !== f.dataset.room) zoomTo(f.dataset.room);
+    };
+  }
+  AREAS.forEach(({id: a}) => {
+    const el = $("#plan-" + a);
+    el.addEventListener("click", planClick(a));
+    el.addEventListener("keydown", e => {
+      const g = e.target.closest && e.target.closest(".bed");
+      if(g && (e.key === "Enter" || e.key === " ")){ e.preventDefault(); openSheet(g.dataset.id); }
+    });
+  });
+
+  // ---------- Bett-Blatt ----------
+  const sheet = $("#sheet"), scrim = $("#scrim"), nameIn = $("#sheet-name");
+  let lastFocusBed = false, dirty = false, setTimer = 0;
+
+  function fmtTime(t){
+    const d = new Date(t), now = new Date();
+    const hm = d.toLocaleTimeString("de-DE", {hour:"2-digit", minute:"2-digit"});
+    const day = d.toDateString() === now.toDateString() ? "heute" : d.toLocaleDateString("de-DE", {day:"2-digit", month:"2-digit"});
+    return day + ", " + hm + " Uhr";
+  }
+  function syncSheet(fillInput){
+    const b = BED[openId], st = state.beds[openId];
+    $("#sheet-title").textContent = b.id;
+    $("#sheet-kicker").textContent = describe(b);
+    const note = $("#sheet-note");
+    note.hidden = !b.note; note.textContent = b.note || "";
+    $$("#sheet-status [role=radio]").forEach(btn => {
+      const on = btn.dataset.s === st.s;
+      btn.setAttribute("aria-checked", String(on));
+      btn.tabIndex = on ? 0 : -1;
+    });
+    if(fillInput) nameIn.value = st.n;
+    $("#sheet-meta").textContent = st.t ? "Geändert " + fmtTime(st.t)
+      : (state.example && st.s !== "frei" ? "Beispieleintrag" : "Noch nicht geändert");
+    $("#sheet-clear").hidden = st.s === "frei";
+  }
+  function openSheet(id){
+    const ae = document.activeElement;
+    lastFocusBed = !!(ae && ae.closest && ae.closest(".bed"));
+    openId = id; dirty = false;
+    syncSheet(true);
+    sheet.hidden = false; scrim.hidden = false;
+    renderPlans();
+    const sel = $('#sheet-status [aria-checked="true"]');
+    if(sel) sel.focus({preventScroll:true});
+  }
+  function closeSheet(){
+    if(!openId) return;
+    const id = openId;
+    const st = state.beds[id];
+    st.n = st.n.trim();
+    openId = null;
+    sheet.hidden = true; scrim.hidden = true;
+    // kurze Rückmeldung am geänderten Bett
+    if(dirty){ justSet = id; clearTimeout(setTimer); setTimer = setTimeout(() => { justSet = null; }, 600); }
+    commit();
+    if(lastFocusBed){ const el = $('.bed[data-id="' + id + '"]'); if(el) el.focus({preventScroll:true}); }
+  }
+  function setStatus(s){
+    const st = state.beds[openId];
+    if(st.s === s) return;
+    st.s = s;
+    if(s === "frei"){ st.n = ""; nameIn.value = ""; }
+    st.t = Date.now(); dirty = true;
+    commit();
+    syncSheet(false);
+    if(s !== "frei" && !nameIn.value) nameIn.focus({preventScroll:true});
+  }
+  $("#sheet-status").addEventListener("click", e => {
+    const btn = e.target.closest("[role=radio]"); if(btn) setStatus(btn.dataset.s);
+  });
+  $("#sheet-status").addEventListener("keydown", e => {
+    const order = ["frei","reserviert","belegt"];
+    const i = order.indexOf(state.beds[openId].s);
+    let n = -1;
+    if(e.key === "ArrowRight" || e.key === "ArrowDown") n = (i + 1) % 3;
+    if(e.key === "ArrowLeft" || e.key === "ArrowUp") n = (i + 2) % 3;
+    if(n < 0) return;
+    e.preventDefault();
+    setStatus(order[n]);
+    $('#sheet-status [data-s="' + order[n] + '"]').focus();
+  });
+  nameIn.addEventListener("input", () => {
+    const st = state.beds[openId];
+    st.n = nameIn.value;
+    if(st.s === "frei" && st.n.trim()) st.s = "belegt";
+    st.t = Date.now(); dirty = true;
+    commit();
+    syncSheet(false);
+  });
+  nameIn.addEventListener("keydown", e => { if(e.key === "Enter"){ e.preventDefault(); closeSheet(); } });
+  $("#sheet-done").addEventListener("click", closeSheet);
+  $("#sheet-close").addEventListener("click", closeSheet);
+  scrim.addEventListener("click", closeSheet);
+  $("#sheet-clear").addEventListener("click", () => { setStatus("frei"); closeSheet(); });
+  document.addEventListener("keydown", e => { if(e.key === "Escape" && openId) closeSheet(); });
+
+  // ---------- Einstellungen ----------
+  function roomRow(r, extra){
+    const R = ROOMS[r], beds = roomBeds(r).sort(byId);
+    const roomOn = !state.offRooms[r];
+    const one = beds.length === 1;
+    const offCount = beds.filter(b => state.offBeds[b.id]).length;
+    let sub = one ? "1 Platz" : beds.length + " Plätze" + (offCount ? " · " + offCount + " aus" : "");
+    if(extra) sub = extra + " · " + sub;
+    return '<div class="set-room' + (roomOn ? '' : ' is-off') + '">' +
+      '<div class="set-room-head"><div><p class="set-room-name">' + esc(R.name) + '</p><p class="set-room-sub">' + sub + '</p></div>' +
+      '<div class="switch-wrap"><span>' + (roomOn ? "An" : "Aus") + '</span>' +
+      '<button type="button" class="switch" role="switch" aria-checked="' + roomOn + '" data-toggle-room="' + r + '" aria-label="' + esc(R.name) + ' an"></button></div></div>' +
+      (one ? '' : '<div class="pills">' + beds.map(b => {
+        const on = !state.offBeds[b.id], st = state.beds[b.id];
+        const dot = st.s !== "frei" ? '<span class="sw" data-s="' + st.s + '" style="width:9px;height:9px;border-radius:3px"></span>' : '';
+        return '<button type="button" class="pill" aria-pressed="' + on + '" data-toggle-bed="' + b.id + '"' + (roomOn ? '' : ' disabled') +
+          ' aria-label="' + b.id + ' an" title="' + esc(describe(b)) + '"><span class="pill-id">' + b.id + dot + '</span><span class="pill-st">' + (on ? "an" : "aus") + '</span></button>';
+      }).join("") + '</div>') + '</div>';
+  }
+  let removeAsk = null;
+  function extraCard(){
+    return '<div class="set-card"><h2>Weitere Plätze</h2>' +
+      '<p class="fine set-hint">Für Betten ohne festen Ort im Plan, zum Beispiel ein Sofa. Sie erscheinen in der Übersicht unter dem Notbett.</p>' +
+      state.extra.map(x => {
+        const on = !state.offBeds[x.id], st = state.beds[x.id];
+        const dot = st.s !== "frei" ? '<span class="sw" data-s="' + st.s + '" style="width:9px;height:9px;border-radius:3px"></span>' : '';
+        const ask = removeAsk === x.id;
+        return '<div class="x-row"><span class="pill-id">' + x.id + dot + '</span>' +
+          '<input class="x-name" id="x-name-' + x.id + '" data-rename="' + x.id + '" value="' + esc(x.name) + '" maxlength="40" autocomplete="off" aria-label="Name von ' + x.id + '">' +
+          '<button type="button" class="switch" role="switch" aria-checked="' + on + '" data-toggle-bed="' + x.id + '" aria-label="' + x.id + ' an"></button>' +
+          '<button type="button" class="btn sm ' + (ask ? 'danger solid' : 'danger') + '" id="x-del-' + x.id + '" data-remove="' + x.id + '">' + (ask ? 'Wirklich entfernen' : 'Entfernen') + '</button></div>';
+      }).join("") +
+      '<form class="x-add" id="x-add" novalidate><label for="x-new">Neuer Platz</label>' +
+        '<div class="row"><input class="x-name" id="x-new" maxlength="40" autocomplete="off" placeholder="z. B. Sofa im Wohnzimmer">' +
+        '<button type="submit" class="btn primary" id="x-add-btn" disabled>Hinzufügen</button></div></form>' +
+      '</div>';
+  }
+  let confirmOpen = false;
+  function renderSettings(){
+    const ae = document.activeElement;
+    const keep = ae && ae.dataset ? (ae.dataset.toggleRoom ? '[data-toggle-room="' + ae.dataset.toggleRoom + '"]'
+      : ae.dataset.toggleBed ? '[data-toggle-bed="' + ae.dataset.toggleBed + '"]' : ae.id ? "#" + ae.id : null) : null;
+    const used = BEDS.filter(b => state.beds[b.id].s !== "frei").length;
+    $("#settings-list").innerHTML =
+      '<div class="set-card"><h2>Haus</h2><p class="fine set-hint">Sind T-Zimmer und Zimmer F beide aus, ist auch der Flur dorthin gesperrt.</p>' +
+        AREAS[0].rooms.map(r => roomRow(r)).join("") + '</div>' +
+      '<div class="stack">' +
+        '<div class="set-card"><h2>Einzelplätze</h2>' + roomRow("L", "außerhalb") + roomRow("E", "Notbett") + roomRow("TH", "optional") + '</div>' +
+        extraCard() +
+        '<div class="set-card">' + roomRow("N", "Saal für 5–8 Betten") + '</div>' +
+        '<div class="set-card"><h2>Belegung</h2><div class="set-actions">' +
+          '<p>Setzt alle Plätze auf frei und löscht die Vornamen. Was aus ist, bleibt aus.</p>' +
+          (confirmOpen
+            ? '<div class="confirm" role="group" aria-label="Bestätigen"><p>' + used + ' Einträge werden gelöscht.</p><div class="row"><button type="button" class="btn ghost sm" id="clear-no">Abbrechen</button><button type="button" class="btn danger solid sm" id="clear-yes">Alle freigeben</button></div></div>'
+            : '<div class="row"><button type="button" class="btn danger" id="clear-ask"' + (used ? '' : ' disabled') + '>Alle Plätze freigeben</button></div>') +
+          '<div class="row"><button type="button" class="btn ghost" id="all-on">Alles einschalten</button></div>' +
+          '<p class="fine">Gespeichert nur in diesem Browser auf diesem Gerät.</p>' +
+        '</div></div>' +
+      '</div>';
+    if(keep){ const el = $(keep, $("#settings-list")); if(el) el.focus({preventScroll:true}); }
+  }
+  $("#settings-list").addEventListener("click", e => {
+    const sw = e.target.closest("[data-toggle-room]");
+    if(sw){ toggleRoom(sw.dataset.toggleRoom); return; }
+    const p = e.target.closest("[data-toggle-bed]");
+    if(p && !p.disabled){ const id = p.dataset.toggleBed; if(state.offBeds[id]) delete state.offBeds[id]; else state.offBeds[id] = true; commit(); return; }
+    const t = e.target.closest("button"); if(!t) return;
+    if(t.dataset.remove){
+      const id = t.dataset.remove;
+      if(removeAsk !== id){ removeAsk = id; renderSettings(); const b = $("#x-del-" + id); if(b) b.focus(); return; }
+      removeAsk = null;
+      state.extra = state.extra.filter(x => x.id !== id);
+      delete state.beds[id]; delete state.offBeds[id];
+      rebuildExtras(); commit();
+      return;
+    }
+    if(t.id === "clear-ask"){ confirmOpen = true; renderSettings(); const n = $("#clear-no"); if(n) n.focus(); }
+    else if(t.id === "clear-no"){ confirmOpen = false; renderSettings(); }
+    else if(t.id === "clear-yes"){
+      BEDS.forEach(b => { state.beds[b.id] = {s:"frei", n:"", t:Date.now()}; });
+      state.example = false; confirmOpen = false; commit();
+    }
+    else if(t.id === "all-on"){ state.offRooms = {}; state.offBeds = {}; commit(); }
+  });
+
+  $("#settings-list").addEventListener("input", e => {
+    const el = e.target;
+    if(el.id === "x-new"){ $("#x-add-btn").disabled = !el.value.trim(); return; }
+    if(el.dataset && el.dataset.rename){
+      const x = state.extra.find(v => v.id === el.dataset.rename); if(!x) return;
+      x.name = el.value;
+      rebuildExtras(); save();
+      // nur die Übersicht neu zeichnen, damit das Feld den Fokus behält
+      AREAS.forEach(a => renderArea(a.id)); renderSummary(); fitText(document);
+    }
+  });
+  $("#settings-list").addEventListener("focusout", e => {
+    const el = e.target;
+    if(el.dataset && el.dataset.rename){
+      const x = state.extra.find(v => v.id === el.dataset.rename);
+      if(x && !x.name.trim()){ x.name = x.id; el.value = x.id; rebuildExtras(); commit(); }
+      else if(x && x.name !== x.name.trim()){ x.name = x.name.trim(); el.value = x.name; rebuildExtras(); save(); }
+    }
+  });
+  $("#settings-list").addEventListener("submit", e => {
+    if(e.target.id !== "x-add") return;
+    e.preventDefault();
+    const name = $("#x-new").value.trim();
+    if(!name) return;
+    state.extra.push({id:nextExtraId(), name});
+    removeAsk = null;
+    rebuildExtras(); commit();
+    const inp = $("#x-new"); if(inp) inp.focus();
+  });
+
+  $("#notice-clear").addEventListener("click", () => {
+    BEDS.forEach(b => { const st = state.beds[b.id]; if(!st.t && EXAMPLE[b.id]) state.beds[b.id] = {s:"frei", n:"", t:0}; });
+    state.example = false; commit();
+  });
+  $("#notice-keep").addEventListener("click", () => { state.example = false; commit(); });
+
+  // ---------- Styleguide ----------
+  function renderStyleguide(){
+    const spec = (b, st, off) => {
+      const p = 8;
+      return '<svg class="spec" viewBox="' + (b.x-p) + " " + (b.y-p) + " " + (b.w+2*p) + " " + (b.h+2*p) + '" aria-hidden="true">' + bedSVG(b, {st, off, static:true}) + '</svg>';
+    };
+    const demo = {id:"D1", room:"D", kind:"single", x:0, y:0, w:136, h:56, head:"l"};
+    const states = [
+      ["frei", "", false, "Frei", "Weiße Fläche, feine Kante, kein Name.", "--free · --free-line"],
+      ["reserviert", "Lea", false, "Reserviert", "Ocker getönt, gestrichelte Kante. Der Name ist freiwillig, zum Beispiel für eine angekündigte Aufnahme.", "--res-soft · --res · --res-ink"],
+      ["belegt", "Jonas", false, "Belegt", "Voll gefüllt in Petrol, Name hell darauf. Die einzige kräftige Fläche im Plan.", "--acc · --acc-ink"],
+      ["frei", "", true, "Aus", "Schraffiert und nicht antippbar. Die Belegung bleibt im Hintergrund gespeichert.", "--hatch · --off"]
+    ];
+    $("#sg-states-grid").innerHTML = states.map(([s, n, off, t, d, tok]) =>
+      '<div class="tile">' + spec(demo, {s, n, t:0}, off) + '<h3>' + t + '</h3><p>' + d + '</p><span class="tok">' + tok + '</span></div>').join("");
+
+    const sw = [
+      ["--paper","Papier","Seitenhintergrund","#EFF2F1","#111615"],
+      ["--sheet","Blatt","Karten, Planflächen","#FFFFFF","#1A2120"],
+      ["--ink","Tinte","Text, Hauptknopf","#1B2422","#E4EBE8"],
+      ["--ink-2","Tinte 2","Nebentext, Nummern","#5B6764","#A0ACA8"],
+      ["--wall","Wand","Wände im Grundriss","#29332F","#C3CDC9"],
+      ["--fixture","Privat","Räume ohne Tür","#E6EAE9","#252D2C"],
+      ["--acc","Belegt","Füllung belegter Plätze","#2E6A65","#62A69D"],
+      ["--res","Reserviert","Strichkante, Balken","#A87728","#D6AB5C"],
+      ["--res-soft","Reserviert Fläche","Füllung reservierter Plätze","#F7EEDC","#372C18"],
+      ["--free-line","Frei Kante","Kante freier Plätze","#B5C0BD","#4A5754"],
+      ["--hatch","Aus","Schraffur","#C9D1CE","#34403D"],
+      ["--danger","Löschen","nur für Löschen","#A3412F","#E27D6C"]
+    ];
+    $("#sg-swatches").innerHTML = sw.map(([tok, name, role, l, d]) =>
+      '<div class="swatch"><span class="pair2"><i style="background:' + l + '"></i><i style="background:' + d + '"></i></span>' +
+      '<div><b>' + name + '</b><span>' + role + '</span><span class="tok">' + tok + ' · ' + l + ' / ' + d + '</span></div></div>').join("");
+
+    const grid = $("#sg-symbols-grid");
+    const singleB = {id:"F1", room:"F", kind:"single", x:0, y:0, w:136, h:56, head:"l"};
+    const sh = (140 - 9) / 2;
+    const top = {id:"D2", room:"D", kind:"slot", pos:"oben", x:3, y:3, w:54, h:sh};
+    const bot = {id:"D3", room:"D", kind:"slot", pos:"unten", x:3, y:6+sh, w:54, h:sh};
+    const tl = {id:"L3", room:"L", kind:"tile", x:0, y:0, w:300, h:60, side:"Notbett"};
+    const extra = [
+      ['<svg viewBox="-8 -8 152 72" aria-hidden="true">' + bedSVG(singleB, {st:{s:"frei", n:"", t:0}, off:false, static:true}) + '</svg>', "Einzelbett", "Kissen markiert das Kopfende an der Wand"],
+      ['<svg viewBox="-60 -8 180 156" aria-hidden="true"><rect class="bunk-frame" x="0" y="0" width="60" height="140" rx="7"/>' +
+        bedSVG(top, {st:{s:"belegt", n:"Mira", t:0}, off:false, static:true}) + bedSVG(bot, {st:{s:"frei", n:"", t:0}, off:false, static:true}) + '</svg>', "Stockbett", "Rahmen mit zwei Plätzen, oben die kleinere Nummer"],
+      ['<svg viewBox="-8 -40 316 140" aria-hidden="true">' + bedSVG(tl, {st:{s:"frei", n:"", t:0}, off:false, static:true}) + '</svg>', "Platz-Kachel", "Loggia, Notbett, Tiny House: alle gleich groß, untereinander"],
+      ['<svg viewBox="0 0 120 72" aria-hidden="true"><rect class="blocked" x="14" y="10" width="92" height="52"/><text class="plan-note" x="60" y="40" text-anchor="middle">PRIVAT</text></svg>', "Privat", "Raum ohne Tür, grau und immer gesperrt"],
+      ['<svg viewBox="0 0 120 72" aria-hidden="true"><rect x="8" y="8" width="104" height="56" fill="url(#hatch)" opacity=".7"/><path class="wall" d="M8 8 V64 H112"/></svg>', "Zimmer aus", "Boden schraffiert, Label zeigt „aus“"]
+    ];
+    grid.insertAdjacentHTML("beforeend", extra.map(([svg, t, d]) => '<div class="symbol">' + svg + '<div><b>' + t + '</b><span>' + d + '</span></div></div>').join(""));
+  }
+
+  // ---------- Ablauf ----------
+  function renderPlans(){ AREAS.forEach(a => renderArea(a.id)); fitText(document); }
+  function renderAll(){
+    AREAS.forEach(a => renderArea(a.id));
+    syncLock();
+    renderSummary();
+    renderTiny();
+    renderExtraCard();
+    updateChips();
+    renderSettings();
+    fitText(document);
+  }
+  function commit(){ save(); renderAll(); }
+
+  function showView(v){
+    $$(".tab").forEach(t => t.setAttribute("aria-selected", String(t.dataset.view === v)));
+    $$(".view").forEach(s => { s.hidden = s.id !== "view-" + v; });
+    try{ localStorage.setItem(KEY + "-tab", v); }catch(e){}
+    if(v === "overview") applyVB();
+    fitText(document);
+  }
+  $$(".tab").forEach(t => t.addEventListener("click", () => showView(t.dataset.view)));
+
+  $("#today").textContent = new Date().toLocaleDateString("de-DE", {weekday:"long", day:"numeric", month:"long", year:"numeric"});
+  buildChips();
+  renderStyleguide();
+  renderAll();
+  let startView = "overview";
+  try{ const v = localStorage.getItem(KEY + "-tab"); if(v === "settings" || v === "style") startView = v; }catch(e){}
+  showView(startView);
+  applyVB();
+  window.addEventListener("resize", () => { applyVB(); fitText(document); });
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(() => fitText(document));
+})();
+</script>

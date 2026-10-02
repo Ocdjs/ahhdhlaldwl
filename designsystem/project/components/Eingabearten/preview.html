@@ -1,0 +1,29 @@
+<!-- @dsCard group="Grundlagen" height=360 subtitle="Finger, Stift und Tastatur" -->
+<!doctype html>
+<html lang="de">
+<head><meta charset="utf-8"><title>Eingabearten</title></head>
+<body class="nu" style="margin:0;background:var(--grund)">
+<div class="nu-vorschau" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
+  <div style="display:grid;gap:10px;align-content:start">
+    <b>Finger</b>
+    <div style="position:relative;width:152px">
+      <div id="b1"></div>
+      <div style="position:absolute;inset:-6px;border:2px dashed var(--blau);border-radius:14px;pointer-events:none"></div>
+    </div>
+    <p class="nu-beschr">Treffer reicht 6 dp über die Karte hinaus. Kein Ziel unter 48 × 48 dp, Abstand zwischen Zielen mindestens 8 dp.</p>
+  </div>
+  <div style="display:grid;gap:10px;align-content:start">
+    <b>Stift</b>
+    <div class="nu-unterschrift" id="u"><div class="nu-unterschrift-feld" style="height:120px"><span class="nu-unterschrift-hilfe">Mit Stift probieren</span></div></div>
+    <p class="nu-beschr">Strichstärke folgt dem Druck (1,4–4 dp). Sobald ein Stift erkannt ist, zählt der Handballen nicht mehr.</p>
+  </div>
+  <div style="display:grid;gap:10px;align-content:start">
+    <b>Tastatur</b>
+    <div class="nu-tastenleiste" style="border-radius:12px"><button class="nu-chip">@ Gast</button><button class="nu-chip">Verwarnung</button><button class="nu-btn nu-btn--primaer nu-btn--klein">Fertig</button></div>
+    <p class="nu-beschr">Im Schreibmodus rückt das Feld nach oben, die Leiste sitzt über der Tastatur. Eine Hardware-Tastatur wird mit Tab und Strg+Enter bedient.</p>
+  </div>
+</div>
+<script>document.getElementById("b1").innerHTML=Nu.bett({nr:"D4",s:"anwesend",name:"Ali",naechte:12,symbole:["notiz"]});Nu.unterschrift(document.getElementById("u"));</script>
+<script>Nu.mountIcons();</script>
+</body>
+</html>

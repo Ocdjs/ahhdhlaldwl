@@ -1,0 +1,38 @@
+<!-- @dsCard group="Grundlagen" height=520 subtitle="Alle Animationen zum Abspielen" -->
+<!doctype html>
+<html lang="de">
+<head><meta charset="utf-8"><title>Bewegung</title></head>
+<body class="nu" style="margin:0;background:var(--grund)">
+<div class="nu-vorschau" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
+  <div class="dm"><b>Statuswechsel</b><div class="st" id="s1"></div><button class="nu-btn nu-btn--klein" data-run="1">Abspielen</button><small>250 ms, Kreis aus dem Tipp-Punkt</small></div>
+  <div class="dm"><b>Zähler</b><div class="st"><button class="nu-iconbtn nu-iconbtn--fl" aria-label="Erinnerungen"><i data-icon="glocke"></i><span class="nu-zaehler" id="z">2</span></button></div><button class="nu-btn nu-btn--klein" data-run="2">Abspielen</button><small>250 ms, Pop auf 118 %</small></div>
+  <div class="dm"><b>Abgleich läuft</b><div class="st"><span class="nu-sync" data-s="laeuft"><i data-icon="abgleich"></i>Abgleich läuft</span></div><span></span><small>1,1 s pro Umdrehung, linear</small></div>
+  <div class="dm"><b>Detailbereich</b><div class="st" style="overflow:hidden;width:100%;height:80px;position:relative;background:var(--grund);border-radius:12px"><div id="d" style="position:absolute;right:0;top:0;bottom:0;width:55%;background:var(--flaeche);border-radius:12px 0 0 12px"></div></div><button class="nu-btn nu-btn--klein" data-run="3">Abspielen</button><small>350 ms, kurve-eintritt</small></div>
+  <div class="dm"><b>Einblendung</b><div class="st" id="e" style="width:100%"></div><button class="nu-btn nu-btn--klein" data-run="4">Abspielen</button><small>350 ms herein, 6 s Standzeit</small></div>
+  <div class="dm"><b>Bericht abgeschlossen</b><div class="st"><span class="nu-gesperrt" style="padding:8px 14px"><i data-icon="schloss" id="sl"></i>Abgeschlossen</span></div><button class="nu-btn nu-btn--klein" data-run="5">Abspielen</button><small>350 ms, Bügel rastet ein</small></div>
+  <div class="dm"><b>Falsche PIN</b><div class="st"><div class="nu-pin-punkte" id="pp"><i class="is-voll"></i><i class="is-voll"></i><i class="is-voll"></i><i class="is-voll"></i></div></div><button class="nu-btn nu-btn--klein" data-run="6">Abspielen</button><small>300 ms Kopfschütteln</small></div>
+  <div class="dm"><b>Ablegen nach Ziehen</b><div class="st" id="s2"></div><button class="nu-btn nu-btn--klein" data-run="7">Abspielen</button><small>350 ms, federt auf 98 %</small></div>
+  <div class="dm"><b>Bestätigt</b><div class="st"><span class="nu-pille nu-pille--frei" id="ck"><i data-icon="check" class="klein nu-zeichnen"></i>Unterschrift bestätigt</span></div><button class="nu-btn nu-btn--klein" data-run="8">Abspielen</button><small>250 ms, Häkchen wird gezeichnet</small></div>
+</div>
+<style>.dm{display:grid;gap:10px;justify-items:start;align-content:start;padding:14px;border-radius:14px;background:var(--flaeche)} .dm small{color:var(--tinte-2);font-size:13px} .st{min-height:96px;display:grid;place-items:center start}</style>
+<script>
+Nu.mountIcons();
+var s1=document.getElementById("s1"), s2=document.getElementById("s2");
+function bed1(s){s1.innerHTML=Nu.bett(s==="anwesend"?{nr:"B3",s:"anwesend",name:"Ion",naechte:4}:{nr:"B3",s:"erwartet",name:"Ion",naechte:3});}
+bed1("erwartet"); s2.innerHTML=Nu.bett({nr:"F2",s:"anwesend",name:"Samir",naechte:20});
+function re(el,c){el.classList.remove(c);void el.offsetWidth;el.classList.add(c);}
+var runs={
+ 1:function(){bed1(s1.querySelector(".nu-bett").dataset.s==="anwesend"?"erwartet":"anwesend");var b=s1.querySelector(".nu-bett");b.style.setProperty("--x","30%");b.style.setProperty("--y","60%");re(b,"is-neu");},
+ 2:function(){var z=document.getElementById("z");z.textContent=+z.textContent+1;re(z,"pop");},
+ 3:function(){re(document.getElementById("d"),"rein");document.getElementById("d").classList.add("nu-detail");},
+ 4:function(){var e=document.getElementById("e");e.innerHTML='<div class="nu-einblendung" style="width:100%">'+Nu.svg("dusche")+'<div><b>Dusche 20:30</b><span>Ali, Bett 5</span></div><span></span><i class="lauf"></i></div>';},
+ 5:function(){var s=document.querySelector("#sl")||document.querySelector(".nu-gesperrt .nu-svg");re(s,"zu");},
+ 6:function(){re(document.getElementById("pp"),"is-falsch");},
+ 7:function(){re(s2.querySelector(".nu-bett"),"is-gesetzt");},
+ 8:function(){var c=document.querySelector("#ck .nu-svg");c.classList.remove("nu-zeichnen");void c.offsetWidth;c.classList.add("nu-zeichnen");}
+};
+document.querySelectorAll("[data-run]").forEach(function(b){b.onclick=function(){runs[b.dataset.run]();};});
+runs[4]();
+</script>
+</body>
+</html>

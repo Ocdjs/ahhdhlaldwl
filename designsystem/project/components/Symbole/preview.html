@@ -1,0 +1,13 @@
+<!-- @dsCard group="Grundlagen" height=620 -->
+<!doctype html>
+<html lang="de">
+<head><meta charset="utf-8"><title>Symbole</title></head>
+<body class="nu" style="margin:0;background:var(--grund)">
+<div class="nu-vorschau" id="g" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px"></div>
+<script>
+var g=document.getElementById("g"), names=Object.keys(Nu.icons).concat(["karte-gelb","karte-rot"]);
+g.innerHTML=names.map(function(n){return '<div style="display:grid;justify-items:center;gap:6px;padding:12px 4px;border-radius:10px;background:var(--flaeche)">'+Nu.svg(n)+'<span style="font:400 12px/16px var(--font-zahl);color:var(--tinte-2);text-align:center;word-break:break-all">'+n+'</span></div>'}).join("");
+</script>
+<script>Nu.mountIcons();</script>
+</body>
+</html>

@@ -1,0 +1,519 @@
+{
+ "v": 3,
+ "layout": "files",
+ "createdOnFiles": {
+  "v": 1,
+  "at": "2026-10-02T12:11:45Z"
+ },
+ "title": "Notübernachtung",
+ "namespace": "Nu",
+ "libraries": [],
+ "sections": {},
+ "groups": [
+  "Symbole"
+ ],
+ "assetGroups": {
+  "Symbole": {
+   "name": "Symbole",
+   "tile": "s",
+   "order": [
+    "bett.svg",
+    "stockbett.svg",
+    "bett-plus.svg",
+    "anwesend.svg",
+    "erwartet.svg",
+    "schloss.svg",
+    "schloss-offen.svg",
+    "rueckkehr.svg",
+    "deaktiviert.svg",
+    "abwesend.svg",
+    "auszug.svg",
+    "tauschen.svg",
+    "umziehen.svg",
+    "person.svg",
+    "personen.svg",
+    "person-plus.svg",
+    "suche.svg",
+    "notiz.svg",
+    "laeuseschein.svg",
+    "laeuseschein-fehlt.svg",
+    "warnung.svg",
+    "verwarnung.svg",
+    "karte-gelb.svg",
+    "karte-rot.svg",
+    "vorfall.svg",
+    "schluessel.svg",
+    "dusche.svg",
+    "sprache.svg",
+    "kamera.svg",
+    "scannen.svg",
+    "unterschrift.svg",
+    "stift.svg",
+    "tastatur.svg",
+    "haus.svg",
+    "standort-2.svg",
+    "bericht.svg",
+    "archiv.svg",
+    "kalender.svg",
+    "uhr.svg",
+    "glocke.svg",
+    "regler.svg",
+    "abgleich.svg",
+    "wolke-ok.svg",
+    "wolke-wartet.svg",
+    "wolke-aus.svg",
+    "ampel.svg",
+    "telefon.svg",
+    "kueche.svg",
+    "einkauf.svg",
+    "wiederholen.svg",
+    "mail.svg",
+    "dokument-plus.svg",
+    "teilen.svg",
+    "pdf.svg",
+    "mond.svg",
+    "sonne.svg",
+    "plus.svg",
+    "minus.svg",
+    "check.svg",
+    "schliessen.svg",
+    "zurueck.svg",
+    "weiter.svg",
+    "auf.svg",
+    "ab.svg",
+    "mehr.svg",
+    "info.svg",
+    "loeschen.svg",
+    "rueckgaengig.svg",
+    "filter.svg"
+   ],
+   "files": {
+    "bett.svg": {
+     "name": "bett.svg",
+     "blob": "6bcfa0a7e23cf59feb728b9d66acd3fb",
+     "size": 301,
+     "type": "image/svg+xml"
+    },
+    "stockbett.svg": {
+     "name": "stockbett.svg",
+     "blob": "012bf9617e7272fc3c4005b0fa41afac",
+     "size": 344,
+     "type": "image/svg+xml"
+    },
+    "bett-plus.svg": {
+     "name": "bett-plus.svg",
+     "blob": "a63898886e695cf1b1d6f3f5f0388415",
+     "size": 302,
+     "type": "image/svg+xml"
+    },
+    "anwesend.svg": {
+     "name": "anwesend.svg",
+     "blob": "9dbc59bc5d2084d9187980a69dac9b63",
+     "size": 257,
+     "type": "image/svg+xml"
+    },
+    "erwartet.svg": {
+     "name": "erwartet.svg",
+     "blob": "5322a91b6684d65d18e3f1ead729b03f",
+     "size": 339,
+     "type": "image/svg+xml"
+    },
+    "schloss.svg": {
+     "name": "schloss.svg",
+     "blob": "05fb0e15f1666c7d48ecdde278f21cee",
+     "size": 334,
+     "type": "image/svg+xml"
+    },
+    "schloss-offen.svg": {
+     "name": "schloss-offen.svg",
+     "blob": "feeeb704310592c2844c3a6b5befd978",
+     "size": 336,
+     "type": "image/svg+xml"
+    },
+    "rueckkehr.svg": {
+     "name": "rueckkehr.svg",
+     "blob": "e9db167dbc26e11438081d50b505a917",
+     "size": 287,
+     "type": "image/svg+xml"
+    },
+    "deaktiviert.svg": {
+     "name": "deaktiviert.svg",
+     "blob": "d0ab2cb1b8867fbbf78da30574c4011a",
+     "size": 251,
+     "type": "image/svg+xml"
+    },
+    "abwesend.svg": {
+     "name": "abwesend.svg",
+     "blob": "eea0dbd3bb3e7507672bf53ad4f0790c",
+     "size": 286,
+     "type": "image/svg+xml"
+    },
+    "auszug.svg": {
+     "name": "auszug.svg",
+     "blob": "284b87fa7d991984d60b286d70c11b2c",
+     "size": 319,
+     "type": "image/svg+xml"
+    },
+    "tauschen.svg": {
+     "name": "tauschen.svg",
+     "blob": "8f0a7e0fa262a431721cd90f7530b6a4",
+     "size": 258,
+     "type": "image/svg+xml"
+    },
+    "umziehen.svg": {
+     "name": "umziehen.svg",
+     "blob": "acb786c30e80ab712dfbafb4cfe2d1dc",
+     "size": 237,
+     "type": "image/svg+xml"
+    },
+    "person.svg": {
+     "name": "person.svg",
+     "blob": "dd73801b507506f65ee9beb5a4303625",
+     "size": 259,
+     "type": "image/svg+xml"
+    },
+    "personen.svg": {
+     "name": "personen.svg",
+     "blob": "b6d79a1d6e3f7d510a0be08bcbf9ad45",
+     "size": 319,
+     "type": "image/svg+xml"
+    },
+    "person-plus.svg": {
+     "name": "person-plus.svg",
+     "blob": "f793b9650974b237405850eecfcfde9c",
+     "size": 279,
+     "type": "image/svg+xml"
+    },
+    "suche.svg": {
+     "name": "suche.svg",
+     "blob": "5f2cf55f5f81dd3d0c4377a6be8eabeb",
+     "size": 253,
+     "type": "image/svg+xml"
+    },
+    "notiz.svg": {
+     "name": "notiz.svg",
+     "blob": "0f7242b0853deeaf9ece9803214144d8",
+     "size": 337,
+     "type": "image/svg+xml"
+    },
+    "laeuseschein.svg": {
+     "name": "laeuseschein.svg",
+     "blob": "439b682fa8601cfc03c1562b45f17781",
+     "size": 310,
+     "type": "image/svg+xml"
+    },
+    "laeuseschein-fehlt.svg": {
+     "name": "laeuseschein-fehlt.svg",
+     "blob": "893635e4ff0e6a6727f5629f1e8e2b9c",
+     "size": 316,
+     "type": "image/svg+xml"
+    },
+    "warnung.svg": {
+     "name": "warnung.svg",
+     "blob": "bd9ab6cf0595a532faacf0ab0871a379",
+     "size": 280,
+     "type": "image/svg+xml"
+    },
+    "verwarnung.svg": {
+     "name": "verwarnung.svg",
+     "blob": "96c5037860036db404cbd4417f4b0d4d",
+     "size": 255,
+     "type": "image/svg+xml"
+    },
+    "karte-gelb.svg": {
+     "name": "karte-gelb.svg",
+     "blob": "bf590e8e3472571323d6af8868621b22",
+     "size": 309,
+     "type": "image/svg+xml"
+    },
+    "karte-rot.svg": {
+     "name": "karte-rot.svg",
+     "blob": "d1e0f09ac7eb32e38729ea8d5fd919b7",
+     "size": 309,
+     "type": "image/svg+xml"
+    },
+    "vorfall.svg": {
+     "name": "vorfall.svg",
+     "blob": "63bd4b5a6331d5793b01b5da0434cf1c",
+     "size": 231,
+     "type": "image/svg+xml"
+    },
+    "schluessel.svg": {
+     "name": "schluessel.svg",
+     "blob": "0a69938e0330818efa961a984b1f5987",
+     "size": 292,
+     "type": "image/svg+xml"
+    },
+    "dusche.svg": {
+     "name": "dusche.svg",
+     "blob": "11668aa524538e9d7fe3d117569eeea7",
+     "size": 324,
+     "type": "image/svg+xml"
+    },
+    "sprache.svg": {
+     "name": "sprache.svg",
+     "blob": "5d87291ff7d858225535dc9db9021d90",
+     "size": 327,
+     "type": "image/svg+xml"
+    },
+    "kamera.svg": {
+     "name": "kamera.svg",
+     "blob": "61ab68975762a918dd116faa807e1618",
+     "size": 359,
+     "type": "image/svg+xml"
+    },
+    "scannen.svg": {
+     "name": "scannen.svg",
+     "blob": "cc9c9045e83d96826e6bad9ef0dbeb66",
+     "size": 337,
+     "type": "image/svg+xml"
+    },
+    "unterschrift.svg": {
+     "name": "unterschrift.svg",
+     "blob": "5e7229290e081cb6f92dedfbbdec3425",
+     "size": 281,
+     "type": "image/svg+xml"
+    },
+    "stift.svg": {
+     "name": "stift.svg",
+     "blob": "8d0a94fa07baf2d227ba775d7137b744",
+     "size": 251,
+     "type": "image/svg+xml"
+    },
+    "tastatur.svg": {
+     "name": "tastatur.svg",
+     "blob": "efdab66722ce1f31ee01c28c16c38448",
+     "size": 355,
+     "type": "image/svg+xml"
+    },
+    "haus.svg": {
+     "name": "haus.svg",
+     "blob": "39259e60ac41d0d60f3098f1f0551c9b",
+     "size": 245,
+     "type": "image/svg+xml"
+    },
+    "standort-2.svg": {
+     "name": "standort-2.svg",
+     "blob": "c999cfd885ce57ecaf76246f1dc652d0",
+     "size": 262,
+     "type": "image/svg+xml"
+    },
+    "bericht.svg": {
+     "name": "bericht.svg",
+     "blob": "f60ef358b01bea13b1f0a44a76d599e3",
+     "size": 325,
+     "type": "image/svg+xml"
+    },
+    "archiv.svg": {
+     "name": "archiv.svg",
+     "blob": "b7d194bfebb15548e4ab624e645d4306",
+     "size": 278,
+     "type": "image/svg+xml"
+    },
+    "kalender.svg": {
+     "name": "kalender.svg",
+     "blob": "7e17233522bd4042e9d8adb6a01baea3",
+     "size": 328,
+     "type": "image/svg+xml"
+    },
+    "uhr.svg": {
+     "name": "uhr.svg",
+     "blob": "03d97fb1c1a02faa0e6ce309900d6c72",
+     "size": 247,
+     "type": "image/svg+xml"
+    },
+    "glocke.svg": {
+     "name": "glocke.svg",
+     "blob": "b6a038715bb1be88c2fa422c88a0b060",
+     "size": 250,
+     "type": "image/svg+xml"
+    },
+    "regler.svg": {
+     "name": "regler.svg",
+     "blob": "69d378ac6a6f39e6d1dcc3f2a50ecf9c",
+     "size": 296,
+     "type": "image/svg+xml"
+    },
+    "abgleich.svg": {
+     "name": "abgleich.svg",
+     "blob": "d1d624e09aef9642d58b224d97db0691",
+     "size": 288,
+     "type": "image/svg+xml"
+    },
+    "wolke-ok.svg": {
+     "name": "wolke-ok.svg",
+     "blob": "68b511bd1122d4ba685f1c3a8a2a3927",
+     "size": 280,
+     "type": "image/svg+xml"
+    },
+    "wolke-wartet.svg": {
+     "name": "wolke-wartet.svg",
+     "blob": "41da5a7a1898acca989fb4f6f459145a",
+     "size": 296,
+     "type": "image/svg+xml"
+    },
+    "wolke-aus.svg": {
+     "name": "wolke-aus.svg",
+     "blob": "3354706c2b4d56206630bda252a6b0b8",
+     "size": 271,
+     "type": "image/svg+xml"
+    },
+    "ampel.svg": {
+     "name": "ampel.svg",
+     "blob": "5a9cb024a16c5d288d890926d97fe41b",
+     "size": 377,
+     "type": "image/svg+xml"
+    },
+    "telefon.svg": {
+     "name": "telefon.svg",
+     "blob": "3ffd457e7c3de1cefb18d539a4ff3c73",
+     "size": 320,
+     "type": "image/svg+xml"
+    },
+    "kueche.svg": {
+     "name": "kueche.svg",
+     "blob": "11cf6640fcf1fca8e9a12f48a9b16c40",
+     "size": 299,
+     "type": "image/svg+xml"
+    },
+    "einkauf.svg": {
+     "name": "einkauf.svg",
+     "blob": "afe82bf296072170b8b5238d14ee076b",
+     "size": 245,
+     "type": "image/svg+xml"
+    },
+    "wiederholen.svg": {
+     "name": "wiederholen.svg",
+     "blob": "9adbbba244c71a76d6ee59dd7f4826ee",
+     "size": 295,
+     "type": "image/svg+xml"
+    },
+    "mail.svg": {
+     "name": "mail.svg",
+     "blob": "f4f219f676b9eedb9643423895748aac",
+     "size": 312,
+     "type": "image/svg+xml"
+    },
+    "pdf.svg": {
+     "name": "pdf.svg",
+     "blob": "b92b54403b40fcec44d207070ecba8fd",
+     "size": 323,
+     "type": "image/svg+xml"
+    },
+    "mond.svg": {
+     "name": "mond.svg",
+     "blob": "9c8b0b26279994e7138fd9b407257ce9",
+     "size": 244,
+     "type": "image/svg+xml"
+    },
+    "sonne.svg": {
+     "name": "sonne.svg",
+     "blob": "e541c9fa6be8ff581332c7c2ca8490af",
+     "size": 354,
+     "type": "image/svg+xml"
+    },
+    "plus.svg": {
+     "name": "plus.svg",
+     "blob": "a9134cfd8dc58b59aac72aef981f9586",
+     "size": 212,
+     "type": "image/svg+xml"
+    },
+    "minus.svg": {
+     "name": "minus.svg",
+     "blob": "2f38597849043d03d6d20d829688f33d",
+     "size": 203,
+     "type": "image/svg+xml"
+    },
+    "check.svg": {
+     "name": "check.svg",
+     "blob": "8ead8074351e51f2842883aa16d6d8e5",
+     "size": 217,
+     "type": "image/svg+xml"
+    },
+    "schliessen.svg": {
+     "name": "schliessen.svg",
+     "blob": "c6ddcc1ea5bb04187472105b2a584b08",
+     "size": 216,
+     "type": "image/svg+xml"
+    },
+    "zurueck.svg": {
+     "name": "zurueck.svg",
+     "blob": "b99c59ebb978d1709241d148a527731c",
+     "size": 209,
+     "type": "image/svg+xml"
+    },
+    "weiter.svg": {
+     "name": "weiter.svg",
+     "blob": "0da97d33f30b432e4ccb08165e8aaaf8",
+     "size": 207,
+     "type": "image/svg+xml"
+    },
+    "auf.svg": {
+     "name": "auf.svg",
+     "blob": "825320a80ec2c1fb46a1e73508bd4674",
+     "size": 208,
+     "type": "image/svg+xml"
+    },
+    "ab.svg": {
+     "name": "ab.svg",
+     "blob": "95dd5a616a04ed0feb46a7120a7ffafb",
+     "size": 207,
+     "type": "image/svg+xml"
+    },
+    "mehr.svg": {
+     "name": "mehr.svg",
+     "blob": "0a70b178e40717f402ddfe198b055109",
+     "size": 226,
+     "type": "image/svg+xml"
+    },
+    "info.svg": {
+     "name": "info.svg",
+     "blob": "a855d948cacb644ada1761fc9392ba0d",
+     "size": 255,
+     "type": "image/svg+xml"
+    },
+    "loeschen.svg": {
+     "name": "loeschen.svg",
+     "blob": "600af051f29e4c83bee8b15add78eb95",
+     "size": 255,
+     "type": "image/svg+xml"
+    },
+    "rueckgaengig.svg": {
+     "name": "rueckgaengig.svg",
+     "blob": "5dcd17017ad6537d549b735fe71a309e",
+     "size": 239,
+     "type": "image/svg+xml"
+    },
+    "filter.svg": {
+     "name": "filter.svg",
+     "blob": "69384a9bca5732d0c3e80ba516fff856",
+     "size": 228,
+     "type": "image/svg+xml"
+    },
+    "teilen.svg": {
+     "name": "teilen.svg",
+     "blob": "954bd4e65534d904b1293a903f916c8c",
+     "size": 338,
+     "type": "image/svg+xml"
+    },
+    "dokument-plus.svg": {
+     "name": "dokument-plus.svg",
+     "blob": "44b38f024798fa8e9fdfcad3da881d20",
+     "size": 325,
+     "type": "image/svg+xml"
+    }
+   }
+  }
+ },
+ "blobs": {},
+ "docs": {
+  "readme": "project/README.md",
+  "sections": []
+ },
+ "lastChange": {
+  "by": "David",
+  "at": "2026-10-02T13:30:03Z",
+  "via": "Claude Code",
+  "note": "St. Pius als Grundriss, KHT-Zählung, Zustand „fehlt“, gleiche Vornamen, Sanktion für genau eine Person, Hausordnung zweispaltig, 7-Tage-Kalender, Betten einzeln sperren, Gästedatenbank, Abschnitt Fachregeln"
+ }
+}

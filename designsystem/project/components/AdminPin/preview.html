@@ -1,0 +1,13 @@
+<!-- @dsCard group="Einstellungen" height=470 -->
+<!doctype html>
+<html lang="de">
+<head><meta charset="utf-8"><title>AdminPin</title></head>
+<body class="nu" style="margin:0;background:var(--grund)">
+<div class="nu nu-vorschau" style="justify-content:center"><div class="nu-pin">
+<i data-icon="schloss"></i><b class="titel">Admin-PIN eingeben</b>
+<div class="nu-pin-punkte" id="pp"><i class="is-voll"></i><i class="is-voll"></i><i></i><i></i></div>
+<div class="nu-pin-tasten" id="t"></div><p class="nu-beschr">Schützt Einstellungen und Korrekturen vor versehentlichen Änderungen.</p></div></div>
+<script>document.getElementById("t").innerHTML=["1","2","3","4","5","6","7","8","9","","0","⌫"].map(function(x){return x?'<button>'+x+'</button>':'<span></span>'}).join("");</script>
+<script>Nu.mountIcons();</script>
+</body>
+</html>

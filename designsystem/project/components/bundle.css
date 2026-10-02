@@ -1,0 +1,426 @@
+@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:wght@400;600&family=Atkinson+Hyperlegible+Next:wght@400;600;700&family=Noto+Sans:wght@400;600&family=Noto+Sans+Arabic:wght@400;600&display=swap");
+
+/* Notübernachtung · Bausteine
+   Eine Klasse pro Baustein, Präfix nu-. Zustände über data-s (Status) oder is-…; Varianten über --…
+   Alle Farben, Abstände und Zeiten kommen aus tokens.json. */
+
+.nu, .nu *{box-sizing:border-box}
+.nu{font-family:var(--font-ui);font-size:17px;line-height:26px;color:var(--tinte);background:var(--grund);-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+:where(.nu) button{font:inherit;color:inherit}
+.nu :focus-visible{outline:2px solid var(--fokus);outline-offset:2px}
+.nu-svg{width:var(--symbol);height:var(--symbol);flex:none;display:inline-block;vertical-align:middle}
+.nu-svg.klein{width:var(--symbol-klein);height:var(--symbol-klein)}
+.nu-svg path{vector-effect:non-scaling-stroke}
+
+/* ---------- Knöpfe ---------- */
+.nu-btn{min-height:var(--ziel-gross);padding:0 22px;border-radius:var(--radius-m);border:0;display:inline-flex;align-items:center;justify-content:center;gap:10px;font:600 17px/24px var(--font-ui);cursor:pointer;background:var(--flaeche-2);color:var(--tinte);transition:background var(--dauer-sofort) var(--kurve-standard),transform var(--dauer-sofort) var(--kurve-standard);user-select:none;-webkit-user-select:none;touch-action:manipulation}
+.nu-btn:active{transform:scale(.97);background:var(--flaeche-3)}
+.nu-btn--primaer{background:var(--primaer);color:var(--auf-primaer)}
+.nu-btn--primaer:active{background:var(--primaer);opacity:.86}
+.nu-btn--rahmen{background:var(--flaeche);box-shadow:inset 0 0 0 1.5px var(--linie-stark)}
+.nu-btn--gefahr{color:var(--vorfall)}
+.nu-btn--gefahr-voll{background:var(--vorfall);color:var(--auf-vorfall)}
+.nu-btn--klein{min-height:var(--ziel-min);padding:0 16px;font-size:15px}
+.nu-btn--breit{width:100%}
+.nu-btn:disabled{opacity:.42;cursor:not-allowed;transform:none}
+.nu-iconbtn{width:var(--ziel-min);height:var(--ziel-min);border-radius:var(--radius-rund);border:0;background:transparent;display:inline-grid;place-items:center;cursor:pointer;color:var(--tinte-2);position:relative;transition:background var(--dauer-sofort)}
+.nu-iconbtn:active{background:var(--flaeche-3)}
+.nu-iconbtn--fl{background:var(--flaeche-2)}
+
+/* ---------- Zähler, Pillen, Chips ---------- */
+.nu-zaehler{position:absolute;top:4px;right:2px;min-width:22px;height:22px;padding:0 6px;border-radius:var(--radius-rund);background:var(--warnung);color:var(--flaeche);font:600 13px/22px var(--font-zahl);text-align:center}
+.nu-zaehler.pop{animation:nu-pop var(--dauer-mittel) var(--kurve-standard)}
+.nu-pille{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:0 12px;border-radius:var(--radius-rund);font:600 14px/18px var(--font-ui);background:var(--flaeche-2);color:var(--tinte-2)}
+.nu-pille--warnung{background:var(--warnung-flaeche);color:var(--warnung)}
+.nu-pille--frei{background:var(--frei-flaeche);color:var(--frei)}
+.nu-pille--blau{background:var(--erwartet-flaeche);color:var(--blau)}
+.nu-pille--vorfall{background:var(--vorfall-flaeche);color:var(--vorfall)}
+.nu-chip{min-height:var(--ziel-min);padding:0 16px;border-radius:var(--radius-rund);border:0;background:var(--flaeche-2);display:inline-flex;align-items:center;gap:8px;font:600 15px/20px var(--font-ui);cursor:pointer;color:var(--tinte)}
+.nu-chip[aria-pressed="true"],.nu-chip.is-an{background:var(--primaer);color:var(--auf-primaer)}
+.nu-bald{display:inline-flex;align-items:center;gap:6px;padding:2px 10px;border-radius:var(--radius-s);border:1.5px dashed var(--linie-stark);font:600 13px/18px var(--font-ui);color:var(--tinte-3)}
+
+/* ---------- Eingaben ---------- */
+.nu-feld{display:grid;gap:6px}
+.nu-feld > label,.nu-feldname{font:600 14px/18px var(--font-ui);color:var(--tinte-2)}
+.nu-eingabe{min-height:var(--ziel-gross);width:100%;padding:0 16px;border-radius:var(--radius-m);border:2px solid transparent;background:var(--flaeche-2);color:var(--tinte);font:400 17px/26px var(--font-ui);outline:none}
+.nu-eingabe::placeholder{color:var(--tinte-3)}
+.nu-eingabe:focus{border-color:var(--fokus);background:var(--flaeche)}
+textarea.nu-eingabe{min-height:132px;padding:14px 16px;resize:vertical}
+.nu-seg{display:inline-grid;grid-auto-flow:column;grid-auto-columns:minmax(96px,1fr);gap:4px;padding:4px;border-radius:calc(var(--radius-m) + 4px);background:var(--flaeche-2)}
+.nu-seg button{min-height:48px;border:0;border-radius:var(--radius-m);background:transparent;font:600 16px/20px var(--font-ui);color:var(--tinte-2);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background var(--dauer-kurz),color var(--dauer-kurz)}
+.nu-seg button[aria-checked="true"]{background:var(--primaer);color:var(--auf-primaer)}
+.nu-schalter{position:relative;width:60px;height:var(--ziel-min);border:0;background:transparent;padding:0;cursor:pointer;flex:none}
+.nu-schalter::before{content:"";position:absolute;left:0;top:8px;width:60px;height:32px;border-radius:var(--radius-rund);background:var(--flaeche-3);box-shadow:inset 0 0 0 1.5px var(--linie-stark);transition:background var(--dauer-kurz)}
+.nu-schalter::after{content:"";position:absolute;left:5px;top:13px;width:22px;height:22px;border-radius:var(--radius-rund);background:var(--linie-stark);transition:transform var(--dauer-kurz) var(--kurve-standard),background var(--dauer-kurz)}
+.nu-schalter[aria-checked="true"]::before{background:var(--primaer);box-shadow:none}
+.nu-schalter[aria-checked="true"]::after{transform:translateX(28px);background:var(--auf-primaer)}
+
+/* ---------- Grundgerüst ---------- */
+.nu-app{display:grid;grid-template-columns:var(--leiste-breite) minmax(0,1fr);grid-template-rows:var(--kopf-hoehe) minmax(0,1fr);height:100%;min-height:0;background:var(--grund)}
+.nu-leiste{grid-row:1 / -1;background:var(--flaeche-2);display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 0}
+.nu-leiste-marke{width:48px;height:48px;border-radius:var(--radius-m);display:grid;place-items:center;color:var(--tinte);margin-bottom:12px}
+.nu-nav{width:88px;min-height:76px;border:0;background:transparent;border-radius:var(--radius-l);display:grid;justify-items:center;align-content:center;gap:4px;cursor:pointer;color:var(--tinte-2);font:600 13px/16px var(--font-ui);text-align:center;padding:4px}
+.nu-nav .nu-nav-ind{width:64px;height:36px;border-radius:var(--radius-rund);display:grid;place-items:center;transition:background var(--dauer-kurz) var(--kurve-standard)}
+.nu-nav[aria-current="page"]{color:var(--tinte)}
+.nu-nav[aria-current="page"] .nu-nav-ind{background:var(--primaer);color:var(--auf-primaer)}
+.nu-leiste .nu-nav:last-child{margin-top:auto}
+.nu-kopf{display:flex;align-items:center;gap:12px;padding:0 20px 0 16px;background:var(--grund);min-width:0}
+.nu-datum{display:flex;align-items:center;gap:2px;background:var(--flaeche);border-radius:var(--radius-rund);padding:4px}
+.nu-datum-text{min-width:204px;text-align:center;font:700 17px/22px var(--font-ui);padding:0 4px}
+.nu-datum-text small{display:block;font:400 13px/16px var(--font-ui);color:var(--tinte-2)}
+.nu-kopf-raum{flex:1}
+.nu-sync{display:inline-flex;align-items:center;gap:8px;min-height:var(--ziel-min);padding:0 14px;border-radius:var(--radius-rund);border:0;background:transparent;font:400 15px/20px var(--font-ui);color:var(--tinte-2);cursor:pointer}
+.nu-sync[data-s="laeuft"] .nu-svg{animation:nu-dreh 1.1s linear infinite}
+.nu-sync[data-s="offline"],.nu-sync[data-s="wartet"]{color:var(--tinte)}
+.nu-sync[data-s="gestoert"]{background:var(--warnung-flaeche);color:var(--warnung);font-weight:600}
+.nu-dienst{display:flex;align-items:center;gap:6px}
+.nu-person{display:inline-flex;align-items:center;gap:8px;min-height:var(--ziel-min);padding:0 14px 0 4px;border-radius:var(--radius-rund);border:0;background:var(--flaeche);font:600 15px/20px var(--font-ui);cursor:pointer;color:var(--tinte)}
+.nu-person .nu-kuerzel{width:40px;height:40px;border-radius:var(--radius-rund);display:grid;place-items:center;background:var(--flaeche-3);font:600 15px/1 var(--font-ui)}
+.nu-person[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--tinte)}
+.nu-person[aria-pressed="true"] .nu-kuerzel{background:var(--primaer);color:var(--auf-primaer)}
+.nu-inhalt{min-width:0;min-height:0;overflow:auto;padding:4px 20px 20px 16px}
+.nu-nurlesen{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:var(--radius-rund);background:var(--flaeche-3);font:600 13px/18px var(--font-ui);color:var(--tinte-2)}
+
+/* ---------- Kennzahlen ---------- */
+.nu-kennzahlen{display:flex;align-items:center;gap:12px 20px;flex-wrap:wrap;background:var(--flaeche);border-radius:var(--radius-l);padding:12px 16px}
+.nu-ampel{display:inline-flex;align-items:center;gap:12px;padding:6px 18px 6px 8px;border-radius:var(--radius-rund);background:var(--flaeche-2)}
+.nu-ampel-licht{width:44px;height:44px;border-radius:var(--radius-rund);display:grid;place-items:center;font:600 22px/1 var(--font-zahl);transition:background var(--dauer-mittel) var(--kurve-standard)}
+.nu-ampel[data-s="gruen"] .nu-ampel-licht{background:var(--ampel-gruen);color:var(--auf-ampel)}
+.nu-ampel[data-s="gelb"] .nu-ampel-licht{background:var(--ampel-gelb);color:var(--auf-gelb)}
+.nu-ampel[data-s="rot"] .nu-ampel-licht{background:var(--ampel-rot);color:var(--auf-ampel)}
+.nu-ampel-wort{font:700 17px/20px var(--font-ui)}
+.nu-ampel-wort small{display:block;font:400 13px/16px var(--font-ui);color:var(--tinte-2)}
+.nu-kennzahl{display:grid;gap:0;font:400 14px/18px var(--font-ui);color:var(--tinte-2)}
+.nu-kennzahl b{font:600 20px/26px var(--font-zahl);color:var(--tinte)}
+.nu-kht{display:grid;gap:0;padding:4px 14px;border-radius:var(--radius-m);background:var(--flaeche-2);border:0;text-align:left;font:400 14px/18px var(--font-ui);color:var(--tinte-2);cursor:pointer}
+.nu-kht b{font:600 20px/26px var(--font-zahl);color:var(--tinte)}
+.nu-kht small{font:400 13px/16px var(--font-ui)}
+
+/* ---------- Bettenplan ---------- */
+.nu-reiter{display:inline-flex;gap:4px;padding:4px;border-radius:var(--radius-rund);background:var(--flaeche)}
+.nu-reiter button{min-height:48px;padding:0 20px;border:0;border-radius:var(--radius-rund);background:transparent;font:600 16px/20px var(--font-ui);color:var(--tinte-2);display:flex;align-items:center;gap:8px;cursor:pointer}
+.nu-reiter button[aria-selected="true"]{background:var(--primaer);color:var(--auf-primaer)}
+.nu-reiter .n{font:400 13px var(--font-zahl);opacity:.8}
+.nu-zimmer{background:var(--flaeche);border-radius:var(--radius-l);padding:12px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.nu-zimmer-kopf{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding:0 4px}
+.nu-zimmer-name{font:700 13px/16px var(--font-ui);letter-spacing:.08em;text-transform:uppercase;color:var(--tinte-2)}
+.nu-zimmer-frei{font:400 13px/16px var(--font-zahl);color:var(--tinte-3)}
+.nu-zimmer-betten{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start}
+.nu-zimmer-teil{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;padding:10px;border-radius:var(--radius-m);background:var(--flaeche-2)}
+.nu-zimmer.is-aus{background:repeating-linear-gradient(45deg,var(--aus-schraffur) 0 1.5px,var(--aus-flaeche) 1.5px 8px)}
+
+.nu-bett{position:relative;width:var(--bett-breite);min-height:var(--bett-hoehe);padding:9px 12px 10px;border-radius:var(--radius-m);border:0;text-align:left;display:grid;grid-template-rows:auto 1fr auto;gap:2px;cursor:pointer;background:var(--flaeche);color:var(--tinte);box-shadow:inset 0 0 0 2px var(--linie-stark);font:inherit;touch-action:none;user-select:none;-webkit-user-select:none;transition:transform var(--dauer-sofort) var(--kurve-standard),background var(--dauer-mittel) var(--kurve-standard),box-shadow var(--dauer-mittel) var(--kurve-standard),color var(--dauer-mittel)}
+.nu-bett:active{transform:scale(.97)}
+.nu-bett-kopf{display:flex;align-items:center;justify-content:space-between;gap:6px;min-height:20px}
+.nu-bett-nr{font:600 15px/18px var(--font-zahl);opacity:.8}
+.nu-bett-status{display:inline-flex;align-items:center;gap:4px;font:600 13px/16px var(--font-ui)}
+.nu-bett-name{font:700 20px/24px var(--font-ui);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;align-self:center}
+.nu-bett-fuss{display:flex;align-items:center;gap:6px;min-height:20px;font:400 13px/16px var(--font-ui)}
+.nu-bett-fuss .naechte{font-family:var(--font-zahl);opacity:.85}
+.nu-bett-symbole{display:inline-flex;align-items:center;gap:4px;margin-left:auto}
+.nu-bett-symbole .nu-svg{width:18px;height:18px}
+.nu-bett[data-s="frei"]{background:var(--frei-flaeche);box-shadow:inset 0 0 0 2px var(--frei);color:var(--frei)}
+.nu-bett[data-s="frei"] .nu-bett-name,.nu-bett[data-s="freibis"] .nu-bett-name{font-weight:600;font-size:17px;color:var(--frei)}
+.nu-bett[data-s="erwartet"]{background:var(--erwartet-flaeche);box-shadow:inset 0 0 0 2px var(--blau)}
+.nu-bett[data-s="erwartet"] .nu-bett-status{color:var(--blau)}
+.nu-bett[data-s="anwesend"]{background:var(--anwesend);color:var(--auf-anwesend);box-shadow:none}
+.nu-bett[data-s="gehalten"]{background:var(--gehalten-flaeche);box-shadow:inset 0 0 0 2px var(--linie-stark)}
+.nu-bett[data-s="gehalten"] .nu-bett-name{color:var(--tinte-2)}
+.nu-bett[data-s="freibis"]{background:var(--frei-flaeche);box-shadow:inset 0 0 0 2px var(--frei)}
+.nu-bett[data-s="freibis"] .nu-bett-status{color:var(--frei)}
+.nu-bett[data-s="aus"]{background:repeating-linear-gradient(45deg,var(--aus-schraffur) 0 1.5px,var(--aus-flaeche) 1.5px 8px);box-shadow:inset 0 0 0 1.5px var(--aus-schraffur);color:var(--tinte-3);cursor:default}
+.nu-bett.is-warn::after{content:"";position:absolute;inset:-4px;border-radius:calc(var(--radius-m) + 4px);border:2px solid var(--warnung);pointer-events:none}
+.nu-bett.is-offen{outline:3px solid var(--fokus);outline-offset:3px}
+.nu-bett.is-neu{animation:nu-flut var(--dauer-mittel) var(--kurve-eintritt)}
+.nu-bett.is-gesetzt{animation:nu-setzen var(--dauer-lang) var(--kurve-standard)}
+.nu-bett.is-gezogen{transform:scale(1.05) rotate(-1deg);box-shadow:var(--schatten-gehoben);z-index:20;transition:none;cursor:grabbing}
+.nu-bett.is-platzhalter{opacity:.35}
+.nu-bett.is-ziel{outline:3px solid var(--frei);outline-offset:3px}
+.nu-bett.is-ziel-tausch{outline:3px solid var(--blau);outline-offset:3px}
+.nu-stockbett{display:grid;gap:8px;padding:8px;border-radius:calc(var(--radius-m) + 4px);background:var(--flaeche-3)}
+.nu-stockbett-teil{display:grid;gap:2px}
+.nu-stockbett-teil > span{font:600 12px/14px var(--font-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--tinte-2);padding-left:2px}
+/* Fehlt unentschuldigt: 1. Nacht zählt als belegt (blau mit Warnkante), ab der 2. Nacht in Folge als frei (grün) */
+.nu-bett[data-s="fehlt"]{background:var(--erwartet-flaeche);box-shadow:inset 0 0 0 2px var(--warnung)}
+.nu-bett[data-s="fehlt"] .nu-bett-status,.nu-bett[data-s="fehlt"] .nu-bett-fuss{color:var(--warnung)}
+.nu-bett[data-s="fehlt2"]{background:var(--frei-flaeche);box-shadow:inset 0 0 0 2px var(--frei);color:var(--frei)}
+.nu-bett[data-s="fehlt2"] .nu-bett-name{font-weight:600;font-size:17px;color:var(--frei)}
+.nu-bett[data-s="fehlt2"] .nu-bett-status,.nu-bett[data-s="fehlt2"] .nu-bett-fuss{color:var(--warnung)}
+/* Kompakte Bettkarte im Grundriss: füllt den Platz des Betts, Status als Symbol, Datum unten */
+.nu-bett--kompakt{width:100%;height:100%;min-height:0;padding:5px 7px 5px 8px;gap:0;border-radius:8px;grid-template-rows:auto minmax(0,1fr) auto}
+.nu-bett--kompakt .nu-bett-kopf{min-height:16px;gap:4px}
+.nu-bett--kompakt .nu-bett-nr{font-size:13px;line-height:16px}
+.nu-bett--kompakt .nu-bett-status .nu-svg{width:16px;height:16px}
+.nu-bett--kompakt .nu-bett-name{font-size:16px;line-height:20px}
+.nu-bett--kompakt[data-s="frei"] .nu-bett-name,.nu-bett--kompakt[data-s="freibis"] .nu-bett-name,.nu-bett--kompakt[data-s="fehlt2"] .nu-bett-name{font-size:15px}
+.nu-bett--kompakt .nu-bett-fuss{min-height:14px;gap:4px;font:600 12px/14px var(--font-ui)}
+.nu-bett--kompakt .nu-bett-fuss > span:first-child{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nu-bett--kompakt .nu-bett-symbole{gap:2px}
+.nu-bett--kompakt .nu-bett-symbole .nu-svg{width:15px;height:15px}
+.nu-bett--kompakt.is-warn::after{inset:-3px;border-radius:11px}
+@container (max-width: 80px){
+  .nu-bett--kompakt{padding:5px 5px 5px 6px}
+  .nu-bett--kompakt .nu-bett-name{font-size:14.5px;line-height:18px}
+  .nu-bett--kompakt .nu-bett-fuss .wort{display:none}
+  .nu-bett--kompakt[data-s="frei"] .nu-bett-name,.nu-bett--kompakt[data-s="freibis"] .nu-bett-name,.nu-bett--kompakt[data-s="fehlt2"] .nu-bett-name{font-size:14px}
+}
+
+/* Grundriss: Wände und Türen als SVG, Betten als echte Bettkarten darüber (Prozent vom Plan) */
+.nu-grundriss{position:relative;width:100%;aspect-ratio:var(--grundriss-format,971 / 800)}
+.nu-grundriss > svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.nu-grundriss .boden{fill:var(--flaeche)}
+.nu-grundriss .boden.is-aus{fill:url(#nu-schraffur)}
+.nu-grundriss .schraffur-grund{fill:var(--aus-flaeche)}
+.nu-grundriss .schraffur-strich{stroke:var(--aus-schraffur);stroke-width:1.5}
+.nu-grundriss .privat{fill:var(--flaeche-3)}
+.nu-grundriss .wand{fill:none;stroke:var(--tinte);stroke-width:6;stroke-linecap:square}
+.nu-grundriss .tuer{fill:none;stroke:var(--tinte-3);stroke-width:1.5}
+.nu-grundriss .stockrahmen{fill:var(--flaeche-3)}
+.nu-grundriss .notiz{font:700 13px var(--font-ui);letter-spacing:.12em;fill:var(--tinte-3)}
+.nu-grundriss .raumname{font:700 14px var(--font-ui);letter-spacing:.08em;fill:var(--tinte-2)}
+.nu-grundriss .raumfrei{font:400 13px var(--font-zahl);fill:var(--tinte-3)}
+.nu-grundriss .flur-zu{display:none}
+.nu-grundriss.is-flur-zu .flur-zu{display:inline}
+.nu-grundriss.is-flur-zu .flur-offen{display:none}
+.nu-grundriss-platz{position:absolute;display:flex;container-type:size}
+.nu-grundriss-platz > .nu-bett{flex:1}
+.nu-plan-raster{display:grid;grid-template-columns:minmax(0,1fr) 176px;gap:16px;align-items:start}
+.nu-plan-karte{background:var(--flaeche);border-radius:var(--radius-l);padding:14px 16px}
+.nu-plan-raster .nu-plaetze .nu-bett{width:100%}
+.nu-plaetze{display:grid;gap:8px;align-content:start}
+.nu-plaetze-titel{font:700 13px/16px var(--font-ui);letter-spacing:.08em;text-transform:uppercase;color:var(--tinte-2);padding:8px 4px 0;display:grid;gap:2px}
+.nu-plaetze-titel span{font:400 13px/16px var(--font-zahl);letter-spacing:0;text-transform:none;color:var(--tinte-3)}
+.nu-notbett{font:600 12px/14px var(--font-ui);color:var(--tinte-2)}
+
+/* Schnellauswahl am Bett */
+.nu-schnell{position:absolute;z-index:30;width:300px;background:var(--flaeche);border-radius:var(--radius-l);box-shadow:var(--schatten-schwebend),inset 0 0 0 1px var(--linie);padding:14px;display:grid;gap:10px;transform-origin:var(--ursprung,50% 0);animation:nu-schnell-rein var(--dauer-kurz) var(--kurve-eintritt)}
+.nu-schnell-kopf{display:flex;align-items:baseline;gap:10px}
+.nu-schnell-kopf b{font:700 20px/24px var(--font-ui)}
+.nu-schnell-kopf span{font:600 15px var(--font-zahl);color:var(--tinte-2)}
+.nu-schnell .nu-btn{justify-content:flex-start}
+
+/* Detailbereich */
+.nu-detail{background:var(--flaeche);width:var(--detail-breite);max-width:100%;height:100%;display:flex;flex-direction:column;border-radius:var(--radius-l) 0 0 var(--radius-l);overflow:hidden}
+.nu-detail.rein{animation:nu-detail-rein var(--dauer-lang) var(--kurve-eintritt)}
+.nu-detail-kopf{display:flex;align-items:flex-start;gap:12px;padding:20px 16px 16px 24px}
+.nu-detail-kopf .nr{font:600 28px/32px var(--font-zahl)}
+.nu-detail-kopf h2{margin:0;font:700 22px/28px var(--font-ui)}
+.nu-detail-kopf p{margin:2px 0 0;font:400 15px/22px var(--font-ui);color:var(--tinte-2)}
+.nu-detail-inhalt{flex:1;overflow:auto;padding:0 24px 24px;display:grid;gap:24px;align-content:start}
+.nu-detail-aktionen{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:16px 24px;background:var(--flaeche-2)}
+.nu-detail-aktionen .nu-btn{padding:0 14px;justify-content:flex-start}
+.nu-detail-aktionen .nu-btn:not(.nu-btn--primaer){background:var(--flaeche)}
+.nu-abschnitt{display:grid;gap:10px}
+.nu-abschnitt > h3{margin:0;font:700 18px/24px var(--font-ui)}
+.nu-daten{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:0;font:400 16px/22px var(--font-ui)}
+.nu-daten dt{color:var(--tinte-2)}
+.nu-daten dd{margin:0;font-weight:600}
+.nu-zeile{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:var(--radius-m);background:var(--flaeche-2)}
+.nu-zeile--warnung{background:var(--warnung-flaeche);color:var(--warnung)}
+.nu-zeile--warnung b{color:var(--warnung)}
+.nu-zeile--vorfall{background:var(--vorfall-flaeche);color:var(--vorfall)}
+.nu-zeile > div{flex:1;min-width:0;color:var(--tinte)}
+.nu-zeile small{display:block;color:var(--tinte-2);font:400 14px/20px var(--font-ui)}
+.nu-notiz{display:grid;gap:4px;padding-left:16px;position:relative}
+.nu-notiz::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:2px;border-radius:2px;background:var(--linie)}
+.nu-notiz small{font:400 14px/20px var(--font-ui);color:var(--tinte-2)}
+
+/* ---------- Aufnahme ---------- */
+.nu-assistent{display:grid;grid-template-columns:260px minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto;height:100%;background:var(--flaeche)}
+.nu-schritte{grid-row:1 / -1;background:var(--flaeche-2);padding:24px 16px;display:grid;align-content:start;gap:4px;margin:0;list-style:none}
+.nu-schritt{display:flex;align-items:center;gap:12px;min-height:56px;padding:0 12px;border-radius:var(--radius-m);font:600 16px/20px var(--font-ui);color:var(--tinte-3)}
+.nu-schritt i{width:32px;height:32px;border-radius:var(--radius-rund);display:grid;place-items:center;font:600 15px/1 var(--font-zahl);font-style:normal;box-shadow:inset 0 0 0 1.5px var(--linie-stark)}
+.nu-schritt.is-fertig{color:var(--tinte-2)}
+.nu-schritt.is-fertig i{background:var(--flaeche-3);box-shadow:none}
+.nu-schritt[aria-current="step"]{color:var(--tinte);background:var(--flaeche)}
+.nu-schritt[aria-current="step"] i{background:var(--primaer);color:var(--auf-primaer);box-shadow:none}
+.nu-assistent-seite{padding:28px 32px;overflow:auto;min-width:0}
+.nu-assistent-seite.vor{animation:nu-schritt-vor var(--dauer-mittel) var(--kurve-standard)}
+.nu-assistent-seite.zurueck{animation:nu-schritt-zurueck var(--dauer-mittel) var(--kurve-standard)}
+.nu-assistent-fuss{display:flex;gap:12px;justify-content:space-between;padding:16px 32px;background:var(--flaeche)}
+.nu-wahl{display:grid;gap:4px;min-height:96px;padding:16px 18px;border-radius:var(--radius-l);border:0;background:var(--flaeche-2);text-align:left;cursor:pointer;font:inherit;color:var(--tinte);box-shadow:inset 0 0 0 2px transparent;transition:box-shadow var(--dauer-kurz)}
+.nu-wahl b{font:700 18px/24px var(--font-ui)}
+.nu-wahl span{font:400 15px/20px var(--font-ui);color:var(--tinte-2)}
+.nu-wahl[aria-checked="true"]{background:var(--flaeche);box-shadow:inset 0 0 0 3px var(--tinte)}
+.nu-treffer{display:flex;align-items:center;gap:14px;min-height:64px;padding:8px 16px;border-radius:var(--radius-m);background:var(--flaeche-2);border:0;width:100%;text-align:left;cursor:pointer;font:inherit;color:var(--tinte)}
+.nu-treffer b{font:700 17px/22px var(--font-ui)}
+.nu-treffer small{display:block;font:400 14px/20px var(--font-ui);color:var(--tinte-2)}
+.nu-treffer.is-verbot{background:var(--vorfall-flaeche);box-shadow:inset 0 0 0 2px var(--vorfall)}
+.nu-treffer.is-verbot small{color:var(--vorfall)}
+.nu-treffer-bett{flex:none;min-width:52px;height:40px;padding:0 8px;border-radius:var(--radius-s);display:grid;place-items:center;font:600 16px/1 var(--font-zahl);background:var(--flaeche);color:var(--tinte);box-shadow:inset 0 0 0 1.5px var(--linie-stark)}
+.nu-treffer-bett.is-leer{color:var(--tinte-3);box-shadow:inset 0 0 0 1.5px var(--linie)}
+.nu-treffer.is-verbot .nu-treffer-bett{box-shadow:inset 0 0 0 1.5px var(--vorfall);color:var(--vorfall)}
+.nu-dokument{background:var(--papier);color:var(--auf-papier);border-radius:var(--radius-l);padding:28px 32px;font:400 17px/28px var(--font-dokument);max-width:72ch}
+.nu-dokument h3{margin:0 0 8px;font:600 20px/28px var(--font-dokument)}
+.nu-dokument mark{background:transparent;color:var(--auf-papier);font-weight:600;border-bottom:2px solid var(--papier-linie)}
+.nu-dokument[dir="rtl"]{font:400 19px/32px var(--font-rtl);text-align:right}
+.nu-dokument[dir="rtl"] h3{font-family:var(--font-rtl)}
+.nu-dokument-paar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:stretch}
+.nu-dokument-paar .nu-dokument{max-width:none}
+.nu-dokument-marke{display:inline-flex;align-items:center;gap:6px;margin:0 0 10px;padding:3px 10px;border-radius:var(--radius-rund);font:600 13px/18px var(--font-ui);background:var(--auf-papier);color:var(--papier)}
+.nu-dokument--uebersetzung{background:var(--flaeche-2);color:var(--tinte)}
+.nu-dokument--uebersetzung .nu-dokument-marke{background:transparent;color:var(--tinte-2);box-shadow:inset 0 0 0 1.5px var(--linie-stark)}
+.nu-dokument--uebersetzung mark{color:var(--tinte);border-bottom-color:var(--linie-stark)}
+
+/* Unterschrift */
+.nu-unterschrift{display:grid;gap:8px}
+.nu-unterschrift-kopf{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.nu-unterschrift-kopf b{font:700 17px/22px var(--font-ui)}
+.nu-unterschrift-kopf small{font:400 14px/20px var(--font-ui);color:var(--tinte-2)}
+.nu-unterschrift-feld{position:relative;height:var(--unterschrift-hoehe);border-radius:var(--radius-l);background:var(--papier);box-shadow:inset 0 0 0 2px var(--papier-linie);touch-action:none;overflow:hidden;cursor:crosshair}
+.nu-unterschrift-feld::before{content:"";position:absolute;left:28px;right:28px;bottom:52px;height:2px;background:var(--papier-linie)}
+.nu-unterschrift-feld::after{content:"×";position:absolute;left:28px;bottom:58px;font:400 26px/1 var(--font-ui);color:var(--papier-linie)}
+.nu-unterschrift-feld canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+.nu-unterschrift-hilfe{position:absolute;left:0;right:0;bottom:16px;text-align:center;font:400 14px/20px var(--font-ui);color:var(--auf-papier-2);transition:opacity var(--dauer-kurz)}
+.nu-unterschrift.is-gezeichnet .nu-unterschrift-hilfe{opacity:0}
+.nu-unterschrift.is-bestaetigt .nu-unterschrift-feld{box-shadow:inset 0 0 0 3px var(--frei);cursor:default}
+.nu-unterschrift-marke{position:absolute;top:12px;right:12px;z-index:2;display:none;align-items:center;gap:6px;padding:4px 12px 4px 8px;border-radius:var(--radius-rund);background:var(--frei);color:var(--auf-frei);font:600 14px/20px var(--font-ui)}
+.nu-unterschrift.is-bestaetigt .nu-unterschrift-marke{display:inline-flex;animation:nu-pop var(--dauer-mittel) var(--kurve-standard)}
+.nu-unterschrift-knoepfe{display:flex;gap:8px;justify-content:flex-end}
+
+/* ---------- Dienst & Bericht ---------- */
+.nu-hinweis{display:grid;gap:6px;padding:16px 18px;border-radius:var(--radius-l);background:var(--flaeche)}
+.nu-hinweis-kopf{display:flex;align-items:center;gap:8px;font:400 14px/20px var(--font-ui);color:var(--tinte-2)}
+.nu-hinweis-kopf b{color:var(--tinte);font-weight:600}
+.nu-hinweis.is-wichtig{background:var(--warnung-flaeche)}
+.nu-hinweis.is-wichtig .nu-hinweis-kopf .nu-svg{color:var(--warnung)}
+.nu-bericht{background:var(--flaeche);border-radius:var(--radius-l);padding:24px;display:grid;gap:28px}
+.nu-bericht.is-vorfall{box-shadow:inset 0 0 0 3px var(--vorfall)}
+.nu-bericht-zeile{display:grid;grid-template-columns:220px minmax(0,1fr);gap:16px;align-items:start}
+.nu-bericht-zeile > .nu-feldname{padding-top:16px;font-size:16px;color:var(--tinte)}
+.nu-besetzung{display:grid;grid-template-columns:140px 220px minmax(0,1fr);gap:12px;align-items:center;padding:10px 12px;border-radius:var(--radius-m);background:var(--flaeche-2)}
+.nu-besetzung .rolle{font:600 15px/20px var(--font-ui);color:var(--tinte-2)}
+.nu-mini-unterschrift{height:64px;border-radius:var(--radius-m);background:var(--papier);box-shadow:inset 0 0 0 1.5px var(--papier-linie);display:flex;align-items:center;justify-content:center;gap:8px;font:600 15px/20px var(--font-ui);color:var(--auf-papier-2);border:0;cursor:pointer;width:100%}
+.nu-mini-unterschrift.is-fertig{box-shadow:inset 0 0 0 2px var(--frei);color:var(--frei)}
+.nu-erwaehnung{display:inline;padding:1px 6px;border-radius:var(--radius-s);background:var(--erwartet-flaeche);color:var(--blau);font-weight:600}
+/* Sanktion aus dem Bericht: genau eine Person bekommt sie, weitere Erwähnte nur als Notiz */
+.nu-zuordnung{display:grid;gap:8px;padding:10px 12px;border-radius:var(--radius-m);background:var(--warnung-flaeche)}
+.nu-zuordnung-kopf{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font:600 15px/20px var(--font-ui);color:var(--warnung)}
+.nu-zuordnung-ziel{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 14px;border-radius:var(--radius-rund);border:0;background:var(--flaeche);color:var(--tinte);font:700 16px/20px var(--font-ui);box-shadow:inset 0 0 0 2px var(--warnung);cursor:pointer}
+.nu-zuordnung-ziel .bett{font:600 14px/1 var(--font-zahl);color:var(--tinte-2)}
+.nu-zuordnung-rest{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font:400 14px/20px var(--font-ui);color:var(--tinte-2)}
+.nu-stufe{font-weight:700}
+.nu-stufe--verwarnung{color:var(--tinte)}
+.nu-stufe--gelb,.nu-stufe--rot{display:inline-flex;align-items:center;gap:4px}
+.nu-vorschlaege{background:var(--flaeche);border-radius:var(--radius-l);box-shadow:var(--schatten-schwebend),inset 0 0 0 1px var(--linie);padding:6px;display:grid;gap:2px;width:340px}
+.nu-vorschlaege button{display:flex;align-items:center;gap:12px;min-height:52px;padding:0 12px;border:0;border-radius:var(--radius-m);background:transparent;text-align:left;font:inherit;cursor:pointer;color:var(--tinte)}
+.nu-vorschlaege button[aria-selected="true"]{background:var(--flaeche-2)}
+.nu-vorschlaege small{color:var(--tinte-2);font:400 14px var(--font-ui);margin-left:auto}
+.nu-tastenleiste{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--flaeche-2);overflow-x:auto}
+.nu-tastenleiste .nu-chip{background:var(--flaeche);flex:none}
+.nu-tastenleiste .nu-btn{margin-left:auto;flex:none}
+.nu-checkliste{display:flex;flex-wrap:wrap;gap:8px}
+.nu-dusche{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.nu-slot{display:grid;gap:2px;min-height:76px;padding:10px 14px;border-radius:var(--radius-m);border:0;background:var(--flaeche-2);text-align:left;cursor:pointer;font:inherit;color:var(--tinte);box-shadow:inset 0 0 0 1.5px var(--linie)}
+.nu-slot .zeit{font:600 15px/18px var(--font-zahl);color:var(--tinte-2)}
+.nu-slot b{font:700 17px/22px var(--font-ui)}
+.nu-slot[data-s="frei"] b{font-weight:400;color:var(--tinte-3)}
+.nu-slot[data-s="geplant"]{background:var(--erwartet-flaeche);box-shadow:inset 0 0 0 2px var(--blau)}
+.nu-slot[data-s="erledigt"]{background:var(--flaeche);box-shadow:inset 0 0 0 2px var(--frei)}
+.nu-slot[data-s="erledigt"] .zeit{color:var(--frei)}
+.nu-slot[data-s="verpasst"]{background:var(--flaeche);box-shadow:inset 0 0 0 1.5px var(--linie-stark)}
+.nu-slot[data-s="verpasst"] b{text-decoration:line-through;color:var(--tinte-2)}
+.nu-gesperrt{display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:var(--radius-l);background:var(--flaeche-3);font:600 16px/22px var(--font-ui)}
+.nu-gesperrt small{display:block;font:400 14px/20px var(--font-ui);color:var(--tinte-2)}
+.nu-gesperrt .nu-svg.zu{animation:nu-schloss var(--dauer-lang) var(--kurve-standard)}
+.nu-nachtrag{display:grid;gap:4px;padding:12px 16px;border-radius:var(--radius-m);background:var(--flaeche-2)}
+.nu-nachtrag small{font:400 14px/20px var(--font-ui);color:var(--tinte-2)}
+
+/* ---------- Kalender ---------- */
+.nu-monat{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.nu-monat-kopf{font:600 13px/16px var(--font-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--tinte-2);padding:4px 8px}
+.nu-tag{min-height:112px;border-radius:var(--radius-m);background:var(--flaeche);padding:8px;display:grid;align-content:start;gap:4px;border:0;text-align:left;font:inherit;color:var(--tinte);cursor:pointer}
+.nu-tag .d{font:600 15px/20px var(--font-zahl)}
+.nu-tag.is-heute .d{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:var(--radius-rund);background:var(--primaer);color:var(--auf-primaer)}
+.nu-tag.is-anders{background:transparent;color:var(--tinte-3)}
+.nu-termin{display:flex;align-items:center;gap:4px;padding:2px 6px;border-radius:var(--radius-s);font:600 12.5px/18px var(--font-ui);background:var(--flaeche-2);color:var(--tinte);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nu-termin .nu-svg{width:14px;height:14px}
+.nu-termin--feiertag{background:var(--warnung-flaeche);color:var(--warnung)}
+.nu-termin--dienst{background:var(--erwartet-flaeche);color:var(--blau)}
+.nu-woche{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;align-items:stretch}
+.nu-woche-tag{min-height:360px;border-radius:var(--radius-l);background:var(--flaeche);padding:12px 10px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.nu-woche-kopf{display:flex;align-items:baseline;gap:6px;padding:0 2px 6px;box-shadow:0 1px 0 var(--linie)}
+.nu-woche-kopf b{font:600 22px/28px var(--font-zahl)}
+.nu-woche-kopf span{font:600 13px/16px var(--font-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--tinte-2)}
+.nu-woche-tag.is-heute .nu-woche-kopf b{color:var(--auf-primaer);background:var(--primaer);border-radius:var(--radius-rund);min-width:36px;text-align:center;padding:0 6px}
+.nu-woche-tag.is-vorbei{background:transparent;box-shadow:inset 0 0 0 1px var(--linie)}
+.nu-woche-tag .nu-termin{white-space:normal;align-items:flex-start;padding:6px 8px;font-size:14px;line-height:19px;border-radius:var(--radius-m)}
+.nu-woche-tag .nu-termin .nu-svg{width:16px;height:16px;margin-top:1px}
+.nu-woche-tag .nu-termin > span{min-width:0;overflow-wrap:anywhere}
+.nu-woche-tag .nu-termin small{display:block;font:400 12.5px/16px var(--font-ui);color:inherit;opacity:.85}
+.nu-woche-plus{margin-top:auto;min-height:48px;border:0;border-radius:var(--radius-m);background:transparent;color:var(--tinte-2);font:600 14px/18px var(--font-ui);display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer}
+.nu-woche-plus:hover{background:var(--flaeche-2)}
+
+/* ---------- Einstellungen ---------- */
+.nu-pin{display:grid;justify-items:center;gap:20px}
+.nu-pin-punkte{display:flex;gap:14px}
+.nu-pin-punkte i{width:16px;height:16px;border-radius:var(--radius-rund);box-shadow:inset 0 0 0 2px var(--linie-stark)}
+.nu-pin-punkte i.is-voll{background:var(--tinte);box-shadow:none}
+.nu-pin-punkte.is-falsch{animation:nu-wackeln 300ms var(--kurve-standard)}
+.nu-pin-tasten{display:grid;grid-template-columns:repeat(3,80px);gap:12px}
+.nu-pin-tasten button{height:72px;border-radius:var(--radius-rund);border:0;background:var(--flaeche-2);font:600 26px/1 var(--font-zahl);color:var(--tinte);cursor:pointer}
+.nu-pin-tasten button:active{background:var(--flaeche-3)}
+.nu-einstellung{display:flex;align-items:center;gap:16px;min-height:72px;padding:8px 16px;border-radius:var(--radius-m);background:var(--flaeche)}
+.nu-einstellung > div{flex:1;min-width:0}
+.nu-einstellung b{display:block;font:600 17px/22px var(--font-ui)}
+.nu-einstellung small{display:block;font:400 14px/20px var(--font-ui);color:var(--tinte-2)}
+.nu-zimmer-einst{display:grid;gap:4px;padding:8px;border-radius:var(--radius-l);background:var(--flaeche)}
+.nu-zimmer-einst > .nu-einstellung{padding:8px 8px 8px 12px}
+.nu-bettschalter-liste{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;padding:0 8px 8px}
+.nu-bettschalter{display:flex;align-items:center;gap:10px;min-height:56px;padding:6px 10px 6px 12px;border-radius:var(--radius-m);background:var(--flaeche-2)}
+.nu-bettschalter b{font:600 16px/20px var(--font-zahl);flex:1}
+.nu-bettschalter small{display:block;font:400 12.5px/16px var(--font-ui);color:var(--tinte-2)}
+.nu-bettschalter.is-aus{background:repeating-linear-gradient(45deg,var(--aus-schraffur) 0 1.5px,var(--aus-flaeche) 1.5px 8px)}
+.nu-bettschalter .nu-chip[aria-pressed="false"]{background:var(--flaeche);box-shadow:inset 0 0 0 1.5px var(--linie-stark)}
+.nu-dokzeile{display:flex;align-items:center;gap:12px;min-height:64px;padding:8px 10px 8px 14px;border-radius:var(--radius-m);background:var(--flaeche-2)}
+.nu-dokzeile > div{flex:1;min-width:0}
+.nu-dokzeile b{display:block;font:600 16px/22px var(--font-ui)}
+.nu-dokzeile small{display:block;font:400 14px/20px var(--font-ui);color:var(--tinte-2)}
+.nu-dokzeile.is-fehlt{background:var(--warnung-flaeche)}
+.nu-dokzeile.is-fehlt > .nu-svg{color:var(--warnung)}
+
+/* ---------- Rückmeldung ---------- */
+.nu-einblendung{position:relative;width:380px;max-width:100%;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start;padding:14px 8px 18px 16px;border-radius:var(--radius-l);background:var(--flaeche);box-shadow:var(--schatten-schwebend),inset 0 0 0 1px var(--linie);overflow:hidden;animation:nu-einblenden var(--dauer-lang) var(--kurve-eintritt)}
+.nu-einblendung b{display:block;font:700 17px/22px var(--font-ui)}
+.nu-einblendung span{display:block;font:400 15px/22px var(--font-ui);color:var(--tinte-2)}
+.nu-einblendung .nu-svg{color:var(--blau);margin-top:2px}
+.nu-einblendung .lauf{position:absolute;left:0;bottom:0;height:3px;background:var(--blau);width:100%;transform-origin:left;animation:nu-ablauf var(--dauer-einblendung) linear forwards}
+.nu-banner{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:var(--radius-m);background:var(--warnung-flaeche);color:var(--warnung);font:600 16px/22px var(--font-ui)}
+.nu-banner > div{flex:1;color:var(--tinte)}
+.nu-banner small{display:block;font:400 14px/20px var(--font-ui);color:var(--tinte-2)}
+.nu-dialog{width:480px;max-width:100%;background:var(--flaeche);border-radius:var(--radius-l);padding:24px;display:grid;gap:16px;box-shadow:var(--schatten-schwebend);animation:nu-dialog-rein var(--dauer-mittel) var(--kurve-eintritt)}
+.nu-dialog h2{margin:0;font:700 22px/28px var(--font-ui)}
+.nu-dialog p{margin:0;color:var(--tinte-2)}
+.nu-dialog-knoepfe{display:flex;gap:8px;justify-content:flex-end}
+.nu-scrim{position:absolute;inset:0;background:var(--abdunklung);animation:nu-ein var(--dauer-mittel) var(--kurve-standard)}
+.nu-glocke-liste{width:400px;background:var(--flaeche);border-radius:var(--radius-l);box-shadow:var(--schatten-schwebend),inset 0 0 0 1px var(--linie);padding:8px;display:grid;gap:4px}
+
+/* ---------- Bewegung ---------- */
+@keyframes nu-pop{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.18);opacity:1}100%{transform:scale(1)}}
+@keyframes nu-dreh{to{transform:rotate(360deg)}}
+@keyframes nu-flut{0%{clip-path:circle(0% at var(--x,50%) var(--y,50%))}100%{clip-path:circle(150% at var(--x,50%) var(--y,50%))}}
+@keyframes nu-setzen{0%{transform:scale(1.05)}55%{transform:scale(.98)}100%{transform:scale(1)}}
+@keyframes nu-schnell-rein{from{opacity:0;transform:scale(.92)}}
+@keyframes nu-detail-rein{from{transform:translateX(100%)}}
+@keyframes nu-schritt-vor{from{opacity:0;transform:translateX(32px)}}
+@keyframes nu-schritt-zurueck{from{opacity:0;transform:translateX(-32px)}}
+@keyframes nu-einblenden{from{opacity:0;transform:translateX(48px)}}
+@keyframes nu-ablauf{to{transform:scaleX(0)}}
+@keyframes nu-dialog-rein{from{opacity:0;transform:translateY(16px) scale(.98)}}
+@keyframes nu-ein{from{opacity:0}}
+@keyframes nu-schloss{0%{transform:translateY(-3px)}60%{transform:translateY(1px)}100%{transform:none}}
+@keyframes nu-wackeln{0%,100%{transform:none}20%{transform:translateX(-8px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(3px)}}
+@keyframes nu-einmal-puls{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
+@keyframes nu-check-zeichnen{from{stroke-dashoffset:30}to{stroke-dashoffset:0}}
+.nu-zeichnen path{stroke-dasharray:30;animation:nu-check-zeichnen var(--dauer-mittel) var(--kurve-standard) both}
+[dir="rtl"] .nu-assistent-seite.vor{animation-name:nu-schritt-zurueck}
+[dir="rtl"] .nu-assistent-seite.zurueck{animation-name:nu-schritt-vor}
+@media (prefers-reduced-motion: reduce){
+  .nu *, .nu *::before, .nu *::after{animation-duration:1ms!important;animation-iteration-count:1!important;transition-duration:1ms!important}
+  .nu-sync[data-s="laeuft"] .nu-svg{animation:none}
+}
+
+/* Vorschau-Rahmen der Designsystem-Seite */
+.nu-vorschau{padding:20px;display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}
+.nu-vorschau--spalte{flex-direction:column}
+.nu-beschr{font:400 13px/18px var(--font-ui);color:var(--tinte-2);margin:0}

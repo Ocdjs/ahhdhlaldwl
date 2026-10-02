@@ -1,0 +1,110 @@
+/* Prototyp: Gerüst über den ganzen Bildschirm, Überlagerungen, schmale Bildschirme */
+html,body{height:100%;margin:0;background:var(--grund)}
+body.nu{overflow:hidden}
+#app{height:100%}
+.nu-app{position:relative;overflow:hidden}
+.p-proto{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:var(--radius-rund);background:var(--flaeche);font:600 13px/18px var(--font-ui);color:var(--tinte-2);white-space:nowrap}
+.p-plan-kopf{position:sticky;top:-4px;z-index:5;background:var(--grund);display:grid;gap:12px;padding:4px 0 12px}
+.p-plan-zeile{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.p-raster{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start}
+.p-hinweisbalken{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:var(--radius-m);background:var(--erwartet-flaeche);color:var(--tinte);font:600 15px/20px var(--font-ui)}
+.p-hinweisbalken .nu-btn{margin-left:auto}
+.p-ueber{position:absolute;inset:0;z-index:40;pointer-events:none}
+.p-ueber > *{pointer-events:auto}
+.p-detail-wrap{position:absolute;top:0;right:0;bottom:0;z-index:35;display:flex}
+.p-modal{position:absolute;inset:0;z-index:60;display:grid;place-items:center;padding:16px}
+.p-modal .nu-scrim{position:absolute;inset:0}
+.p-modal > .nu-dialog,.p-modal > .p-blatt{position:relative;max-height:calc(100% - 32px);overflow:auto}
+.p-blatt{width:560px;max-width:100%;background:var(--flaeche);border-radius:var(--radius-l);padding:24px;display:grid;gap:16px;box-shadow:var(--schatten-schwebend);animation:nu-dialog-rein var(--dauer-mittel) var(--kurve-eintritt)}
+.p-blatt h2{margin:0;font:700 22px/28px var(--font-ui)}
+.p-blatt-kopf{display:flex;align-items:flex-start;gap:12px}
+.p-blatt-kopf > div{flex:1}
+.p-blatt-kopf p{margin:4px 0 0;color:var(--tinte-2);font-size:15px;line-height:22px}
+.p-blatt-fuss{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.p-wizard{position:absolute;inset:0;z-index:50;display:grid;grid-template-rows:auto minmax(0,1fr);background:var(--flaeche);animation:nu-dialog-rein var(--dauer-mittel) var(--kurve-eintritt)}
+.p-wizard-kopf{display:flex;align-items:center;gap:12px;padding:12px 20px 12px 24px;background:var(--flaeche-2)}
+.p-wizard-kopf h2{margin:0;font:700 20px/26px var(--font-ui);flex:1}
+.p-wizard .nu-assistent{min-height:0}
+.p-schritt-nr{display:none;font:600 14px var(--font-ui);color:var(--tinte-2)}
+.p-zwei{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.p-drei{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.p-fuenf{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.p-liste{display:grid;gap:8px}
+.p-glocke{position:absolute;top:68px;right:180px;z-index:45}
+.p-toasts{position:absolute;top:84px;right:20px;z-index:70;display:grid;gap:8px;pointer-events:none}
+.p-toasts > *{pointer-events:auto}
+.p-bericht-raster{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(300px,1fr);gap:16px;align-items:start}
+.p-bericht-raster.is-schreiben{grid-template-columns:minmax(0,1fr)}
+.p-bericht-raster.is-schreiben .p-seite{display:none}
+.p-seite{display:grid;gap:12px;position:sticky;top:0}
+.p-erkannt{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.p-tastenleiste{position:fixed;left:0;right:0;bottom:0;z-index:80;box-shadow:0 -1px 0 var(--linie)}
+.p-leer{display:grid;justify-items:center;gap:16px;padding:64px 24px;text-align:center;color:var(--tinte-2)}
+.p-leer b{font:700 22px/28px var(--font-ui);color:var(--tinte)}
+.p-tag-detail{background:var(--flaeche);border-radius:var(--radius-l);padding:20px;display:grid;gap:12px;align-content:start}
+.p-kal-raster{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:16px;align-items:start}
+.p-einst-raster{display:grid;grid-template-columns:260px minmax(0,1fr);gap:16px;align-items:start}
+.p-einst-nav{display:grid;gap:4px}
+.p-einst-nav button{min-height:52px;padding:0 16px;border:0;border-radius:var(--radius-m);background:transparent;text-align:left;font:600 16px/20px var(--font-ui);color:var(--tinte-2);cursor:pointer;display:flex;align-items:center;gap:10px}
+.p-einst-nav button[aria-current="true"]{background:var(--flaeche);color:var(--tinte)}
+.p-stepper{display:inline-flex;align-items:center;gap:4px;background:var(--flaeche-2);border-radius:var(--radius-rund);padding:4px}
+.p-stepper b{min-width:40px;text-align:center;font:600 18px var(--font-zahl)}
+.p-mini-sig{height:52px;display:block;width:100%;object-fit:contain}
+
+.p-fluegel{position:fixed;z-index:90;pointer-events:none}
+.nu-bett.is-ausgegraut{opacity:.35}
+.p-nacht-knopf{margin-top:auto}
+.p-nacht-knopf + .nu-nav{margin-top:0}
+.nu-leiste .nu-nav:last-child{margin-top:0}
+@media (max-width:900px){
+  .nu-app{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto}
+  .nu-leiste{grid-row:3;flex-direction:row;justify-content:space-around;padding:4px 8px;gap:0}
+  .nu-leiste-marke,.p-nacht-knopf{display:none}
+  .nu-nav{min-height:64px;width:auto;flex:1}
+  .nu-kopf{flex-wrap:wrap;padding:8px 12px;gap:8px;height:auto}
+  .nu-datum-text{min-width:0}
+  .nu-dienst,.p-proto{display:none}
+  .nu-inhalt{padding:4px 12px 16px}
+  .p-detail-wrap{left:0}
+  .nu-detail{width:100%;border-radius:0}
+  .p-bericht-raster,.p-kal-raster,.p-einst-raster,.p-zwei{grid-template-columns:minmax(0,1fr)}
+  .p-drei,.p-fuenf{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .nu-assistent{grid-template-columns:minmax(0,1fr)}
+  .nu-schritte{display:none}
+  .p-schritt-nr{display:block}
+  .nu-assistent-seite{padding:20px 16px}
+  .nu-assistent-fuss{padding:12px 16px}
+  .nu-bericht-zeile,.nu-besetzung{grid-template-columns:minmax(0,1fr)}
+  .nu-bericht-zeile > .nu-feldname{padding-top:0}
+  .p-glocke{right:12px;left:12px}
+  .nu-glocke-liste{width:auto}
+  .nu-monat{gap:2px}.nu-tag{min-height:72px;padding:4px}.nu-termin{font-size:11px}
+  .nu-kennzahlen{gap:10px}
+}
+
+.nu-bett{touch-action:manipulation}
+.p-modal .nu-dialog,.p-modal .p-blatt,.p-wizard,.nu-schnell,.p-modal .nu-scrim{animation:none}
+.is-rein{animation:nu-dialog-rein var(--dauer-mittel) var(--kurve-eintritt)!important}
+.nu-schnell.is-rein{animation:nu-schnell-rein var(--dauer-kurz) var(--kurve-eintritt)!important}
+.nu-scrim.is-rein{animation:nu-ein var(--dauer-mittel) var(--kurve-standard)!important}
+.nu-zaehler{top:0;right:-4px}
+/* Bettenplan St. Pius: Grundriss links, Loggien und weitere Plätze rechts untereinander */
+.p-auswahlmodus .nu-plan-karte,.p-auswahlmodus .p-raster{outline:3px dashed var(--blau);outline-offset:6px}
+/* Gästedatenbank: Liste links, Gastakte rechts */
+.p-gaeste{display:grid;grid-template-columns:380px minmax(0,1fr);gap:16px;align-items:start}
+.p-gliste{display:grid;gap:6px;position:sticky;top:0;max-height:calc(100vh - 170px);overflow:auto;padding:2px}
+.p-gliste .nu-treffer{background:var(--flaeche)}
+.p-gliste .nu-treffer[aria-current="true"]{box-shadow:inset 0 0 0 3px var(--tinte)}
+.p-gliste .nu-treffer > .nu-svg{color:var(--warnung)}
+.p-akte{background:var(--flaeche);border-radius:var(--radius-l);padding:20px 24px;display:grid;gap:22px;align-content:start}
+.p-akte.p-leer{justify-items:center}
+@media (max-width:900px){
+  .nu-plan-raster{grid-template-columns:minmax(0,1fr)}
+  .p-gaeste{grid-template-columns:minmax(0,1fr)}
+  .p-gaeste.is-akte .p-gliste{display:none}
+  .p-gaeste:not(.is-akte) .p-akte{display:none}
+  .p-gliste{position:static;max-height:none}
+  .nu-woche{grid-template-columns:minmax(0,1fr)}
+  .nu-woche-tag{min-height:0}
+  .nu-dokument-paar{grid-template-columns:minmax(0,1fr)}
+}

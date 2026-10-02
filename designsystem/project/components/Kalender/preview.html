@@ -1,0 +1,15 @@
+<!-- @dsCard group="Kalender" height=560 width=1160 subtitle="Standard: 7 Tage" -->
+<!doctype html>
+<html lang="de">
+<head><meta charset="utf-8"><title>Kalender</title></head>
+<body class="nu" style="margin:0;background:var(--grund)">
+<div class="nu" style="width:1160px;background:var(--grund);padding:20px">
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><h2 class="titel-gross" style="margin:0;flex:1">KW 40 · 28.09. – 04.10.2026</h2><div class="nu-seg" role="radiogroup" aria-label="Ansicht"><button role="radio" aria-checked="true">7 Tage</button><button role="radio" aria-checked="false">Monat</button></div><button class="nu-iconbtn nu-iconbtn--fl" aria-label="Vorige Woche"><i data-icon="zurueck"></i></button><button class="nu-btn nu-btn--rahmen nu-btn--klein">Heute</button><button class="nu-iconbtn nu-iconbtn--fl" aria-label="Nächste Woche"><i data-icon="weiter"></i></button></div>
+<div class="nu-woche" id="w"></div></div>
+<script>
+var T=["Mo","Di","Mi","Do","Fr","Sa","So"],D=["Flo","Silke, Jessica","Flo","Flo","Jonas, Silke","Jonas, Silke","Flo"],E={4:[["wiederholen","Bettwäschewechsel Zimmer B","Bettwäsche",""]],5:[["kalender","Lieferung Decken","Sondertermin",""]],6:[["einkauf","Morgen Feiertag, heute einkaufen","Feiertag","feiertag"]]};
+document.getElementById("w").innerHTML=T.map(function(t,i){var d=28+i>30?28+i-30:28+i;return '<div class="nu-woche-tag'+(i===4?' is-heute':i<4?' is-vorbei':'')+'"><div class="nu-woche-kopf"><b>'+d+'</b><span>'+t+'</span></div><span class="nu-termin nu-termin--dienst">'+Nu.svg("personen")+'<span>Nachtdienst<small>'+D[i]+'</small></span></span><span class="nu-termin">'+Nu.svg("kueche")+'<span>Küche<small>Hannah</small></span></span>'+(E[i]||[]).map(function(e){return '<span class="nu-termin'+(e[3]?' nu-termin--'+e[3]:'')+'">'+Nu.svg(e[0])+'<span>'+e[1]+'<small>'+e[2]+'</small></span></span>';}).join("")+'<button class="nu-woche-plus">'+Nu.svg("plus","klein")+'Termin</button></div>';}).join("");
+</script>
+<script>Nu.mountIcons();</script>
+</body>
+</html>

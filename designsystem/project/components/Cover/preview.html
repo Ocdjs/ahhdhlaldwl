@@ -1,0 +1,46 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><title>Cover</title>
+<style>
+html,body{margin:0;height:100%;background:var(--grund)}
+.cv{position:relative;width:960px;height:288px;overflow:hidden;background:var(--grund)}
+.cv svg{position:absolute;left:0;top:0;width:960px;height:136px}
+.t{rx:var(--radius-m)}
+.b{rx:var(--radius-l)}
+.pille{rx:12px}
+.an{fill:var(--anwesend)}
+.er{fill:var(--erwartet-flaeche);stroke:var(--blau);stroke-width:2.5}
+.fr{fill:var(--frei-flaeche);stroke:var(--frei);stroke-width:2.5}
+.ge{fill:var(--gehalten-flaeche);stroke:var(--linie-stark);stroke-width:2.5}
+.ink{fill:var(--primaer)}
+.gelb{fill:var(--ampel-gelb)}
+.txt{position:absolute;left:40px;top:160px;max-width:880px}
+.name{margin:0;font:700 64px/0.95 var(--font-ui);letter-spacing:-0.015em;color:var(--tinte)}
+.tag{margin:16px 0 0;font:400 14px/20px var(--font-ui);color:var(--tinte-2)}
+</style></head>
+<body>
+<div class="cv">
+<!-- Blöcke: anwesend 320 × 116 (die Farbe des Plans), primaer 112 × 52, frei-flaeche mit Kante frei 112 × 52, erwartet-flaeche mit Kante blau 152 × 116; Pille ampel-gelb.
+     Anordnung: oberes Band über die volle Breite, weil der Name zu breit für die rechte Zone ist; eine große Platte mit Trabanten, rechts das Muster.
+     Muster: Bettkarten aus radius-m in zwei Reihen („geometrisch, modular, dichte Oberfläche“): der Bettenplan ist das Zeichen dieser App.
+     Maße: Lücke abstand-3 (12), Rand 40, radius-l (16) für Blöcke, radius-m (10) für Kacheln, radius-rund für die Pille. -->
+<svg viewBox="0 0 960 136" aria-hidden="true">
+<rect class="b an" x="40" y="8" width="320" height="116"/>
+<rect class="b ink" x="372" y="8" width="112" height="52"/>
+<rect class="b fr" x="372" y="72" width="112" height="52"/>
+<rect class="b er" x="496" y="8" width="92" height="116"/>
+<rect class="t an" x="600" y="8" width="56" height="52"/>
+<rect class="t an" x="668" y="8" width="56" height="52"/>
+<rect class="t er" x="736" y="8" width="56" height="52"/>
+<rect class="t an" x="804" y="8" width="56" height="52"/>
+<rect class="t fr" x="872" y="8" width="56" height="52"/>
+<rect class="t an" x="600" y="72" width="56" height="52"/>
+<rect class="t fr" x="668" y="72" width="56" height="52"/>
+<rect class="t an" x="736" y="72" width="56" height="52"/>
+<rect class="t ge" x="804" y="72" width="56" height="52"/>
+<rect class="t an" x="872" y="72" width="56" height="52"/>
+<rect class="pille gelb" x="72" y="84" width="96" height="24"/>
+</svg>
+<div class="txt"><h1 class="name">Notübernachtung</h1><p class="tag">Bettenplan, Aufnahme und Dienstbericht für die Nacht am Tablet.</p></div>
+</div>
+</body></html>

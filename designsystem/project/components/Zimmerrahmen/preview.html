@@ -1,0 +1,14 @@
+<!-- @dsCard group="Bettenplan" height=300 -->
+<!doctype html>
+<html lang="de">
+<head><meta charset="utf-8"><title>Zimmerrahmen</title></head>
+<body class="nu" style="margin:0;background:var(--grund)">
+<div class="nu nu-vorschau" id="v" style="flex-wrap:nowrap"></div>
+<script>
+var B=Nu.bett;
+document.getElementById("v").innerHTML='<section class="nu-zimmer"><div class="nu-zimmer-kopf"><span class="nu-zimmer-name">Zimmer B</span><span class="nu-zimmer-frei">1 von 4 frei</span></div><div class="nu-zimmer-betten">'+B({nr:"B1",s:"erwartet",name:"Mihai",naechte:1})+B({nr:"B2",s:"frei"})+'</div><div class="nu-zimmer-betten">'+B({nr:"B3",s:"fehlt",name:"Ion",naechte:4})+B({nr:"B4",s:"anwesend",name:"Olek",naechte:15})+'</div></section>'+
+'<section class="nu-zimmer is-aus" style="min-width:340px"><div class="nu-zimmer-kopf"><span class="nu-zimmer-name">Zimmer F</span><span class="nu-zimmer-frei">gesperrt</span></div><div class="nu-zimmer-betten">'+B({nr:"F1",s:"aus"})+B({nr:"F2",s:"aus"})+'</div></section>';
+</script>
+<script>Nu.mountIcons();</script>
+</body>
+</html>

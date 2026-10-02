@@ -1,0 +1,23 @@
+<!-- @dsCard group="Aufnahme" height=700 width=1180 -->
+<!doctype html>
+<html lang="de">
+<head><meta charset="utf-8"><title>Assistent</title></head>
+<body class="nu" style="margin:0;background:var(--grund)">
+<div class="nu" style="height:700px;width:1180px"><div class="nu-assistent">
+<ol class="nu-schritte">
+ <li class="nu-schritt is-fertig"><i>✓</i>Person</li><li class="nu-schritt is-fertig"><i>✓</i>Dauer</li><li class="nu-schritt is-fertig"><i>✓</i>Sprache</li>
+ <li class="nu-schritt" aria-current="step"><i>4</i>Hausordnung</li><li class="nu-schritt"><i>5</i>Datenschutz</li><li class="nu-schritt"><i>6</i>Abschluss</li></ol>
+<div class="nu-assistent-seite" style="display:grid;gap:18px;align-content:start">
+ <h2 class="titel" style="margin:0">Hausordnung</h2>
+ <div class="nu-dokument-paar"><div class="nu-dokument" lang="de"><span class="nu-dokument-marke"><i data-icon="unterschrift" class="klein"></i>Deutsch · wird unterschrieben</span><h3>Hausordnung</h3><p style="margin:0">Willkommen, <mark>Ali</mark>. Dein Bett ist <mark>B2</mark> ab <mark>02.10.2026</mark>. Einlass ab 19:00 Uhr, Ruhe ab 22:00 Uhr. Rauchen, Alkohol und Drogen sind im Haus nicht erlaubt. Aufgenommen von <mark>Jonas</mark>.</p></div>
+<div class="nu-dokument nu-dokument--uebersetzung" dir="rtl" lang="ar"><span class="nu-dokument-marke" dir="ltr" lang="de"><i data-icon="sprache" class="klein"></i>Übersetzung Arabisch · zum Verständnis</span><h3>قواعد البيت</h3><p style="margin:0">مرحبًا <mark>Ali</mark>. سريرك هو <mark>B2</mark> ابتداءً من <mark>02.10.2026</mark>. الدخول من الساعة 19:00، والهدوء من الساعة 22:00. التدخين والكحول والمخدرات ممنوعة داخل البيت. تم الاستقبال بواسطة <mark>Jonas</mark>.</p></div></div>
+ <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+  <div class="nu-unterschrift is-gezeichnet is-bestaetigt"><div class="nu-unterschrift-kopf"><b>Gast: Ali</b><small>bestätigt 19:42</small></div><div class="nu-unterschrift-feld" style="height:150px"><span class="nu-unterschrift-marke"><i data-icon="check" class="klein"></i>Bestätigt</span><svg viewBox="0 0 300 150" style="position:absolute;inset:0;width:100%;height:100%"><path d="M40 100c20-30 30-50 40-30s-10 40 10 20 30-40 40-10 20 10 40-10 20-5 40 0" fill="none" stroke="var(--stift-tinte)" stroke-width="3" stroke-linecap="round"/></svg></div></div>
+  <div class="nu-unterschrift"><div class="nu-unterschrift-kopf"><b>Betreuung: Jonas</b><small>noch offen</small></div><div class="nu-unterschrift-feld" style="height:150px"><span class="nu-unterschrift-hilfe">Mit Finger oder Stift unterschreiben</span></div></div>
+ </div>
+</div>
+<div class="nu-assistent-fuss"><button class="nu-btn"><i data-icon="zurueck"></i>Zurück</button><span class="nu-beschr" style="align-self:center">Es fehlen Unterschriften.</span><button class="nu-btn nu-btn--primaer" disabled>Weiter<i data-icon="weiter"></i></button></div>
+</div></div>
+<script>Nu.mountIcons();</script>
+</body>
+</html>

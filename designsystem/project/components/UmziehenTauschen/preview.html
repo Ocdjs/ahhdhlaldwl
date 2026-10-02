@@ -1,0 +1,33 @@
+<!-- @dsCard group="Bettenplan" height=430 subtitle="Zum Ausprobieren: Karte lange drücken und ziehen" -->
+<!doctype html>
+<html lang="de">
+<head><meta charset="utf-8"><title>UmziehenTauschen</title></head>
+<body class="nu" style="margin:0;background:var(--grund)">
+<div class="nu nu-vorschau nu-vorschau--spalte" style="position:relative">
+<p class="nu-beschr">Karte lange drücken (400 ms) und auf ein anderes Bett ziehen. Grüner Rahmen = umziehen, blauer Rahmen = tauschen.</p>
+<div id="feld" style="display:flex;gap:12px;flex-wrap:wrap"></div>
+<div id="dlg"></div>
+</div>
+<script>
+var D=[{nr:"B1",s:"anwesend",name:"Mihai",naechte:1},{nr:"B2",s:"frei"},{nr:"B3",s:"anwesend",name:"Ion",naechte:4},{nr:"B4",s:"anwesend",name:"Olek",naechte:15}];
+var feld=document.getElementById("feld"),dlg=document.getElementById("dlg");
+function draw(){feld.innerHTML=D.map(Nu.bett).join("");}
+draw();
+var drag=null,start=null,timer=0;
+function ziel(e){return document.elementsFromPoint(e.clientX,e.clientY).find(function(x){return x.classList&&x.classList.contains("nu-bett")&&(!drag||x!==drag.c)})||null;}
+function marks(t){feld.querySelectorAll(".nu-bett").forEach(function(b){b.classList.remove("is-ziel","is-ziel-tausch")});if(t)t.classList.add(t.dataset.s==="frei"?"is-ziel":"is-ziel-tausch");}
+feld.addEventListener("pointerdown",function(e){var c=e.target.closest(".nu-bett");if(!c||c.dataset.s==="frei")return;start={x:e.clientX,y:e.clientY,id:e.pointerId,c:c};
+ timer=setTimeout(function(){drag=start;c.classList.add("is-gezogen");try{c.setPointerCapture(start.id)}catch(_){}},400);});
+feld.addEventListener("pointermove",function(e){if(!drag){if(start&&Math.hypot(e.clientX-start.x,e.clientY-start.y)>10){clearTimeout(timer);start=null;}return;}
+ drag.c.style.transform="translate("+(e.clientX-drag.x)+"px,"+(e.clientY-drag.y)+"px) scale(1.05) rotate(-1deg)";marks(ziel(e));});
+document.addEventListener("pointerup",function(e){clearTimeout(timer);start=null;if(!drag)return;var t=ziel(e),from=drag.c.dataset.nr;drag.c.classList.remove("is-gezogen");drag.c.style.transform="";drag=null;marks(null);
+ if(!t||t.dataset.s==="aus")return;var a=D.find(function(x){return x.nr===from}),b=D.find(function(x){return x.nr===t.dataset.nr});var tausch=b.s!=="frei";
+ dlg.innerHTML='<div class="nu-dialog" style="margin-top:16px"><h2>'+(tausch?a.name+" ("+a.nr+") und "+b.name+" ("+b.nr+") tauschen?":a.name+" von "+a.nr+" nach "+b.nr+" umziehen?")+'</h2><p>Gilt ab heute. Bereits unterschriebene PDFs bleiben unverändert.</p><div class="nu-dialog-knoepfe"><button class="nu-btn nu-btn--klein" id="nein">Abbrechen</button><button class="nu-btn nu-btn--primaer nu-btn--klein" id="ja">'+(tausch?"Tauschen":"Umziehen")+'</button></div></div>';
+ document.getElementById("nein").onclick=function(){dlg.innerHTML=""};
+ document.getElementById("ja").onclick=function(){var ia=D.indexOf(a),ib=D.indexOf(b),na=a.nr,nb=b.nr;D[ia]=Object.assign({},b,{nr:na});D[ib]=Object.assign({},a,{nr:nb});dlg.innerHTML="";draw();
+  [nb].concat(tausch?[na]:[]).forEach(function(n){feld.querySelector('[data-nr="'+n+'"]').classList.add("is-gesetzt")});};
+});
+</script>
+<script>Nu.mountIcons();</script>
+</body>
+</html>

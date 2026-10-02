@@ -1,0 +1,16 @@
+<!-- @dsCard group="Grundgerüst" height=150 -->
+<!doctype html>
+<html lang="de">
+<head><meta charset="utf-8"><title>Abgleich</title></head>
+<body class="nu" style="margin:0;background:var(--grund)">
+<div class="nu nu-vorschau">
+<button class="nu-sync" data-s="ok"><i data-icon="wolke-ok"></i>Synchronisiert 21:00</button>
+<button class="nu-sync" data-s="laeuft"><i data-icon="abgleich"></i>Abgleich läuft …</button>
+<button class="nu-sync" data-s="wartet"><i data-icon="wolke-wartet"></i>3 Änderungen ausstehend</button>
+<button class="nu-sync" data-s="offline"><i data-icon="wolke-aus"></i>Offline – 3 Änderungen ausstehend</button>
+<button class="nu-sync" data-s="gestoert"><i data-icon="warnung"></i>Abgleich gestört seit 26 Std.</button>
+<div class="nu-banner" style="width:100%"><i data-icon="warnung"></i><div>Der letzte Abgleich ist 26 Stunden her.<small>Alle Eingaben sind auf dem Tablet gespeichert. Bitte WLAN prüfen oder die Leitung informieren.</small></div><button class="nu-btn nu-btn--klein nu-btn--rahmen">Jetzt synchronisieren</button></div>
+</div>
+<script>Nu.mountIcons();</script>
+</body>
+</html>

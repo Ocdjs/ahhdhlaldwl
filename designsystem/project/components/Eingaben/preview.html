@@ -1,0 +1,21 @@
+<!-- @dsCard group="Grundlagen" height=400 -->
+<!doctype html>
+<html lang="de">
+<head><meta charset="utf-8"><title>Eingaben</title></head>
+<body class="nu" style="margin:0;background:var(--grund)">
+<div class="nu-vorschau" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px">
+  <div class="nu-feld"><label for="v1">Vorname</label><input class="nu-eingabe" id="v1" value="Marek"></div>
+  <div class="nu-feld"><label for="v2">Nachname (freiwillig)</label><input class="nu-eingabe" id="v2" placeholder="Nachname eintragen"></div>
+  <div class="nu-feld"><span class="nu-feldname">Vorfälle</span>
+    <div class="nu-seg" role="radiogroup"><button role="radio" aria-checked="false">Ja</button><button role="radio" aria-checked="true">Nein</button></div></div>
+  <div class="nu-feld"><span class="nu-feldname">Bett dauerhaft behalten</span>
+    <div style="display:flex;align-items:center;gap:12px"><button class="nu-schalter" role="switch" aria-checked="true" aria-label="Bett dauerhaft behalten"></button><span>Ja, auch in den Folgenächten</span></div></div>
+  <div class="nu-feld" style="grid-column:1/-1"><span class="nu-feldname">Fehlt etwas</span>
+    <div class="nu-checkliste"><button class="nu-chip" aria-pressed="true"><i data-icon="check" class="klein"></i>Tüten</button><button class="nu-chip" aria-pressed="false">Putzmittel</button><button class="nu-chip" aria-pressed="true"><i data-icon="check" class="klein"></i>Toilettenpapier</button><button class="nu-chip" aria-pressed="false">Decken</button><button class="nu-chip" aria-pressed="false"><i data-icon="plus" class="klein"></i>Anderes</button></div></div>
+</div>
+<script>document.querySelectorAll(".nu-seg button").forEach(function(b){b.onclick=function(){b.parentNode.querySelectorAll("button").forEach(function(x){x.setAttribute("aria-checked",String(x===b))})}});
+document.querySelectorAll(".nu-schalter").forEach(function(s){s.onclick=function(){s.setAttribute("aria-checked",String(s.getAttribute("aria-checked")!=="true"))}});
+document.querySelectorAll(".nu-checkliste .nu-chip").forEach(function(c){c.onclick=function(){c.setAttribute("aria-pressed",String(c.getAttribute("aria-pressed")!=="true"))}});</script>
+<script>Nu.mountIcons();</script>
+</body>
+</html>

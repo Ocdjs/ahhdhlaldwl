@@ -1,0 +1,23 @@
+<!-- @dsCard group="Einstellungen" height=620 subtitle="Betten einzeln sperren, Notbett markieren" -->
+<!doctype html>
+<html lang="de">
+<head><meta charset="utf-8"><title>Einstellungszeilen</title></head>
+<body class="nu" style="margin:0;background:var(--grund)">
+<div class="nu nu-vorschau nu-vorschau--spalte" style="max-width:860px">
+<div class="nu-zimmer-einst" style="width:100%"><div class="nu-einstellung"><i data-icon="bett"></i><div><b>Zimmer D</b><small>5 von 6 Betten in Betrieb</small></div><button class="nu-schalter" role="switch" aria-checked="true" aria-label="Zimmer D in Betrieb"></button></div>
+<div class="nu-bettschalter-liste" id="d"></div></div>
+<div class="nu-zimmer-einst" style="width:100%"><div class="nu-einstellung"><i data-icon="bett"></i><div><b>Loggien</b><small>5 von 5 Betten in Betrieb</small></div><button class="nu-schalter" role="switch" aria-checked="true" aria-label="Loggien in Betrieb"></button></div>
+<div class="nu-bettschalter-liste" id="l"></div></div>
+<div class="nu-einstellung" style="width:100%"><i data-icon="telefon"></i><div><b>Zahlen für das Kältehilfetelefon</b><small>Gesamt ohne Notbett · belegt inkl. 1. Nacht unentschuldigt</small></div><button class="nu-btn nu-btn--rahmen nu-btn--klein">Rechnung</button></div>
+<div class="nu-einstellung" style="width:100%"><i data-icon="wolke-ok"></i><div><b>Meldung an die Ampel</b><small>meldet frei, belegt und gesamt, nie Namen</small></div><span class="nu-bald"><i data-icon="uhr" class="klein"></i>noch nicht verfügbar</span></div>
+</div>
+<script>
+function bs(nr,info,an,notbett){return '<div class="nu-bettschalter'+(an?'':' is-aus')+'" style="flex-wrap:wrap"><div style="flex:1;min-width:0"><b>'+nr+'</b><small>'+info+'</small></div><button class="nu-schalter" role="switch" aria-checked="'+an+'" aria-label="Bett '+nr+' in Betrieb"></button>'+(notbett!==undefined?'<button class="nu-chip" style="flex-basis:100%;justify-content:center" aria-pressed="'+notbett+'">'+(notbett?Nu.svg("check","klein"):'')+'Notbett</button>':'')+'</div>';}
+document.getElementById("d").innerHTML=bs("D1","belegt · Jonas",true)+bs("D2","belegt · Marek",true)+bs("D3","gesperrt",false)+bs("D4","belegt · Ali",true)+bs("D5","belegt · Dimitri",true)+bs("D6","belegt · Petra",true);
+document.getElementById("l").innerHTML=bs("L1","belegt · Emil",true,false)+bs("L2","belegt · Kasia",true,false)+bs("L3","in Betrieb",true,true)+bs("L4","belegt · Jana",true,false)+bs("L5","belegt · Ali",true,false);
+document.querySelectorAll(".nu-schalter").forEach(function(s){s.onclick=function(){var an=s.getAttribute("aria-checked")!=="true";s.setAttribute("aria-checked",String(an));var p=s.closest(".nu-bettschalter");if(p){p.classList.toggle("is-aus",!an);p.querySelector("small").textContent=an?"in Betrieb":"gesperrt";}}});
+document.querySelectorAll(".nu-bettschalter .nu-chip").forEach(function(c){c.onclick=function(){var an=c.getAttribute("aria-pressed")!=="true";c.setAttribute("aria-pressed",String(an));c.innerHTML=(an?Nu.svg("check","klein"):"")+"Notbett";}});
+</script>
+<script>Nu.mountIcons();</script>
+</body>
+</html>

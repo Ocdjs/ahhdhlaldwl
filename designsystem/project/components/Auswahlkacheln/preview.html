@@ -1,0 +1,21 @@
+<!-- @dsCard group="Aufnahme" height=500 subtitle="Schalter „Enddatum festlegen“ zum Ausprobieren" -->
+<!doctype html>
+<html lang="de">
+<head><meta charset="utf-8"><title>Auswahlkacheln</title></head>
+<body class="nu" style="margin:0;background:var(--grund)">
+<div class="nu nu-vorschau nu-vorschau--spalte" style="max-width:960px">
+<b class="abschnitt">Geplante Dauer</b>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%">
+<button class="nu-wahl" role="radio" aria-checked="false"><b>1 Nacht</b><span>Kein Läuseschein nötig</span></button>
+<button class="nu-wahl" role="radio" aria-checked="true"><b>Mehrere Nächte</b><span>Ohne festes Enddatum, Bett wird blockiert, Läuseschein-Pflicht beginnt</span></button></div>
+<div class="nu-einstellung" style="background:var(--flaeche-2);width:100%"><i data-icon="kalender"></i><div><b>Enddatum festlegen</b><small>Das Bett ist bis zum Abreisetag vergeben.</small></div><button class="nu-schalter" role="switch" aria-checked="true" aria-label="Enddatum festlegen" id="sw"></button></div>
+<div id="ende" style="display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap"><div class="nu-feld" style="width:240px"><label for="d">Abreise am</label><input class="nu-eingabe" id="d" type="date" value="2026-10-09"></div><div class="nu-checkliste" style="padding-bottom:4px"><button class="nu-chip">+3 Nächte</button><button class="nu-chip" aria-pressed="true">+7 Nächte</button><button class="nu-chip">+14 Nächte</button></div></div>
+<b class="abschnitt">Sprache der Übersetzung</b>
+<div style="display:grid;grid-template-columns:repeat(5,150px);gap:8px" id="sp"></div>
+</div>
+<script>var S=[["Deutsch","Deutsch"],["English","Englisch"],["Français","Französisch"],["Español","Spanisch"],["العربية","Arabisch"],["فارسی","Farsi"],["Polski","Polnisch"],["Română","Rumänisch"],["Български","Bulgarisch"],["Русский","Russisch"]];
+document.getElementById("sp").innerHTML=S.map(function(s,i){return '<button class="nu-wahl" role="radio" style="min-height:72px;padding:10px 14px" aria-checked="'+(i===4)+'"><b style="font-family:'+(i===4||i===5?'var(--font-rtl)':'var(--font-dokument)')+'">'+s[0]+'</b><span>'+s[1]+'</span></button>';}).join("");
+var sw=document.getElementById("sw");sw.onclick=function(){var an=sw.getAttribute("aria-checked")!=="true";sw.setAttribute("aria-checked",String(an));document.getElementById("ende").style.display=an?"flex":"none";sw.parentNode.querySelector("small").textContent=an?"Das Bett ist bis zum Abreisetag vergeben.":"Aus: bleibt bis auf Weiteres, ohne festes Enddatum.";};</script>
+<script>Nu.mountIcons();</script>
+</body>
+</html>

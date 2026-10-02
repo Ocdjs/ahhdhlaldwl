@@ -1,0 +1,26 @@
+<!-- @dsCard group="Bettenplan" height=440 width=1000 -->
+<!doctype html>
+<html lang="de">
+<head><meta charset="utf-8"><title>Schnellauswahl</title></head>
+<body class="nu" style="margin:0;background:var(--grund)">
+<div class="nu nu-vorschau" style="position:relative;min-height:410px;gap:24px;flex-wrap:nowrap;align-items:flex-start">
+<div style="position:relative;width:310px"><div id="b1"></div><div class="nu-schnell" style="left:0;top:100px;--ursprung:20% 0">
+<div class="nu-schnell-kopf"><b>Ion</b><span>B3 · erwartet</span></div>
+<div class="nu-zeile nu-zeile--warnung"><i data-icon="abwesend"></i><div><b>Fehlte gestern unentschuldigt</b><small>Fehlt Ion heute wieder, zählt das Bett ab heute als frei.</small></div></div>
+<button class="nu-btn nu-btn--primaer"><i data-icon="anwesend"></i>Ist da</button>
+<button class="nu-btn"><i data-icon="abwesend"></i>Nicht da</button>
+<button class="nu-btn"><i data-icon="person"></i>Details</button></div></div>
+<div style="position:relative;width:310px"><div id="b2"></div><div class="nu-schnell" style="left:0;top:100px;--ursprung:20% 0">
+<div class="nu-schnell-kopf"><b>Kasia</b><span>L2 · fehlt</span></div>
+<div class="nu-zeile nu-zeile--warnung"><i data-icon="abwesend"></i><div><b>Fehlt unentschuldigt, 1. Nacht</b><small>Zählt für das Kältehilfetelefon weiter als belegt.</small></div></div>
+<button class="nu-btn nu-btn--primaer"><i data-icon="anwesend"></i>Ist doch da</button>
+<button class="nu-btn"><i data-icon="person"></i>Details</button></div></div>
+<div style="position:relative;width:310px"><div id="b3"></div><div class="nu-schnell" style="left:0;top:100px;--ursprung:20% 0">
+<div class="nu-schnell-kopf"><b>Bett F2</b><span>frei</span></div>
+<div class="nu-zeile nu-zeile--warnung"><i data-icon="abwesend"></i><div><b>Ben fehlt die 2. Nacht in Folge</b><small>Unentschuldigt. Das Bett zählt als frei und darf vergeben werden.</small></div></div>
+<button class="nu-btn nu-btn--primaer"><i data-icon="person-plus"></i>Gast aufnehmen</button>
+<button class="nu-btn"><i data-icon="anwesend"></i>Ben ist doch da</button></div></div>
+</div>
+<script>document.getElementById("b1").innerHTML=Nu.bett({nr:"B3",s:"erwartet",name:"Ion",naechte:4});document.getElementById("b2").innerHTML=Nu.bett({nr:"L2",s:"fehlt",name:"Kasia",naechte:2});document.getElementById("b3").innerHTML=Nu.bett({nr:"F2",s:"fehlt2",name:"Ben",fehltN:2});document.querySelectorAll(".nu-bett").forEach(function(b){b.classList.add("is-offen")});Nu.mountIcons();</script>
+</body>
+</html>
