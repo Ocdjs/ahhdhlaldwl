@@ -1,6 +1,6 @@
-# Notübernachtung – Designsystem und Prototyp
+# Notübernachtung – App, Designsystem und Prototyp
 
-Vorlage für eine Android-Tablet-App (Kotlin, Jetpack Compose) für die Notübernachtung der Kältehilfe.
+Tablet-App für die Notübernachtung der Kältehilfe: **`app/`** (Expo / React Native, iPad und Android). Anleitung in `app/README.md`, Hinweise für Claude Code in `CLAUDE.md`.
 
 - **Designsystem** (veröffentlicht): https://claude.ai/artifact/XkQNF6rnqztP2fkC9gJxuM
 - **Klickbarer Prototyp** ohne Nextcloud: https://claude.ai/artifact/WnuQMizHu67mZ9sqQxH2v6
@@ -9,6 +9,7 @@ Vorlage für eine Android-Tablet-App (Kotlin, Jetpack Compose) für die Notüber
 
 | Ordner | Inhalt |
 | --- | --- |
+| `app/` | Die Tablet-App (Version 1, Beispieldaten, lokal gespeichert). Festlegungen und offene Fragen: `app/ENTSCHEIDUNGEN.md` |
 | `designsystem/project/` | Veröffentlichte Dateien: `README.md` (Grundsätze, Wörter, Farben), `fachregeln.md` (KHT-Zählung, „fehlt“, gleiche Vornamen, Sanktionen), `bildschirme.md`, `android.md`, `dokumente.md`, `eingabe.md`, `tokens.json`, Bausteine unter `components/`, Symbole unter `assets/Symbole/` |
 | `designsystem/gen/` | Generatoren: `tokens.py`, `icons.py`, `nu-core.js`, `bundle.py`, Bausteine in `comps1.py` bis `comps7.py`, `build.py` |
 | `prototyp/` | Prototyp-Quellen `app.js`, `app.css`, Zusammenbau `build.py`, Ende-zu-Ende-Test `test.js` (Playwright), fertige Seite `notuebernachtung-prototyp.html` |
