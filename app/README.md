@@ -36,6 +36,15 @@ Ohne eigenen Build geht es auch mit **Expo Go**: `npx expo start`, dann `i` drü
 Das APK ist mit dem Debug-Schlüssel signiert: gut zum Testen, nicht für den Play Store.
 Für eine feste Verteilung (Play Store, TestFlight, MDM) siehe `eas.json` und die Expo-Doku zu EAS Build.
 
+### BlueStacks (Android-Emulator unter Windows oder macOS)
+
+1. APK aus GitHub › Actions › „Android-APK“ › grüner Lauf › Artefakt `notuebernachtung-apk` laden und entpacken.
+2. Die `.apk` ins BlueStacks-Fenster ziehen oder rechts „APK installieren“ (Strg + Umschalt + B) wählen.
+3. Einstellungen › Anzeige: 1920 × 1080, Querformat, 240 DPI; unter „Gerät“ möglichst ein Tablet-Profil.
+4. Bei „App nicht installiert“ die alte Version zuerst deinstallieren (andere Signatur).
+
+Die App braucht Android 7 oder neuer; jede aktuelle BlueStacks-Instanz passt.
+
 ### Im Browser (nur Vorschau)
 
 ```bash
