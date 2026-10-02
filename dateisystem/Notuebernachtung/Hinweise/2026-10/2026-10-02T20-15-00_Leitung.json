@@ -1,0 +1,18 @@
+{
+  "text": "Ab morgen gibt es das Abendessen erst um 19:30. Bitte den Gästen beim Ankommen sagen.",
+  "von": "Leitung",
+  "ab": "2026-10-03",
+  "bis": "2026-10-09",
+  "dauer": "1_woche",
+  "wichtig": false,
+  "quelle": "app",
+  "beendet_um": null,
+  "beendet_von": null,
+  "_meta": {
+    "schema": "hinweis/1",
+    "geaendert_um": "2026-10-02T20:15:00+02:00",
+    "geaendert_von": "Leitung",
+    "geraet": "tablet-st-pius",
+    "version": 1
+  }
+}

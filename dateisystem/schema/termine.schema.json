@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.notuebernachtung.invalid/termine.schema.json",
+  "title": "Termine eines Monats",
+  "description": "Kalender/Termine/JJJJ-MM.json – Aufgabe, Bettwäsche, Sondertermin, Feiertag. Abgleich je Termin-ID.",
+  "type": "object",
+  "properties": {
+    "monat": {
+      "$ref": "gemeinsam.schema.json#/$defs/monat"
+    },
+    "termine": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "datum": {
+            "$ref": "gemeinsam.schema.json#/$defs/datum"
+          },
+          "art": {
+            "enum": [
+              "Aufgabe",
+              "Bettwäsche",
+              "Sondertermin",
+              "Feiertag"
+            ]
+          },
+          "titel": {
+            "type": "string"
+          },
+          "symbol": {
+            "type": "string"
+          },
+          "von": {
+            "$ref": "gemeinsam.schema.json#/$defs/person"
+          },
+          "geaendert": {
+            "type": "object",
+            "properties": {
+              "von": {
+                "$ref": "gemeinsam.schema.json#/$defs/person"
+              },
+              "um": {
+                "$ref": "gemeinsam.schema.json#/$defs/zeitpunkt"
+              },
+              "vorher": {
+                "type": "object",
+                "properties": {
+                  "datum": {
+                    "$ref": "gemeinsam.schema.json#/$defs/datum"
+                  },
+                  "titel": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "datum",
+                  "titel"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "von",
+              "um",
+              "vorher"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "datum",
+          "art",
+          "titel",
+          "symbol",
+          "von"
+        ],
+        "additionalProperties": false,
+        "description": "Bettwäsche erscheint am Tag als wichtiger Hinweis im Bericht."
+      }
+    },
+    "_meta": {
+      "$ref": "gemeinsam.schema.json#/$defs/meta_aenderbar"
+    }
+  },
+  "required": [
+    "monat",
+    "termine",
+    "_meta"
+  ],
+  "additionalProperties": false
+}

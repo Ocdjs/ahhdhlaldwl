@@ -1,0 +1,246 @@
+{
+  "monat": "2026-10",
+  "eingefroren_um": "2026-10-01T09:30:00+02:00",
+  "eingelesen_von": "Leitung",
+  "quelle": "Kalender/Dienstplan-Eingang/Eingelesen/Dienstplan_2026-10.pdf",
+  "korrekturen": [
+    {
+      "datum": "2026-10-12",
+      "rolle": "Küche",
+      "erkannt": null,
+      "gewaehlt": "Mika"
+    },
+    {
+      "datum": "2026-10-20",
+      "rolle": "Betreuung 1",
+      "erkannt": "Kim",
+      "gewaehlt": "Robin"
+    }
+  ],
+  "tage": {
+    "2026-10-01": {
+      "betreuung": [
+        "Chris",
+        null
+      ],
+      "kueche": "Mika"
+    },
+    "2026-10-02": {
+      "betreuung": [
+        "Kim",
+        "Sam"
+      ],
+      "kueche": "Jule"
+    },
+    "2026-10-03": {
+      "betreuung": [
+        "Kim",
+        "Jule"
+      ],
+      "kueche": "Mika"
+    },
+    "2026-10-04": {
+      "betreuung": [
+        "Chris",
+        null
+      ],
+      "kueche": "Jule"
+    },
+    "2026-10-05": {
+      "betreuung": [
+        "Jule",
+        "Robin"
+      ],
+      "kueche": "Mika"
+    },
+    "2026-10-06": {
+      "betreuung": [
+        "Kim",
+        "Jule"
+      ],
+      "kueche": "Jule"
+    },
+    "2026-10-07": {
+      "betreuung": [
+        "Chris",
+        null
+      ],
+      "kueche": "Mika"
+    },
+    "2026-10-08": {
+      "betreuung": [
+        "Jule",
+        "Robin"
+      ],
+      "kueche": "Jule"
+    },
+    "2026-10-09": {
+      "betreuung": [
+        "Kim",
+        "Jule"
+      ],
+      "kueche": "Mika"
+    },
+    "2026-10-10": {
+      "betreuung": [
+        "Chris",
+        null
+      ],
+      "kueche": "Jule"
+    },
+    "2026-10-11": {
+      "betreuung": [
+        "Jule",
+        "Robin"
+      ],
+      "kueche": "Mika"
+    },
+    "2026-10-12": {
+      "betreuung": [
+        "Kim",
+        "Jule"
+      ],
+      "kueche": "Jule"
+    },
+    "2026-10-13": {
+      "betreuung": [
+        "Chris",
+        null
+      ],
+      "kueche": "Mika"
+    },
+    "2026-10-14": {
+      "betreuung": [
+        "Jule",
+        "Robin"
+      ],
+      "kueche": "Jule"
+    },
+    "2026-10-15": {
+      "betreuung": [
+        "Kim",
+        "Jule"
+      ],
+      "kueche": "Mika"
+    },
+    "2026-10-16": {
+      "betreuung": [
+        "Chris",
+        null
+      ],
+      "kueche": "Jule"
+    },
+    "2026-10-17": {
+      "betreuung": [
+        "Jule",
+        "Robin"
+      ],
+      "kueche": "Mika"
+    },
+    "2026-10-18": {
+      "betreuung": [
+        "Kim",
+        "Jule"
+      ],
+      "kueche": "Jule"
+    },
+    "2026-10-19": {
+      "betreuung": [
+        "Chris",
+        null
+      ],
+      "kueche": "Mika"
+    },
+    "2026-10-20": {
+      "betreuung": [
+        "Jule",
+        "Robin"
+      ],
+      "kueche": "Jule"
+    },
+    "2026-10-21": {
+      "betreuung": [
+        "Kim",
+        "Jule"
+      ],
+      "kueche": "Mika"
+    },
+    "2026-10-22": {
+      "betreuung": [
+        "Chris",
+        null
+      ],
+      "kueche": "Jule"
+    },
+    "2026-10-23": {
+      "betreuung": [
+        "Jule",
+        "Robin"
+      ],
+      "kueche": "Mika"
+    },
+    "2026-10-24": {
+      "betreuung": [
+        "Kim",
+        "Jule"
+      ],
+      "kueche": "Jule"
+    },
+    "2026-10-25": {
+      "betreuung": [
+        "Chris",
+        null
+      ],
+      "kueche": "Mika"
+    },
+    "2026-10-26": {
+      "betreuung": [
+        "Jule",
+        "Robin"
+      ],
+      "kueche": "Jule"
+    },
+    "2026-10-27": {
+      "betreuung": [
+        "Kim",
+        "Jule"
+      ],
+      "kueche": "Mika"
+    },
+    "2026-10-28": {
+      "betreuung": [
+        "Chris",
+        null
+      ],
+      "kueche": "Jule"
+    },
+    "2026-10-29": {
+      "betreuung": [
+        "Jule",
+        "Robin"
+      ],
+      "kueche": "Mika"
+    },
+    "2026-10-30": {
+      "betreuung": [
+        "Kim",
+        "Jule"
+      ],
+      "kueche": "Jule"
+    },
+    "2026-10-31": {
+      "betreuung": [
+        "Chris",
+        null
+      ],
+      "kueche": "Mika"
+    }
+  },
+  "_meta": {
+    "schema": "plan0/1",
+    "angelegt_um": "2026-10-01T00:00:05+02:00",
+    "angelegt_von": "App",
+    "geraet": "tablet-st-pius",
+    "unveraenderlich": true
+  }
+}

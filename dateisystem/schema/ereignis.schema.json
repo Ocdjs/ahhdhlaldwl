@@ -1,0 +1,154 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.notuebernachtung.invalid/ereignis.schema.json",
+  "title": "Ereignis zum Gast",
+  "description": "Gaeste/<gast_id>/Ereignisse/<zeit>_<von>_<art>.json – Sanktion oder Notiz, unveränderlich. Eine Sanktion gilt immer für genau einen Gast.",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "art": {
+          "const": "sanktion"
+        },
+        "gast_id": {
+          "$ref": "gemeinsam.schema.json#/$defs/gast_id"
+        },
+        "stufe": {
+          "enum": [
+            "Verwarnung",
+            "Gelbe Karte",
+            "Rote Karte",
+            "Hausverbot"
+          ]
+        },
+        "grund": {
+          "type": "string",
+          "minLength": 1
+        },
+        "datum": {
+          "$ref": "gemeinsam.schema.json#/$defs/datum"
+        },
+        "bis": {
+          "anyOf": [
+            {
+              "$ref": "gemeinsam.schema.json#/$defs/datum"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "von": {
+          "$ref": "gemeinsam.schema.json#/$defs/person"
+        },
+        "bericht": {
+          "anyOf": [
+            {
+              "$ref": "gemeinsam.schema.json#/$defs/relpfad"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "absatz": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "_meta": {
+          "$ref": "gemeinsam.schema.json#/$defs/meta_unveraenderlich"
+        }
+      },
+      "required": [
+        "art",
+        "gast_id",
+        "stufe",
+        "grund",
+        "datum",
+        "bis",
+        "von",
+        "bericht",
+        "absatz",
+        "_meta"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "art": {
+          "const": "notiz"
+        },
+        "gast_id": {
+          "$ref": "gemeinsam.schema.json#/$defs/gast_id"
+        },
+        "text": {
+          "type": "string"
+        },
+        "datum": {
+          "$ref": "gemeinsam.schema.json#/$defs/datum"
+        },
+        "von": {
+          "$ref": "gemeinsam.schema.json#/$defs/person"
+        },
+        "rolle": {
+          "enum": [
+            "betroffen",
+            "erwaehnt"
+          ]
+        },
+        "quelle": {
+          "type": "string"
+        },
+        "bericht": {
+          "anyOf": [
+            {
+              "$ref": "gemeinsam.schema.json#/$defs/relpfad"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "absatz": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "bei_aufnahme": {
+          "type": "boolean",
+          "description": "Ploppt bei der Wiederaufnahme des Gastes auf."
+        },
+        "_meta": {
+          "$ref": "gemeinsam.schema.json#/$defs/meta_unveraenderlich"
+        }
+      },
+      "required": [
+        "art",
+        "gast_id",
+        "text",
+        "datum",
+        "von",
+        "rolle",
+        "quelle",
+        "bericht",
+        "absatz",
+        "_meta"
+      ],
+      "additionalProperties": false
+    }
+  ]
+}

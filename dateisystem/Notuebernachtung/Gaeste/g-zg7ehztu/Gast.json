@@ -1,0 +1,55 @@
+{
+  "id": "g-zg7ehztu",
+  "vorname": "Laura",
+  "nachname": "",
+  "spitzname": "",
+  "standort": "st-pius",
+  "aufnahmen": [
+    {
+      "nr": "2026-27-0008",
+      "datum": "2026-09-12",
+      "bett": "T3",
+      "von": "Kim",
+      "dauer": "mehrere",
+      "ende": null,
+      "pdf": "Dokumente/0008_Laura_2026-09-12.pdf"
+    }
+  ],
+  "hausordnung": {
+    "unterschrieben_am": "2026-09-12",
+    "version": "2026-10",
+    "art": "app",
+    "uebersetzung": "ro"
+  },
+  "datenschutz": {
+    "unterschrieben_am": "2026-09-12",
+    "version": "2026-10"
+  },
+  "sprache": "ro",
+  "laeuseschein": {
+    "status": "liegt_vor",
+    "seit": null,
+    "geprueft_von": "Sam"
+  },
+  "dokumente": [
+    {
+      "datei": "Dokumente/0008_Laura_2026-09-12.pdf",
+      "art": "aufnahme",
+      "titel": "Aufnahme-PDF (Hausordnung und Datenschutz)",
+      "am": "2026-09-12",
+      "von": "Kim"
+    }
+  ],
+  "erste_nacht": "2026-09-12",
+  "letzte_nacht": "2026-10-02",
+  "naechte": 30,
+  "loeschen_ab": null,
+  "aufnahme_hinweise_aus": [],
+  "_meta": {
+    "schema": "gast/1",
+    "geaendert_um": "2026-09-12T19:30:00+02:00",
+    "geaendert_von": "Kim",
+    "geraet": "tablet-st-pius",
+    "version": 3
+  }
+}

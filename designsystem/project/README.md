@@ -1,4 +1,4 @@
-Die Notübernachtungs-App ersetzt die Papierlisten einer kleinen Notübernachtung der Kältehilfe auf einem Samsung-Tablet im Querformat: Bettenplan mit Grundriss, Aufnahme mit Unterschrift, Gästedatenbank, Dienstbericht, Duschplan und Kalender. Bedient wird sie nachts von wechselnden, oft ehrenamtlichen Betreuer*innen, mit Finger, S Pen und Tastatur. Dieses System legt fest, wie die App aussieht und sich bewegt; die Funktionen stehen in der Funktionsbeschreibung, die Bildschirme im Abschnitt **Bildschirme**, die Regeln hinter den Zahlen und Zuständen (KHT-Zählung, „fehlt“, gleiche Vornamen, Sanktionen) im Abschnitt **Fachregeln**, die Umsetzung in Jetpack Compose im Abschnitt **Android**.
+Die Notübernachtungs-App ersetzt die Papierlisten einer kleinen Notübernachtung der Kältehilfe auf einem Samsung-Tablet im Querformat: Bettenplan mit Grundriss, Aufnahme mit Unterschrift, Gästedatenbank, Dienstbericht, Duschplan und Kalender. Bedient wird sie nachts von wechselnden, oft ehrenamtlichen Betreuer*innen, mit Finger, S Pen und Tastatur. Dieses System legt fest, wie die App aussieht und sich bewegt; die Funktionen stehen in der Funktionsbeschreibung, die Bildschirme im Abschnitt **Bildschirme**, die Regeln hinter den Zahlen und Zuständen (KHT-Zählung, „fehlt“, gleiche Vornamen, Sanktionen) im Abschnitt **Fachregeln**, die Umsetzung in Jetpack Compose im Abschnitt **Android**, die Ablage auf dem Tablet und in Nextcloud im Abschnitt **Dateisystem**.
 
 Ein klickbarer Prototyp ohne Nextcloud zeigt alle Bausteine im Zusammenspiel: https://claude.ai/artifact/WnuQMizHu67mZ9sqQxH2v6 . Er nutzt dieselben Werte und dasselbe Stylesheet (`components/bundle.css`); wo Prototyp und dieses System voneinander abweichen, gilt das System.
 
@@ -41,8 +41,13 @@ Feste Wörter, in App, Datenmodell und PDF gleich:
 | Hat KHT angerufen? | Pflichtfeld im Bericht | An KHT gemeldet |
 | Teilen | PDF über den Teilen-Dialog, Empfänger frei wählbar | Senden an … |
 | Leitung | Verfasserin von Hinweisen (die Schwester), wählbar wie das Team | Chefin, Admin |
-| Monatsabschluss, Dienstnachweis | monatliche Unterschrift: geplante gegen gemachte Dienste, Grundlage der Lohnabrechnung | Stundenzettel |
-| krank, abgegeben, Vertretung | Abweichungen vom Originalplan | Ausfall, Einspringen |
+| Monatsabschluss, Dienstnachweis | monatliche Unterschrift je Bereich (Betreuung, Küche): geplante gegen gemachte Dienste, Grundlage der Lohnabrechnung | Stundenzettel |
+| abgegeben, Vertretung | Abweichungen vom Originalplan (Grund Tausch oder Sonstiges; kein „krank“) | Ausfall, Einspringen, krank |
+| Originalplan | der zu Monatsbeginn eingelesene und geprüfte Dienstplan; „geplant“ im Monatsabschluss | Soll-Plan |
+| geändert | Dienst oder Termin, der im Kalender mit PIN geändert wurde, mit Namen vermerkt | überschrieben |
+| ergänzen, Ergänzung | Zusatz zu einem abgeschlossenen Bericht; ändern geht nicht mehr | Nachtrag, korrigieren |
+| ohne Unterschrift | Bericht abgeschlossen, obwohl jemand nicht unterschrieben hat; im PDF markiert | unvollständig |
+| Bad aufschließen | Erinnerung, wenn alle geduscht haben | Bad frei geben |
 | Abgleich | Synchronisation mit Nextcloud | Sync, Upload |
 
 Alle Namen in Beispielen sind Platzhalter (Kim, Sam, Robin, Chris, Jule, Mika im Team; Paul, Max, Felix … als Gäste). Abkürzungen nur für Bettnummern (D4, N3, L2, E1, TH1, Z1, N9), Aufnahmenummern (2026-27-0042) und KHT (beim ersten Auftreten „Kältehilfetelefon“). Zählen positiv: „3 von 8 frei“.

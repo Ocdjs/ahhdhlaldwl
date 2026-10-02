@@ -1,0 +1,18 @@
+{
+  "diensttag": "2026-09-28",
+  "art": "hinweis",
+  "text": "Bei der nächsten Aufnahme nach Schlüssel 7 fragen.",
+  "von": "Leitung",
+  "um": "2026-09-30T10:20:00+02:00",
+  "gast": "g-7d3bgagc",
+  "bei_aufnahme": true,
+  "hinweis": null,
+  "notiz": "Gaeste/g-7d3bgagc/Ereignisse/2026-09-30T10-20-00_Leitung_notiz.json",
+  "_meta": {
+    "schema": "kommentar/1",
+    "angelegt_um": "2026-09-30T10:20:00+02:00",
+    "angelegt_von": "Leitung",
+    "geraet": "tablet-st-pius",
+    "unveraenderlich": true
+  }
+}

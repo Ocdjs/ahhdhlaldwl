@@ -1,0 +1,94 @@
+{
+  "monat": "2026-09",
+  "person": "Robin",
+  "bereich": "betreuung",
+  "summen": {
+    "geplant": 10,
+    "gemacht": 9,
+    "abgegeben": 1,
+    "vertretung": 0
+  },
+  "tage": [
+    {
+      "datum": "2026-09-02",
+      "geplant": true,
+      "gemacht": true,
+      "rolle": "Betreuung 2",
+      "bemerkung": null
+    },
+    {
+      "datum": "2026-09-05",
+      "geplant": true,
+      "gemacht": true,
+      "rolle": "Betreuung 2",
+      "bemerkung": null
+    },
+    {
+      "datum": "2026-09-08",
+      "geplant": true,
+      "gemacht": true,
+      "rolle": "Betreuung 2",
+      "bemerkung": null
+    },
+    {
+      "datum": "2026-09-11",
+      "geplant": true,
+      "gemacht": false,
+      "rolle": "Betreuung 2",
+      "bemerkung": "abgegeben an Chris"
+    },
+    {
+      "datum": "2026-09-14",
+      "geplant": true,
+      "gemacht": true,
+      "rolle": "Betreuung 2",
+      "bemerkung": null
+    },
+    {
+      "datum": "2026-09-17",
+      "geplant": true,
+      "gemacht": true,
+      "rolle": "Betreuung 2",
+      "bemerkung": null
+    },
+    {
+      "datum": "2026-09-20",
+      "geplant": true,
+      "gemacht": true,
+      "rolle": "Betreuung 2",
+      "bemerkung": null
+    },
+    {
+      "datum": "2026-09-23",
+      "geplant": true,
+      "gemacht": true,
+      "rolle": "Betreuung 2",
+      "bemerkung": null
+    },
+    {
+      "datum": "2026-09-26",
+      "geplant": true,
+      "gemacht": true,
+      "rolle": "Betreuung 2",
+      "bemerkung": null
+    },
+    {
+      "datum": "2026-09-29",
+      "geplant": true,
+      "gemacht": true,
+      "rolle": "Betreuung 2",
+      "bemerkung": null
+    }
+  ],
+  "plankorrekturen": [],
+  "unterschrift": "2026-09_Dienstnachweis_Betreuung_Robin.png",
+  "unterschrieben_um": "2026-09-29T22:41:00+02:00",
+  "pdf": "2026-09_Dienstnachweis_Betreuung_Robin.pdf",
+  "_meta": {
+    "schema": "dienstnachweis/1",
+    "angelegt_um": "2026-09-29T22:41:00+02:00",
+    "angelegt_von": "Robin",
+    "geraet": "tablet-st-pius",
+    "unveraenderlich": true
+  }
+}

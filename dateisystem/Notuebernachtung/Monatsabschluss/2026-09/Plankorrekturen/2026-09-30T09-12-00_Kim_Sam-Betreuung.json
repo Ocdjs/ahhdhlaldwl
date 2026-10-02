@@ -1,0 +1,20 @@
+{
+  "monat": "2026-09",
+  "person": "Sam",
+  "bereich": "betreuung",
+  "tage_hinzu": [
+    "2026-09-27"
+  ],
+  "tage_weg": [],
+  "grund": "Plan falsch übernommen",
+  "von": "Kim",
+  "um": "2026-09-30T09:12:00+02:00",
+  "warnung_bestaetigt": true,
+  "_meta": {
+    "schema": "plankorrektur/1",
+    "angelegt_um": "2026-09-30T09:12:00+02:00",
+    "angelegt_von": "Kim",
+    "geraet": "tablet-st-pius",
+    "unveraenderlich": true
+  }
+}

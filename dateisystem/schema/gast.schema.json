@@ -1,0 +1,311 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.notuebernachtung.invalid/gast.schema.json",
+  "title": "Gast",
+  "description": "Gaeste/<gast_id>/Gast.json – Stammdaten, Aufnahmen, Unterschriften-Stand, Läuseschein, Dokumentliste. Anzeigename wird nie gespeichert.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "gemeinsam.schema.json#/$defs/gast_id"
+    },
+    "vorname": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nachname": {
+      "type": "string"
+    },
+    "spitzname": {
+      "type": "string"
+    },
+    "standort": {
+      "$ref": "gemeinsam.schema.json#/$defs/standort"
+    },
+    "aufnahmen": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "nr": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{4}$"
+          },
+          "datum": {
+            "$ref": "gemeinsam.schema.json#/$defs/datum"
+          },
+          "bett": {
+            "anyOf": [
+              {
+                "$ref": "gemeinsam.schema.json#/$defs/bettnr"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "von": {
+            "$ref": "gemeinsam.schema.json#/$defs/person"
+          },
+          "dauer": {
+            "enum": [
+              "eine_nacht",
+              "mehrere"
+            ]
+          },
+          "ende": {
+            "anyOf": [
+              {
+                "$ref": "gemeinsam.schema.json#/$defs/datum"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "pdf": {
+            "anyOf": [
+              {
+                "$ref": "gemeinsam.schema.json#/$defs/relpfad"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "nr",
+          "datum",
+          "bett",
+          "von",
+          "dauer",
+          "ende",
+          "pdf"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "hausordnung": {
+      "type": "object",
+      "properties": {
+        "unterschrieben_am": {
+          "anyOf": [
+            {
+              "$ref": "gemeinsam.schema.json#/$defs/datum"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "art": {
+          "anyOf": [
+            {
+              "enum": [
+                "app",
+                "papier"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "uebersetzung": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-z]{2}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "unterschrieben_am",
+        "version",
+        "art",
+        "uebersetzung"
+      ],
+      "additionalProperties": false
+    },
+    "datenschutz": {
+      "type": "object",
+      "properties": {
+        "unterschrieben_am": {
+          "anyOf": [
+            {
+              "$ref": "gemeinsam.schema.json#/$defs/datum"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "unterschrieben_am",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "sprache": {
+      "type": "string",
+      "pattern": "^[a-z]{2}$"
+    },
+    "laeuseschein": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "enum": [
+                "liegt_vor",
+                "fehlt",
+                "nicht_noetig"
+              ]
+            },
+            "seit": {
+              "anyOf": [
+                {
+                  "$ref": "gemeinsam.schema.json#/$defs/datum"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "geprueft_von": {
+              "anyOf": [
+                {
+                  "$ref": "gemeinsam.schema.json#/$defs/person"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "status",
+            "seit",
+            "geprueft_von"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "dokumente": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "datei": {
+            "$ref": "gemeinsam.schema.json#/$defs/relpfad"
+          },
+          "art": {
+            "enum": [
+              "aufnahme",
+              "laeuseschein",
+              "hausordnung_papier",
+              "sonstiges"
+            ]
+          },
+          "titel": {
+            "type": "string"
+          },
+          "am": {
+            "$ref": "gemeinsam.schema.json#/$defs/datum"
+          },
+          "von": {
+            "$ref": "gemeinsam.schema.json#/$defs/person"
+          }
+        },
+        "required": [
+          "datei",
+          "art",
+          "titel",
+          "am",
+          "von"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "erste_nacht": {
+      "$ref": "gemeinsam.schema.json#/$defs/datum"
+    },
+    "letzte_nacht": {
+      "$ref": "gemeinsam.schema.json#/$defs/datum"
+    },
+    "naechte": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "loeschen_ab": {
+      "anyOf": [
+        {
+          "$ref": "gemeinsam.schema.json#/$defs/datum"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "aufnahme_hinweise_aus": {
+      "type": "array",
+      "items": {
+        "$ref": "gemeinsam.schema.json#/$defs/relpfad"
+      },
+      "description": "Ereignis-Dateien, deren Hinweis bei der Wiederaufnahme nicht mehr aufploppen soll („Nicht mehr zeigen“)."
+    },
+    "_meta": {
+      "$ref": "gemeinsam.schema.json#/$defs/meta_aenderbar"
+    }
+  },
+  "required": [
+    "id",
+    "vorname",
+    "nachname",
+    "spitzname",
+    "standort",
+    "aufnahmen",
+    "hausordnung",
+    "datenschutz",
+    "sprache",
+    "laeuseschein",
+    "dokumente",
+    "erste_nacht",
+    "letzte_nacht",
+    "naechte",
+    "loeschen_ab",
+    "aufnahme_hinweise_aus",
+    "_meta"
+  ],
+  "additionalProperties": false
+}

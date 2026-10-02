@@ -1,0 +1,18 @@
+{
+  "datum": "2026-10-03",
+  "art": "dienst",
+  "rolle": "Betreuung 2",
+  "alt": "Jule",
+  "neu": "Chris",
+  "von": "Leitung",
+  "grund": "Tausch",
+  "notiz": "getauscht mit 14.10.",
+  "um": "2026-10-02T14:20:00+02:00",
+  "_meta": {
+    "schema": "planaenderung/1",
+    "angelegt_um": "2026-10-02T14:20:00+02:00",
+    "angelegt_von": "Leitung",
+    "geraet": "tablet-st-pius",
+    "unveraenderlich": true
+  }
+}

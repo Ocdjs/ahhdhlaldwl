@@ -1,0 +1,18 @@
+{
+  "art": "notiz",
+  "gast_id": "g-5abs6jtw",
+  "text": "Gelbe Karte für @Felix (D5): laute Musik nach 23 Uhr nach zwei Hinweisen. @Max (D4) war dabei.",
+  "datum": "2026-09-29",
+  "von": "Sam",
+  "rolle": "erwaehnt",
+  "quelle": "aus Bericht vom 29.09. · erwähnt, keine Sanktion",
+  "bericht": "Berichte/2026-09/2026-09-29",
+  "absatz": 1,
+  "_meta": {
+    "schema": "ereignis/1",
+    "angelegt_um": "2026-09-29T22:10:00+02:00",
+    "angelegt_von": "Sam",
+    "geraet": "tablet-st-pius",
+    "unveraenderlich": true
+  }
+}

@@ -1,13 +1,15 @@
-<!-- @dsCard group="Dienst und Bericht" height=400 -->
+<!-- @dsCard group="Dienst und Bericht" height=1020 -->
 <!doctype html>
 <html lang="de">
 <head><meta charset="utf-8"><title>BerichtAbgeschlossen</title></head>
 <body class="nu" style="margin:0;background:var(--grund)">
 <div class="nu nu-vorschau nu-vorschau--spalte" style="max-width:900px">
-<div class="nu-gesperrt" style="width:100%"><i data-icon="schloss" class="zu"></i><div style="flex:1">Bericht abgeschlossen<small>02.10. · 07:42 · Kim, Sam · PDF gespeichert und abgeglichen</small></div><button class="nu-btn nu-btn--klein nu-btn--rahmen"><i data-icon="pdf"></i>PDF ansehen</button><button class="nu-btn nu-btn--klein nu-btn--rahmen"><i data-icon="teilen"></i>Teilen</button></div>
-<div class="nu-bericht is-vorfall" style="width:100%;gap:12px;padding:18px"><div style="display:flex;align-items:center;gap:8px;color:var(--vorfall);font-weight:700"><i data-icon="vorfall"></i>Bericht mit Vorfall</div><div style="color:var(--tinte-2)">Wichtige Hinweise: <span class="nu-stufe nu-stufe--gelb"><i data-icon="karte-gelb" class="klein"></i>Gelbe Karte</span> <span class="nu-erwaehnung">@Felix</span> und <span class="nu-erwaehnung">@Max (D4)</span> …</div></div>
-<div class="nu-nachtrag" style="width:100%"><b>Nachtrag</b>Felix hat sich am Morgen entschuldigt.<small>03.10. · 19:05 · Sam</small></div>
-<button class="nu-btn nu-btn--rahmen"><i data-icon="stift"></i>Nachtrag hinzufügen</button>
+<div class="nu-dialog" role="alertdialog" style="position:static;margin:0 auto"><h2>Wirklich ohne Unterschrift abschließen?</h2><p>Es fehlt die Unterschrift von Jule (Küche). Der Küchendienst geht oft früher, das ist in Ordnung. Der Bericht wird im PDF als „ohne Unterschrift“ markiert. Der Dienst zählt im Monatsabschluss erst, wenn die Unterschrift nachgeholt ist.</p><div class="nu-dialog-knoepfe"><button class="nu-btn nu-btn--klein">Zurück</button><button class="nu-btn nu-btn--gefahr-voll nu-btn--klein">Ja, trotzdem abschließen</button></div></div>
+<div class="nu-gesperrt" style="width:100%"><i data-icon="schloss" class="zu"></i><div style="flex:1">Bericht abgeschlossen <span class="nu-pille nu-pille--warnung"><i data-icon="warnung" class="klein"></i>ohne Unterschrift: Jule</span><small>03.10. · 07:42 · Kim, Sam, Jule · PDF gespeichert und abgeglichen · nicht mehr änderbar, nur ergänzen</small></div><button class="nu-btn nu-btn--klein nu-btn--rahmen"><i data-icon="pdf"></i>PDF ansehen</button><button class="nu-btn nu-btn--klein nu-btn--rahmen"><i data-icon="teilen"></i>Teilen</button></div>
+<div class="nu-besetzung" style="width:100%"><span class="rolle">Küche</span><button class="nu-person" aria-pressed="false" disabled><span class="nu-kuerzel">JU</span>Jule</button><button class="nu-mini-unterschrift"><i data-icon="unterschrift" class="klein"></i>Unterschrift nachholen</button></div>
+<div style="width:100%;background:#fff;color:#1a1a1a;border-radius:6px;box-shadow:0 1px 4px rgba(0,0,0,.25);padding:22px 26px;display:grid;gap:10px;font:13px/1.45 var(--font-ui)"><div style="border:3px solid #b3261e;color:#b3261e;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:6px 12px;border-radius:4px;justify-self:start;transform:rotate(-1.5deg)">Ohne Unterschrift abgeschlossen: Jule</div><div style="display:flex;justify-content:space-between;border-bottom:2px solid #1a1a1a;padding-bottom:6px"><b style="font-size:15px">Dienstbericht Notübernachtung</b><span>Freitag, 2. Oktober 2026</span></div><div>Küche · Jule · <b style="color:#b3261e;font-size:11px;letter-spacing:.04em">OHNE UNTERSCHRIFT</b></div></div>
+<div class="nu-nachtrag" style="width:100%"><b>Ergänzung</b>Unterschrift von Jule nachgeholt.<small>03.10. · 18:55 · Jule</small></div>
+<button class="nu-btn nu-btn--rahmen"><i data-icon="stift"></i>Ergänzen</button>
 </div>
 <script>Nu.mountIcons();</script>
 </body>

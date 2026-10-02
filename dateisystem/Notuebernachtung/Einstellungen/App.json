@@ -1,0 +1,90 @@
+{
+  "ampel": {
+    "gruen_ab_freien_betten": 3,
+    "gelb_ab_freien_betten": 1
+  },
+  "tageswechsel": "12:00",
+  "dienst": {
+    "beginn": "18:45",
+    "ende": "08:00"
+  },
+  "duschplan": {
+    "slots": [
+      "19:00",
+      "19:30",
+      "20:00",
+      "20:30",
+      "21:00",
+      "21:30"
+    ],
+    "slot_minuten": 30,
+    "vorlauf_tage": 3,
+    "bad_abschliessen_bis_alle_geduscht": true
+  },
+  "fehlt_etwas": [
+    "Tüten",
+    "Putzmittel",
+    "Toilettenpapier",
+    "Decken",
+    "Kaffee",
+    "Seife"
+  ],
+  "hinweise": {
+    "dauern": [
+      "naechster_dienst",
+      "3_tage",
+      "1_woche",
+      "2_wochen",
+      "datum"
+    ],
+    "standard": "3_tage",
+    "standard_von_im_archiv": "Leitung"
+  },
+  "besetzung": {
+    "rollen": [
+      "Betreuung 1",
+      "Betreuung 2",
+      "Küche"
+    ],
+    "gruende_abweichung": [
+      "Tausch",
+      "Sonstiges"
+    ]
+  },
+  "sprachen": [
+    "de",
+    "en",
+    "fr",
+    "es",
+    "ar",
+    "fa",
+    "pl",
+    "ro",
+    "bg",
+    "ru"
+  ],
+  "saison": {
+    "name": "2026/27",
+    "beginn": "2026-10-01",
+    "ende": "2027-04-30",
+    "aufnahme_praefix": "2026-27",
+    "naechste_aufnahmenummer": 33
+  },
+  "loeschfristen": {
+    "vorschlag_vom_traeger_festzulegen": true,
+    "gaeste_monate_nach_letzter_nacht": 12,
+    "hausverbot_monate_nach_ende": 12,
+    "berichte_monate": 36,
+    "belegung_und_duschplan_monate": 36,
+    "hinweise_monate": 12,
+    "protokoll_monate": 12,
+    "monatsabschluss": "nicht automatisch loeschen"
+  },
+  "_meta": {
+    "schema": "einstellungen/1",
+    "geaendert_um": "2026-09-30T16:20:00+02:00",
+    "geaendert_von": "Leitung",
+    "geraet": "tablet-st-pius",
+    "version": 9
+  }
+}

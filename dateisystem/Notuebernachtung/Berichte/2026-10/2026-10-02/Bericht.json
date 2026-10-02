@@ -1,0 +1,56 @@
+{
+  "diensttag": "2026-10-02",
+  "status": "offen",
+  "begonnen_um": "2026-10-02T18:50:00+02:00",
+  "besetzung": [
+    {
+      "rolle": "Betreuung 1",
+      "person": "Kim",
+      "geplant": "Kim",
+      "grund": null,
+      "unterschrift": null,
+      "unterschrieben_um": null
+    },
+    {
+      "rolle": "Betreuung 2",
+      "person": "Sam",
+      "geplant": "Sam",
+      "grund": null,
+      "unterschrift": null,
+      "unterschrieben_um": null
+    },
+    {
+      "rolle": "Küche",
+      "person": "Jule",
+      "geplant": "Jule",
+      "grund": null,
+      "unterschrift": null,
+      "unterschrieben_um": null
+    }
+  ],
+  "felder": {
+    "kht_angerufen": null,
+    "hinweise": "",
+    "fragen": "",
+    "abwesenheiten": [],
+    "externe_gaeste": [],
+    "vorfaelle": null,
+    "schluessel_fehlt": "nein",
+    "schluessel_nr": "",
+    "fehlt_etwas": [],
+    "fehlt_etwas_text": "",
+    "sonstiges": ""
+  },
+  "zuordnung": [],
+  "kennzahlen": null,
+  "ohne_unterschrift": [],
+  "abgeschlossen_um": null,
+  "pdf": null,
+  "_meta": {
+    "schema": "bericht/1",
+    "geaendert_um": "2026-10-02T21:00:00+02:00",
+    "geaendert_von": "Kim",
+    "geraet": "tablet-st-pius",
+    "version": 23
+  }
+}

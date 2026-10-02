@@ -1,0 +1,30 @@
+{
+  "datum": "2026-10-01",
+  "slots": {
+    "19:00": {
+      "gast": "g-4jz67swy",
+      "status": "erledigt",
+      "geaendert_um": "2026-10-01T19:28:00+02:00",
+      "geaendert_von": "Sam"
+    },
+    "19:30": {
+      "gast": "g-a52wj6ye",
+      "status": "verpasst",
+      "geaendert_um": "2026-10-01T20:02:00+02:00",
+      "geaendert_von": "Sam"
+    }
+  },
+  "bad": {
+    "zu": false,
+    "aufgeschlossen_um": "2026-10-01T20:05:00+02:00",
+    "geaendert_um": "2026-10-01T20:05:00+02:00",
+    "geaendert_von": "Sam"
+  },
+  "_meta": {
+    "schema": "duschplan/1",
+    "geaendert_um": "2026-10-01T20:05:00+02:00",
+    "geaendert_von": "Sam",
+    "geraet": "tablet-st-pius",
+    "version": 5
+  }
+}

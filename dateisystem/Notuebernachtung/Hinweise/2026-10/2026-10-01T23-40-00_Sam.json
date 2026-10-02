@@ -1,0 +1,18 @@
+{
+  "text": "Neue Decken liegen im Keller, Regal links.",
+  "von": "Sam",
+  "ab": "2026-10-01",
+  "bis": "2026-10-04",
+  "dauer": "datum",
+  "wichtig": false,
+  "quelle": "app",
+  "beendet_um": null,
+  "beendet_von": null,
+  "_meta": {
+    "schema": "hinweis/1",
+    "geaendert_um": "2026-10-01T23:40:00+02:00",
+    "geaendert_von": "Sam",
+    "geraet": "tablet-st-pius",
+    "version": 1
+  }
+}

@@ -1,0 +1,223 @@
+{
+  "monat": "2026-11",
+  "tage": {
+    "2026-11-01": {
+      "betreuung": [
+        "Sam",
+        "Robin"
+      ],
+      "kueche": "Mika"
+    },
+    "2026-11-02": {
+      "betreuung": [
+        "Kim",
+        "Sam"
+      ],
+      "kueche": "Jule"
+    },
+    "2026-11-03": {
+      "betreuung": [
+        "Chris",
+        null
+      ],
+      "kueche": "Mika"
+    },
+    "2026-11-04": {
+      "betreuung": [
+        "Sam",
+        "Robin"
+      ],
+      "kueche": "Jule"
+    },
+    "2026-11-05": {
+      "betreuung": [
+        "Kim",
+        "Sam"
+      ],
+      "kueche": "Mika"
+    },
+    "2026-11-06": {
+      "betreuung": [
+        "Chris",
+        null
+      ],
+      "kueche": "Jule"
+    },
+    "2026-11-07": {
+      "betreuung": [
+        "Sam",
+        "Robin"
+      ],
+      "kueche": "Mika"
+    },
+    "2026-11-08": {
+      "betreuung": [
+        "Kim",
+        "Sam"
+      ],
+      "kueche": "Jule"
+    },
+    "2026-11-09": {
+      "betreuung": [
+        "Chris",
+        null
+      ],
+      "kueche": "Mika"
+    },
+    "2026-11-10": {
+      "betreuung": [
+        "Sam",
+        "Robin"
+      ],
+      "kueche": "Jule"
+    },
+    "2026-11-11": {
+      "betreuung": [
+        "Kim",
+        "Sam"
+      ],
+      "kueche": "Mika"
+    },
+    "2026-11-12": {
+      "betreuung": [
+        "Chris",
+        null
+      ],
+      "kueche": "Jule"
+    },
+    "2026-11-13": {
+      "betreuung": [
+        "Sam",
+        "Robin"
+      ],
+      "kueche": "Mika"
+    },
+    "2026-11-14": {
+      "betreuung": [
+        "Kim",
+        "Sam"
+      ],
+      "kueche": "Jule"
+    },
+    "2026-11-15": {
+      "betreuung": [
+        "Chris",
+        null
+      ],
+      "kueche": "Mika"
+    },
+    "2026-11-16": {
+      "betreuung": [
+        "Sam",
+        "Robin"
+      ],
+      "kueche": "Jule"
+    },
+    "2026-11-17": {
+      "betreuung": [
+        "Kim",
+        "Sam"
+      ],
+      "kueche": "Mika"
+    },
+    "2026-11-18": {
+      "betreuung": [
+        "Chris",
+        null
+      ],
+      "kueche": "Jule"
+    },
+    "2026-11-19": {
+      "betreuung": [
+        "Sam",
+        "Robin"
+      ],
+      "kueche": "Mika"
+    },
+    "2026-11-20": {
+      "betreuung": [
+        "Kim",
+        "Sam"
+      ],
+      "kueche": "Jule"
+    },
+    "2026-11-21": {
+      "betreuung": [
+        "Chris",
+        null
+      ],
+      "kueche": "Mika"
+    },
+    "2026-11-22": {
+      "betreuung": [
+        "Sam",
+        "Robin"
+      ],
+      "kueche": "Jule"
+    },
+    "2026-11-23": {
+      "betreuung": [
+        "Kim",
+        "Sam"
+      ],
+      "kueche": "Mika"
+    },
+    "2026-11-24": {
+      "betreuung": [
+        "Chris",
+        null
+      ],
+      "kueche": "Jule"
+    },
+    "2026-11-25": {
+      "betreuung": [
+        "Sam",
+        "Robin"
+      ],
+      "kueche": "Mika"
+    },
+    "2026-11-26": {
+      "betreuung": [
+        "Kim",
+        "Sam"
+      ],
+      "kueche": "Jule"
+    },
+    "2026-11-27": {
+      "betreuung": [
+        "Chris",
+        null
+      ],
+      "kueche": "Mika"
+    },
+    "2026-11-28": {
+      "betreuung": [
+        "Sam",
+        "Robin"
+      ],
+      "kueche": "Jule"
+    },
+    "2026-11-29": {
+      "betreuung": [
+        "Kim",
+        "Sam"
+      ],
+      "kueche": "Mika"
+    },
+    "2026-11-30": {
+      "betreuung": [
+        "Chris",
+        null
+      ],
+      "kueche": "Jule"
+    }
+  },
+  "quelle": "Kalender/Dienstplan-Eingang/Eingelesen/Dienstplan_2026-11.pdf",
+  "_meta": {
+    "schema": "dienstplan/1",
+    "geaendert_um": "2026-11-01T11:00:00+02:00",
+    "geaendert_von": "Leitung",
+    "geraet": "tablet-st-pius",
+    "version": 4
+  }
+}

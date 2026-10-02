@@ -3,3 +3,6 @@ designsystem/gen/test/
 designsystem/gen/shots/
 prototyp/preview.html
 prototyp/*.png
+dateisystem/gen/zustand.json
+dateisystem/gen/_zustand.html
+dateisystem/gen/__pycache__/

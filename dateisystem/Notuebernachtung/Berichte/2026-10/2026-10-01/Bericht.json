@@ -1,0 +1,66 @@
+{
+  "diensttag": "2026-10-01",
+  "status": "abgeschlossen",
+  "begonnen_um": "2026-10-01T18:50:00+02:00",
+  "besetzung": [
+    {
+      "rolle": "Betreuung 1",
+      "person": "Sam",
+      "geplant": "Sam",
+      "grund": null,
+      "unterschrift": "Unterschriften/Betreuung-1_Sam.png",
+      "unterschrieben_um": "2026-10-01T22:30:00+02:00"
+    },
+    {
+      "rolle": "Betreuung 2",
+      "person": "Chris",
+      "geplant": "Chris",
+      "grund": null,
+      "unterschrift": "Unterschriften/Betreuung-2_Chris.png",
+      "unterschrieben_um": "2026-10-02T18:55:00+02:00"
+    },
+    {
+      "rolle": "Küche",
+      "person": "Jule",
+      "geplant": "Jule",
+      "grund": null,
+      "unterschrift": "Unterschriften/Kueche_Jule.png",
+      "unterschrieben_um": "2026-10-01T22:30:00+02:00"
+    }
+  ],
+  "felder": {
+    "kht_angerufen": "ja",
+    "hinweise": "Ruhige Nacht.",
+    "fragen": "@Tom (D2) fragt nach Arbeitsschuhen in Größe 44.",
+    "abwesenheiten": [],
+    "externe_gaeste": [],
+    "vorfaelle": "nein",
+    "schluessel_fehlt": "nein",
+    "schluessel_nr": "",
+    "fehlt_etwas": [
+      "Toilettenpapier"
+    ],
+    "fehlt_etwas_text": "Müllbeutel 120 l",
+    "sonstiges": ""
+  },
+  "zuordnung": [],
+  "kennzahlen": {
+    "kht_nummer": 24,
+    "frei": 7,
+    "gesamt": 31,
+    "ampel": "gruen",
+    "st_nikolaus_belegt": 7
+  },
+  "ohne_unterschrift": [
+    "Chris"
+  ],
+  "abgeschlossen_um": "2026-10-02T07:58:00+02:00",
+  "pdf": "2026-10-01_Dienstbericht.pdf",
+  "_meta": {
+    "schema": "bericht/1",
+    "geaendert_um": "2026-10-02T07:58:00+02:00",
+    "geaendert_von": "Sam",
+    "geraet": "tablet-st-pius",
+    "version": 23
+  }
+}

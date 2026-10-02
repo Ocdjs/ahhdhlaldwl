@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.notuebernachtung.invalid/belegung.schema.json",
+  "title": "Belegung eines Diensttags",
+  "description": "Belegung/JJJJ-MM/JJJJ-MM-TT.json – Stand jedes Betts. Entsteht beim Tageswechsel aus dem Vortag; Abgleich je Bett (neueres geaendert_um gewinnt).",
+  "type": "object",
+  "properties": {
+    "diensttag": {
+      "$ref": "gemeinsam.schema.json#/$defs/datum"
+    },
+    "betten": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "gemeinsam.schema.json#/$defs/bettstatus"
+          },
+          "gast": {
+            "anyOf": [
+              {
+                "$ref": "gemeinsam.schema.json#/$defs/gast_id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "seit": {
+            "$ref": "gemeinsam.schema.json#/$defs/datum"
+          },
+          "dauerhaft": {
+            "type": "boolean"
+          },
+          "ende": {
+            "anyOf": [
+              {
+                "$ref": "gemeinsam.schema.json#/$defs/datum"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "bis": {
+            "$ref": "gemeinsam.schema.json#/$defs/datum"
+          },
+          "grund": {
+            "type": "string"
+          },
+          "fehlt_naechte": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "fehlte_vornacht": {
+            "type": "boolean"
+          },
+          "belegt_durch": {
+            "enum": [
+              "aufnahme",
+              "kaeltebus"
+            ]
+          },
+          "geaendert_um": {
+            "$ref": "gemeinsam.schema.json#/$defs/zeitpunkt"
+          },
+          "geaendert_von": {
+            "$ref": "gemeinsam.schema.json#/$defs/person"
+          }
+        },
+        "required": [
+          "status",
+          "gast",
+          "geaendert_um",
+          "geaendert_von"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "kennzahlen": {
+      "$ref": "gemeinsam.schema.json#/$defs/kennzahlen"
+    },
+    "_meta": {
+      "$ref": "gemeinsam.schema.json#/$defs/meta_aenderbar"
+    }
+  },
+  "required": [
+    "diensttag",
+    "betten",
+    "kennzahlen",
+    "_meta"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,18 @@
+{
+  "diensttag": "2026-10-01",
+  "art": "antwort",
+  "text": "Schuhe in Größe 44 liegen in der Kleiderkammer.",
+  "von": "Leitung",
+  "um": "2026-10-02T10:05:00+02:00",
+  "gast": "g-a52wj6ye",
+  "bei_aufnahme": false,
+  "hinweis": "Hinweise/2026-10/2026-10-02T10-05-00_Leitung.json",
+  "notiz": "Gaeste/g-a52wj6ye/Ereignisse/2026-10-02T10-05-00_Leitung_notiz.json",
+  "_meta": {
+    "schema": "kommentar/1",
+    "angelegt_um": "2026-10-02T10:05:00+02:00",
+    "angelegt_von": "Leitung",
+    "geraet": "tablet-st-pius",
+    "unveraenderlich": true
+  }
+}

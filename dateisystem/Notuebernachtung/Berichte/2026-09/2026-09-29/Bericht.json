@@ -1,0 +1,73 @@
+{
+  "diensttag": "2026-09-29",
+  "status": "abgeschlossen",
+  "begonnen_um": "2026-09-29T18:50:00+02:00",
+  "besetzung": [
+    {
+      "rolle": "Betreuung 1",
+      "person": "Sam",
+      "geplant": "Sam",
+      "grund": null,
+      "unterschrift": "Unterschriften/Betreuung-1_Sam.png",
+      "unterschrieben_um": "2026-09-29T22:30:00+02:00"
+    },
+    {
+      "rolle": "Betreuung 2",
+      "person": "Robin",
+      "geplant": "Robin",
+      "grund": null,
+      "unterschrift": "Unterschriften/Betreuung-2_Robin.png",
+      "unterschrieben_um": "2026-09-29T22:30:00+02:00"
+    },
+    {
+      "rolle": "Küche",
+      "person": "Jule",
+      "geplant": "Jule",
+      "grund": null,
+      "unterschrift": "Unterschriften/Kueche_Jule.png",
+      "unterschrieben_um": "2026-09-29T22:30:00+02:00"
+    }
+  ],
+  "felder": {
+    "kht_angerufen": "ja",
+    "hinweise": "Gelbe Karte für @Felix (D5): laute Musik nach 23 Uhr nach zwei Hinweisen. @Max (D4) war dabei.",
+    "fragen": "",
+    "abwesenheiten": [],
+    "externe_gaeste": [],
+    "vorfaelle": "ja",
+    "schluessel_fehlt": "nein",
+    "schluessel_nr": "",
+    "fehlt_etwas": [],
+    "fehlt_etwas_text": "",
+    "sonstiges": ""
+  },
+  "zuordnung": [
+    {
+      "absatz": 1,
+      "stufe": "Gelbe Karte",
+      "gast": "g-tbs6twp6",
+      "erwaehnt": [
+        "g-tbs6twp6",
+        "g-5abs6jtw"
+      ],
+      "ereignis": "Gaeste/g-tbs6twp6/Ereignisse/2026-09-29T22-10-00_Sam_sanktion.json"
+    }
+  ],
+  "kennzahlen": {
+    "kht_nummer": 25,
+    "frei": 6,
+    "gesamt": 31,
+    "ampel": "gruen",
+    "st_nikolaus_belegt": 7
+  },
+  "ohne_unterschrift": [],
+  "abgeschlossen_um": "2026-09-30T07:58:00+02:00",
+  "pdf": "2026-09-29_Dienstbericht.pdf",
+  "_meta": {
+    "schema": "bericht/1",
+    "geaendert_um": "2026-09-30T07:58:00+02:00",
+    "geaendert_von": "Sam",
+    "geraet": "tablet-st-pius",
+    "version": 23
+  }
+}

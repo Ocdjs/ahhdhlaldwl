@@ -1,0 +1,18 @@
+{
+  "art": "sanktion",
+  "gast_id": "g-3eqvxsj7",
+  "stufe": "Hausverbot",
+  "grund": "Gewalt gegen einen anderen Gast",
+  "datum": "2026-09-22",
+  "bis": "2027-03-21",
+  "von": "Leitung",
+  "bericht": null,
+  "absatz": null,
+  "_meta": {
+    "schema": "ereignis/1",
+    "angelegt_um": "2026-09-22T22:10:00+02:00",
+    "angelegt_von": "Leitung",
+    "geraet": "tablet-st-pius",
+    "unveraenderlich": true
+  }
+}

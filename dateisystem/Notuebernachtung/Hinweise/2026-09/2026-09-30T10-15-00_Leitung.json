@@ -1,0 +1,18 @@
+{
+  "text": "Heizung im T-Zimmer ist defekt. Der Handwerker kommt Donnerstag, bis dahin den Heizlüfter nutzen.",
+  "von": "Leitung",
+  "ab": "2026-09-30",
+  "bis": "2026-10-05",
+  "dauer": "datum",
+  "wichtig": true,
+  "quelle": "nextcloud_eingang",
+  "beendet_um": null,
+  "beendet_von": null,
+  "_meta": {
+    "schema": "hinweis/1",
+    "geaendert_um": "2026-09-30T10:15:00+02:00",
+    "geaendert_von": "Leitung",
+    "geraet": "tablet-st-pius",
+    "version": 1
+  }
+}

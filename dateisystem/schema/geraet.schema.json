@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.notuebernachtung.invalid/geraet.schema.json",
+  "title": "Gerät",
+  "description": "_app/Geraete/<geraet>.json – jedes Tablet schreibt nur seine eigene Datei.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "name": {
+      "type": "string"
+    },
+    "nextcloud_benutzer": {
+      "type": "string"
+    },
+    "app_version": {
+      "type": "string"
+    },
+    "letzter_abgleich": {
+      "$ref": "gemeinsam.schema.json#/$defs/zeitpunkt"
+    },
+    "offene_aenderungen": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "_meta": {
+      "$ref": "gemeinsam.schema.json#/$defs/meta_aenderbar"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "nextcloud_benutzer",
+    "app_version",
+    "letzter_abgleich",
+    "offene_aenderungen",
+    "_meta"
+  ],
+  "additionalProperties": false
+}

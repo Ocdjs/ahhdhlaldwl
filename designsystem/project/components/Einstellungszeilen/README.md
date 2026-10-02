@@ -8,3 +8,4 @@ Eine Zeile je Einstellung: Symbol, Name, aktueller Wert, rechts Schalter oder Kn
 - **Weitere Plätze** (St. Pius und St. Nikolaus): Felder „Nummer“ (frei, 1–6 Zeichen, Vorschlag Z1 bzw. N9) und „Bezeichnung“, Knopf „Platz hinzufügen“. Jeder Platz lässt sich umbenennen (Nummer und Bezeichnung) und, solange er frei ist, entfernen. Doppelte Nummern lehnt die App mit Klartext ab.
 - **Notbett** als Chip an Loggien, Esszimmer, Tiny House und weiteren Plätzen: Notbetten werden nur über den Kältebus belegt und zählen nur, wenn sie belegt sind.
 - **Noch nicht verfügbar** (`nu-bald`): gestrichelte Marke mit Uhr. Keine stillen Platzhalter.
+- Gruppe **Dienstplan einlesen** (siehe dort): einmal zu Monatsbeginn durch die Leitung, Ergebnis ist der Originalplan.

@@ -1,0 +1,307 @@
+{
+  "diensttag": "2026-10-02",
+  "betten": {
+    "D1": {
+      "status": "anwesend",
+      "gast": "g-urxfldir",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "D2": {
+      "status": "anwesend",
+      "gast": "g-a52wj6ye",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "D3": {
+      "status": "frei",
+      "gast": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "D4": {
+      "status": "erwartet",
+      "gast": "g-5abs6jtw",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "geaendert_um": "2026-10-02T19:04:33+02:00",
+      "geaendert_von": "Kim"
+    },
+    "D5": {
+      "status": "anwesend",
+      "gast": "g-tbs6twp6",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "D6": {
+      "status": "freigehalten",
+      "gast": "g-tlwjefmx",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "bis": "2026-10-06",
+      "grund": "Krankenhaus",
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "T1": {
+      "status": "erwartet",
+      "gast": "g-63yoqq76",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "T2": {
+      "status": "frei_bis",
+      "gast": "g-jwvvj27r",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "bis": "2026-10-08",
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "T3": {
+      "status": "anwesend",
+      "gast": "g-zg7ehztu",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "B1": {
+      "status": "erwartet",
+      "gast": "g-zamgpx32",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "B2": {
+      "status": "frei",
+      "gast": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "B3": {
+      "status": "erwartet",
+      "gast": "g-6emvj323",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "fehlte_vornacht": true,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "B4": {
+      "status": "anwesend",
+      "gast": "g-af435xrl",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "F1": {
+      "status": "anwesend",
+      "gast": "g-4jz67swy",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "F2": {
+      "status": "fehlt_ab_2",
+      "gast": "g-hjtnvigo",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "fehlt_naechte": 2,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "F3": {
+      "status": "anwesend",
+      "gast": "g-wmgvg2lf",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "F4": {
+      "status": "frei",
+      "gast": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "L1": {
+      "status": "anwesend",
+      "gast": "g-6w2dwnr7",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "L2": {
+      "status": "fehlt",
+      "gast": "g-itr2kvvs",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "fehlt_naechte": 1,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "L3": {
+      "status": "frei",
+      "gast": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "L4": {
+      "status": "anwesend",
+      "gast": "g-ric4bfgp",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "L5": {
+      "status": "anwesend",
+      "gast": "g-wtb7g57y",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "E1": {
+      "status": "anwesend",
+      "gast": "g-vxmygxt4",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "belegt_durch": "kaeltebus",
+      "geaendert_um": "2026-10-02T20:10:45+02:00",
+      "geaendert_von": "Sam"
+    },
+    "TH1": {
+      "status": "anwesend",
+      "gast": "g-vcwoazjs",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "N1": {
+      "status": "anwesend",
+      "gast": "g-unbjnbtg",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "N2": {
+      "status": "anwesend",
+      "gast": "g-qhdiridb",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "N3": {
+      "status": "anwesend",
+      "gast": "g-2a3vjww4",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "N4": {
+      "status": "gesperrt",
+      "gast": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "N5": {
+      "status": "anwesend",
+      "gast": "g-xn7nxdat",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "N6": {
+      "status": "anwesend",
+      "gast": "g-4gscrbeh",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "N7": {
+      "status": "anwesend",
+      "gast": "g-tugie2sq",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "N8": {
+      "status": "anwesend",
+      "gast": "g-klz6nmca",
+      "seit": "2026-09-12",
+      "dauerhaft": true,
+      "ende": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    },
+    "N9": {
+      "status": "frei",
+      "gast": null,
+      "geaendert_um": "2026-10-02T12:00:00+02:00",
+      "geaendert_von": "Tageswechsel"
+    }
+  },
+  "kennzahlen": {
+    "kht_nummer": 25,
+    "frei": 6,
+    "gesamt": 31,
+    "notbetten_belegt": 1,
+    "st_nikolaus_belegt": 7,
+    "ampel": "gruen",
+    "stand": "2026-10-02T20:10:45+02:00"
+  },
+  "_meta": {
+    "schema": "belegung/1",
+    "geaendert_um": "2026-10-02T20:10:45+02:00",
+    "geaendert_von": "Sam",
+    "geraet": "tablet-st-pius",
+    "version": 37
+  }
+}

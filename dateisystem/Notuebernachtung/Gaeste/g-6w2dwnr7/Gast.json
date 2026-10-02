@@ -1,0 +1,55 @@
+{
+  "id": "g-6w2dwnr7",
+  "vorname": "Noah",
+  "nachname": "",
+  "spitzname": "",
+  "standort": "st-pius",
+  "aufnahmen": [
+    {
+      "nr": "2026-27-0015",
+      "datum": "2026-09-12",
+      "bett": "L1",
+      "von": "Kim",
+      "dauer": "mehrere",
+      "ende": null,
+      "pdf": "Dokumente/0015_Noah_2026-09-12.pdf"
+    }
+  ],
+  "hausordnung": {
+    "unterschrieben_am": "2026-09-12",
+    "version": "2026-10",
+    "art": "app",
+    "uebersetzung": null
+  },
+  "datenschutz": {
+    "unterschrieben_am": "2026-09-12",
+    "version": "2026-10"
+  },
+  "sprache": "de",
+  "laeuseschein": {
+    "status": "liegt_vor",
+    "seit": null,
+    "geprueft_von": "Sam"
+  },
+  "dokumente": [
+    {
+      "datei": "Dokumente/0015_Noah_2026-09-12.pdf",
+      "art": "aufnahme",
+      "titel": "Aufnahme-PDF (Hausordnung und Datenschutz)",
+      "am": "2026-09-12",
+      "von": "Kim"
+    }
+  ],
+  "erste_nacht": "2026-09-12",
+  "letzte_nacht": "2026-10-02",
+  "naechte": 6,
+  "loeschen_ab": null,
+  "aufnahme_hinweise_aus": [],
+  "_meta": {
+    "schema": "gast/1",
+    "geaendert_um": "2026-09-12T19:30:00+02:00",
+    "geaendert_von": "Kim",
+    "geraet": "tablet-st-pius",
+    "version": 3
+  }
+}

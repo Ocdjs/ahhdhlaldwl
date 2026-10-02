@@ -1,0 +1,19 @@
+{
+  "text": "Antwort: Schuhe in Größe 44 liegen in der Kleiderkammer.",
+  "von": "Leitung",
+  "ab": "2026-10-02",
+  "bis": "2026-10-02",
+  "dauer": "naechster_dienst",
+  "wichtig": false,
+  "quelle": "archiv",
+  "bezug": "Berichte/2026-10/2026-10-01",
+  "beendet_um": null,
+  "beendet_von": null,
+  "_meta": {
+    "schema": "hinweis/1",
+    "geaendert_um": "2026-10-02T10:05:00+02:00",
+    "geaendert_von": "Leitung",
+    "geraet": "tablet-st-pius",
+    "version": 1
+  }
+}

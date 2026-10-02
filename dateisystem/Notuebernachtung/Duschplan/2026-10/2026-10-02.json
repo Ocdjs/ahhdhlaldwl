@@ -1,0 +1,35 @@
+{
+  "datum": "2026-10-02",
+  "slots": {
+    "19:00": {
+      "gast": "g-urxfldir",
+      "status": "erledigt",
+      "geaendert_um": "2026-10-02T19:31:02+02:00",
+      "geaendert_von": "Kim"
+    },
+    "20:00": {
+      "gast": "g-4jz67swy",
+      "status": "geplant",
+      "geaendert_um": "2026-10-02T17:40:00+02:00",
+      "geaendert_von": "Kim"
+    },
+    "20:30": {
+      "gast": "g-wmgvg2lf",
+      "status": "geplant",
+      "geaendert_um": "2026-10-02T17:40:00+02:00",
+      "geaendert_von": "Kim"
+    }
+  },
+  "bad": {
+    "zu": true,
+    "geaendert_um": "2026-10-02T18:52:10+02:00",
+    "geaendert_von": "Kim"
+  },
+  "_meta": {
+    "schema": "duschplan/1",
+    "geaendert_um": "2026-10-02T19:31:02+02:00",
+    "geaendert_von": "Kim",
+    "geraet": "tablet-st-pius",
+    "version": 6
+  }
+}

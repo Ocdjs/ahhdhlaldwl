@@ -1,0 +1,235 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.notuebernachtung.invalid/einstellungen.schema.json",
+  "title": "Einstellungen",
+  "description": "Einstellungen/App.json – für alle Geräte gleich. Gerätesachen (Nachtmodus, PINs, Kiosk, Nextcloud-Zugang) liegen nur auf dem Gerät.",
+  "type": "object",
+  "properties": {
+    "ampel": {
+      "type": "object",
+      "properties": {
+        "gruen_ab_freien_betten": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "gelb_ab_freien_betten": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "gruen_ab_freien_betten",
+        "gelb_ab_freien_betten"
+      ],
+      "additionalProperties": false
+    },
+    "tageswechsel": {
+      "$ref": "gemeinsam.schema.json#/$defs/uhrzeit"
+    },
+    "dienst": {
+      "type": "object",
+      "properties": {
+        "beginn": {
+          "$ref": "gemeinsam.schema.json#/$defs/uhrzeit"
+        },
+        "ende": {
+          "$ref": "gemeinsam.schema.json#/$defs/uhrzeit"
+        }
+      },
+      "required": [
+        "beginn",
+        "ende"
+      ],
+      "additionalProperties": false
+    },
+    "duschplan": {
+      "type": "object",
+      "properties": {
+        "slots": {
+          "type": "array",
+          "items": {
+            "$ref": "gemeinsam.schema.json#/$defs/uhrzeit"
+          }
+        },
+        "slot_minuten": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "vorlauf_tage": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "bad_abschliessen_bis_alle_geduscht": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "slots",
+        "slot_minuten",
+        "vorlauf_tage",
+        "bad_abschliessen_bis_alle_geduscht"
+      ],
+      "additionalProperties": false
+    },
+    "fehlt_etwas": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "hinweise": {
+      "type": "object",
+      "properties": {
+        "dauern": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "naechster_dienst",
+              "3_tage",
+              "1_woche",
+              "2_wochen",
+              "datum"
+            ]
+          }
+        },
+        "standard": {
+          "type": "string"
+        },
+        "standard_von_im_archiv": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "dauern",
+        "standard",
+        "standard_von_im_archiv"
+      ],
+      "additionalProperties": false
+    },
+    "besetzung": {
+      "type": "object",
+      "properties": {
+        "rollen": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "gruende_abweichung": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "Tausch",
+              "Sonstiges"
+            ]
+          }
+        }
+      },
+      "required": [
+        "rollen",
+        "gruende_abweichung"
+      ],
+      "additionalProperties": false
+    },
+    "sprachen": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z]{2}$"
+      }
+    },
+    "saison": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "beginn": {
+          "$ref": "gemeinsam.schema.json#/$defs/datum"
+        },
+        "ende": {
+          "$ref": "gemeinsam.schema.json#/$defs/datum"
+        },
+        "aufnahme_praefix": {
+          "type": "string"
+        },
+        "naechste_aufnahmenummer": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "name",
+        "beginn",
+        "ende",
+        "aufnahme_praefix",
+        "naechste_aufnahmenummer"
+      ],
+      "additionalProperties": false
+    },
+    "loeschfristen": {
+      "type": "object",
+      "properties": {
+        "vorschlag_vom_traeger_festzulegen": {
+          "type": "boolean"
+        },
+        "gaeste_monate_nach_letzter_nacht": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "hausverbot_monate_nach_ende": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "berichte_monate": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "belegung_und_duschplan_monate": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "hinweise_monate": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "protokoll_monate": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "monatsabschluss": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "vorschlag_vom_traeger_festzulegen",
+        "gaeste_monate_nach_letzter_nacht",
+        "hausverbot_monate_nach_ende",
+        "berichte_monate",
+        "belegung_und_duschplan_monate",
+        "hinweise_monate",
+        "protokoll_monate",
+        "monatsabschluss"
+      ],
+      "additionalProperties": false
+    },
+    "_meta": {
+      "$ref": "gemeinsam.schema.json#/$defs/meta_aenderbar"
+    }
+  },
+  "required": [
+    "ampel",
+    "tageswechsel",
+    "dienst",
+    "duschplan",
+    "fehlt_etwas",
+    "hinweise",
+    "besetzung",
+    "sprachen",
+    "saison",
+    "loeschfristen",
+    "_meta"
+  ],
+  "additionalProperties": false
+}

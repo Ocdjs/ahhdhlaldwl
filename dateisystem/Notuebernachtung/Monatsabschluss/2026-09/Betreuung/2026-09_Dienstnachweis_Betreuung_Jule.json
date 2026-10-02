@@ -1,0 +1,31 @@
+{
+  "monat": "2026-09",
+  "person": "Jule",
+  "bereich": "betreuung",
+  "summen": {
+    "geplant": 0,
+    "gemacht": 1,
+    "abgegeben": 0,
+    "vertretung": 1
+  },
+  "tage": [
+    {
+      "datum": "2026-09-18",
+      "geplant": false,
+      "gemacht": true,
+      "rolle": "Betreuung 1",
+      "bemerkung": "Vertretung für Kim · Sonstiges"
+    }
+  ],
+  "plankorrekturen": [],
+  "unterschrift": "2026-09_Dienstnachweis_Betreuung_Jule.png",
+  "unterschrieben_um": "2026-09-29T19:06:00+02:00",
+  "pdf": "2026-09_Dienstnachweis_Betreuung_Jule.pdf",
+  "_meta": {
+    "schema": "dienstnachweis/1",
+    "angelegt_um": "2026-09-29T19:06:00+02:00",
+    "angelegt_von": "Jule",
+    "geraet": "tablet-st-pius",
+    "unveraenderlich": true
+  }
+}

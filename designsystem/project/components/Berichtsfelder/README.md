@@ -1,11 +1,19 @@
 # Berichtsfelder
 
-Jedes Feld des Dienstberichts hat eine Zeile mit Beschriftung links und Eingabe rechts.
+Jedes Feld des Dienstberichts hat eine Zeile mit Beschriftung links und Eingabe rechts – **in dieser Reihenfolge**:
 
-- Zeile `nu-bericht-zeile`: Beschriftung 220 dp breit (`text-stark` 16 sp), Eingabe daneben. Zwischen Feldern `abstand-6`; keine Linien.
-- **Ja/Nein** (`nu-seg`) für „Hat KHT angerufen?“, Vorfälle, Schlüssel fehlt; keine Vorauswahl. Offene Pflichtfelder zeigen beim Abschließen die Pille „Pflichtfeld“ in `warnung`.
-- **Hat KHT angerufen?** (früher „An KHT gemeldet“): daneben die Pille „KHT-Nummer 25“ aus dem Bettenplan, griffbereit, wenn das Kältehilfetelefon anruft.
-- **Fehlt etwas:** Chips aus der Liste in den Einstellungen und daneben immer ein **Freitextfeld** „Was genau?“, weil die Kategorien breit sind („Müllbeutel 120 l, Duschgel“). Beides steht im PDF.
-- **Abwesenheit von Gästen:** automatisch aus dem Bettenplan: freigehalten, frei bis Rückkehr und **fehlt unentschuldigt** (1. Nacht, ab 2. Nacht mit „Bett zählt als frei“) als Warnzeilen.
-- **Freitext** (Wichtige Hinweise, Fragen von Gästen, Sonstiges): siehe Erwähnung und Stufenwörter.
-- Ein Bericht mit „Vorfälle: Ja“ bekommt den Rahmen 3 dp `vorfall` (`nu-bericht.is-vorfall`).
+1. Besetzung (Betreuung und Küche, siehe Besetzung)
+2. **Hat KHT angerufen?** – Ja/Nein, daneben die Pille „KHT-Nummer 25“
+3. **Wichtige Hinweise** – Freitext mit @-Erwähnung und Stufenwörtern
+4. **Fragen von Gästen**
+5. **Abwesenheiten** – automatisch aus dem Bettenplan (freigehalten, frei bis Rückkehr, fehlt unentschuldigt)
+6. **Externe Gäste**
+7. **Vorfälle** – Ja/Nein; Einzelheiten unter „Wichtige Hinweise“
+8. **Schlüssel fehlt** – Ja/Nein mit Nummer
+9. **Fehlt etwas** – Chips und Freitext „Was genau?“
+10. **Sonstiges**
+
+- Zeile `nu-bericht-zeile`: Beschriftung 220 dp (`text-stark`), Eingabe daneben, zwischen Feldern `abstand-6`, keine Linien.
+- **Pflicht** sind „Hat KHT angerufen?“ und „Vorfälle“ (Pille „Pflichtfeld“ in `warnung` beim Abschließen) sowie eindeutige Erwähnungen. **Unterschriften sind keine Pflicht:** der Text neben dem Knopf sagt „Unterschrift Jule fehlt (geht auch ohne)“, beim Abschließen fragt die App nach (siehe Bericht abgeschlossen).
+- Ein Bericht mit „Vorfälle: Ja“ bekommt den Rahmen 3 dp `vorfall`.
+- Die PDF-Tabelle „Feld | Eintrag“ folgt derselben Reihenfolge.

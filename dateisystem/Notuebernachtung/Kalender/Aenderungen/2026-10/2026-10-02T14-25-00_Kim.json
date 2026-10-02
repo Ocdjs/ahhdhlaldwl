@@ -1,0 +1,19 @@
+{
+  "datum": "2026-10-04",
+  "art": "termin",
+  "rolle": null,
+  "termin_id": "t-2026-10-02",
+  "alt": "Lieferung Decken · 03.10.",
+  "neu": "Lieferung Decken · 04.10.",
+  "von": "Kim",
+  "grund": "Sonstiges",
+  "notiz": "Lieferant kommt einen Tag später",
+  "um": "2026-10-02T14:25:00+02:00",
+  "_meta": {
+    "schema": "planaenderung/1",
+    "angelegt_um": "2026-10-02T14:25:00+02:00",
+    "angelegt_von": "Kim",
+    "geraet": "tablet-st-pius",
+    "unveraenderlich": true
+  }
+}

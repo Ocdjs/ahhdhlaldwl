@@ -7,13 +7,14 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || '/opt/node-tools/n
   await p.goto('file://' + process.cwd() + '/preview.html'); await p.waitForTimeout(500);
   await p.evaluate(() => { localStorage.clear(); }); await p.reload(); await p.waitForTimeout(500);
   await p.evaluate(() => document.documentElement.setAttribute('data-theme','tag'));
-  const S = () => p.evaluate(() => JSON.parse(localStorage.getItem('nu-prototyp-v3') || 'null'));
+  const S = () => p.evaluate(() => JSON.parse(localStorage.getItem('nu-prototyp-v6') || 'null'));
   const kht = async () => (await p.textContent('.nu-kht-nummer b')).trim();
   const ampel = async () => (await p.textContent('.nu-ampel-licht')).trim();
   const shot = async (n) => { await p.waitForTimeout(350); await p.screenshot({ path: n + '.png' }); };
   async function sign(sel){ await p.locator(sel + ' .nu-unterschrift-feld').scrollIntoViewIfNeeded(); const box = await p.locator(sel + ' .nu-unterschrift-feld').boundingBox(); await p.mouse.move(box.x+40, box.y+100); await p.mouse.down(); for(let i=0;i<20;i++){ await p.mouse.move(box.x+40+i*12, box.y+100 - Math.sin(i/2)*30); } await p.mouse.up(); await p.click(sel + ' [data-pad-act="ok"]'); await p.waitForTimeout(150); }
   await shot('s1-plan');
   pruef('KHT-Nummer Start 25 (E1 Notbett belegt zählt), Ampel 6 frei', await kht() === '25' && await ampel() === '6', [await kht(), await ampel()]);
+  pruef('Bad zu, noch 2 Duschen', (await p.getAttribute('.nu-bad', 'data-zustand')) === 'zu' && (await p.getAttribute('[data-tuer="BAD"]', 'class')).includes('is-zu'));
   pruef('Vorwärtspfeil gesperrt', await p.isDisabled('[data-act="tag"][data-arg="1"]'));
   // erwartet -> ist da
   await p.click('.nu-bett[data-nr="D4"]'); await shot('s2-schnell');
@@ -58,8 +59,18 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || '/opt/node-tools/n
   pruef('Zuordnung: Gelbe Karte für Felix', (await p.textContent('.nu-zuordnung-ziel')).includes('Felix'));
   await p.click('[data-act="feldJaNein"][data-arg="kht,ja"]'); await p.click('[data-act="feldJaNein"][data-arg="vorfall,ja"]');
   await p.click('[data-act="fehlt"][data-arg="Decken"]'); await p.fill('#f-fehltText', 'Müllbeutel 120 l'); await p.dispatchEvent('#f-fehltText', 'input');
-  for (const i of [0,1,2]) { await p.click('[data-act="besetzungUnterschrift"][data-arg="' + i + '"]'); await p.waitForTimeout(250); await sign('[data-pad="bes' + i + '"]'); await p.waitForTimeout(200); }
-  await p.click('[data-act="abschliessen"]'); await p.waitForTimeout(500); await shot('s12-abgeschlossen');
+  const reihe = await p.$$eval('.nu-bericht-zeile .nu-feldname', l => l.map(e => e.textContent.trim()));
+  pruef('Feldreihenfolge KHT, Hinweise, Fragen, Abwesenheiten, Externe, Vorfälle, Schlüssel …, Sonstiges', /^Hat KHT angerufen\?.*Wichtige Hinweise.*Fragen von Gästen.*Abwesenheiten.*Externe Gäste.*Vorfälle.*Schlüssel.*Sonstiges/.test(reihe.join(' ')), reihe);
+  for (const i of [0,1]) { await p.click('[data-act="besetzungUnterschrift"][data-arg="' + i + '"]'); await p.waitForTimeout(250); await sign('[data-pad="bes' + i + '"]'); await p.waitForTimeout(200); }
+  await p.click('[data-act="abschliessen"]'); await p.waitForTimeout(300); await shot('s12-ohne-unterschrift');
+  pruef('Warnung „Ohne Unterschrift abschließen?“', (await p.textContent('.nu-dialog')).includes('ohne Unterschrift abschließen'));
+  await p.click('[data-act="abschliessenTrotzdem"]'); await p.waitForTimeout(500); await shot('s12-abgeschlossen');
+  pruef('Abgeschlossen, markiert „ohne Unterschrift“', (await p.textContent('.nu-gesperrt')).includes('ohne Unterschrift'));
+  await p.click('[data-act="besetzungUnterschrift"][data-arg="2"]'); await p.waitForTimeout(250); await sign('[data-pad="bes2"]'); await p.waitForTimeout(250);
+  pruef('Unterschrift nachgeholt, Nachtrag vermerkt', (await p.content()).includes('nachgeholt'));
+  await p.click('[data-act="berichtPdf"]'); await shot('s12-pdf');
+  pruef('PDF trägt Stempel „ohne Unterschrift“', (await p.textContent('.p-pdf')).includes('Ohne Unterschrift abgeschlossen: Jule'));
+  await p.click('.p-blatt-fuss [data-act="modalZu"]');
   const st = await S(); const g = Object.values(st.G);
   const dim = g.find(x => x.vorname === 'Felix'), aliD4 = g.find(x => x.vorname === 'Max' && x.spitz === 'Professor');
   pruef('Felix bekommt die Gelbe Karte', dim.sanktionen.length === 2, dim.sanktionen.map(s => s.stufe));
@@ -70,17 +81,82 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || '/opt/node-tools/n
   await p.click('[data-act="dienstReiter"][data-arg="bericht"]').catch(() => {});
   pruef('Hinweis letzter Dienst für Sam', (await p.content()).includes('Sam: Heute ist dein letzter geplanter Dienst'));
   await p.click('[data-act="dienstReiter"][data-arg="monat"]'); await p.click('[data-act="monatWahl"] >> nth=0'); await shot('s12b-monat');
-  await p.click('[data-act="nachweis"][data-arg$=",Robin"]'); await shot('s12c-nachweis');
-  pruef('Robin: Krankheit erkannt', (await p.textContent('.p-blatt')).includes('krank · vertreten durch Chris'));
+  await p.click('[data-act="nachweis"][data-arg$=",Robin,betreuung"]'); await shot('s12c-nachweis');
+  pruef('Robin: abgegeben an Chris, kein „krank“', (await p.textContent('.p-blatt')).includes('abgegeben an Chris') && !(await p.textContent('.p-blatt')).includes('krank'));
   await p.click('[data-act="planKorrektur"]'); await shot('s12d-korrektur'); await p.click('[data-act="planTag"] >> nth=0'); await p.fill('#pk-grund', 'Plan falsch übernommen'); await p.click('[data-act="planSpeichern"]'); await p.waitForTimeout(200);
   await sign('[data-pad="mon"]'); await p.waitForTimeout(300); await shot('s12e-unterschrieben');
   pruef('Robin unterschrieben und gesperrt', (await p.$('.p-blatt [data-act="planKorrektur"]')) === null && (await p.textContent('.p-blatt')).includes('nicht mehr änderbar'));
   await p.click('.p-blatt-fuss [data-act="modalZu"]'); await p.waitForTimeout(200);
-  pruef('Lohntabelle hat Robin', (await p.textContent('.nu-bericht >> nth=1')).includes('Robin'));
+  pruef('Lohntabelle Betreuung hat Robin', (await p.textContent('.nu-bericht >> nth=1')).includes('Robin'));
+  pruef('Jule in Betreuung und Küche getrennt', (await p.$('[data-act="nachweis"][data-arg$=",Jule,betreuung"]')) !== null && (await p.$('[data-act="nachweis"][data-arg$=",Jule,kueche"]')) !== null);
+  // Duschen erledigt → Erinnerung Bad aufschließen → im Grundriss antippen
+  await p.click('[data-act="dienstReiter"][data-arg="dusche"]'); await p.waitForTimeout(150);
+  for (const z of ['20:00','20:30']) { await p.click('[data-act="slot"][data-arg="' + z + '"]'); await p.click('[data-act="slotStatus"][data-arg="' + z + ',erledigt"]'); await p.waitForTimeout(150); }
+  pruef('Einblendung „Bad aufschließen“', (await p.textContent('#einblendungen, body')).includes('Bad aufschließen'));
+  await p.click('[data-act="glocke"]'); await p.waitForTimeout(150);
+  pruef('Glocke: Bad aufschließen', (await p.textContent('.nu-glocke-liste')).includes('Bad aufschließen'));
+  await p.click('[data-act="erinnerung"][data-arg="bad"]'); await p.waitForTimeout(300); await shot('s12h-bad-erinnern');
+  pruef('Bad im Grundriss: Erinnerung', (await p.getAttribute('.nu-bad', 'data-zustand')) === 'erinnern');
+  await p.click('.nu-bad'); await p.waitForTimeout(250); await shot('s12i-bad-frei');
+  pruef('Bad frei, Tür öffnet animiert', (await p.getAttribute('.nu-bad', 'data-zustand')) === 'frei' && (await p.getAttribute('[data-tuer="BAD"]', 'class')).includes('is-oeffnen'));
+  await p.click('.nu-bad'); pruef('Wieder abschließen fragt nach', (await p.textContent('.nu-dialog')).includes('wieder abschließen')); await p.click('.nu-dialog [data-act="modalZu"]');
+  await p.click('[data-act="bereich"][data-arg="dienst"]'); await p.waitForTimeout(150);
+  // Archiv: Hinweis für die nächsten Dienste mit Anzeigedauer
+  await p.click('[data-act="dienstReiter"][data-arg="archiv"]'); await p.waitForTimeout(200);
+  pruef('Archiv: geplanter Hinweis ab morgen sichtbar', (await p.textContent('.p-main, main, body')).includes('Abendessen erst um 19:30'));
+  await p.click('[data-act="hinweisBlatt"][data-arg="archiv"]'); await p.waitForTimeout(200);
+  pruef('Hinweis: Leitung vorausgewählt', (await p.getAttribute('[data-act="vonWahl"][data-arg="Leitung"]', 'aria-pressed')) === 'true');
+  await p.fill('#hw-text', 'Bitte Zimmer B lüften.'); await p.click('[data-act="dauerWahl"][data-arg="1"]'); await shot('s12f-hinweis-dauer');
+  pruef('Dauer „Nächster Dienst“ = nur 03.10.', (await p.textContent('#hw-zeit')).includes('Nur im Dienst am'));
+  await p.click('[data-act="hinweisSpeichern"]'); await p.waitForTimeout(250);
+  const hw = (await S()).hinweise[0]; pruef('Hinweis gespeichert mit ab = bis', hw.ab === hw.bis && hw.von === 'Leitung', hw);
+  await p.click('[data-act="hinweisEnde"][data-arg="h2"]'); await p.waitForTimeout(250); await shot('s12g-archiv-hinweise');
+  pruef('Hinweis vorzeitig beendet', !!(await S()).hinweise.find(h => h.id === 'h2').beendet);
+  // Archiv: Fehlt etwas, Frage beantworten, wichtiger Hinweis mit Gastbezug
+  pruef('Archiv: Fehlt-etwas-Liste', (await p.textContent('.p-liste')).includes('Müllbeutel 120 l'));
+  await p.click('[data-act="fehltErledigt"] >> text=Toilettenpapier'); await p.waitForTimeout(150);
+  pruef('Fehlt: Toilettenpapier abgehakt', Object.keys((await S()).fehltErledigt).some(k => k.endsWith('|Toilettenpapier')));
+  await p.click('[data-act="kommentarBlatt"][data-arg$=",antwort"] >> nth=0'); await p.waitForTimeout(200);
+  pruef('Antwort: Tom vorausgewählt, Leitung als Von', (await p.getAttribute('[data-act="kommGast"] >> nth=0', 'aria-pressed')) === 'true' && (await p.textContent('[data-act="kommGast"] >> nth=0')).includes('Tom') && (await p.getAttribute('[data-act="vonWahl"][data-arg="Leitung"]', 'aria-pressed')) === 'true');
+  await p.fill('#ko-text', 'Schuhe in Größe 44 liegen in der Kleiderkammer.'); await shot('s12j-antwort'); await p.click('[data-act="kommentarSpeichern"]'); await p.waitForTimeout(250);
+  let st2 = await S(); const tom = Object.values(st2.G).find(g => g.vorname === 'Tom');
+  pruef('Antwort: Hinweis für nächsten Dienst und Notiz bei Tom', st2.hinweise[0].bezug && st2.hinweise[0].text.startsWith('Antwort') && tom.notizen.some(n => /Antwort zu Bericht/.test(n.quelle)), st2.hinweise[0]);
+  await p.click('[data-act="kommentarBlatt"][data-arg="2026-09-28,hinweis"]'); await p.waitForTimeout(200);
+  await p.fill('#ko-text', 'Bei der nächsten Aufnahme nach Schlüssel 7 fragen.'); await p.click('[data-act="kommentarSpeichern"]'); await p.waitForTimeout(250); await shot('s12k-archiv-kommentare');
+  st2 = await S(); const mm = Object.values(st2.G).find(g => g.nachname === 'Mustermann');
+  pruef('Wichtiger Hinweis: Notiz bei Mustermann für Wiederaufnahme', mm.notizen.some(n => n.aufnahme) && st2.hinweise[0].wichtig === true);
+  await p.click('[data-act="dienstReiter"][data-arg="bericht"]'); await p.waitForTimeout(200);
+  const seite = await p.textContent('.p-seite');
+  pruef('Bettwäschewechsel als wichtiger Hinweis', (await p.textContent('.p-seite .nu-hinweis.is-wichtig >> nth=0')).includes('Bettwäschewechsel'));
+  pruef('Bericht heute: beendeter und geplanter Hinweis nicht sichtbar', !seite.includes('Neue Decken') && !seite.includes('Abendessen') && !seite.includes('Zimmer B lüften') && seite.includes('Heizung'));
+  // Wiederaufnahme: Hinweis ploppt auf
+  await p.click('[data-act="bereich"][data-arg="plan"]'); await p.click('.nu-bett[data-nr="F4"]'); await p.click('#schnell [data-act="aufnahme"]'); await p.waitForTimeout(300);
+  await p.fill('#w-suche', 'Mustermann'); await p.waitForTimeout(200); await p.click('#w-treffer [data-act="gastWaehlen"] >> nth=0'); await p.waitForTimeout(300); await shot('s12l-wiederaufnahme');
+  pruef('Wiederaufnahme zeigt Hinweis zu Max', (await p.textContent('.nu-dialog')).includes('Schlüssel 7'));
+  await p.click('.nu-dialog [data-act="modalZu"]'); await p.click('[data-act="aufnahmeAbbrechen"]'); await p.waitForTimeout(200);
+  if (await p.$('.nu-dialog [data-act]')) { const t = await p.$$('.nu-dialog [data-act]'); await t[t.length - 1].click(); await p.waitForTimeout(200); }
   // Kalender Woche
   await p.click('[data-act="bereich"][data-arg="kalender"]'); await shot('s13-kalender');
   pruef('Kalender startet mit 7 Tagen', (await p.$$('.nu-woche-tag')).length === 7);
-  await p.click('[data-act="importBlatt"]'); pruef('Import ohne WhatsApp', !(await p.textContent('.p-blatt')).includes('WhatsApp')); await p.click('.p-blatt-fuss [data-act="modalZu"]');
+  // Kalender ändern: PIN, wer ändert (Pflicht), Markierung, Originalplan bleibt
+  await p.click('[data-act="kalBearbeiten"]'); for (const k of '1234') await p.click('[data-act="pin2"][data-arg="' + k + '"]'); await p.waitForTimeout(200);
+  pruef('Kalender: Ändern freigeschaltet', (await p.$$('.nu-dienstzeile.is-aenderbar')).length > 0);
+  const morgen = await p.evaluate(() => { const d = new Date(); d.setDate(d.getDate() + 1); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); });
+  await p.click('[data-act="dienstAendern"][data-arg="' + morgen + ',1"]'); await p.waitForTimeout(200);
+  const vorher = await p.getAttribute('[data-act="dpPerson"][aria-pressed="true"]', 'data-arg');
+  const neuName = vorher === 'Chris' ? 'Robin' : 'Chris';
+  await p.click('[data-act="dpPerson"][data-arg="' + neuName + '"]'); await p.click('[data-act="dienstSpeichern"]'); await p.waitForTimeout(200);
+  pruef('Ohne „Wer ändert?“ kein Speichern', (await p.textContent('#dp-von-hinweis')).includes('Bitte zuerst'));
+  await p.click('[data-act="dpVon"][data-arg="Leitung"]'); await shot('s13b-dienst-aendern'); await p.click('[data-act="dienstSpeichern"]'); await p.waitForTimeout(250);
+  let st3 = await S();
+  pruef('Dienst geändert, Originalplan unverändert, vermerkt', st3.dienstplan[morgen][1] === neuName && st3.plan0[morgen].nacht[1] === vorher && st3.planAenderungen.slice(-1)[0].von === 'Leitung', [st3.dienstplan[morgen], st3.plan0[morgen]]);
+  await p.click('[data-act="kalBearbeiten"]'); await p.waitForTimeout(200); await shot('s13c-kalender-geaendert');
+  pruef('Kalender markiert die Änderung', (await p.$$('.nu-dienstzeile.is-geaendert')).length >= 1);
+  await p.click('.nu-dienstzeile.is-geaendert'); pruef('Info: geändert von Leitung', (await p.textContent('.p-blatt')).includes('geändert von Leitung')); await p.click('.p-blatt-fuss [data-act="modalZu"]');
+  await p.click('[data-act="kalBearbeiten"]'); for (const k of '1234') await p.click('[data-act="pin2"][data-arg="' + k + '"]'); await p.waitForTimeout(200);
+  await p.click('[data-act="terminAendern"] >> nth=0'); await p.fill('#ta-titel', 'Lieferung Decken (verschoben)'); await p.click('[data-act="dpVon"][data-arg="Kim"]'); await p.click('[data-act="terminSpeichern2"][data-arg="speichern"]'); await p.waitForTimeout(200);
+  pruef('Termin geändert und vermerkt', (await S()).termine.some(t => t.titel.includes('verschoben') && t.geaendert && t.geaendert.von === 'Kim'));
+  await p.click('[data-act="kalBearbeiten"]');
   // Gästedatenbank: Unterschrift nachholen, Papier hinterlegen
   await p.click('[data-act="bereich"][data-arg="gaeste"]'); await p.fill('#g-suche', 'Max'); await p.waitForTimeout(200);
   await p.click('[data-act="akteZeigen"] >> text=L5'); await shot('s14-akte');
@@ -93,6 +169,22 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || '/opt/node-tools/n
   await shot('s15-akte-haddad');
   // Einstellungen: einzelnes Bett sperren, Notbett
   await p.click('[data-act="bereich"][data-arg="einstellungen"]'); for (const k of '1234') await p.click('[data-act="pinTaste"][data-arg="' + k + '"]');
+  // Dienstplan einlesen: Prüfmaske je Tag, ergibt Originalplan
+  await p.click('[data-act="einst"][data-arg="dienstplan"]'); await p.waitForTimeout(150); await shot('s15b-dienstplan-start');
+  pruef('Oktober schon eingelesen, November offen', (await p.textContent('.p-liste')).includes('Originalplan steht fest') && (await p.$('[data-act="scanStart"]')) !== null);
+  await p.click('[data-act="scanStart"] >> nth=0'); await p.waitForTimeout(150);
+  let tage = 0;
+  for (let n = 0; n < 40; n++) {
+    if (await p.$('[data-act="scanSpeichern"]')) break;
+    if (n === 4) { await p.click('.nu-scan-pruef >> nth=1 >> [data-act="scanWahl"][data-arg="1,Jule"]'); await shot('s15c-dienstplan-pruefen'); }
+    for (const z of await p.$$('.nu-scan-pruef.is-unsicher:not(.is-geprueft)')) { const c = await z.$('[aria-pressed="true"]') || await z.$('[data-act="scanWahl"]'); await c.click(); await p.waitForTimeout(60); }
+    if (n === 0) pruef('Erst Unsicheres prüfen sperrt nicht ohne Grund', !(await p.isDisabled('[data-act="scanTagOk"]')));
+    await p.click('[data-act="scanTagOk"]'); tage++; await p.waitForTimeout(40);
+  }
+  await shot('s15d-dienstplan-fertig');
+  await p.click('[data-act="scanSpeichern"]'); await p.waitForTimeout(250);
+  const st4 = await S(); const nov = Object.keys(st4.planImporte).sort().pop();
+  pruef('Originalplan November gespeichert, 1 Korrektur', st4.planImporte[nov] && st4.planImporte[nov].korrigiert >= 1 && st4.plan0[nov + '-05'].nacht[1] === 'Jule', [tage, st4.planImporte[nov]]);
   await p.click('[data-act="einst"][data-arg="betten"]'); await p.click('[data-act="bettAus"][data-arg="D3"]'); await p.click('[data-act="notbett"][data-arg="L3"]'); await shot('s16-betten');
   await p.fill('#name-X', 'Sofa Wohnzimmer'); await p.click('[data-act="extraDazu"][data-arg="pius"]'); await p.waitForTimeout(200);
   await p.fill('#nr-NX', 'Sofa'); await p.fill('#name-NX', 'Sofa im Saal'); await p.click('[data-act="extraDazu"][data-arg="niko"]'); await p.waitForTimeout(200);
@@ -110,6 +202,13 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || '/opt/node-tools/n
   pruef('D1 steht nach Tausch rechts von D6', parseFloat(d1) > parseFloat(d6), [d1, d6]);
   await p.click('[data-act="reiter"][data-arg="niko"]'); await shot('s18-nikolaus');
   pruef('St. Nikolaus: N9 und Sofa rechts neben dem Saal', (await p.$('.nu-plaetze .nu-bett[data-nr="N9"]')) !== null && (await p.$('.nu-plaetze .nu-bett[data-nr="Sofa"]')) !== null); await p.click('[data-act="reiter"][data-arg="haus"]');
+  // Zimmer T und F ganz aus → Türen schließen animiert, Flur gesperrt
+  await p.click('[data-act="bereich"][data-arg="einstellungen"]'); await p.click('[data-act="einst"][data-arg="betten"]').catch(() => {}); await p.waitForTimeout(150);
+  await p.click('[data-act="zimmerAus"][data-arg="T"]'); await p.click('[data-act="zimmerAus"][data-arg="F"]'); await p.waitForTimeout(150);
+  await p.click('[data-act="bereich"][data-arg="plan"]'); await p.waitForTimeout(120); await p.screenshot({ path: 's18b-tuer-halb.png' }); await p.waitForTimeout(800); await shot('s18c-tueren-zu');
+  const tc = async id => await p.getAttribute('[data-tuer="' + id + '"]', 'class');
+  pruef('Türen T, F, Flur schließen animiert', (await tc('T')).includes('is-schliessen') && (await tc('F')).includes('is-schliessen') && (await tc('FLUR')).includes('is-zu'));
+  await p.click('[data-act="bereich"][data-arg="einstellungen"]'); await p.click('[data-act="zimmerAus"][data-arg="T"]'); await p.click('[data-act="zimmerAus"][data-arg="F"]'); await p.click('[data-act="bereich"][data-arg="plan"]'); await p.waitForTimeout(200);
   // Nacht
   await p.evaluate(() => document.documentElement.setAttribute('data-theme','nacht')); await p.waitForTimeout(100);
   await p.screenshot({ path: 's19-nacht.png' });

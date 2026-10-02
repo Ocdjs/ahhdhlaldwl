@@ -1,0 +1,18 @@
+{
+  "art": "sanktion",
+  "gast_id": "g-tbs6twp6",
+  "stufe": "Gelbe Karte",
+  "grund": "Laute Musik nach 23 Uhr nach zwei Hinweisen",
+  "datum": "2026-09-29",
+  "bis": null,
+  "von": "Sam",
+  "bericht": "Berichte/2026-09/2026-09-29",
+  "absatz": 1,
+  "_meta": {
+    "schema": "ereignis/1",
+    "angelegt_um": "2026-09-29T22:10:00+02:00",
+    "angelegt_von": "Sam",
+    "geraet": "tablet-st-pius",
+    "unveraenderlich": true
+  }
+}

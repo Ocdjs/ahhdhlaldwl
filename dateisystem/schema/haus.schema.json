@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.notuebernachtung.invalid/haus.schema.json",
+  "title": "Haus",
+  "description": "Einstellungen/Haus.json – Standorte, Zimmer, Betten, Notbetten, Sperren, Nummerntausch, zusätzliche Plätze. Ändern nur in den Einstellungen (Admin-PIN).",
+  "type": "object",
+  "properties": {
+    "standorte": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "gemeinsam.schema.json#/$defs/standort"
+          },
+          "name": {
+            "type": "string"
+          },
+          "grundriss": {
+            "$ref": "gemeinsam.schema.json#/$defs/relpfad"
+          },
+          "zimmer": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "gesperrt": {
+                  "type": "boolean"
+                },
+                "betten": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "nr": {
+                        "$ref": "gemeinsam.schema.json#/$defs/bettnr"
+                      },
+                      "platz": {
+                        "type": "string"
+                      },
+                      "art": {
+                        "enum": [
+                          "bett",
+                          "stockbett",
+                          "zusatz"
+                        ]
+                      },
+                      "stockbett": {
+                        "type": "string"
+                      },
+                      "lage": {
+                        "enum": [
+                          "oben",
+                          "unten"
+                        ]
+                      },
+                      "notbett": {
+                        "type": "boolean"
+                      },
+                      "gesperrt": {
+                        "type": "boolean"
+                      },
+                      "ort": {
+                        "type": "string"
+                      },
+                      "bezeichnung": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "nr",
+                      "platz",
+                      "art",
+                      "notbett",
+                      "gesperrt"
+                    ],
+                    "additionalProperties": false,
+                    "description": "platz = gezeichneter Platz im Grundriss; Nummerntausch ändert nur platz."
+                  }
+                },
+                "zugang_ueber": {
+                  "type": "string"
+                },
+                "abschaltbar": {
+                  "type": "boolean"
+                },
+                "tuer": {
+                  "type": "string"
+                },
+                "frei_benennbar": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "gesperrt",
+                "betten"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "raeume": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "art": {
+                  "enum": [
+                    "bad",
+                    "flur"
+                  ]
+                },
+                "tuer": {
+                  "type": "string"
+                },
+                "gesperrt_wenn_alle_aus": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "art",
+                "tuer"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "grundriss",
+          "zimmer",
+          "raeume"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "_meta": {
+      "$ref": "gemeinsam.schema.json#/$defs/meta_aenderbar"
+    }
+  },
+  "required": [
+    "standorte",
+    "_meta"
+  ],
+  "additionalProperties": false
+}

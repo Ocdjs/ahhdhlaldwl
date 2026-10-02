@@ -1,0 +1,16 @@
+{
+  "monat": "2026-10",
+  "erledigt": {
+    "2026-10-01|Toilettenpapier": {
+      "von": "Leitung",
+      "um": "2026-10-02T10:00:00+02:00"
+    }
+  },
+  "_meta": {
+    "schema": "fehlt_erledigt/1",
+    "geaendert_um": "2026-10-02T10:00:00+02:00",
+    "geaendert_von": "Leitung",
+    "geraet": "tablet-st-pius",
+    "version": 1
+  }
+}

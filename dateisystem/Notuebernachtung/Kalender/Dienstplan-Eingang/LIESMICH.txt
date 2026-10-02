@@ -1,0 +1,3 @@
+Dienstplan als PDF oder ICS hier ablegen. Die App fragt beim nächsten Abgleich „Neuer Dienstplan – einlesen?“,
+zeigt eine Prüftabelle und legt danach Kalender/Dienstplan/JJJJ-MM.json an. Die Datei wandert nach Eingelesen/.
+Kein Import aus WhatsApp.

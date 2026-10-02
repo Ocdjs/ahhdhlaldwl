@@ -1,0 +1,129 @@
+{
+  "monat": "2026-09",
+  "person": "Jule",
+  "bereich": "kueche",
+  "summen": {
+    "geplant": 15,
+    "gemacht": 15,
+    "abgegeben": 0,
+    "vertretung": 0
+  },
+  "tage": [
+    {
+      "datum": "2026-09-02",
+      "geplant": true,
+      "gemacht": true,
+      "rolle": "Küche",
+      "bemerkung": null
+    },
+    {
+      "datum": "2026-09-04",
+      "geplant": true,
+      "gemacht": true,
+      "rolle": "Küche",
+      "bemerkung": null
+    },
+    {
+      "datum": "2026-09-06",
+      "geplant": true,
+      "gemacht": true,
+      "rolle": "Küche",
+      "bemerkung": null
+    },
+    {
+      "datum": "2026-09-08",
+      "geplant": true,
+      "gemacht": true,
+      "rolle": "Küche",
+      "bemerkung": null
+    },
+    {
+      "datum": "2026-09-10",
+      "geplant": true,
+      "gemacht": true,
+      "rolle": "Küche",
+      "bemerkung": null
+    },
+    {
+      "datum": "2026-09-12",
+      "geplant": true,
+      "gemacht": true,
+      "rolle": "Küche",
+      "bemerkung": null
+    },
+    {
+      "datum": "2026-09-14",
+      "geplant": true,
+      "gemacht": true,
+      "rolle": "Küche",
+      "bemerkung": null
+    },
+    {
+      "datum": "2026-09-16",
+      "geplant": true,
+      "gemacht": true,
+      "rolle": "Küche",
+      "bemerkung": null
+    },
+    {
+      "datum": "2026-09-18",
+      "geplant": true,
+      "gemacht": true,
+      "rolle": "Küche",
+      "bemerkung": null
+    },
+    {
+      "datum": "2026-09-20",
+      "geplant": true,
+      "gemacht": true,
+      "rolle": "Küche",
+      "bemerkung": null
+    },
+    {
+      "datum": "2026-09-22",
+      "geplant": true,
+      "gemacht": true,
+      "rolle": "Küche",
+      "bemerkung": null
+    },
+    {
+      "datum": "2026-09-24",
+      "geplant": true,
+      "gemacht": true,
+      "rolle": "Küche",
+      "bemerkung": null
+    },
+    {
+      "datum": "2026-09-26",
+      "geplant": true,
+      "gemacht": true,
+      "rolle": "Küche",
+      "bemerkung": null
+    },
+    {
+      "datum": "2026-09-28",
+      "geplant": true,
+      "gemacht": true,
+      "rolle": "Küche",
+      "bemerkung": null
+    },
+    {
+      "datum": "2026-09-30",
+      "geplant": true,
+      "gemacht": true,
+      "rolle": "Küche",
+      "bemerkung": null
+    }
+  ],
+  "plankorrekturen": [],
+  "unterschrift": "2026-09_Dienstnachweis_Kueche_Jule.png",
+  "unterschrieben_um": "2026-09-29T19:05:00+02:00",
+  "pdf": "2026-09_Dienstnachweis_Kueche_Jule.pdf",
+  "_meta": {
+    "schema": "dienstnachweis/1",
+    "angelegt_um": "2026-09-29T19:05:00+02:00",
+    "angelegt_von": "Jule",
+    "geraet": "tablet-st-pius",
+    "unveraenderlich": true
+  }
+}

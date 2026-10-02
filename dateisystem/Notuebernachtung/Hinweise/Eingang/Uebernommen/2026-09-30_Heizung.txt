@@ -1,0 +1,4 @@
+bis: 2026-10-05
+wichtig: ja
+
+Heizung im T-Zimmer ist defekt. Der Handwerker kommt Donnerstag, bis dahin den Heizlüfter nutzen.

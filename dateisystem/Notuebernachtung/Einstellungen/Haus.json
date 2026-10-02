@@ -1,0 +1,389 @@
+{
+  "standorte": [
+    {
+      "id": "st-pius",
+      "name": "St. Pius",
+      "grundriss": "Einstellungen/Grundriss_St-Pius.json",
+      "zimmer": [
+        {
+          "id": "D",
+          "name": "Zimmer D",
+          "gesperrt": false,
+          "betten": [
+            {
+              "nr": "D1",
+              "platz": "D1",
+              "art": "bett",
+              "notbett": false,
+              "gesperrt": false
+            },
+            {
+              "nr": "D2",
+              "platz": "D2",
+              "art": "stockbett",
+              "stockbett": "D2/D3",
+              "lage": "oben",
+              "notbett": false,
+              "gesperrt": false
+            },
+            {
+              "nr": "D3",
+              "platz": "D3",
+              "art": "stockbett",
+              "stockbett": "D2/D3",
+              "lage": "unten",
+              "notbett": false,
+              "gesperrt": false
+            },
+            {
+              "nr": "D4",
+              "platz": "D4",
+              "art": "stockbett",
+              "stockbett": "D4/D5",
+              "lage": "oben",
+              "notbett": false,
+              "gesperrt": false
+            },
+            {
+              "nr": "D5",
+              "platz": "D5",
+              "art": "stockbett",
+              "stockbett": "D4/D5",
+              "lage": "unten",
+              "notbett": false,
+              "gesperrt": false
+            },
+            {
+              "nr": "D6",
+              "platz": "D6",
+              "art": "bett",
+              "notbett": false,
+              "gesperrt": false
+            }
+          ],
+          "tuer": "D"
+        },
+        {
+          "id": "T",
+          "name": "T-Zimmer",
+          "gesperrt": false,
+          "betten": [
+            {
+              "nr": "T1",
+              "platz": "T1",
+              "art": "stockbett",
+              "stockbett": "T1/T2",
+              "lage": "oben",
+              "notbett": false,
+              "gesperrt": false
+            },
+            {
+              "nr": "T2",
+              "platz": "T2",
+              "art": "stockbett",
+              "stockbett": "T1/T2",
+              "lage": "unten",
+              "notbett": false,
+              "gesperrt": false
+            },
+            {
+              "nr": "T3",
+              "platz": "T3",
+              "art": "bett",
+              "notbett": false,
+              "gesperrt": false
+            }
+          ],
+          "zugang_ueber": "F",
+          "tuer": "T"
+        },
+        {
+          "id": "B",
+          "name": "Zimmer B",
+          "gesperrt": false,
+          "betten": [
+            {
+              "nr": "B1",
+              "platz": "B1",
+              "art": "bett",
+              "notbett": false,
+              "gesperrt": false
+            },
+            {
+              "nr": "B2",
+              "platz": "B2",
+              "art": "bett",
+              "notbett": false,
+              "gesperrt": false
+            },
+            {
+              "nr": "B3",
+              "platz": "B3",
+              "art": "stockbett",
+              "stockbett": "B3/B4",
+              "lage": "oben",
+              "notbett": false,
+              "gesperrt": false
+            },
+            {
+              "nr": "B4",
+              "platz": "B4",
+              "art": "stockbett",
+              "stockbett": "B3/B4",
+              "lage": "unten",
+              "notbett": false,
+              "gesperrt": false
+            }
+          ],
+          "tuer": "B"
+        },
+        {
+          "id": "F",
+          "name": "Zimmer F",
+          "gesperrt": false,
+          "betten": [
+            {
+              "nr": "F1",
+              "platz": "F1",
+              "art": "bett",
+              "notbett": false,
+              "gesperrt": false
+            },
+            {
+              "nr": "F2",
+              "platz": "F2",
+              "art": "bett",
+              "notbett": false,
+              "gesperrt": false
+            },
+            {
+              "nr": "F3",
+              "platz": "F3",
+              "art": "stockbett",
+              "stockbett": "F3/F4",
+              "lage": "oben",
+              "notbett": false,
+              "gesperrt": false
+            },
+            {
+              "nr": "F4",
+              "platz": "F4",
+              "art": "stockbett",
+              "stockbett": "F3/F4",
+              "lage": "unten",
+              "notbett": false,
+              "gesperrt": false
+            }
+          ],
+          "tuer": "F"
+        },
+        {
+          "id": "L",
+          "name": "Loggien",
+          "gesperrt": false,
+          "betten": [
+            {
+              "nr": "L1",
+              "platz": "L1",
+              "art": "bett",
+              "notbett": false,
+              "gesperrt": false,
+              "ort": "Loggia"
+            },
+            {
+              "nr": "L2",
+              "platz": "L2",
+              "art": "bett",
+              "notbett": false,
+              "gesperrt": false,
+              "ort": "Loggia"
+            },
+            {
+              "nr": "L3",
+              "platz": "L3",
+              "art": "bett",
+              "notbett": true,
+              "gesperrt": false,
+              "ort": "Loggia"
+            },
+            {
+              "nr": "L4",
+              "platz": "L4",
+              "art": "bett",
+              "notbett": false,
+              "gesperrt": false,
+              "ort": "Loggia"
+            },
+            {
+              "nr": "L5",
+              "platz": "L5",
+              "art": "bett",
+              "notbett": false,
+              "gesperrt": false,
+              "ort": "Loggia"
+            }
+          ]
+        },
+        {
+          "id": "E",
+          "name": "Esszimmer",
+          "gesperrt": false,
+          "betten": [
+            {
+              "nr": "E1",
+              "platz": "E1",
+              "art": "bett",
+              "notbett": true,
+              "gesperrt": false,
+              "ort": "Esszimmer"
+            }
+          ]
+        },
+        {
+          "id": "TH",
+          "name": "Tiny House",
+          "gesperrt": false,
+          "betten": [
+            {
+              "nr": "TH1",
+              "platz": "TH1",
+              "art": "bett",
+              "notbett": false,
+              "gesperrt": false,
+              "ort": "Tiny House"
+            }
+          ],
+          "abschaltbar": true
+        },
+        {
+          "id": "X",
+          "name": "Weitere Plätze",
+          "gesperrt": false,
+          "betten": [
+            {
+              "nr": "Z1",
+              "platz": "Z1",
+              "art": "zusatz",
+              "bezeichnung": "Sofa Wohnzimmer",
+              "notbett": false,
+              "gesperrt": true
+            }
+          ],
+          "frei_benennbar": true
+        }
+      ],
+      "raeume": [
+        {
+          "id": "BAD",
+          "name": "Bad",
+          "art": "bad",
+          "tuer": "BAD"
+        },
+        {
+          "id": "FLUR",
+          "name": "Flur",
+          "art": "flur",
+          "tuer": "FLUR",
+          "gesperrt_wenn_alle_aus": [
+            "T",
+            "F"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "st-nikolaus",
+      "name": "St. Nikolaus",
+      "grundriss": "Einstellungen/Grundriss_St-Nikolaus.json",
+      "zimmer": [
+        {
+          "id": "N",
+          "name": "Saal",
+          "gesperrt": false,
+          "betten": [
+            {
+              "nr": "N1",
+              "platz": "N1",
+              "art": "bett",
+              "notbett": false,
+              "gesperrt": false
+            },
+            {
+              "nr": "N2",
+              "platz": "N2",
+              "art": "bett",
+              "notbett": false,
+              "gesperrt": false
+            },
+            {
+              "nr": "N3",
+              "platz": "N3",
+              "art": "bett",
+              "notbett": false,
+              "gesperrt": false
+            },
+            {
+              "nr": "N4",
+              "platz": "N4",
+              "art": "bett",
+              "notbett": false,
+              "gesperrt": true
+            },
+            {
+              "nr": "N5",
+              "platz": "N5",
+              "art": "bett",
+              "notbett": false,
+              "gesperrt": false
+            },
+            {
+              "nr": "N6",
+              "platz": "N6",
+              "art": "bett",
+              "notbett": false,
+              "gesperrt": false
+            },
+            {
+              "nr": "N7",
+              "platz": "N7",
+              "art": "bett",
+              "notbett": false,
+              "gesperrt": false
+            },
+            {
+              "nr": "N8",
+              "platz": "N8",
+              "art": "bett",
+              "notbett": false,
+              "gesperrt": false
+            }
+          ]
+        },
+        {
+          "id": "NX",
+          "name": "Weitere Plätze",
+          "gesperrt": false,
+          "betten": [
+            {
+              "nr": "N9",
+              "platz": "N9",
+              "art": "zusatz",
+              "bezeichnung": "Matratze Flur",
+              "notbett": false,
+              "gesperrt": false
+            }
+          ],
+          "frei_benennbar": true
+        }
+      ],
+      "raeume": []
+    }
+  ],
+  "_meta": {
+    "schema": "haus/1",
+    "geaendert_um": "2026-09-30T16:20:00+02:00",
+    "geaendert_von": "Leitung",
+    "geraet": "tablet-st-pius",
+    "version": 14
+  }
+}

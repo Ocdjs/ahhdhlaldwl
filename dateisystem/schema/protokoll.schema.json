@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.notuebernachtung.invalid/protokoll.schema.json",
+  "title": "Protokollzeile",
+  "description": "_app/Protokoll/JJJJ-MM/JJJJ-MM-TT_<geraet>.jsonl – eine Zeile je Änderung, nur anhängen. Gäste nur als ID, nie mit Namen.",
+  "type": "object",
+  "properties": {
+    "um": {
+      "$ref": "gemeinsam.schema.json#/$defs/zeitpunkt"
+    },
+    "von": {
+      "$ref": "gemeinsam.schema.json#/$defs/person"
+    },
+    "art": {
+      "type": "string",
+      "pattern": "^[a-z]+\\.[a-z_]+$"
+    },
+    "ziel": {
+      "type": "string"
+    },
+    "gast": {
+      "$ref": "gemeinsam.schema.json#/$defs/gast_id"
+    },
+    "alt": {
+      "type": "string"
+    },
+    "neu": {
+      "type": "string"
+    },
+    "zusatz": {
+      "type": "string"
+    },
+    "anzahl": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "required": [
+    "um",
+    "von",
+    "art",
+    "ziel"
+  ],
+  "additionalProperties": false
+}

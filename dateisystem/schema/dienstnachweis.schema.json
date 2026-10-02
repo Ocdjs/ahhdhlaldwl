@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.notuebernachtung.invalid/dienstnachweis.schema.json",
+  "title": "Dienstnachweis",
+  "description": "Monatsabschluss/JJJJ-MM/<Betreuung|Kueche>/JJJJ-MM_Dienstnachweis_<Bereich>_<Person>.json – je Person und Bereich, unveränderlich nach der Unterschrift. Kein „krank“.",
+  "type": "object",
+  "properties": {
+    "monat": {
+      "$ref": "gemeinsam.schema.json#/$defs/monat"
+    },
+    "person": {
+      "type": "string"
+    },
+    "bereich": {
+      "$ref": "gemeinsam.schema.json#/$defs/bereich"
+    },
+    "summen": {
+      "type": "object",
+      "properties": {
+        "geplant": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "gemacht": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "abgegeben": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "vertretung": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "geplant",
+        "gemacht",
+        "abgegeben",
+        "vertretung"
+      ],
+      "additionalProperties": false
+    },
+    "tage": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "datum": {
+            "$ref": "gemeinsam.schema.json#/$defs/datum"
+          },
+          "geplant": {
+            "type": "boolean"
+          },
+          "gemacht": {
+            "type": "boolean"
+          },
+          "rolle": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "bemerkung": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "datum",
+          "geplant",
+          "gemacht",
+          "rolle",
+          "bemerkung"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "plankorrekturen": {
+      "type": "array",
+      "items": {
+        "$ref": "gemeinsam.schema.json#/$defs/relpfad"
+      }
+    },
+    "unterschrift": {
+      "$ref": "gemeinsam.schema.json#/$defs/relpfad"
+    },
+    "unterschrieben_um": {
+      "$ref": "gemeinsam.schema.json#/$defs/zeitpunkt"
+    },
+    "pdf": {
+      "$ref": "gemeinsam.schema.json#/$defs/relpfad"
+    },
+    "_meta": {
+      "$ref": "gemeinsam.schema.json#/$defs/meta_unveraenderlich"
+    }
+  },
+  "required": [
+    "monat",
+    "person",
+    "bereich",
+    "summen",
+    "tage",
+    "plankorrekturen",
+    "unterschrift",
+    "unterschrieben_um",
+    "pdf",
+    "_meta"
+  ],
+  "additionalProperties": false
+}

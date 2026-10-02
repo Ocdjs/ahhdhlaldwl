@@ -10,9 +10,10 @@ Navigation: **Bettenplan · Gäste · Dienst & Bericht · Kalender · Einstellun
 - Oben, beim Scrollen stehend, `nu-kennzahlen`: Ampel („6 Betten frei · Ampel grün“), **KHT-Nummer** (nur die Zahl der belegten Betten, antippbar für einen Satz zur Regel), „St. Pius 12 da · 4 erwartet“, „St. Nikolaus 7 von 8“.
 - Darunter die Reiter **St. Pius** und **St. Nikolaus** (`nu-reiter`, mit Zahl freier Betten) und rechts der Hauptknopf „Gast aufnehmen“.
 - **St. Pius:** der Grundriss (Baustein **Grundriss**): Zimmer D (zwei Räume), Privaträume, T-Zimmer (Zugang über Zimmer F), Zimmer B, Flur, Bad, Zimmer F, Treppe; Betten als kompakte Bettkarten an ihrer Stelle. Rechts daneben untereinander Loggien L1–L5, Esszimmer E1, Tiny House TH1 und weitere Plätze Z1 …; Notbetten tragen „Notbett“.
+- **Bad** im Grundriss (Baustein Tür und Bad): zu während der Duschzeit, Erinnerung „Bad aufschließen“ (Glocke und Einblendung), wenn alle geduscht haben; kurz antippen = frei. Ganz gesperrte Zimmer und das abgeschlossene Bad zeigen eine geschlossene Tür (animiert).
 - **St. Nikolaus:** Saal mit N1–N8 in zwei Reihen, rechts daneben die weiteren Plätze (z. B. N9); Belegung wird jede Nacht fortgeschrieben. Aufnahme dort nur mit Person und Abschluss, ohne Hausordnung und Unterschrift.
 - Unter 900 dp Breite: Zimmerrahmen untereinander statt Grundriss.
-- **Vergangene Tage** (Pfeil zurück): Belegung jener Nacht, Pille „Nur lesen“, niemand „erwartet“; Tipp öffnet Gastdetails mit „Nachtrag hinzufügen“. Der Pfeil nach vorn ist am heutigen Tag gesperrt.
+- **Vergangene Tage** (Pfeil zurück): Belegung jener Nacht, Pille „Nur lesen“, niemand „erwartet“; Tipp öffnet Gastdetails mit „Notiz hinzufügen“. Der Pfeil nach vorn ist am heutigen Tag gesperrt.
 
 **Schnellauswahl** am Bett (`nu-schnell`) – siehe Baustein. „Nicht da“ fragt: „Weiter warten“, „Hat sich abgemeldet“, „Fehlt unentschuldigt“.
 
@@ -29,6 +30,8 @@ Navigation: **Bettenplan · Gäste · Dienst & Bericht · Kalender · Einstellun
 5. **Datenschutz:** nur Deutsch, ein `nu-unterschrift`: Gast.
 6. **Abschluss:** Gast, Bett, Dauer, „Angezeigt als Max (B2)“ bei gleichem Vornamen, Übersetzung, Aufnahmenummer, PDF-Name; Läuseschein-Pflicht bei mehreren Nächten. „Fertig“ setzt das Bett mit `is-neu` auf „anwesend“.
 
+**Wiederaufnahme:** Hat der gewählte Gast Notizen mit „bei Wiederaufnahme“ (z. B. ein wichtiger Hinweis der Leitung aus dem Archiv), öffnet sich sofort der Dialog „Hinweis zu Max (Mustermann)“ mit „Nicht mehr zeigen“ und „Verstanden“.
+
 Bekannter Gast mit Unterschrift: nur Schritt 1, 2, 6. **Nachholen** (aus Gastdetails oder Gästedatenbank): Schritt 3, 4, 5, 6.
 
 ## 3 Gäste (Gästedatenbank)
@@ -43,43 +46,50 @@ Bekannter Gast mit Unterschrift: nur Schritt 1, 2, 6. **Nachholen** (aus Gastdet
 
 **Bericht** (eine lange Seite, zweispaltig ab 1200 dp):
 - Kopf: Datum, Besetzung (`nu-besetzung`) mit Unterschriften.
-- Linke Spalte: Berichtsfelder in dieser Reihenfolge: Wichtige Hinweise (Freitext mit @ und Stufenwörtern, darunter die Sanktions-Zuordnung), **Hat KHT angerufen?** (mit den Zahlen), Vorfälle, **Fehlt etwas** (Chips und Freitext), Fragen von Gästen, Abwesenheit von Gästen (inkl. „fehlt unentschuldigt“), Schlüssel fehlt, Externe Gäste, Sonstiges.
-- Rechte Spalte: Hinweise, Seit deinem letzten Dienst, Heute.
-- Unten: „Bericht abschließen“ mit dem, was noch fehlt (Unterschriften, KHT-Anruf, Vorfälle, mehrdeutige @-Erwähnungen).
+- Linke Spalte: Berichtsfelder in dieser Reihenfolge: **Hat KHT angerufen?** (mit KHT-Nummer), **Wichtige Hinweise** (Freitext mit @ und Stufenwörtern, darunter die Sanktions-Zuordnung), Fragen von Gästen, Abwesenheiten (inkl. „fehlt unentschuldigt“), Externe Gäste, Vorfälle, Schlüssel fehlt, **Fehlt etwas** (Chips und Freitext), Sonstiges. Die Besetzung (Betreuung und Küche) steht davor im Kopf.
+- Rechte Spalte: Hinweise (Bettwäschewechsel des Tages als wichtiger Hinweis zuerst), Seit deinem letzten Dienst, Heute.
+- Unten: „Bericht abschließen“ mit dem, was noch fehlt (KHT-Anruf, Vorfälle, mehrdeutige @-Erwähnungen); fehlende Unterschriften stehen als „geht auch ohne“ dabei.
 - Schreibmodus mit Bildschirmtastatur: rechte Spalte klappt ein, siehe Abschnitt Eingabe.
 
 **Wer bekommt die Sanktion?** (Blatt aus der Zuordnung): alle im Absatz Genannten mit Bettnummer und bisherigen Sanktionen, dazu „Niemand“.
 
-**Abgeschlossen:** `nu-gesperrt` mit „PDF ansehen“ und **„Teilen“** (Android-Teilen-Dialog, kein fester Empfänger); Nachträge darunter.
+**Ohne Unterschrift abschließen** (Dialog): „Wirklich ohne Unterschrift abschließen?“ mit Namen und Rolle, bei der Küche „Der Küchendienst geht oft früher, das ist in Ordnung.“; „Zurück“ / „Ja, trotzdem abschließen“.
+
+**Abgeschlossen:** `nu-gesperrt` mit Pille „ohne Unterschrift: Jule“, „nicht mehr änderbar, nur ergänzen“, „PDF ansehen“ (Vorschau mit Stempel) und **„Teilen“** (Android-Teilen-Dialog, kein fester Empfänger); in der Besetzung „Unterschrift nachholen“; Ergänzungen darunter, Knopf „Ergänzen“.
 
 **Duschplan** (Reiter): Tagesauswahl Heute, Morgen, Übermorgen, In 3 Tagen; Raster der Slots.
 
-**Archiv** (Reiter): Liste der Berichte, neueste oben, Vorfälle rot umrahmt; Filter und Volltextsuche.
+**Archiv** (Reiter, siehe Archivkarte): oben **Hinweise für die nächsten Dienste** („Hinweis hinterlegen“, laufende und geplante mit „Beenden“, abgelaufene eingeklappt), dann **Fehlt etwas** zum Abhaken, dann die Berichte, neueste oben, Vorfälle rot umrahmt. Je Bericht: Frage von Gästen mit „Antworten“, Fehlt-Pillen, Kommentare, „Kommentieren“ und „Wichtiger Hinweis“. Filter und Volltextsuche.
 
-**Hinweis anlegen:** Blatt mit „Von“ (Chips: Personen im Dienst, Leitung, übriges Team), Text, gültig bis, Priorität normal/wichtig.
+**Kommentar / Antwort / Wichtiger Hinweis** (Blatt): Von (Leitung vorgewählt), Art, Text, betroffener Gast (mit „erscheint bei der Wiederaufnahme“), „Oben im Dienst zeigen“ (Nur im Archiv, Nächster Dienst, 3 Tage, 1 Woche, Bis Datum).
 
-**Monatsabschluss** (Reiter): Monat wählen, Übersicht aller Personen mit Geplant, Gemacht, Abweichung, Status; „Öffnen“ zeigt den **Dienstnachweis** mit Tageszeilen, „Geplante Dienste korrigieren“ (Warnung, Pflichtgrund) und Unterschriftsfeld; darunter die Lohntabelle der unterschriebenen Nachweise. Beim letzten geplanten Dienst einer Person erscheint oben im Bericht ein freiwilliger Hinweis.
+**Hinweis anlegen:** Blatt mit „Von“ (Chips: Leitung, Personen im Dienst, übriges Team; im Archiv ist Leitung vorgewählt), Text, „Wie lange anzeigen?“ (Nächster Dienst, 3 Tage, 1 Woche, 2 Wochen, Bis Datum), wichtig.
 
-**Person tauschen** (Besetzung): Grund Krankheit, Tausch oder Sonstiges, dann die Person.
+**Monatsabschluss** (Reiter): Monat wählen, getrennt nach **Betreuung** und **Küche** je eine Übersicht mit Geplant, Gemacht, Abweichung, Status; „Öffnen“ zeigt den **Dienstnachweis** des Bereichs mit Tageszeilen, „Geplante Dienste korrigieren“ (Warnung, Pflichtgrund) und Unterschriftsfeld (ohne PIN); darunter zwei Lohntabellen (Betreuung, Küche). Beim letzten geplanten Dienst einer Person erscheint oben im Bericht ein freiwilliger Hinweis.
+
+**Person tauschen** (Besetzung): Grund Tausch oder Sonstiges, dann die Person.
 
 ## 5 Kalender
 
-- **Standard: 7-Tage-Ansicht** (`nu-woche`): eine Spalte je Tag mit Nachtdienst, Küche und allen Terminen ungekürzt, „+ Termin“ unten. Kopf mit KW, Umschalter „7 Tage · Monat“, Pfeilen, „Heute“.
-- Monat (`nu-monat`) auf Wunsch, Tag antippen zeigt ihn rechts.
-- „Termin“ legt Aufgabe, Bettwäsche, Sondertermin, Feiertag an.
-- **Dienstplan einlesen:** Quelle Nextcloud-Datei (PDF, ICS) oder Foto, dann Prüftabelle mit unsicheren Feldern in `warnung-flaeche`. Kein Import aus WhatsApp.
+- **Standard: 7-Tage-Ansicht** (`nu-woche`): eine Spalte je Tag mit Betreuung 1, Betreuung 2 und Küche als Zeilen (`nu-dienstzeile`) und allen Terminen ungekürzt, „+ Termin“ unten. Kopf mit KW, Umschalter „7 Tage · Monat“, Pfeilen, „Heute“, **„Ändern“**.
+- **Geändert** markiert: Zeile auf `warnung-flaeche` mit Strich links, „· geändert“, Originalname durchgestrichen; antippen zeigt wer, wann, warum.
+- **Ändern** (Admin-PIN): Dienste und Termine ab heute antippbar. Blatt „Dienst ändern“ mit Person, **„Wer ändert?“ (Pflicht)**, Grund, Notiz; Blatt „Termin ändern“ mit Titel, Datum, Art, „Wer ändert?“, Löschen. Der Originalplan bleibt für den Monatsabschluss.
+- Monat (`nu-monat`) auf Wunsch, Tag antippen zeigt ihn rechts (mit denselben Dienstzeilen).
+- „Termin“ legt Aufgabe, Bettwäsche, Sondertermin, Feiertag an. Bettwäsche erscheint am Tag als wichtiger Hinweis.
+- Dienstplan einlesen liegt in den Einstellungen. Kein Import aus WhatsApp.
 
 ## 6 Einstellungen (Admin-PIN)
 
 Einstieg über `nu-pin`, dann zweispaltig: links Gruppen, rechts Zeilen (`nu-einstellung`).
 - **Betten und Zimmer:** je Zimmer eine Karte mit „Nummern tauschen“, Zimmerschalter und **einem Schalter je Bett** (`nu-bettschalter`); Chip „Notbett“ in Loggien, Esszimmer, Tiny House und weiteren Plätzen; „Platz hinzufügen“ mit Nummer und Bezeichnung für St. Pius und St. Nikolaus, Umbenennen und Entfernen.
 - **Ampel und KHT:** KHT-Nummer mit „Ansehen“, Notbetten (nur Kältebus), Ampel-Schwelle, Meldung an die Ampel.
+- **Dienstplan einlesen** (siehe Baustein): einmal zu Monatsbeginn durch die Leitung; Foto oder Datei aus Nextcloud, dann Prüfmaske Tag für Tag (Ausschnitt aus dem Foto links, je Rolle Chips rechts, Unsicheres muss angetippt werden), am Ende „Als Originalplan speichern“.
 - Weitere Gruppen: Darstellung (Nachtmodus), Nextcloud-Verbindung, Abgleich, Hinweise, Texte und Sprachen, Saison und Löschfristen, Duschplan, Liste „Fehlt etwas“, Sicherheit (App-PIN, Sperre, Kiosk).
 - **Löschlauf:** Vorschau „Folgendes wird gelöscht“ mit Anzahlen, Admin-PIN, Knopf `nu-btn--gefahr-voll`.
 
 ## Überall
 
-- **Glocke** (`nu-glocke-liste`): Läuseschein, „Simon, F2 fehlt 2. Nacht“, neue Hinweise, Duschslots.
+- **Glocke** (`nu-glocke-liste`): Läuseschein, „Simon, F2 fehlt 2. Nacht“, neue Hinweise, Bettwäschewechsel heute, „Bad aufschließen“, Duschslots.
 - **Einblendungen** (`nu-einblendung`), **Abgleich-Blatt** (aus `nu-sync`), **Dialoge** (`nu-dialog`).
 - **App-Sperre:** `nu-pin` auf `grund`, über allem, nach 5 Minuten Inaktivität.
 - **Leere Zustände:** ein Satz, was hier erscheint, und ein Knopf, wie man anfängt.

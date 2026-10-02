@@ -109,3 +109,17 @@ body.nu{overflow:hidden}
   .nu-dokument-paar{grid-template-columns:minmax(0,1fr)}
 }
 .p-blatt--breit{width:780px}
+/* PDF-Vorschau: immer weißes Papier, auch im Nachtmodus */
+.p-pdf{background:#fff;color:#1a1a1a;border-radius:6px;box-shadow:0 1px 4px rgba(0,0,0,.25);padding:28px 32px;display:grid;gap:14px;font-size:13px;line-height:1.45;position:relative;max-height:60vh;overflow:auto}
+.p-pdf-kopf{display:flex;justify-content:space-between;gap:12px;border-bottom:2px solid #1a1a1a;padding-bottom:8px;flex-wrap:wrap}
+.p-pdf-kopf b{font-size:16px}
+.p-pdf table{border-collapse:collapse;width:100%}
+.p-pdf th,.p-pdf td{border:1px solid #c8c8c8;padding:6px 8px;text-align:left;vertical-align:top}
+.p-pdf th{width:170px;background:#f4f4f4;font-weight:600}
+.p-pdf-sig{width:200px;height:44px}
+.p-pdf-sig img{height:36px;display:block}
+.p-pdf-sig small{color:#555}
+.p-pdf-fehlt{color:#b3261e;font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:11px}
+.p-pdf-stempel{border:3px solid #b3261e;color:#b3261e;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:6px 12px;border-radius:4px;justify-self:start;transform:rotate(-1.5deg)}
+.p-pdf-nachtrag{display:grid;gap:4px;border-top:1px dashed #999;padding-top:8px}
+.p-alt summary{cursor:pointer;min-height:44px;display:flex;align-items:center}

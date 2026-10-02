@@ -21,20 +21,20 @@ Dateiname: `0042_Vorname_Nachname_2026-11-14.pdf` (ohne Nachname ohne diesen Tei
 
 ## Dienstbericht-PDF
 
-1. Kopf: „Dienstbericht Dienstag, 14.11.2026“, Feiertag, Besetzung mit Unterschriften (geplant / tatsächlich).
+1. Kopf: „Dienstbericht Dienstag, 14.11.2026“, Feiertag, Besetzung (Betreuung 1, Betreuung 2, Küche) mit Unterschriften (geplant / tatsächlich). Fehlt eine Unterschrift: im Feld „OHNE UNTERSCHRIFT“ (rot, Versalien) und oben ein roter Stempel „Ohne Unterschrift abgeschlossen: Jule“, nach dem Nachholen mit „· nachgeholt“ und Zeitpunkt unter der Unterschrift.
 2. Bei Vorfall: Balken 2 pt in Rot (#B42318) links neben dem Titel und das Wort „Vorfall“; sonst keine Farbe.
-3. Hinweise des Tages, dann alle Berichtsfelder in App-Reihenfolge als Tabelle „Feld | Eintrag“. Erwähnte Gäste halbfett, Stufenwörter halbfett mit Kartensymbol in Farbe.
+3. Hinweise des Tages, dann alle Berichtsfelder in App-Reihenfolge als Tabelle „Feld | Eintrag“: Hat KHT angerufen?, Wichtige Hinweise, Fragen von Gästen, Abwesenheiten, Externe Gäste, Vorfälle, Schlüssel fehlt, Fehlt etwas, Sonstiges. Erwähnte Gäste halbfett, Stufenwörter halbfett mit Kartensymbol in Farbe.
 4. Kennzahlen ohne Namen, Stand beim Abschließen: KHT-Nummer, freie Betten mit Ampelfarbe, „Hat KHT angerufen?“ Ja/Nein, St. Nikolaus belegt.
 5. Sanktionen: Stufe mit Kartensymbol und genau einem Gast („Gelbe Karte: Felix (D5)“); weitere Erwähnte ohne Sanktion halbfett im Text.
 6. „Fehlt etwas“: gewählte Chips und der Freitext.
-7. Nachträge unter einer Linie mit Datum, Uhrzeit, Name.
+7. Ergänzungen (nach dem Abschluss die einzige Änderung) unter einer Linie mit Datum, Uhrzeit, Name; jede Ergänzung erzeugt das PDF neu, Nextcloud hält die vorige Fassung. Archiv-Kommentare stehen nicht im PDF.
 Dateiname: `2026-11-14_Dienstbericht.pdf`.
 
 ## Dienstnachweis-PDF
 
-1. Kopf: „Dienstnachweis September 2026“, Person, Erstellt am.
-2. Kennzahlen: Geplant, Gemacht, Krank, Abgegeben, Vertretung.
+1. Kopf: „Dienstnachweis Betreuung · September 2026“ (bzw. Küche), Person, Erstellt am. Je Person und Bereich ein eigenes PDF.
+2. Kennzahlen: Geplant (Originalplan), Gemacht, Abgegeben, Vertretung. Kein „krank“.
 3. Tabelle je Tag: Datum, Geplant, Gemacht (Rolle), Bemerkung; Abweichungen halbfett.
 4. Plankorrekturen mit Tagen, Grund, Person, Zeit.
 5. Unterschrift der Person mit Datum und Uhrzeit, darunter „Nach der Unterschrift nicht mehr änderbar“.
-Dateiname: `2026-09_Dienstnachweis_Robin.pdf`. Die Zahlen gehen zugleich als Zeile in `Lohnabrechnung_2026-09.csv` (Spalten: Person; Monat; Geplant; Gemacht; Krank; Abgegeben; Vertretung; Unterschrieben; PDF).
+Dateiname: `2026-09_Dienstnachweis_Betreuung_Robin.pdf` bzw. `2026-09_Dienstnachweis_Kueche_Jule.pdf`. Die Zahlen gehen zugleich als Zeile in die Lohntabelle des Bereichs: `Lohnabrechnung_2026-09_Betreuung.csv` bzw. `Lohnabrechnung_2026-09_Kueche.csv` (UTF-8 mit BOM, Semikolon; Spalten: Person; Personalnummer; Bereich; Monat; Geplant; Gemacht; Abgegeben; Vertretung; Unterschrieben; PDF). Ablage siehe Dateisystem.

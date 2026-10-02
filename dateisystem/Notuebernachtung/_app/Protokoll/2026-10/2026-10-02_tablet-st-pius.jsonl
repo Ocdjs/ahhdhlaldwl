@@ -1,0 +1,5 @@
+{"um": "2026-10-02T18:52:10+02:00", "von": "Kim", "art": "bericht.begonnen", "ziel": "Berichte/2026-10/2026-10-02"}
+{"um": "2026-10-02T19:04:33+02:00", "von": "Kim", "art": "bett.status", "ziel": "D4", "gast": "g-5abs6jtw", "alt": "erwartet", "neu": "anwesend"}
+{"um": "2026-10-02T19:31:02+02:00", "von": "Kim", "art": "dusche.status", "ziel": "19:00", "gast": "g-urxfldir", "neu": "erledigt"}
+{"um": "2026-10-02T20:10:45+02:00", "von": "Sam", "art": "bett.aufnahme", "ziel": "E1", "gast": "g-vxmygxt4", "neu": "anwesend", "zusatz": "Kältebus"}
+{"um": "2026-10-02T20:15:00+02:00", "von": "Leitung", "art": "hinweis.angelegt", "ziel": "Hinweise/2026-10/2026-10-02T20-15-00_Leitung.json"}

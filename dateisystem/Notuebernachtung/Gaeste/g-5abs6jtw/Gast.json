@@ -1,0 +1,62 @@
+{
+  "id": "g-5abs6jtw",
+  "vorname": "Max",
+  "nachname": "",
+  "spitzname": "Professor",
+  "standort": "st-pius",
+  "aufnahmen": [
+    {
+      "nr": "2026-27-0003",
+      "datum": "2026-09-12",
+      "bett": "D4",
+      "von": "Kim",
+      "dauer": "mehrere",
+      "ende": null,
+      "pdf": "Dokumente/0003_Max_2026-09-12.pdf"
+    }
+  ],
+  "hausordnung": {
+    "unterschrieben_am": "2026-09-12",
+    "version": "2026-10",
+    "art": "app",
+    "uebersetzung": "ar"
+  },
+  "datenschutz": {
+    "unterschrieben_am": "2026-09-12",
+    "version": "2026-10"
+  },
+  "sprache": "ar",
+  "laeuseschein": {
+    "status": "liegt_vor",
+    "seit": null,
+    "geprueft_von": "Sam"
+  },
+  "dokumente": [
+    {
+      "datei": "Dokumente/0003_Max_2026-09-12.pdf",
+      "art": "aufnahme",
+      "titel": "Aufnahme-PDF (Hausordnung und Datenschutz)",
+      "am": "2026-09-12",
+      "von": "Kim"
+    },
+    {
+      "datei": "Dokumente/Laeuseschein_2026-09-12.pdf",
+      "art": "laeuseschein",
+      "titel": "Läuseschein",
+      "am": "2026-09-12",
+      "von": "Sam"
+    }
+  ],
+  "erste_nacht": "2026-09-12",
+  "letzte_nacht": "2026-10-02",
+  "naechte": 12,
+  "loeschen_ab": null,
+  "aufnahme_hinweise_aus": [],
+  "_meta": {
+    "schema": "gast/1",
+    "geaendert_um": "2026-09-12T19:30:00+02:00",
+    "geaendert_von": "Kim",
+    "geraet": "tablet-st-pius",
+    "version": 3
+  }
+}

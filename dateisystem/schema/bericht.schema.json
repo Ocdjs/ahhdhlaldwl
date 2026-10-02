@@ -1,0 +1,275 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.notuebernachtung.invalid/bericht.schema.json",
+  "title": "Dienstbericht",
+  "description": "Berichte/JJJJ-MM/JJJJ-MM-TT/Bericht.json – änderbar solange status = offen; nach dem Abschließen unveränderlich, Ergänzungen nur als Nachtrag. Felder in der Reihenfolge des Berichts.",
+  "type": "object",
+  "properties": {
+    "diensttag": {
+      "$ref": "gemeinsam.schema.json#/$defs/datum"
+    },
+    "status": {
+      "enum": [
+        "offen",
+        "abgeschlossen"
+      ]
+    },
+    "begonnen_um": {
+      "$ref": "gemeinsam.schema.json#/$defs/zeitpunkt"
+    },
+    "besetzung": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "rolle": {
+            "type": "string"
+          },
+          "person": {
+            "type": "string"
+          },
+          "geplant": {
+            "type": "string"
+          },
+          "grund": {
+            "anyOf": [
+              {
+                "enum": [
+                  "Tausch",
+                  "Sonstiges"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "unterschrift": {
+            "anyOf": [
+              {
+                "$ref": "gemeinsam.schema.json#/$defs/relpfad"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "unterschrieben_um": {
+            "anyOf": [
+              {
+                "$ref": "gemeinsam.schema.json#/$defs/zeitpunkt"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "rolle",
+          "person",
+          "geplant",
+          "grund",
+          "unterschrift",
+          "unterschrieben_um"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "felder": {
+      "type": "object",
+      "properties": {
+        "kht_angerufen": {
+          "anyOf": [
+            {
+              "enum": [
+                "ja",
+                "nein"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hinweise": {
+          "type": "string"
+        },
+        "fragen": {
+          "type": "string"
+        },
+        "abwesenheiten": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "externe_gaeste": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "vorfaelle": {
+          "anyOf": [
+            {
+              "enum": [
+                "ja",
+                "nein"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "schluessel_fehlt": {
+          "anyOf": [
+            {
+              "enum": [
+                "ja",
+                "nein"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "schluessel_nr": {
+          "type": "string"
+        },
+        "fehlt_etwas": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "fehlt_etwas_text": {
+          "type": "string"
+        },
+        "sonstiges": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kht_angerufen",
+        "hinweise",
+        "fragen",
+        "abwesenheiten",
+        "externe_gaeste",
+        "vorfaelle",
+        "schluessel_fehlt",
+        "schluessel_nr",
+        "fehlt_etwas",
+        "fehlt_etwas_text",
+        "sonstiges"
+      ],
+      "additionalProperties": false
+    },
+    "zuordnung": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "absatz": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "stufe": {
+            "type": "string"
+          },
+          "gast": {
+            "anyOf": [
+              {
+                "$ref": "gemeinsam.schema.json#/$defs/gast_id"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "erwaehnt": {
+            "type": "array",
+            "items": {
+              "$ref": "gemeinsam.schema.json#/$defs/gast_id"
+            }
+          },
+          "ereignis": {
+            "anyOf": [
+              {
+                "$ref": "gemeinsam.schema.json#/$defs/relpfad"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "absatz",
+          "stufe",
+          "gast",
+          "erwaehnt",
+          "ereignis"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "kennzahlen": {
+      "anyOf": [
+        {
+          "$ref": "gemeinsam.schema.json#/$defs/kennzahlen"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ohne_unterschrift": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Personen, die beim Abschließen nicht unterschrieben hatten. Steht als Stempel im PDF."
+    },
+    "abgeschlossen_um": {
+      "anyOf": [
+        {
+          "$ref": "gemeinsam.schema.json#/$defs/zeitpunkt"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "pdf": {
+      "anyOf": [
+        {
+          "$ref": "gemeinsam.schema.json#/$defs/relpfad"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "_meta": {
+      "$ref": "gemeinsam.schema.json#/$defs/meta_aenderbar"
+    }
+  },
+  "required": [
+    "diensttag",
+    "status",
+    "begonnen_um",
+    "besetzung",
+    "felder",
+    "zuordnung",
+    "kennzahlen",
+    "ohne_unterschrift",
+    "abgeschlossen_um",
+    "pdf",
+    "_meta"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.notuebernachtung.invalid/gemeinsam.schema.json",
+  "title": "Gemeinsame Bausteine",
+  "description": "Datentypen, die mehrere Dateiarten nutzen.",
+  "$defs": {
+    "datum": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "description": "Kalendertag JJJJ-MM-TT. Der Diensttag ist der Tag, an dem der Dienst abends beginnt; Wechsel um 12:00."
+    },
+    "monat": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}$"
+    },
+    "uhrzeit": {
+      "type": "string",
+      "pattern": "^\\d{2}:\\d{2}$"
+    },
+    "zeitpunkt": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?([+-]\\d{2}:\\d{2}|Z)$",
+      "description": "ISO 8601 mit Zeitzone (Europe/Berlin)."
+    },
+    "gast_id": {
+      "type": "string",
+      "pattern": "^g-[a-z2-7]{8}$",
+      "description": "Feste Gast-ID, auch Ordnername unter Gaeste/. Nie aus Namen gebildet."
+    },
+    "bettnr": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9ÄÖÜäöüß. -]{1,24}$",
+      "description": "Angezeigte Bettnummer (D4, L5, N9, frei benannte Plätze)."
+    },
+    "person": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Vorname aus Team.json oder „Leitung“, bei Automatik „App“ oder „Tageswechsel“."
+    },
+    "relpfad": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._/-]+$",
+      "description": "Pfad relativ zum Ordner der Datei bzw. zum Wurzelordner; nur ASCII, keine Leerzeichen."
+    },
+    "standort": {
+      "enum": [
+        "st-pius",
+        "st-nikolaus"
+      ]
+    },
+    "bereich": {
+      "enum": [
+        "betreuung",
+        "kueche"
+      ]
+    },
+    "bettstatus": {
+      "enum": [
+        "frei",
+        "erwartet",
+        "anwesend",
+        "fehlt",
+        "fehlt_ab_2",
+        "freigehalten",
+        "frei_bis",
+        "gesperrt"
+      ]
+    },
+    "meta_aenderbar": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "geaendert_um": {
+          "$ref": "gemeinsam.schema.json#/$defs/zeitpunkt"
+        },
+        "geaendert_von": {
+          "$ref": "gemeinsam.schema.json#/$defs/person"
+        },
+        "geraet": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema",
+        "version",
+        "geaendert_um",
+        "geaendert_von",
+        "geraet"
+      ],
+      "additionalProperties": false,
+      "description": "Änderbare Datei: jede Änderung erhöht version. Hochladen nur mit If-Match auf das zuletzt gesehene ETag."
+    },
+    "meta_unveraenderlich": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "type": "string"
+        },
+        "angelegt_um": {
+          "$ref": "gemeinsam.schema.json#/$defs/zeitpunkt"
+        },
+        "angelegt_von": {
+          "$ref": "gemeinsam.schema.json#/$defs/person"
+        },
+        "geraet": {
+          "type": "string"
+        },
+        "unveraenderlich": {
+          "const": true
+        }
+      },
+      "required": [
+        "schema",
+        "angelegt_um",
+        "angelegt_von",
+        "geraet",
+        "unveraenderlich"
+      ],
+      "additionalProperties": false,
+      "description": "Wird nur einmal angelegt (If-None-Match: *), danach nie geändert oder überschrieben."
+    },
+    "kennzahlen": {
+      "type": "object",
+      "properties": {
+        "kht_nummer": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "frei": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "gesamt": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "notbetten_belegt": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "st_nikolaus_belegt": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "ampel": {
+          "enum": [
+            "gruen",
+            "gelb",
+            "rot"
+          ]
+        },
+        "stand": {
+          "$ref": "gemeinsam.schema.json#/$defs/zeitpunkt"
+        }
+      },
+      "required": [
+        "kht_nummer",
+        "frei",
+        "gesamt",
+        "ampel"
+      ],
+      "additionalProperties": false,
+      "description": "KHT-Nummer = belegte Betten (Notbett nur wenn belegt). Frei = Betten in Betrieb ohne freie Notbetten minus belegt."
+    }
+  }
+}

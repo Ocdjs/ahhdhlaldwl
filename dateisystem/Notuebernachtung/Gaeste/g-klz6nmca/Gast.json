@@ -1,0 +1,43 @@
+{
+  "id": "g-klz6nmca",
+  "vorname": "Frank",
+  "nachname": "",
+  "spitzname": "",
+  "standort": "st-nikolaus",
+  "aufnahmen": [
+    {
+      "nr": "2026-27-0027",
+      "datum": "2026-09-12",
+      "bett": "N8",
+      "von": "Kim",
+      "dauer": "mehrere",
+      "ende": null,
+      "pdf": null
+    }
+  ],
+  "hausordnung": {
+    "unterschrieben_am": null,
+    "version": null,
+    "art": null,
+    "uebersetzung": null
+  },
+  "datenschutz": {
+    "unterschrieben_am": null,
+    "version": null
+  },
+  "sprache": "de",
+  "laeuseschein": null,
+  "dokumente": [],
+  "erste_nacht": "2026-09-12",
+  "letzte_nacht": "2026-10-02",
+  "naechte": 36,
+  "loeschen_ab": null,
+  "aufnahme_hinweise_aus": [],
+  "_meta": {
+    "schema": "gast/1",
+    "geaendert_um": "2026-09-12T19:30:00+02:00",
+    "geaendert_von": "Kim",
+    "geraet": "tablet-st-pius",
+    "version": 3
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.notuebernachtung.invalid/fehlt_erledigt.schema.json",
+  "title": "Fehlt etwas – erledigt",
+  "description": "Berichte/JJJJ-MM/Fehlt_erledigt.json – abgehakte Punkte aus „Fehlt etwas“, Schlüssel „Diensttag|Eintrag“. Abgleich als Vereinigung.",
+  "type": "object",
+  "properties": {
+    "monat": {
+      "$ref": "gemeinsam.schema.json#/$defs/monat"
+    },
+    "erledigt": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}\\|.+$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "von": {
+            "$ref": "gemeinsam.schema.json#/$defs/person"
+          },
+          "um": {
+            "$ref": "gemeinsam.schema.json#/$defs/zeitpunkt"
+          }
+        },
+        "required": [
+          "von",
+          "um"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "_meta": {
+      "$ref": "gemeinsam.schema.json#/$defs/meta_aenderbar"
+    }
+  },
+  "required": [
+    "monat",
+    "erledigt",
+    "_meta"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,47 @@
+{
+  "id": "g-wtb7g57y",
+  "vorname": "Max",
+  "nachname": "",
+  "spitzname": "",
+  "standort": "st-pius",
+  "aufnahmen": [
+    {
+      "nr": "2026-27-0018",
+      "datum": "2026-09-12",
+      "bett": "L5",
+      "von": "Kim",
+      "dauer": "mehrere",
+      "ende": null,
+      "pdf": null
+    }
+  ],
+  "hausordnung": {
+    "unterschrieben_am": null,
+    "version": null,
+    "art": null,
+    "uebersetzung": "fa"
+  },
+  "datenschutz": {
+    "unterschrieben_am": null,
+    "version": null
+  },
+  "sprache": "fa",
+  "laeuseschein": {
+    "status": "liegt_vor",
+    "seit": null,
+    "geprueft_von": "Sam"
+  },
+  "dokumente": [],
+  "erste_nacht": "2026-09-12",
+  "letzte_nacht": "2026-10-02",
+  "naechte": 5,
+  "loeschen_ab": null,
+  "aufnahme_hinweise_aus": [],
+  "_meta": {
+    "schema": "gast/1",
+    "geaendert_um": "2026-09-12T19:30:00+02:00",
+    "geaendert_von": "Kim",
+    "geraet": "tablet-st-pius",
+    "version": 3
+  }
+}

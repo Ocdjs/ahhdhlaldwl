@@ -1,0 +1,18 @@
+{
+  "art": "notiz",
+  "gast_id": "g-wmgvg2lf",
+  "text": "Arzttermin Donnerstag, kommt eventuell später.",
+  "datum": "2026-09-30",
+  "von": "Leitung",
+  "rolle": "betroffen",
+  "quelle": "Hinweis",
+  "bericht": null,
+  "absatz": null,
+  "_meta": {
+    "schema": "ereignis/1",
+    "angelegt_um": "2026-09-30T21:10:00+02:00",
+    "angelegt_von": "Leitung",
+    "geraet": "tablet-st-pius",
+    "unveraenderlich": true
+  }
+}

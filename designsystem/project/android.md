@@ -68,6 +68,10 @@ Eigene Stile: `nameBett` (20/24 700), `zahlGross`, `nummerGross`, `nummer` (Mono
 | Dauer „Enddatum festlegen“ | `Switch` in einer Zeile; bei an `DatePicker` und `FilterChip`s (+3, +7, +14) |
 | Hausordnung zweispaltig | `Row { Dokument(de, Modifier.weight(1f)); Dokument(übersetzung, Modifier.weight(1f)) }`, unter 900 dp `Column` |
 | Teilen | `Intent.ACTION_SEND` + `FileProvider`, `Intent.createChooser`, kein voreingestellter Empfänger |
+| Tür und Bad | Türblatt im `Canvas` mit `rotate(winkel, pivot = angel)`, `animateFloatAsState(tween(700))`; Bad als eigenes Composable über dem Canvas |
+| Kalender ändern | Admin-PIN als `ModalBottomSheet` mit dem PIN-Raster; „Wer ändert?“ als `FilterChip`-Reihe ohne Vorauswahl, Speichern prüft und schüttelt (`Animatable` x-Versatz) |
+| Dienstplan einlesen | Kamera über `ActivityResultContracts.TakePicture`, Datei über `OpenDocument` bzw. Nextcloud-Eingang; Prüfmaske als `HorizontalPager` je Tag, links Bildausschnitt (`Image` mit `graphicsLayer`-Zoom), rechts drei Chip-Reihen |
+| Archivkarte | `LazyColumn` mit Karten; Kommentar-Blatt als `ModalBottomSheet`; Hinweis bei Wiederaufnahme als `AlertDialog` im Assistenten |
 | Einblendung | eigener Host oben rechts, nicht `Snackbar` (die sitzt unten) |
 | Admin-PIN | eigenes Raster aus `Button`s, keine Systemtastatur |
 
@@ -83,7 +87,12 @@ Eigene Stile: `nameBett` (20/24 700), `zahlGross`, `nummerGross`, `nummer` (Mono
 - `Erwaehnung` und `Sanktion` mit `bericht_id` und `absatz`; eine Sanktion hat genau einen `gast_id`.
 - `Bett.platz`: der gezeichnete Platz, an dem die Nummer steht (Nummerntausch in den Einstellungen).
 - Monatsabschluss: `Plan0`, `Einsatz`, `PlanKorrektur`, `Dienstnachweis` (unveränderlich nach dem Anlegen), daraus die Lohntabelle als CSV in Nextcloud (siehe Fachregeln).
-- `khtNummer()`, `freieBetten()`, `anzeigename()`, `nachweisDaten()` und die Statuswechsel am Tageswechsel als reine Funktionen mit Unit-Tests.
+- Bad: `Duschplan.bad(zu, aufgeschlossen_um, von)`; Erinnerung, sobald keine Dusche mehr `geplant` ist.
+- Kalender: `Plan0` (Originalplan, aus „Dienstplan einlesen“), aktueller `Dienstplan`, `PlanAenderung(datum, rolle, alt, neu, von, grund)`; „geändert“ = Änderung vorhanden oder Abweichung vom Originalplan.
+- Archiv: `Kommentar(bericht, art, text, von, gast_id?, bei_aufnahme, hinweis_id?)`, Notiz mit `bei_aufnahme`; `FehltErledigt(diensttag, eintrag, von, um)`.
+- Bericht: `ohne_unterschrift` (Personen), `Nachtrag(art = TEXT | UNTERSCHRIFT_NACHGEHOLT)`.
+- `khtNummer()`, `freieBetten()`, `anzeigename()`, `nachweisDaten()`, `badZustand()`, `hinweisSichtbar()` und die Statuswechsel am Tageswechsel als reine Funktionen mit Unit-Tests.
+- **Dateien und Abgleich:** Pfade, Namensregeln und Konfliktregeln stehen in **Dateisystem**; im Repository `dateisystem/android/NcPfade.kt` direkt übernehmen. Abgleich mit WorkManager (Netz als Bedingung), WebDAV über OkHttp, Warteschlange in Room.
 
 ## Symbole
 

@@ -1,0 +1,62 @@
+{
+  "diensttag": "2026-09-28",
+  "status": "abgeschlossen",
+  "begonnen_um": "2026-09-28T18:50:00+02:00",
+  "besetzung": [
+    {
+      "rolle": "Betreuung 1",
+      "person": "Kim",
+      "geplant": "Kim",
+      "grund": null,
+      "unterschrift": "Unterschriften/Betreuung-1_Kim.png",
+      "unterschrieben_um": "2026-09-28T22:30:00+02:00"
+    },
+    {
+      "rolle": "Betreuung 2",
+      "person": "Sam",
+      "geplant": "Sam",
+      "grund": null,
+      "unterschrift": "Unterschriften/Betreuung-2_Sam.png",
+      "unterschrieben_um": "2026-09-28T22:30:00+02:00"
+    },
+    {
+      "rolle": "Küche",
+      "person": "Mika",
+      "geplant": "Mika",
+      "grund": null,
+      "unterschrift": "Unterschriften/Kueche_Mika.png",
+      "unterschrieben_um": "2026-09-28T22:30:00+02:00"
+    }
+  ],
+  "felder": {
+    "kht_angerufen": "ja",
+    "hinweise": "Schlüssel 7 fehlt. @Max Mustermann wollte nachsehen, ob er ihn eingesteckt hat.",
+    "fragen": "",
+    "abwesenheiten": [],
+    "externe_gaeste": [],
+    "vorfaelle": "nein",
+    "schluessel_fehlt": "ja",
+    "schluessel_nr": "7",
+    "fehlt_etwas": [],
+    "fehlt_etwas_text": "",
+    "sonstiges": ""
+  },
+  "zuordnung": [],
+  "kennzahlen": {
+    "kht_nummer": 24,
+    "frei": 7,
+    "gesamt": 31,
+    "ampel": "gruen",
+    "st_nikolaus_belegt": 7
+  },
+  "ohne_unterschrift": [],
+  "abgeschlossen_um": "2026-09-29T07:58:00+02:00",
+  "pdf": "2026-09-28_Dienstbericht.pdf",
+  "_meta": {
+    "schema": "bericht/1",
+    "geaendert_um": "2026-09-29T07:58:00+02:00",
+    "geaendert_von": "Kim",
+    "geraet": "tablet-st-pius",
+    "version": 23
+  }
+}

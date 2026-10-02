@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.notuebernachtung.invalid/kommentar.schema.json",
+  "title": "Kommentar zu einem Bericht",
+  "description": "Berichte/…/Kommentare/<zeit>_<von>.json – aus dem Archiv: Kommentar, Antwort auf eine Frage oder wichtiger Hinweis. Kann einen Hinweis für die nächsten Dienste und eine Notiz beim Gast erzeugen.",
+  "type": "object",
+  "properties": {
+    "diensttag": {
+      "$ref": "gemeinsam.schema.json#/$defs/datum"
+    },
+    "art": {
+      "enum": [
+        "kommentar",
+        "antwort",
+        "hinweis"
+      ]
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "von": {
+      "$ref": "gemeinsam.schema.json#/$defs/person"
+    },
+    "um": {
+      "$ref": "gemeinsam.schema.json#/$defs/zeitpunkt"
+    },
+    "gast": {
+      "anyOf": [
+        {
+          "$ref": "gemeinsam.schema.json#/$defs/gast_id"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "bei_aufnahme": {
+      "type": "boolean"
+    },
+    "hinweis": {
+      "anyOf": [
+        {
+          "$ref": "gemeinsam.schema.json#/$defs/relpfad"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "notiz": {
+      "anyOf": [
+        {
+          "$ref": "gemeinsam.schema.json#/$defs/relpfad"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "_meta": {
+      "$ref": "gemeinsam.schema.json#/$defs/meta_unveraenderlich"
+    }
+  },
+  "required": [
+    "diensttag",
+    "art",
+    "text",
+    "von",
+    "um",
+    "gast",
+    "bei_aufnahme",
+    "hinweis",
+    "notiz",
+    "_meta"
+  ],
+  "additionalProperties": false
+}

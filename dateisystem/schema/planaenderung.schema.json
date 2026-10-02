@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.notuebernachtung.invalid/planaenderung.schema.json",
+  "title": "Änderung im Kalender",
+  "description": "Kalender/Aenderungen/JJJJ-MM/<zeit>_<von>.json – jede Änderung eines Dienstes oder Termins nach PIN, mit Pflichtangabe, wer geändert hat. Unveränderlich; der Kalender markiert die Stelle.",
+  "type": "object",
+  "properties": {
+    "datum": {
+      "$ref": "gemeinsam.schema.json#/$defs/datum"
+    },
+    "art": {
+      "enum": [
+        "dienst",
+        "termin"
+      ]
+    },
+    "rolle": {
+      "anyOf": [
+        {
+          "enum": [
+            "Betreuung 1",
+            "Betreuung 2",
+            "Küche"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "termin_id": {
+      "type": "string"
+    },
+    "alt": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "neu": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "von": {
+      "$ref": "gemeinsam.schema.json#/$defs/person"
+    },
+    "grund": {
+      "enum": [
+        "Tausch",
+        "Sonstiges"
+      ]
+    },
+    "notiz": {
+      "type": "string"
+    },
+    "um": {
+      "$ref": "gemeinsam.schema.json#/$defs/zeitpunkt"
+    },
+    "_meta": {
+      "$ref": "gemeinsam.schema.json#/$defs/meta_unveraenderlich"
+    }
+  },
+  "required": [
+    "datum",
+    "art",
+    "rolle",
+    "alt",
+    "neu",
+    "von",
+    "grund",
+    "notiz",
+    "um",
+    "_meta"
+  ],
+  "additionalProperties": false
+}

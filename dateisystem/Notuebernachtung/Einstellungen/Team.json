@@ -1,0 +1,70 @@
+{
+  "personen": [
+    {
+      "name": "Kim",
+      "bereiche": [
+        "betreuung"
+      ],
+      "personalnummer": "P-100",
+      "aktiv": true
+    },
+    {
+      "name": "Sam",
+      "bereiche": [
+        "betreuung"
+      ],
+      "personalnummer": "P-101",
+      "aktiv": true
+    },
+    {
+      "name": "Robin",
+      "bereiche": [
+        "betreuung"
+      ],
+      "personalnummer": "P-102",
+      "aktiv": true
+    },
+    {
+      "name": "Chris",
+      "bereiche": [
+        "betreuung"
+      ],
+      "personalnummer": "P-103",
+      "aktiv": true
+    },
+    {
+      "name": "Jule",
+      "bereiche": [
+        "betreuung",
+        "kueche"
+      ],
+      "personalnummer": "P-104",
+      "aktiv": true
+    },
+    {
+      "name": "Mika",
+      "bereiche": [
+        "kueche"
+      ],
+      "personalnummer": "P-105",
+      "aktiv": true
+    }
+  ],
+  "leitung": {
+    "name": "Leitung",
+    "anzeige": "Leitung (Schwester)",
+    "darf": [
+      "hinweise",
+      "einstellungen",
+      "plankorrektur",
+      "loeschlauf"
+    ]
+  },
+  "_meta": {
+    "schema": "team/1",
+    "geaendert_um": "2026-09-01T12:00:00+02:00",
+    "geaendert_von": "Leitung",
+    "geraet": "tablet-st-pius",
+    "version": 2
+  }
+}

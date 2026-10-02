@@ -183,6 +183,24 @@ button.nu-kennzahl:active{background:var(--flaeche-2)}
 .nu-grundriss.is-flur-zu .flur-offen{display:none}
 .nu-grundriss-platz{position:absolute;display:flex;container-type:size}
 .nu-grundriss-platz > .nu-bett{flex:1}
+.nu-grundriss .tuer-blatt{fill:none;stroke:var(--tinte-3);stroke-width:1.5;stroke-linecap:round;transform-box:view-box}
+.nu-grundriss .nu-tuer.is-zu .tuer-blatt{transform:rotate(var(--tuer-winkel));stroke:var(--tinte);stroke-width:6;stroke-linecap:square}
+.nu-grundriss .nu-tuer.is-zu .tuer-bogen{opacity:0}
+.nu-grundriss .nu-tuer.is-schliessen .tuer-blatt{animation:nu-tuer-zu 700ms cubic-bezier(.55,0,.85,.35) both}
+.nu-grundriss .nu-tuer.is-schliessen .tuer-bogen{animation:nu-tuer-bogen-weg 700ms linear both}
+.nu-grundriss .nu-tuer.is-oeffnen .tuer-blatt{animation:nu-tuer-auf 700ms var(--kurve-austritt) both}
+.nu-grundriss .nu-tuer.is-oeffnen .tuer-bogen{animation:nu-ein 700ms linear both}
+@keyframes nu-tuer-zu{0%{transform:rotate(0);stroke:var(--tinte-3);stroke-width:1.5}85%{transform:rotate(var(--tuer-winkel));stroke:var(--tinte);stroke-width:6}92%{transform:rotate(calc(var(--tuer-winkel) * .97))}100%{transform:rotate(var(--tuer-winkel));stroke:var(--tinte);stroke-width:6}}
+@keyframes nu-tuer-auf{0%{transform:rotate(var(--tuer-winkel));stroke:var(--tinte);stroke-width:6}100%{transform:rotate(0);stroke:var(--tinte-3);stroke-width:1.5}}
+@keyframes nu-tuer-bogen-weg{0%,40%{opacity:1}100%{opacity:0}}
+/* Bad im Grundriss: abgeschlossen (Duschzeit), Erinnerung „Aufschließen“, frei */
+.nu-bad{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:0;border-radius:var(--radius-s);font:700 13px/1.2 var(--font-ui);letter-spacing:.06em;text-align:center;cursor:pointer;padding:6px;background:var(--flaeche-3);color:var(--tinte-2);transition:background var(--dauer-mittel) var(--kurve-standard),color var(--dauer-mittel) var(--kurve-standard)}
+.nu-bad small{font:400 12px/1.25 var(--font-ui);letter-spacing:0}
+.nu-bad[data-zustand="erinnern"]{background:var(--warnung-flaeche);color:var(--warnung);box-shadow:inset 0 0 0 3px var(--warnung);animation:nu-bad-puls 1.6s var(--kurve-standard) 3}
+.nu-bad[data-zustand="frei"]{background:var(--frei-flaeche);color:var(--frei)}
+.nu-bad:focus-visible{outline:3px solid var(--fokus);outline-offset:2px}
+.nu-bad[disabled]{cursor:default}
+@keyframes nu-bad-puls{0%,100%{box-shadow:inset 0 0 0 3px var(--warnung)}50%{box-shadow:inset 0 0 0 3px var(--warnung),0 0 0 6px color-mix(in srgb,var(--warnung) 35%,transparent)}}
 .nu-plan-raster{display:grid;grid-template-columns:minmax(0,1fr) 176px;gap:16px;align-items:start}
 .nu-plan-karte{background:var(--flaeche);border-radius:var(--radius-l);padding:14px 16px}
 .nu-plan-raster .nu-plaetze .nu-bett{width:100%}
@@ -360,6 +378,40 @@ button.nu-kennzahl:active{background:var(--flaeche-2)}
 .nu-woche-tag .nu-termin small{display:block;font:400 12.5px/16px var(--font-ui);color:inherit;opacity:.85}
 .nu-woche-plus{margin-top:auto;min-height:48px;border:0;border-radius:var(--radius-m);background:transparent;color:var(--tinte-2);font:600 14px/18px var(--font-ui);display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer}
 .nu-woche-plus:hover{background:var(--flaeche-2)}
+/* Dienste im Kalender: je Rolle eine Zeile; geändert = Abweichung vom Originalplan, mit Namen vermerkt */
+.nu-dienste{display:grid;gap:4px}
+.nu-dienstzeile{display:grid;grid-template-columns:minmax(0,1fr);align-content:center;min-height:44px;padding:4px 8px;border:0;border-radius:var(--radius-m);background:var(--erwartet-flaeche);color:var(--blau);font:600 14px/19px var(--font-ui);text-align:left;width:100%;min-width:0}
+.nu-dienstzeile--kueche{background:var(--flaeche-2);color:var(--tinte)}
+.nu-dienstzeile-rolle{font:400 12px/15px var(--font-ui);opacity:.85}
+.nu-dienstzeile b{font-weight:600;overflow-wrap:anywhere}
+.nu-dienstzeile s{font:400 12.5px/16px var(--font-ui);color:var(--tinte-2)}
+.nu-dienstzeile.is-offen b{color:var(--tinte-3);font-weight:400}
+.nu-dienstzeile.is-geaendert{background:var(--warnung-flaeche);color:var(--warnung);box-shadow:inset 3px 0 0 var(--warnung)}
+button.nu-dienstzeile{cursor:pointer}
+.nu-dienstzeile.is-aenderbar,.nu-termin-knopf.is-aenderbar .nu-termin{outline:1.5px dashed currentColor;outline-offset:-3px}
+.nu-termin-knopf{display:block;border:0;padding:0;background:none;text-align:left;cursor:pointer;width:100%;font:inherit;color:inherit}
+.nu-termin.is-geaendert{box-shadow:inset 3px 0 0 var(--warnung)}
+.nu-termin--dienst.is-geaendert{background:var(--warnung-flaeche);color:var(--warnung)}
+.is-wackeln{animation:nu-wackeln 300ms var(--kurve-standard)}
+/* Dienstplan einlesen: Prüfmaske, ein Tag nach dem anderen neben dem Foto */
+.nu-scan{display:grid;gap:12px}
+.nu-scan-kopf{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.nu-scan-fortschritt{height:6px;border-radius:var(--radius-rund);background:var(--flaeche-3);overflow:hidden}
+.nu-scan-fortschritt i{display:block;height:100%;background:var(--primaer);transition:width var(--dauer-mittel) var(--kurve-standard)}
+.nu-scan-raster{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:16px;align-items:start}
+.nu-scan-foto{display:grid;gap:8px;position:sticky;top:0}
+.nu-scan-blatt{background:var(--papier);color:var(--auf-papier);border-radius:var(--radius-s);padding:10px 12px;box-shadow:var(--schatten-gehoben);transform:rotate(-.6deg);display:grid;gap:2px}
+.nu-scan-zeile{display:grid;grid-template-columns:44px repeat(3,minmax(0,1fr));gap:6px;padding:8px 6px;border-bottom:1px solid var(--papier-linie);font:italic 400 19px/24px var(--font-dokument);color:var(--stift-tinte)}
+.nu-scan-zeile span:first-child{font:400 15px/24px var(--font-zahl);color:var(--auf-papier-2);font-style:normal}
+.nu-scan-zeile--kopf{font:700 12px/16px var(--font-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--auf-papier-2)}
+.nu-scan-zeile--kopf span:first-child{font:700 12px/16px var(--font-ui)}
+.nu-scan-zeile.is-aktuell{background:color-mix(in srgb,var(--ampel-gelb) 30%,transparent);outline:2px solid var(--warnung);border-radius:4px}
+.nu-scan-rechts{display:grid;gap:12px;background:var(--flaeche);border-radius:var(--radius-l);padding:16px 18px}
+.nu-scan-pruef{display:grid;gap:8px;padding:10px 12px;border-radius:var(--radius-m);background:var(--flaeche-2)}
+.nu-scan-pruef.is-unsicher:not(.is-geprueft){background:var(--warnung-flaeche);box-shadow:inset 0 0 0 2px var(--warnung)}
+.nu-scan-pruef .nu-chip[aria-pressed="false"]{background:var(--flaeche)}
+.nu-scan-pruef-kopf{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+@media (max-width:900px){.nu-scan-raster{grid-template-columns:minmax(0,1fr)}.nu-scan-foto{position:static}}
 
 /* ---------- Einstellungen ---------- */
 .nu-pin{display:grid;justify-items:center;gap:20px}

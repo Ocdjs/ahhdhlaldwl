@@ -1,0 +1,12 @@
+Hier kann die Leitung vom PC aus Hinweise für die nächsten Dienste ablegen.
+
+Eine Textdatei (.txt) je Hinweis. Die ersten Zeilen dürfen Angaben enthalten, dann eine Leerzeile, dann der Text:
+
+  bis: 2026-10-09        (oder: dauer: naechster Dienst | 3 Tage | 1 Woche | 2 Wochen)
+  ab: 2026-10-03         (freiwillig, sonst ab dem nächsten Dienst)
+  wichtig: ja            (freiwillig)
+
+  Ab morgen gibt es das Abendessen erst um 19:30.
+
+Die App übernimmt die Datei beim nächsten Abgleich als Hinweis „von Leitung“
+und verschiebt sie nach Eingang/Uebernommen/.

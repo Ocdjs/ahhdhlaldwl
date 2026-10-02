@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.notuebernachtung.invalid/team.schema.json",
+  "title": "Team",
+  "description": "Einstellungen/Team.json – Personen mit Bereich (Betreuung, Küche oder beides) für Besetzung und Monatsabschluss.",
+  "type": "object",
+  "properties": {
+    "personen": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "bereiche": {
+            "type": "array",
+            "items": {
+              "$ref": "gemeinsam.schema.json#/$defs/bereich"
+            },
+            "minItems": 1
+          },
+          "personalnummer": {
+            "type": "string"
+          },
+          "aktiv": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "bereiche",
+          "personalnummer",
+          "aktiv"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "leitung": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "anzeige": {
+          "type": "string"
+        },
+        "darf": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "anzeige",
+        "darf"
+      ],
+      "additionalProperties": false
+    },
+    "_meta": {
+      "$ref": "gemeinsam.schema.json#/$defs/meta_aenderbar"
+    }
+  },
+  "required": [
+    "personen",
+    "leitung",
+    "_meta"
+  ],
+  "additionalProperties": false
+}

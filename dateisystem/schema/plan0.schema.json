@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.notuebernachtung.invalid/plan0.schema.json",
+  "title": "Originalplan",
+  "description": "Monatsabschluss/JJJJ-MM/Plan0.json – entsteht einmal zu Monatsbeginn in Einstellungen › Dienstplan einlesen (Leitung, PIN): jeder Dienst einzeln mit Foto/Datei geprüft. Unveränderlich; Korrekturen nur als Plankorrektur.",
+  "type": "object",
+  "properties": {
+    "monat": {
+      "$ref": "gemeinsam.schema.json#/$defs/monat"
+    },
+    "eingefroren_um": {
+      "$ref": "gemeinsam.schema.json#/$defs/zeitpunkt"
+    },
+    "eingelesen_von": {
+      "$ref": "gemeinsam.schema.json#/$defs/person"
+    },
+    "quelle": {
+      "$ref": "gemeinsam.schema.json#/$defs/relpfad"
+    },
+    "korrekturen": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "datum": {
+            "$ref": "gemeinsam.schema.json#/$defs/datum"
+          },
+          "rolle": {
+            "enum": [
+              "Betreuung 1",
+              "Betreuung 2",
+              "Küche"
+            ]
+          },
+          "erkannt": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "gewaehlt": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "datum",
+          "rolle",
+          "erkannt",
+          "gewaehlt"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Stellen, an denen die Prüfung von der Erkennung abwich."
+    },
+    "tage": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "betreuung": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "kueche": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "betreuung",
+          "kueche"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "_meta": {
+      "$ref": "gemeinsam.schema.json#/$defs/meta_unveraenderlich"
+    }
+  },
+  "required": [
+    "monat",
+    "eingefroren_um",
+    "eingelesen_von",
+    "quelle",
+    "korrekturen",
+    "tage",
+    "_meta"
+  ],
+  "additionalProperties": false
+}

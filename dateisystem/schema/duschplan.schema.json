@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.notuebernachtung.invalid/duschplan.schema.json",
+  "title": "Duschplan eines Tages mit Bad",
+  "description": "Duschplan/JJJJ-MM/JJJJ-MM-TT.json – Slots und ob das Bad abgeschlossen ist. Bad zu bis alle geplanten Duschen erledigt sind; danach Erinnerung „Bad aufschließen“.",
+  "type": "object",
+  "properties": {
+    "datum": {
+      "$ref": "gemeinsam.schema.json#/$defs/datum"
+    },
+    "slots": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^\\d{2}:\\d{2}$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "gast": {
+            "$ref": "gemeinsam.schema.json#/$defs/gast_id"
+          },
+          "status": {
+            "enum": [
+              "geplant",
+              "erledigt",
+              "verpasst"
+            ]
+          },
+          "geaendert_um": {
+            "$ref": "gemeinsam.schema.json#/$defs/zeitpunkt"
+          },
+          "geaendert_von": {
+            "$ref": "gemeinsam.schema.json#/$defs/person"
+          }
+        },
+        "required": [
+          "gast",
+          "status",
+          "geaendert_um",
+          "geaendert_von"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "bad": {
+      "type": "object",
+      "properties": {
+        "zu": {
+          "type": "boolean"
+        },
+        "aufgeschlossen_um": {
+          "$ref": "gemeinsam.schema.json#/$defs/zeitpunkt"
+        },
+        "geaendert_um": {
+          "$ref": "gemeinsam.schema.json#/$defs/zeitpunkt"
+        },
+        "geaendert_von": {
+          "$ref": "gemeinsam.schema.json#/$defs/person"
+        }
+      },
+      "required": [
+        "zu",
+        "geaendert_um",
+        "geaendert_von"
+      ],
+      "additionalProperties": false
+    },
+    "_meta": {
+      "$ref": "gemeinsam.schema.json#/$defs/meta_aenderbar"
+    }
+  },
+  "required": [
+    "datum",
+    "slots",
+    "bad",
+    "_meta"
+  ],
+  "additionalProperties": false
+}

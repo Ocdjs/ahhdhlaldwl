@@ -1,0 +1,230 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.notuebernachtung.invalid/grundriss.schema.json",
+  "title": "Grundriss",
+  "description": "Einstellungen/Grundriss_<Standort>.json – Geometrie in Grundriss-Einheiten, nicht im Code.",
+  "type": "object",
+  "properties": {
+    "standort": {
+      "$ref": "gemeinsam.schema.json#/$defs/standort"
+    },
+    "einheiten": {
+      "type": "string"
+    },
+    "viewbox": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 4,
+      "maxItems": 4
+    },
+    "boeden": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "number"
+        },
+        "minItems": 4,
+        "maxItems": 4
+      }
+    },
+    "privat": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 4,
+            "maxItems": 4
+          },
+          {
+            "type": "object",
+            "properties": {
+              "pfad": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "pfad"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "waende": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tueren": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "angel": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "offen_bis": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "winkel_zu": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "hinweis": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "angel",
+          "offen_bis",
+          "winkel_zu"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Türblatt dreht beim Schließen um winkel_zu Grad um die Angel (animiert, 700 ms). Schließt bei gesperrtem Zimmer und beim abgeschlossenen Bad."
+    },
+    "bad": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 4,
+          "maxItems": 4
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "labels": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "number"
+        },
+        "minItems": 2,
+        "maxItems": 2
+      }
+    },
+    "stockbetten": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "oben": {
+            "type": "string"
+          },
+          "unten": {
+            "type": "string"
+          },
+          "rahmen": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 4,
+            "maxItems": 4
+          }
+        },
+        "required": [
+          "oben",
+          "unten",
+          "rahmen"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "plaetze": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "number"
+        },
+        "minItems": 4,
+        "maxItems": 4
+      }
+    },
+    "notizen": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "pos": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2
+          }
+        },
+        "required": [
+          "text",
+          "pos"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "rechts_daneben": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "_meta": {
+      "$ref": "gemeinsam.schema.json#/$defs/meta_aenderbar"
+    }
+  },
+  "required": [
+    "standort",
+    "einheiten",
+    "viewbox",
+    "boeden",
+    "privat",
+    "waende",
+    "tueren",
+    "bad",
+    "labels",
+    "stockbetten",
+    "plaetze",
+    "notizen",
+    "rechts_daneben",
+    "_meta"
+  ],
+  "additionalProperties": false
+}

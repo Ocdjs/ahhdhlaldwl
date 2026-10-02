@@ -1,0 +1,18 @@
+{
+  "text": "Spendenlieferung Schlafsäcke steht im Flur, bitte nicht ausgeben.",
+  "von": "Leitung",
+  "ab": "2026-09-28",
+  "bis": "2026-10-01",
+  "dauer": "3_tage",
+  "wichtig": false,
+  "quelle": "app",
+  "beendet_um": null,
+  "beendet_von": null,
+  "_meta": {
+    "schema": "hinweis/1",
+    "geaendert_um": "2026-09-28T09:00:00+02:00",
+    "geaendert_von": "Leitung",
+    "geraet": "tablet-st-pius",
+    "version": 1
+  }
+}

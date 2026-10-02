@@ -1,0 +1,92 @@
+{
+  "standort": "st-nikolaus",
+  "einheiten": "Grundriss-Einheiten",
+  "viewbox": [
+    -10,
+    -10,
+    380,
+    440
+  ],
+  "boeden": {
+    "N": [
+      13,
+      13,
+      334,
+      394
+    ]
+  },
+  "privat": [],
+  "waende": [
+    "M10 10 H350 V410 H10 Z"
+  ],
+  "tueren": [],
+  "bad": null,
+  "labels": {
+    "N": [
+      180,
+      204
+    ]
+  },
+  "stockbetten": [],
+  "plaetze": {
+    "N1": [
+      30,
+      16,
+      64,
+      130
+    ],
+    "N5": [
+      30,
+      274,
+      64,
+      130
+    ],
+    "N2": [
+      110,
+      16,
+      64,
+      130
+    ],
+    "N6": [
+      110,
+      274,
+      64,
+      130
+    ],
+    "N3": [
+      190,
+      16,
+      64,
+      130
+    ],
+    "N7": [
+      190,
+      274,
+      64,
+      130
+    ],
+    "N4": [
+      270,
+      16,
+      64,
+      130
+    ],
+    "N8": [
+      270,
+      274,
+      64,
+      130
+    ]
+  },
+  "notizen": [],
+  "rechts_daneben": [
+    "NX"
+  ],
+  "_meta": {
+    "schema": "grundriss/1",
+    "geaendert_um": "2026-09-01T12:00:00+02:00",
+    "geaendert_von": "Leitung",
+    "geraet": "tablet-st-pius",
+    "version": 1
+  }
+}

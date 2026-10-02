@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.notuebernachtung.invalid/dienstplan.schema.json",
+  "title": "Dienstplan eines Monats",
+  "description": "Kalender/Dienstplan/JJJJ-MM.json – aktueller Plan (Betreuung 1 und 2, Küche).",
+  "type": "object",
+  "properties": {
+    "monat": {
+      "$ref": "gemeinsam.schema.json#/$defs/monat"
+    },
+    "tage": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "betreuung": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "kueche": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "geaendert": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "Betreuung 1",
+                "Betreuung 2",
+                "Küche"
+              ]
+            },
+            "description": "Rollen, die vom Originalplan abweichen; Einzelheiten unter Kalender/Aenderungen/."
+          }
+        },
+        "required": [
+          "betreuung",
+          "kueche"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "quelle": {
+      "anyOf": [
+        {
+          "$ref": "gemeinsam.schema.json#/$defs/relpfad"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "_meta": {
+      "$ref": "gemeinsam.schema.json#/$defs/meta_aenderbar"
+    }
+  },
+  "required": [
+    "monat",
+    "tage",
+    "quelle",
+    "_meta"
+  ],
+  "additionalProperties": false
+}

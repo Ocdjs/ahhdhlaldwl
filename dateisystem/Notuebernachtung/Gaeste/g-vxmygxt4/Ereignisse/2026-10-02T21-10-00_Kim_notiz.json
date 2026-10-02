@@ -1,0 +1,18 @@
+{
+  "art": "notiz",
+  "gast_id": "g-vxmygxt4",
+  "text": "Mit dem Kältebus gekommen.",
+  "datum": "2026-10-02",
+  "von": "Kim",
+  "rolle": "betroffen",
+  "quelle": "Aufnahme",
+  "bericht": null,
+  "absatz": null,
+  "_meta": {
+    "schema": "ereignis/1",
+    "angelegt_um": "2026-10-02T21:10:00+02:00",
+    "angelegt_von": "Kim",
+    "geraet": "tablet-st-pius",
+    "unveraenderlich": true
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "tablet-st-pius",
+  "name": "Tablet St. Pius",
+  "nextcloud_benutzer": "nu-tablet-st-pius",
+  "app_version": "1.0.0",
+  "letzter_abgleich": "2026-10-02T21:00:12+02:00",
+  "offene_aenderungen": 0,
+  "_meta": {
+    "schema": "geraet/1",
+    "geaendert_um": "2026-10-02T21:00:12+02:00",
+    "geaendert_von": "App",
+    "geraet": "tablet-st-pius",
+    "version": 812
+  }
+}

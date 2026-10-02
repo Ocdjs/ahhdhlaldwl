@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.notuebernachtung.invalid/hinweis.schema.json",
+  "title": "Hinweis für die nächsten Dienste",
+  "description": "Hinweise/JJJJ-MM/<zeit>_<von>.json – sichtbar im Bericht von ab bis bis (je einschließlich), bis beendet. Nur beendet_* darf sich später ändern.",
+  "type": "object",
+  "properties": {
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "von": {
+      "$ref": "gemeinsam.schema.json#/$defs/person"
+    },
+    "ab": {
+      "$ref": "gemeinsam.schema.json#/$defs/datum"
+    },
+    "bis": {
+      "$ref": "gemeinsam.schema.json#/$defs/datum"
+    },
+    "dauer": {
+      "enum": [
+        "naechster_dienst",
+        "3_tage",
+        "1_woche",
+        "2_wochen",
+        "datum"
+      ]
+    },
+    "wichtig": {
+      "type": "boolean"
+    },
+    "quelle": {
+      "enum": [
+        "app",
+        "nextcloud_eingang",
+        "archiv"
+      ]
+    },
+    "bezug": {
+      "$ref": "gemeinsam.schema.json#/$defs/relpfad",
+      "description": "Bericht-Ordner, zu dem der Hinweis aus dem Archiv gehört."
+    },
+    "beendet_um": {
+      "anyOf": [
+        {
+          "$ref": "gemeinsam.schema.json#/$defs/zeitpunkt"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "beendet_von": {
+      "anyOf": [
+        {
+          "$ref": "gemeinsam.schema.json#/$defs/person"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "_meta": {
+      "$ref": "gemeinsam.schema.json#/$defs/meta_aenderbar"
+    }
+  },
+  "required": [
+    "text",
+    "von",
+    "ab",
+    "bis",
+    "dauer",
+    "wichtig",
+    "quelle",
+    "beendet_um",
+    "beendet_von",
+    "_meta"
+  ],
+  "additionalProperties": false
+}

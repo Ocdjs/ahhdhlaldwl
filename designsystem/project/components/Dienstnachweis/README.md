@@ -1,9 +1,8 @@
 # Dienstnachweis
 
-Der Nachweis einer Person für einen Monat: geplante gegen gemachte Dienste, Abweichungen mit Grund, eine Unterschrift. Danach ist er gesperrt.
+Der Nachweis einer Person für einen Monat **und einen Bereich** (Betreuung oder Küche): geplante gegen gemachte Dienste, Abweichungen mit Grund, eine Unterschrift. Danach ist er gesperrt.
 
-- **Geplant** = Originalplan, wie er vor Monatsanfang feststand (Dienstplan-Import). **Gemacht** = jeder Dienst, bei dem die Person in der Besetzung des Dienstberichts unterschrieben hat, bis zum Moment der Unterschrift unter den Nachweis.
-- Kopf mit Kennzahlen Geplant, Gemacht, Krank, Abgegeben, Vertretung; darunter je Tag eine Zeile: Datum, Geplant ✓, Gemacht ✓ mit Rolle, Bemerkung („krank · vertreten durch Chris“, „Vertretung für Robin · Krankheit“, „ohne Unterschrift im Bericht“). Abweichungen auf `warnung-flaeche`.
-- **Geplante Dienste korrigieren:** nur vor der Unterschrift; öffnet ein Blatt mit Warnbanner („Der Originalplan ist Grundlage der Lohnabrechnung …“), allen Tagen des Monats als Chips und Pflichtfeld „Grund“; der rote Knopf „Korrektur speichern“ (`nu-btn--gefahr-voll`). Jede Korrektur steht danach als Warnzeile im Nachweis (Tage, Grund, wer, wann).
-- **Unterschrift** mit dem Unterschriftsfeld („Die Angaben stimmen“). Danach: Leiste `nu-gesperrt` „Unterschrieben 02.10. 14:00 · PDF · in der Lohntabelle · nicht mehr änderbar“, keine Knöpfe mehr. Das PDF `2026-09_Dienstnachweis_Robin.pdf` wird abgelegt, die Zahlen gehen in die Lohntabelle.
-- Wer unterschreibt, ist die Person selbst; die App fragt nicht nach PIN, zeigt aber den Namen groß im Feld.
+- **Geplant** = Originalplan, wie er zu Monatsbeginn eingelesen und geprüft wurde (Einstellungen › Dienstplan einlesen). **Gemacht** = jeder Dienst, bei dem die Person in der Besetzung des Dienstberichts unterschrieben hat, bis zum Moment der Unterschrift unter den Nachweis. Ein Dienst ohne Unterschrift im Bericht zählt erst, wenn sie nachgeholt ist.
+- Kopf „Dienstnachweis Betreuung · September 2026 · Robin“, Kennzahlen Geplant, Gemacht, Abgegeben, Vertretung (**kein Krank**); darunter je Tag Datum, Geplant ✓, Gemacht ✓ mit Rolle, Bemerkung („abgegeben an Chris · Tausch“, „Vertretung für Robin“, „ohne Unterschrift im Bericht“). Abweichungen auf `warnung-flaeche`.
+- **Geplante Dienste korrigieren:** nur vor der Unterschrift, mit Warnbanner, Tages-Chips und Pflichtgrund; roter Knopf „Korrektur speichern“. Jede Korrektur steht danach als Warnzeile im Nachweis.
+- **Unterschrift** mit dem Unterschriftsfeld („Die Angaben stimmen“), **ohne PIN**. Danach `nu-gesperrt` „Unterschrieben … · PDF · in der Lohntabelle Betreuung · nicht mehr änderbar“. PDF `2026-09_Dienstnachweis_Betreuung_Robin.pdf`.

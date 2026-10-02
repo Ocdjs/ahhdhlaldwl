@@ -1,0 +1,19 @@
+{
+  "art": "notiz",
+  "gast_id": "g-7d3bgagc",
+  "text": "Bei der nächsten Aufnahme nach Schlüssel 7 fragen.",
+  "datum": "2026-09-30",
+  "von": "Leitung",
+  "rolle": "betroffen",
+  "quelle": "Wichtiger Hinweis zu Bericht vom 28.09.",
+  "bericht": "Berichte/2026-09/2026-09-28",
+  "absatz": null,
+  "bei_aufnahme": true,
+  "_meta": {
+    "schema": "ereignis/1",
+    "angelegt_um": "2026-09-30T10:20:00+02:00",
+    "angelegt_von": "Leitung",
+    "geraet": "tablet-st-pius",
+    "unveraenderlich": true
+  }
+}

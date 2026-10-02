@@ -1,0 +1,60 @@
+{
+  "monat": "2026-10",
+  "termine": [
+    {
+      "id": "t-2026-10-01",
+      "datum": "2026-10-02",
+      "art": "Bettwäsche",
+      "titel": "Bettwäschewechsel Zimmer B",
+      "symbol": "wiederholen",
+      "von": "Leitung"
+    },
+    {
+      "id": "t-2026-10-02",
+      "datum": "2026-10-04",
+      "art": "Sondertermin",
+      "titel": "Lieferung Decken",
+      "symbol": "kalender",
+      "von": "Leitung",
+      "geaendert": {
+        "von": "Kim",
+        "um": "2026-10-02T14:25:00+02:00",
+        "vorher": {
+          "datum": "2026-10-03",
+          "titel": "Lieferung Decken"
+        }
+      }
+    },
+    {
+      "id": "t-2026-10-03",
+      "datum": "2026-10-07",
+      "art": "Feiertag",
+      "titel": "Morgen Feiertag, heute einkaufen",
+      "symbol": "einkauf",
+      "von": "Leitung"
+    },
+    {
+      "id": "t-2026-10-04",
+      "datum": "2026-10-09",
+      "art": "Bettwäsche",
+      "titel": "Bettwäschewechsel Zimmer D",
+      "symbol": "wiederholen",
+      "von": "Leitung"
+    },
+    {
+      "id": "t-2026-10-05",
+      "datum": "2026-10-12",
+      "art": "Sondertermin",
+      "titel": "Handwerker Heizung",
+      "symbol": "kalender",
+      "von": "Leitung"
+    }
+  ],
+  "_meta": {
+    "schema": "termine/1",
+    "geaendert_um": "2026-09-30T16:00:00+02:00",
+    "geaendert_von": "Leitung",
+    "geraet": "tablet-st-pius",
+    "version": 2
+  }
+}

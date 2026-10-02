@@ -1,0 +1,64 @@
+<!-- @dsCard group="Bettenplan" height=900 width=1240 subtitle="Sperren und Bad zum Ausprobieren" -->
+<!doctype html>
+<html lang="de">
+<head><meta charset="utf-8"><title>TuerUndBad</title></head>
+<body class="nu" style="margin:0;background:var(--grund)">
+<div class="nu" style="width:1240px;background:var(--grund);padding:20px;display:grid;gap:12px">
+<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center"><button class="nu-btn nu-btn--rahmen nu-btn--klein" id="tf"><i data-icon="schloss"></i>T-Zimmer und Zimmer F sperren</button><button class="nu-btn nu-btn--rahmen nu-btn--klein" id="du"><i data-icon="dusche"></i>Letzte Dusche erledigt</button><span class="nu-beschr" id="st">Bad zu · noch 2 Duschen. Auf das Bad tippen, wenn es offen ist.</span></div>
+<div style="max-width:1000px;background:var(--flaeche);border-radius:16px;padding:16px" id="g"></div></div>
+<script>
+// Grundriss St. Pius: Geometrie wie im Prototyp (viewBox -10 -10 971 800)
+var GR = {
+  boeden:{D:[13,13,314,309], B:[13,328,314,402], T:[746,13,202,274], F:[670,293,278,437]},
+  labels:{D:[19,264], B:[22,356], T:[756,40], F:[752,326]},
+  einzel:{D1:[16,16,150,62], D6:[176,16,150,62], B1:[16,662,150,64], B2:[16,412,150,64], T3:[876,16,70,150], F1:[674,448,150,64], F2:[674,662,150,64]},
+  stock:[["D2","D3",86,86,80,160],["D4","D5",176,86,80,160],["B3","B4",244,352,80,170],["T1","T2",750,110,80,170],["F3","F4",864,460,80,170]]
+};
+var GR_FEST = '<rect class="privat" x="333" y="13" width="188" height="309"/><path class="privat" d="M527 13 H740 V287 H664 V322 H527 Z"/><rect class="privat" x="578" y="451" width="86" height="279"/>' +
+  '<text class="notiz" x="427" y="172" text-anchor="middle">PRIVAT</text><text class="notiz" x="633" y="172" text-anchor="middle">PRIVAT</text><text class="notiz" x="621" y="594" text-anchor="middle">PRIVAT</text>' +
+  '<g class="wandlinien"><path class="wand" d="M336 733 H10 V10 H951 V733 H428"/><path class="wand" d="M170 10 V248 M170 316 V325"/><path class="wand" d="M330 10 V640 M330 712 V733"/><path class="wand" d="M524 10 V325"/><path class="wand" d="M743 10 V290"/><path class="wand" d="M10 325 H210 M282 325 H667"/><path class="wand" d="M667 290 H840 M912 290 H951"/><path class="wand" d="M667 290 V338 M667 410 V733"/><path class="wand" d="M330 448 H355 M427 448 H667"/><path class="wand" d="M458 448 V590 M458 662 V733"/><path class="wand" d="M575 448 V733"/></g>' +
+  '<g><path class="tuer" d="M170 248 A68 68 0 0 0 102 316 M170 316 H102"/></g>' +
+  '<text class="notiz flur-offen" x="498" y="392" text-anchor="middle">FLUR</text><text class="notiz flur-zu" x="498" y="392" text-anchor="middle">FLUR GESPERRT</text><text class="notiz" x="394" y="566" text-anchor="middle">FLUR</text>' +
+  '<path d="M382 747 l-7 10 h14 z" fill="var(--tinte-3)"/><text class="notiz" x="382" y="775" text-anchor="middle">TREPPE</text>';
+// Türen, die sich schließen können: Angel h, offenes Türblatt bis o, Drehwinkel w zum Schließen
+var TUEREN = {D:{h:[282,325],o:[282,253],w:-90}, T:{h:[912,290],o:[912,218],w:-90}, F:{h:[667,338],o:[739,338],w:90}, FLUR:{h:[355,448],o:[355,520],w:-90}, B:{h:[330,640],o:[258,640],w:-90}, BAD:{h:[458,662],o:[386,662],w:90}};
+var GR_BAD = [461,451,111,279];
+function tuerSvg(id, zu, anim){ var t=TUEREN[id],hx=t.h[0],hy=t.h[1],dx=t.o[0]-hx,dy=t.o[1]-hy,r=t.w*Math.PI/180;
+  var cx=Math.round(hx+dx*Math.cos(r)-dy*Math.sin(r)),cy=Math.round(hy+dx*Math.sin(r)+dy*Math.cos(r));
+  return '<g class="nu-tuer'+(zu?' is-zu':'')+(anim?' is-'+anim:'')+'" data-tuer="'+id+'" style="--tuer-winkel:'+t.w+'deg"><path class="tuer tuer-bogen" d="M'+cx+' '+cy+' A72 72 0 0 '+(t.w<0?1:0)+' '+t.o[0]+' '+t.o[1]+'"/><path class="tuer-blatt" style="transform-origin:'+hx+'px '+hy+'px" d="M'+hx+' '+hy+' L'+t.o[0]+' '+t.o[1]+'"/></g>'; }
+function badKnopf(zustand, rest){ var t={zu:["schloss","zu · noch "+(rest||2)+" Duschen"],erinnern:["glocke","Alle geduscht · aufschließen"],frei:["schloss-offen","frei"]}[zustand||"frei"];
+  return '<button class="nu-bad" data-zustand="'+(zustand||"frei")+'" style="left:'+pct(GR_BAD[0]+10,971)+';top:'+pct(GR_BAD[1]+10,800)+';width:'+pct(GR_BAD[2],971)+';height:'+pct(GR_BAD[3],800)+'">'+Nu.svg(t[0])+'BAD<small>'+t[1]+'</small></button>'; }
+var SCHRAFFUR = '<defs><pattern id="nu-schraffur" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect class="schraffur-grund" width="8" height="8"/><line class="schraffur-strich" x1="0" y1="0" x2="0" y2="8"/></pattern></defs>';
+function pct(a,b){return (a/b*100).toFixed(3)+"%";}
+function platz(r,inner){return '<div class="nu-grundriss-platz" style="left:'+pct(r[0]+10,971)+';top:'+pct(r[1]+10,800)+';width:'+pct(r[2],971)+';height:'+pct(r[3],800)+'">'+inner+'</div>';}
+function grundriss(B, aus, bad, anim){
+  aus=aus||{}; anim=anim||{};
+  var karte=function(nr,lage){var b=Object.assign({nr:nr,s:"frei"},B[nr]||{});b.kompakt=true;b.lage=lage||"";return Nu.bett(b);};
+  var frei=function(id){var n=Object.keys(B).filter(function(k){return k.charAt(0)===id.charAt(0)&&k.length===2;});var akt=n.filter(function(k){return B[k].s!=="aus";});return aus[id]?"gesperrt":akt.filter(function(k){return /^(frei|freibis|fehlt2)$/.test(B[k].s);}).length+" von "+akt.length+" frei";};
+  var namen={D:"ZIMMER D",B:"ZIMMER B",T:"T-ZIMMER",F:"ZIMMER F"};
+  var boeden=Object.keys(GR.boeden).map(function(id){var r=GR.boeden[id];return '<rect class="boden'+(aus[id]?' is-aus':'')+'" x="'+r[0]+'" y="'+r[1]+'" width="'+r[2]+'" height="'+r[3]+'"/>';}).join("")+'<rect class="boden'+(aus.T&&aus.F?' is-aus':'')+'" x="333" y="328" width="331" height="117"/>';
+  var stock=GR.stock.map(function(k){return '<rect class="stockrahmen" x="'+k[2]+'" y="'+k[3]+'" width="'+k[4]+'" height="'+k[5]+'" rx="9"/>';}).join("");
+  var labels=Object.keys(GR.labels).map(function(id){var p=GR.labels[id];return '<text class="raumname" x="'+p[0]+'" y="'+p[1]+'">'+namen[id]+'</text><text class="raumfrei" x="'+p[0]+'" y="'+(p[1]+19)+'">'+frei(id)+'</text>';}).join("");
+  var pl=Object.keys(GR.einzel).map(function(nr){return platz(GR.einzel[nr],karte(nr));}).join("")+GR.stock.map(function(k){var sh=(k[5]-9)/2;return platz([k[2]+3,k[3]+3,k[4]-6,sh],karte(k[0],"oben"))+platz([k[2]+3,k[3]+6+sh,k[4]-6,sh],karte(k[1],"unten"));}).join("");
+  var zu={D:!!aus.D,T:!!aus.T,F:!!aus.F,B:!!aus.B,FLUR:!!(aus.T&&aus.F),BAD:bad!=="frei"&&!!bad};
+  var tueren=Object.keys(TUEREN).map(function(id){return tuerSvg(id,zu[id],anim[id]);}).join("");
+  return '<div class="nu-grundriss'+(aus.T&&aus.F?' is-flur-zu':'')+'" role="group" aria-label="Grundriss St. Pius"><svg viewBox="-10 -10 971 800" aria-hidden="true">'+SCHRAFFUR+boeden+GR_FEST+tueren+stock+labels+'</svg>'+pl+badKnopf(bad||"frei")+'</div>';
+}
+var SCHRAFFUR='<defs><pattern id="nu-schraffur" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect class="schraffur-grund" width="8" height="8"/><line class="schraffur-strich" x1="0" y1="0" x2="0" y2="8"/></pattern></defs>';
+var BEISPIEL={D1:{s:"anwesend",name:"Paul"},D2:{s:"anwesend",name:"Tom"},D3:{s:"frei"},D4:{s:"erwartet",name:"Max"},D5:{s:"anwesend",name:"Felix",symbole:["karte-gelb"]},D6:{s:"gehalten",name:"Anna",bis:"06.10."},
+ T1:{s:"fehlt",name:"Jan",symbole:["warnung"],warn:true},T2:{s:"freibis",name:"Leon",bis:"08.10."},T3:{s:"anwesend",name:"Laura"},
+ B1:{s:"erwartet",name:"Tim",symbole:["laeuseschein-fehlt"]},B2:{s:"frei"},B3:{s:"erwartet",name:"Lukas"},B4:{s:"anwesend",name:"Erik"},
+ F1:{s:"anwesend",name:"Moritz",dusche:"20:00"},F2:{s:"fehlt2",name:"Simon",fehltN:2},F3:{s:"anwesend",name:"Lisa"},F4:{s:"aus"}};
+</script>
+<script>
+var aus={},bad="zu",vor={D:false,T:false,F:false,B:false,FLUR:false,BAD:true};
+function zeichne(){var zu={D:!!aus.D,T:!!aus.T,F:!!aus.F,B:!!aus.B,FLUR:!!(aus.T&&aus.F),BAD:bad!=="frei"},an={};Object.keys(zu).forEach(function(k){if(zu[k]!==vor[k])an[k]=zu[k]?"schliessen":"oeffnen";});vor=zu;
+ var b=JSON.parse(JSON.stringify(BEISPIEL));["T","F"].forEach(function(z){if(aus[z])Object.keys(b).forEach(function(n){if(n.charAt(0)===z)b[n]={s:"aus"};});});
+ document.getElementById("g").innerHTML=grundriss(b,aus,bad,an);Nu.mountIcons();
+ document.querySelector(".nu-bad").onclick=function(){if(bad==="erinnern"){bad="frei";document.getElementById("st").textContent="Bad frei. Erneut antippen fragt: „Bad wieder abschließen?“";}else if(bad==="frei"){bad="zu";document.getElementById("st").textContent="Bad wieder abgeschlossen.";}else{document.getElementById("st").textContent="Noch nicht alle geduscht – die App fragt „Bad schon aufschließen?“";return;}zeichne();};}
+document.getElementById("tf").onclick=function(){aus.T=aus.F=!aus.T;this.lastChild.textContent=aus.T?"T-Zimmer und Zimmer F entsperren":"T-Zimmer und Zimmer F sperren";zeichne();};
+document.getElementById("du").onclick=function(){if(bad==="zu"){bad="erinnern";document.getElementById("st").textContent="Erinnerung: „Bad aufschließen“ (Glocke und Einblendung). Jetzt auf das Bad tippen.";zeichne();}};
+zeichne();
+</script>
+</body>
+</html>

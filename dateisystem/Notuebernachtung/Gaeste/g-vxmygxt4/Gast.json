@@ -1,0 +1,55 @@
+{
+  "id": "g-vxmygxt4",
+  "vorname": "Otto",
+  "nachname": "",
+  "spitzname": "",
+  "standort": "st-pius",
+  "aufnahmen": [
+    {
+      "nr": "2026-27-0019",
+      "datum": "2026-09-12",
+      "bett": "E1",
+      "von": "Kim",
+      "dauer": "mehrere",
+      "ende": null,
+      "pdf": "Dokumente/0019_Otto_2026-09-12.pdf"
+    }
+  ],
+  "hausordnung": {
+    "unterschrieben_am": "2026-09-12",
+    "version": "2026-10",
+    "art": "app",
+    "uebersetzung": null
+  },
+  "datenschutz": {
+    "unterschrieben_am": "2026-09-12",
+    "version": "2026-10"
+  },
+  "sprache": "de",
+  "laeuseschein": {
+    "status": "nicht_noetig",
+    "seit": null,
+    "geprueft_von": null
+  },
+  "dokumente": [
+    {
+      "datei": "Dokumente/0019_Otto_2026-09-12.pdf",
+      "art": "aufnahme",
+      "titel": "Aufnahme-PDF (Hausordnung und Datenschutz)",
+      "am": "2026-09-12",
+      "von": "Kim"
+    }
+  ],
+  "erste_nacht": "2026-09-12",
+  "letzte_nacht": "2026-10-02",
+  "naechte": 1,
+  "loeschen_ab": null,
+  "aufnahme_hinweise_aus": [],
+  "_meta": {
+    "schema": "gast/1",
+    "geaendert_um": "2026-09-12T19:30:00+02:00",
+    "geaendert_von": "Kim",
+    "geraet": "tablet-st-pius",
+    "version": 3
+  }
+}

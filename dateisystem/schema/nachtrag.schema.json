@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.notuebernachtung.invalid/nachtrag.schema.json",
+  "title": "Nachtrag zum Bericht",
+  "description": "Berichte/…/Nachtraege/<zeit>_<von>.json – unveränderlich; auch „Unterschrift nachgeholt“.",
+  "type": "object",
+  "properties": {
+    "diensttag": {
+      "$ref": "gemeinsam.schema.json#/$defs/datum"
+    },
+    "art": {
+      "enum": [
+        "text",
+        "unterschrift_nachgeholt"
+      ]
+    },
+    "text": {
+      "type": "string"
+    },
+    "von": {
+      "$ref": "gemeinsam.schema.json#/$defs/person"
+    },
+    "um": {
+      "$ref": "gemeinsam.schema.json#/$defs/zeitpunkt"
+    },
+    "unterschrift": {
+      "anyOf": [
+        {
+          "$ref": "gemeinsam.schema.json#/$defs/relpfad"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "_meta": {
+      "$ref": "gemeinsam.schema.json#/$defs/meta_unveraenderlich"
+    }
+  },
+  "required": [
+    "diensttag",
+    "art",
+    "text",
+    "von",
+    "um",
+    "unterschrift",
+    "_meta"
+  ],
+  "additionalProperties": false
+}

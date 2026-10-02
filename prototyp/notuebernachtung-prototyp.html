@@ -374,6 +374,24 @@ button.nu-kennzahl:active{background:var(--flaeche-2)}
 .nu-grundriss.is-flur-zu .flur-offen{display:none}
 .nu-grundriss-platz{position:absolute;display:flex;container-type:size}
 .nu-grundriss-platz > .nu-bett{flex:1}
+.nu-grundriss .tuer-blatt{fill:none;stroke:var(--tinte-3);stroke-width:1.5;stroke-linecap:round;transform-box:view-box}
+.nu-grundriss .nu-tuer.is-zu .tuer-blatt{transform:rotate(var(--tuer-winkel));stroke:var(--tinte);stroke-width:6;stroke-linecap:square}
+.nu-grundriss .nu-tuer.is-zu .tuer-bogen{opacity:0}
+.nu-grundriss .nu-tuer.is-schliessen .tuer-blatt{animation:nu-tuer-zu 700ms cubic-bezier(.55,0,.85,.35) both}
+.nu-grundriss .nu-tuer.is-schliessen .tuer-bogen{animation:nu-tuer-bogen-weg 700ms linear both}
+.nu-grundriss .nu-tuer.is-oeffnen .tuer-blatt{animation:nu-tuer-auf 700ms var(--kurve-austritt) both}
+.nu-grundriss .nu-tuer.is-oeffnen .tuer-bogen{animation:nu-ein 700ms linear both}
+@keyframes nu-tuer-zu{0%{transform:rotate(0);stroke:var(--tinte-3);stroke-width:1.5}85%{transform:rotate(var(--tuer-winkel));stroke:var(--tinte);stroke-width:6}92%{transform:rotate(calc(var(--tuer-winkel) * .97))}100%{transform:rotate(var(--tuer-winkel));stroke:var(--tinte);stroke-width:6}}
+@keyframes nu-tuer-auf{0%{transform:rotate(var(--tuer-winkel));stroke:var(--tinte);stroke-width:6}100%{transform:rotate(0);stroke:var(--tinte-3);stroke-width:1.5}}
+@keyframes nu-tuer-bogen-weg{0%,40%{opacity:1}100%{opacity:0}}
+/* Bad im Grundriss: abgeschlossen (Duschzeit), Erinnerung „Aufschließen“, frei */
+.nu-bad{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:0;border-radius:var(--radius-s);font:700 13px/1.2 var(--font-ui);letter-spacing:.06em;text-align:center;cursor:pointer;padding:6px;background:var(--flaeche-3);color:var(--tinte-2);transition:background var(--dauer-mittel) var(--kurve-standard),color var(--dauer-mittel) var(--kurve-standard)}
+.nu-bad small{font:400 12px/1.25 var(--font-ui);letter-spacing:0}
+.nu-bad[data-zustand="erinnern"]{background:var(--warnung-flaeche);color:var(--warnung);box-shadow:inset 0 0 0 3px var(--warnung);animation:nu-bad-puls 1.6s var(--kurve-standard) 3}
+.nu-bad[data-zustand="frei"]{background:var(--frei-flaeche);color:var(--frei)}
+.nu-bad:focus-visible{outline:3px solid var(--fokus);outline-offset:2px}
+.nu-bad[disabled]{cursor:default}
+@keyframes nu-bad-puls{0%,100%{box-shadow:inset 0 0 0 3px var(--warnung)}50%{box-shadow:inset 0 0 0 3px var(--warnung),0 0 0 6px color-mix(in srgb,var(--warnung) 35%,transparent)}}
 .nu-plan-raster{display:grid;grid-template-columns:minmax(0,1fr) 176px;gap:16px;align-items:start}
 .nu-plan-karte{background:var(--flaeche);border-radius:var(--radius-l);padding:14px 16px}
 .nu-plan-raster .nu-plaetze .nu-bett{width:100%}
@@ -551,6 +569,40 @@ button.nu-kennzahl:active{background:var(--flaeche-2)}
 .nu-woche-tag .nu-termin small{display:block;font:400 12.5px/16px var(--font-ui);color:inherit;opacity:.85}
 .nu-woche-plus{margin-top:auto;min-height:48px;border:0;border-radius:var(--radius-m);background:transparent;color:var(--tinte-2);font:600 14px/18px var(--font-ui);display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer}
 .nu-woche-plus:hover{background:var(--flaeche-2)}
+/* Dienste im Kalender: je Rolle eine Zeile; geändert = Abweichung vom Originalplan, mit Namen vermerkt */
+.nu-dienste{display:grid;gap:4px}
+.nu-dienstzeile{display:grid;grid-template-columns:minmax(0,1fr);align-content:center;min-height:44px;padding:4px 8px;border:0;border-radius:var(--radius-m);background:var(--erwartet-flaeche);color:var(--blau);font:600 14px/19px var(--font-ui);text-align:left;width:100%;min-width:0}
+.nu-dienstzeile--kueche{background:var(--flaeche-2);color:var(--tinte)}
+.nu-dienstzeile-rolle{font:400 12px/15px var(--font-ui);opacity:.85}
+.nu-dienstzeile b{font-weight:600;overflow-wrap:anywhere}
+.nu-dienstzeile s{font:400 12.5px/16px var(--font-ui);color:var(--tinte-2)}
+.nu-dienstzeile.is-offen b{color:var(--tinte-3);font-weight:400}
+.nu-dienstzeile.is-geaendert{background:var(--warnung-flaeche);color:var(--warnung);box-shadow:inset 3px 0 0 var(--warnung)}
+button.nu-dienstzeile{cursor:pointer}
+.nu-dienstzeile.is-aenderbar,.nu-termin-knopf.is-aenderbar .nu-termin{outline:1.5px dashed currentColor;outline-offset:-3px}
+.nu-termin-knopf{display:block;border:0;padding:0;background:none;text-align:left;cursor:pointer;width:100%;font:inherit;color:inherit}
+.nu-termin.is-geaendert{box-shadow:inset 3px 0 0 var(--warnung)}
+.nu-termin--dienst.is-geaendert{background:var(--warnung-flaeche);color:var(--warnung)}
+.is-wackeln{animation:nu-wackeln 300ms var(--kurve-standard)}
+/* Dienstplan einlesen: Prüfmaske, ein Tag nach dem anderen neben dem Foto */
+.nu-scan{display:grid;gap:12px}
+.nu-scan-kopf{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.nu-scan-fortschritt{height:6px;border-radius:var(--radius-rund);background:var(--flaeche-3);overflow:hidden}
+.nu-scan-fortschritt i{display:block;height:100%;background:var(--primaer);transition:width var(--dauer-mittel) var(--kurve-standard)}
+.nu-scan-raster{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:16px;align-items:start}
+.nu-scan-foto{display:grid;gap:8px;position:sticky;top:0}
+.nu-scan-blatt{background:var(--papier);color:var(--auf-papier);border-radius:var(--radius-s);padding:10px 12px;box-shadow:var(--schatten-gehoben);transform:rotate(-.6deg);display:grid;gap:2px}
+.nu-scan-zeile{display:grid;grid-template-columns:44px repeat(3,minmax(0,1fr));gap:6px;padding:8px 6px;border-bottom:1px solid var(--papier-linie);font:italic 400 19px/24px var(--font-dokument);color:var(--stift-tinte)}
+.nu-scan-zeile span:first-child{font:400 15px/24px var(--font-zahl);color:var(--auf-papier-2);font-style:normal}
+.nu-scan-zeile--kopf{font:700 12px/16px var(--font-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--auf-papier-2)}
+.nu-scan-zeile--kopf span:first-child{font:700 12px/16px var(--font-ui)}
+.nu-scan-zeile.is-aktuell{background:color-mix(in srgb,var(--ampel-gelb) 30%,transparent);outline:2px solid var(--warnung);border-radius:4px}
+.nu-scan-rechts{display:grid;gap:12px;background:var(--flaeche);border-radius:var(--radius-l);padding:16px 18px}
+.nu-scan-pruef{display:grid;gap:8px;padding:10px 12px;border-radius:var(--radius-m);background:var(--flaeche-2)}
+.nu-scan-pruef.is-unsicher:not(.is-geprueft){background:var(--warnung-flaeche);box-shadow:inset 0 0 0 2px var(--warnung)}
+.nu-scan-pruef .nu-chip[aria-pressed="false"]{background:var(--flaeche)}
+.nu-scan-pruef-kopf{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+@media (max-width:900px){.nu-scan-raster{grid-template-columns:minmax(0,1fr)}.nu-scan-foto{position:static}}
 
 /* ---------- Einstellungen ---------- */
 .nu-pin{display:grid;justify-items:center;gap:20px}
@@ -739,6 +791,20 @@ body.nu{overflow:hidden}
   .nu-dokument-paar{grid-template-columns:minmax(0,1fr)}
 }
 .p-blatt--breit{width:780px}
+/* PDF-Vorschau: immer weißes Papier, auch im Nachtmodus */
+.p-pdf{background:#fff;color:#1a1a1a;border-radius:6px;box-shadow:0 1px 4px rgba(0,0,0,.25);padding:28px 32px;display:grid;gap:14px;font-size:13px;line-height:1.45;position:relative;max-height:60vh;overflow:auto}
+.p-pdf-kopf{display:flex;justify-content:space-between;gap:12px;border-bottom:2px solid #1a1a1a;padding-bottom:8px;flex-wrap:wrap}
+.p-pdf-kopf b{font-size:16px}
+.p-pdf table{border-collapse:collapse;width:100%}
+.p-pdf th,.p-pdf td{border:1px solid #c8c8c8;padding:6px 8px;text-align:left;vertical-align:top}
+.p-pdf th{width:170px;background:#f4f4f4;font-weight:600}
+.p-pdf-sig{width:200px;height:44px}
+.p-pdf-sig img{height:36px;display:block}
+.p-pdf-sig small{color:#555}
+.p-pdf-fehlt{color:#b3261e;font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:11px}
+.p-pdf-stempel{border:3px solid #b3261e;color:#b3261e;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:6px 12px;border-radius:4px;justify-self:start;transform:rotate(-1.5deg)}
+.p-pdf-nachtrag{display:grid;gap:4px;border-top:1px dashed #999;padding-top:8px}
+.p-alt summary{cursor:pointer;min-height:44px;display:flex;align-items:center}
 
 </style>
 <div id="app"></div>
@@ -838,7 +904,7 @@ document.body.classList.add("nu");
 var $ = function(s, r){ return (r || document).querySelector(s); };
 var $$ = function(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 var esc = Nu.esc, svg = Nu.svg;
-var KEY = "nu-prototyp-v3";
+var KEY = "nu-prototyp-v6";
 
 // ---------- Datum ----------
 function heute(){ var d = new Date(); if(d.getHours() < 12) d.setDate(d.getDate() - 1); d.setHours(0,0,0,0); return d; }
@@ -875,9 +941,21 @@ var GR_NIKO = {einzel:{}};
 var GR_FEST = '<rect class="privat" x="333" y="13" width="188" height="309"/><path class="privat" d="M527 13 H740 V287 H664 V322 H527 Z"/><rect class="privat" x="578" y="451" width="86" height="279"/>' +
   '<text class="notiz" x="427" y="172" text-anchor="middle">PRIVAT</text><text class="notiz" x="633" y="172" text-anchor="middle">PRIVAT</text><text class="notiz" x="621" y="594" text-anchor="middle">PRIVAT</text>' +
   '<g class="wandlinien"><path class="wand" d="M336 733 H10 V10 H951 V733 H428"/><path class="wand" d="M170 10 V248 M170 316 V325"/><path class="wand" d="M330 10 V640 M330 712 V733"/><path class="wand" d="M524 10 V325"/><path class="wand" d="M743 10 V290"/><path class="wand" d="M10 325 H210 M282 325 H667"/><path class="wand" d="M667 290 H840 M912 290 H951"/><path class="wand" d="M667 290 V338 M667 410 V733"/><path class="wand" d="M330 448 H355 M427 448 H667"/><path class="wand" d="M458 448 V590 M458 662 V733"/><path class="wand" d="M575 448 V733"/></g>' +
-  '<g><path class="tuer" d="M170 248 A68 68 0 0 0 102 316 M170 316 H102"/><path class="tuer" d="M210 325 A72 72 0 0 1 282 253 M282 325 V253"/><path class="tuer" d="M840 290 A72 72 0 0 1 912 218 M912 290 V218"/><path class="tuer" d="M667 410 A72 72 0 0 0 739 338 M667 338 H739"/><path class="tuer" d="M427 448 A72 72 0 0 1 355 520 M355 448 V520"/><path class="tuer" d="M330 712 A72 72 0 0 1 258 640 M330 640 H258"/><path class="tuer" d="M458 590 A72 72 0 0 0 386 662 M458 662 H386"/></g>' +
-  '<text class="notiz flur-offen" x="498" y="392" text-anchor="middle">FLUR</text><text class="notiz flur-zu" x="498" y="392" text-anchor="middle">FLUR GESPERRT</text><text class="notiz" x="394" y="566" text-anchor="middle">FLUR</text><text class="notiz" x="516" y="594" text-anchor="middle">BAD</text>' +
+  '<g><path class="tuer" d="M170 248 A68 68 0 0 0 102 316 M170 316 H102"/></g>' +
+  '<text class="notiz flur-offen" x="498" y="392" text-anchor="middle">FLUR</text><text class="notiz flur-zu" x="498" y="392" text-anchor="middle">FLUR GESPERRT</text><text class="notiz" x="394" y="566" text-anchor="middle">FLUR</text>' +
   '<path d="M382 747 l-7 10 h14 z" fill="var(--tinte-3)"/><text class="notiz" x="382" y="775" text-anchor="middle">TREPPE</text>';
+// Türen, die sich schließen können: Angel h, offenes Türblatt bis o, Drehwinkel zum Schließen
+var TUEREN = {D:{h:[282,325], o:[282,253], w:-90}, T:{h:[912,290], o:[912,218], w:-90}, F:{h:[667,338], o:[739,338], w:90}, FLUR:{h:[355,448], o:[355,520], w:-90}, B:{h:[330,640], o:[258,640], w:-90}, BAD:{h:[458,662], o:[386,662], w:90}};
+var GR_BAD = [461,451,111,279];
+function tuerSvg(id, zu, anim){
+  var t = TUEREN[id], hx = t.h[0], hy = t.h[1], dx = t.o[0] - hx, dy = t.o[1] - hy, r = t.w * Math.PI / 180;
+  var cx = Math.round(hx + dx * Math.cos(r) - dy * Math.sin(r)), cy = Math.round(hy + dx * Math.sin(r) + dy * Math.cos(r));
+  return '<g class="nu-tuer' + (zu ? ' is-zu' : '') + (anim ? ' is-' + anim : '') + '" data-tuer="' + id + '" style="--tuer-winkel:' + t.w + 'deg"><path class="tuer tuer-bogen" d="M' + cx + ' ' + cy + ' A72 72 0 0 ' + (t.w < 0 ? 1 : 0) + ' ' + t.o[0] + ' ' + t.o[1] + '"/><path class="tuer-blatt" style="transform-origin:' + hx + 'px ' + hy + 'px" d="M' + hx + ' ' + hy + ' L' + t.o[0] + ' ' + t.o[1] + '"/></g>';
+}
+// Bad: je Diensttag abgeschlossen, bis alle geplanten Duschen erledigt sind; dann Erinnerung „Bad aufschließen“
+function duschenOffen(){ var d = S.dusche[iso(H)] || {}; return Object.keys(d).sort().filter(function(z){ return d[z].s === "geplant"; }).map(function(z){ var g = S.G[d[z].g]; return z + " " + (g ? g.vorname : ""); }); }
+function badZu(){ var e = (S.bad || {})[iso(tagDatum())]; return e ? e.zu : U.tag === 0; }
+function badZustand(){ return !badZu() ? "frei" : U.tag === 0 && duschenOffen().length === 0 ? "erinnern" : "zu"; }
 var SCHRAFFUR = '<defs><pattern id="nu-schraffur" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect class="schraffur-grund" width="8" height="8"/><line class="schraffur-strich" x1="0" y1="0" x2="0" y2="8"/></pattern></defs>';
 var ORT = {L1:"Loggia",L2:"Loggia",L3:"Loggia",L4:"Loggia",L5:"Loggia",E1:"Esszimmer",TH1:"Tiny House"};
 function alleBetten(plan){ var out = []; plan.forEach(function(z){ z.teile.forEach(function(t){ t.forEach(function(x){ if(Array.isArray(x)) x.forEach(function(y){ out.push({nr:y, zimmer:z.id}); }); else out.push({nr:x, zimmer:z.id}); }); }); }); return out; }
@@ -940,7 +1018,9 @@ function beispiel(){
   var dusche = {}; dusche[iso(H)] = {"19:00":{g:"g1", s:"erledigt"}, "20:00":{g:"g12", s:"geplant"}, "20:30":{g:"g14", s:"geplant"}};
   var hinweise = [
     {id:"h1", von:"Leitung", text:"Heizung im T-Zimmer ist defekt. Der Handwerker kommt Donnerstag, bis dahin den Heizlüfter nutzen.", bis:iso(plus(H,3)), wichtig:true, quelle:"Nextcloud"},
-    {id:"h2", von:"Sam", text:"Neue Decken liegen im Keller, Regal links.", bis:iso(plus(H,2)), wichtig:false, quelle:"App"}
+    {id:"h2", von:"Sam", text:"Neue Decken liegen im Keller, Regal links.", bis:iso(plus(H,2)), wichtig:false, quelle:"App"},
+    {id:"h3", von:"Leitung", text:"Ab morgen gibt es das Abendessen erst um 19:30. Bitte den Gästen beim Ankommen sagen.", ab:iso(plus(H,1)), bis:iso(plus(H,7)), dauer:"1 Woche", wichtig:false, quelle:"App"},
+    {id:"h0", von:"Leitung", text:"Spendenlieferung Schlafsäcke steht im Flur, bitte nicht ausgeben.", ab:iso(plus(H,-4)), bis:iso(plus(H,-1)), dauer:"3 Tage", wichtig:false, quelle:"App"}
   ];
   var termine = [
     {datum:iso(H), art:"Bettwäsche", titel:"Bettwäschewechsel Zimmer B", sym:"wiederholen"},
@@ -963,21 +1043,21 @@ function beispiel(){
   for(var d3 = new Date(m0); d3 < H; d3 = plus(d3, 1)){ var k3 = iso(d3), p3 = plan0[k3];
     var e3 = p3.nacht.map(function(n, j){ return n ? {name:n, rolle:"Betreuung " + (j + 1), geplant:n, grund:""} : null; }).filter(Boolean).concat([{name:p3.kueche, rolle:"Küche", geplant:p3.kueche, grund:""}]);
     if(d3.getMonth() === m0.getMonth() && d3.getDate() > 8){
-      if(!krankTag && p3.nacht.indexOf("Robin") >= 0){ krankTag = k3; e3.forEach(function(e){ if(e.name === "Robin"){ e.name = "Chris"; e.grund = "Krankheit"; } }); }
-      else if(krankTag && !tauschTag && d3.getDate() > 15 && p3.nacht.indexOf("Kim") >= 0 && p3.nacht.indexOf("Jule") < 0){ tauschTag = k3; e3.forEach(function(e){ if(e.name === "Kim"){ e.name = "Jule"; e.grund = "Tausch"; } }); }
+      if(!krankTag && p3.nacht.indexOf("Robin") >= 0){ krankTag = k3; e3.forEach(function(e){ if(e.name === "Robin"){ e.name = "Chris"; e.grund = "Tausch"; } }); }
+      else if(krankTag && !tauschTag && d3.getDate() > 15 && p3.nacht.indexOf("Kim") >= 0 && p3.nacht.indexOf("Jule") < 0){ tauschTag = k3; e3.forEach(function(e){ if(e.name === "Kim"){ e.name = "Jule"; e.grund = "Sonstiges"; } }); }
     }
     einsaetze[k3] = e3; }
   var archiv = [
-    {datum:iso(plus(H,-1)), vorfall:false, personen:"Sam, Chris", text:"Ruhige Nacht. Toilettenpapier fehlt."},
-    {datum:iso(plus(H,-3)), vorfall:true, personen:"Sam, Robin", text:"Gelbe Karte für @Felix: laute Musik nach 23 Uhr nach zwei Hinweisen."},
-    {datum:iso(plus(H,-2)), vorfall:false, personen:"Kim, Chris", text:"Lukas (B3) ist nicht gekommen, fehlt unentschuldigt."},
-    {datum:iso(plus(H,-4)), vorfall:false, personen:"Kim, Sam", text:"Schlüssel 7 fehlt."}
+    {datum:iso(plus(H,-1)), vorfall:false, personen:"Sam, Chris, Jule", text:"Ruhige Nacht.", fehlt:["Toilettenpapier"], fehltText:"Müllbeutel 120 l", fragen:"@Tom (D2) fragt nach Arbeitsschuhen in Größe 44.", kommentare:[]},
+    {datum:iso(plus(H,-3)), vorfall:true, personen:"Sam, Robin, Jule", text:"Gelbe Karte für @Felix: laute Musik nach 23 Uhr nach zwei Hinweisen.", fehlt:[], fehltText:"", fragen:"", kommentare:[{von:"Leitung", art:"kommentar", text:"Danke, richtig gehandelt. Bitte beim nächsten Mal auch die Uhrzeit notieren.", um:kurz(plus(H,-2)) + " 10:20", gast:null}]},
+    {datum:iso(plus(H,-2)), vorfall:false, personen:"Kim, Chris, Mika", text:"Lukas (B3) ist nicht gekommen, fehlt unentschuldigt.", fehlt:["Kaffee","Seife"], fehltText:"", fragen:"Lisa fragt, ob sie ihren Koffer im Keller lassen kann.", kommentare:[]},
+    {datum:iso(plus(H,-4)), vorfall:false, personen:"Kim, Sam, Mika", text:"Schlüssel 7 fehlt. @Max Mustermann wollte nachsehen, ob er ihn eingesteckt hat.", fehlt:[], fehltText:"", fragen:"", kommentare:[]}
   ];
-  return {v:3, theme:"auto", G:G, betten:b, offRooms:{}, offBeds:{N4:true}, notbett:{L3:true, E1:true}, extra:[{id:"N9", name:"Matratze Flur", ort:"niko"}], lage:{}, dusche:dusche, hinweise:hinweise, termine:termine, dienstplan:dienstplan, kueche:kueche, plan0:plan0, einsaetze:einsaetze, nachweise:{}, planLog:[], nachweisBeispiel:true, archiv:archiv,
+  return {v:6, theme:"auto", G:G, betten:b, offRooms:{}, offBeds:{N4:true}, notbett:{L3:true, E1:true}, extra:[{id:"N9", name:"Matratze Flur", ort:"niko"}], lage:{}, bad:{}, dusche:dusche, hinweise:hinweise, termine:termine, dienstplan:dienstplan, kueche:kueche, plan0:plan0, einsaetze:einsaetze, nachweise:{}, planLog:[], nachweisBeispiel:true, archiv:archiv, fehltErledigt:{}, planAenderungen:[], planImporte:(function(){ var o = {}; o[mKey(m0)] = {von:"Leitung", um:"01." + String(m0.getMonth() + 1).padStart(2, "0") + ". 09:10", dienste:90, korrigiert:3, quelle:"Foto"}; o[mKey(H)] = {von:"Leitung", um:"01." + String(H.getMonth() + 1).padStart(2, "0") + ". 09:30", dienste:93, korrigiert:2, quelle:"Foto"}; return o; })(), 
     berichte:{}, aktiv:0, sync:{offline:false, ausstehend:0, zuletzt:"21:00"}, naechsteNr:n + 1, ampel:{gruen:3}, kht:{gemeldet:false, zahl:null, um:null}};
 }
 var S;
-function laden(){ try{ var r = localStorage.getItem(KEY); if(r){ var s = JSON.parse(r); if(s && s.v === 3) return s; } }catch(e){} return beispiel(); }
+function laden(){ try{ var r = localStorage.getItem(KEY); if(r){ var s = JSON.parse(r); if(s && s.v === 6) return s; } }catch(e){} return beispiel(); }
 function speichern(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
 S = laden();
 var nachweisBeispielOffen = !!S.nachweisBeispiel;
@@ -1008,6 +1088,7 @@ function gleicherVorname(g){ var v = g.vorname.toLowerCase(); return Object.keys
 // Anzeigename: bei gleichen Vornamen mit Bettnummer, sonst mit Nachname, Spitzname oder Aufnahmenummer
 function zusatz(g){ var b = bettVon(g.id); return b ? b : g.nachname ? g.nachname : g.spitz ? "„" + g.spitz + "“" : g.nr ? "Nr. " + g.nr.slice(-4) : "ohne Bett"; }
 function anzeige(g){ return g.vorname + (gleicherVorname(g) ? " (" + zusatz(g) + ")" : ""); }
+function notizenHtml(g){ return g.notizen.slice().reverse().map(function(n){ return '<div class="nu-notiz">' + (n.aufnahme ? '<span class="nu-pille nu-pille--warnung" style="margin-bottom:4px">' + svg("glocke","klein") + 'bei Wiederaufnahme</span><br>' : '') + esc(n.text) + '<small>' + kurz(pd(n.datum)) + ' · ' + esc(n.von) + (n.quelle ? ' · ' + esc(n.quelle) : '') + '</small></div>'; }).join("") || '<p class="nu-beschr">Noch keine Notizen.</p>'; }
 function naechteText(n){ return n === 1 ? "1 Nacht" : n + " Nächte"; }
 function pdfName(g){ return (g.nr ? g.nr.slice(-4) : "0000") + "_" + g.vorname + (g.nachname ? "_" + g.nachname : "") + "_" + (g.unterschriebenAm || g.erste) + ".pdf"; }
 function khtZahlen(){
@@ -1088,6 +1169,8 @@ function erinnerungen(){
   BETTEN_HAUS.forEach(function(b){ var g = gastVon(b.nr); if(g && g.laus === "fehlt" && status(b.nr) !== "aus" && status(b.nr) !== "frei" && status(b.nr) !== "freibis"){ var t = lausTage(g); if(t >= 1) out.push({sym: t >= 3 ? "warnung" : "laeuseschein-fehlt", warn:true, text:"Läuseschein · " + g.vorname + ", " + b.nr, klein: t >= 3 ? "fehlt seit " + t + " Tagen" : "Tag " + (t + 1), nr:b.nr}); } });
   BETTEN_HAUS.concat(BETTEN_NIKO).forEach(function(b){ if(status(b.nr) === "fehlt2"){ var g = gastVon(b.nr); out.push({sym:"abwesend", warn:true, text:g.vorname + ", " + b.nr + " fehlt " + (S.betten[b.nr].n || 2) + ". Nacht", klein:"unentschuldigt · Bett zählt als frei", nr:b.nr}); } });
   S.hinweise.filter(function(h){ return h.neu; }).forEach(function(h){ out.push({sym:"bericht", text:"Neuer Hinweis von " + h.von, klein:h.text.slice(0, 48) + "…", dienst:true}); });
+  S.termine.filter(function(x){ return x.datum === iso(H) && x.art === "Bettwäsche"; }).forEach(function(x){ out.push({sym:"wiederholen", warn:true, text:x.titel, klein:"Bettwäschewechsel heute · wichtiger Hinweis", dienst:true}); });
+  if(U.tag === 0 && badZustand() === "erinnern") out.push({sym:"schloss-offen", warn:true, text:"Bad aufschließen", klein:"Alle haben geduscht · im Grundriss auf das Bad tippen", bad:true});
   var d = S.dusche[iso(H)] || {};
   Object.keys(d).sort().forEach(function(k){ if(d[k].s === "geplant"){ var g = S.G[d[k].g]; out.push({sym:"dusche", text:"Dusche " + k + " · " + (g ? g.vorname : ""), klein:"Duschplan", dusche:true}); } });
   return out;
@@ -1158,7 +1241,16 @@ function grundrissPius(){
   var labels = Object.keys(GR.labels).map(function(id){ var p = GR.labels[id]; return '<text class="raumname" x="' + p[0] + '" y="' + p[1] + '">' + namen[id] + '</text><text class="raumfrei" x="' + p[0] + '" y="' + (p[1] + 19) + '">' + raumZahl(id) + '</text>'; }).join("");
   var plaetze = Object.keys(GR.einzel).map(function(p){ return platz(GR.einzel[p], bettKarte(anPlatz(p), true), fw, fh); }).join("") +
     GR.stock.map(function(k){ var sh = (k[5] - 9) / 2; return platz([k[2] + 3, k[3] + 3, k[4] - 6, sh], bettKarte(anPlatz(k[0]), true), fw, fh) + platz([k[2] + 3, k[3] + 6 + sh, k[4] - 6, sh], bettKarte(anPlatz(k[1]), true), fw, fh); }).join("");
-  return '<div class="nu-grundriss' + (flurZu ? ' is-flur-zu' : '') + '" role="group" aria-label="Grundriss St. Pius"><svg viewBox="-10 -10 971 800" aria-hidden="true">' + SCHRAFFUR + boeden + GR_FEST + stock + labels + '</svg>' + plaetze + '</div>';
+  var zu = {D:!!S.offRooms.D, T:!!S.offRooms.T, F:!!S.offRooms.F, B:!!S.offRooms.B, FLUR:!!flurZu, BAD:badZu()}, vorher = U.tuerTag === U.tag ? U.tuerStand : null;
+  var tueren = Object.keys(TUEREN).map(function(id){ var anim = vorher && vorher[id] !== zu[id] ? (zu[id] ? "schliessen" : "oeffnen") : ""; return tuerSvg(id, zu[id], anim); }).join("");
+  U.tuerStand = zu; U.tuerTag = U.tag;
+  var bad = badKnopf('left:' + pct(GR_BAD[0] + 10, fw) + ';top:' + pct(GR_BAD[1] + 10, fh) + ';width:' + pct(GR_BAD[2], fw) + ';height:' + pct(GR_BAD[3], fh));
+  return '<div class="nu-grundriss' + (flurZu ? ' is-flur-zu' : '') + '" role="group" aria-label="Grundriss St. Pius"><svg viewBox="-10 -10 971 800" aria-hidden="true">' + SCHRAFFUR + boeden + GR_FEST + tueren + stock + labels + '</svg>' + plaetze + bad + '</div>';
+}
+function badKnopf(stil){
+  var bz = badZustand(), offen = duschenOffen();
+  return '<button class="nu-bad" data-act="bad" data-zustand="' + bz + '" style="' + stil + '"' + (U.tag < 0 ? ' disabled' : '') +
+    ' aria-label="Bad, ' + (bz === "frei" ? "frei" : bz === "erinnern" ? "abgeschlossen, bitte aufschließen" : "abgeschlossen") + '">' + svg(bz === "frei" ? "schloss-offen" : bz === "erinnern" ? "glocke" : "schloss") + 'BAD<small>' + (bz === "frei" ? "frei" : bz === "erinnern" ? "Alle geduscht · aufschließen" : U.tag < 0 ? "abgeschlossen" : "zu · noch " + offen.length + (offen.length === 1 ? " Dusche" : " Duschen")) + '</small></button>';
 }
 function grundrissNiko(){
   var fw = 380, fh = 440;
@@ -1183,7 +1275,7 @@ function planAnsicht(){
     (U.tag === 0 ? '<button class="nu-btn nu-btn--primaer" data-act="aufnahme">' + svg("person-plus") + 'Gast aufnehmen</button>' : '') + '</div>';
   var auswahl = U.auswahl ? '<div class="p-hinweisbalken">' + svg("tauschen") + 'Neues Bett für ' + esc(gastVon(U.auswahl).vorname) + ' antippen<button class="nu-btn nu-btn--klein nu-btn--rahmen" data-act="auswahlAbbrechen">Abbrechen</button></div>' : '';
   var plan;
-  if(U.reiter === "haus") plan = schmal() ? '<div class="p-raster">' + HAUS.map(zimmerHtml).join("") + '</div>' : '<div class="nu-plan-raster"><div class="nu-plan-karte">' + grundrissPius() + '</div>' + plaetzeSpalte(HAUS) + '</div>';
+  if(U.reiter === "haus") plan = schmal() ? '<div class="p-raster">' + HAUS.map(zimmerHtml).join("") + badKnopf("position:relative;min-height:72px;flex-direction:row;gap:10px") + '</div>' : '<div class="nu-plan-raster"><div class="nu-plan-karte">' + grundrissPius() + '</div>' + plaetzeSpalte(HAUS) + '</div>';
   else plan = schmal() ? '<div class="p-raster">' + NIKO.map(zimmerHtml).join("") + '</div>' : '<div class="nu-plan-raster" style="grid-template-columns:minmax(0,520px) 176px;justify-content:center"><div class="nu-plan-karte">' + grundrissNiko() + '</div>' + plaetzeSpalte(NIKO) + '</div>';
   return '<div class="p-plan-kopf">' + kopfzeile + reiter + auswahl + '</div><div id="plan"' + (U.auswahl ? ' class="p-auswahlmodus"' : '') + '>' + plan + '</div>' +
     (U.reiter === "niko" ? '<p class="nu-beschr" style="margin-top:12px">St. Nikolaus: Wer eingetragen ist, wird jede Nacht fortgeschrieben, bis jemand die Belegung ändert. Aufnahme ohne Hausordnung, Läuseschein und Unterschrift.</p>' : '');
@@ -1254,7 +1346,7 @@ function detailBereich(){
   if(s === "fehlt" || s === "fehlt2") warn += '<div class="nu-zeile nu-zeile--warnung">' + svg("abwesend") + '<div><b>' + (s === "fehlt" ? 'Fehlt unentschuldigt, 1. Nacht' : 'Fehlt die ' + (b.n || 2) + '. Nacht in Folge') + '</b><small>' + (s === "fehlt" ? 'Bett zählt für das Kältehilfetelefon weiter als belegt.' : 'Bett zählt als frei und darf neu vergeben werden.') + '</small></div></div>';
   if(s === "freibis" || s === "gehalten") warn += '<div class="nu-zeile">' + svg(s === "gehalten" ? "schloss" : "rueckkehr") + '<div>' + (s === "gehalten" ? 'Bett freigehalten bis ' : 'Kommt zurück am ') + kurz(pd(b.bis)) + '<small>' + (b.grund ? esc(b.grund) : (s === "gehalten" ? "zählt nicht als frei" : "Bett zählt bis dahin als frei")) + '</small></div></div>';
   var sank = g.sanktionen.length ? g.sanktionen.map(function(x){ var sym = x.stufe === "Hausverbot" ? "karte-rot" : x.stufe === "Gelbe Karte" ? "karte-gelb" : "verwarnung"; return '<div class="nu-zeile">' + svg(sym) + '<div>' + esc(x.stufe) + ' · ' + kurz(pd(x.datum)) + (x.bis ? ' · bis ' + kurz(pd(x.bis)) : '') + '<small>' + esc(x.grund) + ', eingetragen von ' + esc(x.von) + '</small></div></div>'; }).join("") : '<p class="nu-beschr">Keine Einträge.</p>';
-  var notizen = g.notizen.slice().reverse().map(function(n){ return '<div class="nu-notiz">' + esc(n.text) + '<small>' + kurz(pd(n.datum)) + ' · ' + esc(n.von) + (n.quelle ? ' · ' + esc(n.quelle) : '') + '</small></div>'; }).join("") || '<p class="nu-beschr">Noch keine Notizen.</p>';
+  var notizen = notizenHtml(g);
   var laus = g.standort === "nikolaus" ? '<p class="nu-beschr">In St. Nikolaus nicht erfasst.</p>' : g.laus === "liegt" ? '<div class="nu-zeile">' + svg("laeuseschein") + '<div>Liegt vor<small>' + (g.lausVon ? 'Geprüft von ' + esc(g.lausVon) + ' · ' : '') + 'gilt die ganze Saison</small></div></div>' : g.laus === "nicht" ? '<p class="nu-beschr">Nicht nötig (eine Nacht).</p>' : '<p class="nu-beschr">Fehlt.</p>';
   var dok = (g.unterschrieben ? '<div class="nu-zeile">' + svg("pdf") + '<div>' + esc(pdfName(g)) + '<small>Hausordnung (Deutsch' + (g.uebersetzung ? ', Übersetzung ' + esc(SPRACHE[g.uebersetzung][2]) : '') + ') und Datenschutz</small></div></div>' :
     '<div class="nu-zeile nu-zeile--warnung">' + svg("unterschrift") + '<div><b>' + (g.standort === "nikolaus" ? "Unterschreibt außerhalb der App" : "Hausordnung noch nicht unterschrieben") + '</b><small>Kann jederzeit nachgeholt werden.</small></div>' + (ro || g.standort === "nikolaus" ? '' : '<button class="nu-btn nu-btn--klein nu-btn--rahmen" data-act="nachholen" data-arg="' + g.id + '">' + svg("stift") + 'Jetzt</button>') + '</div>') +
@@ -1384,7 +1476,7 @@ function padAnbinden(r){
 function padFertig(key, bild){
   if(U.wizard && /^(hg|hb|dg|db)$/.test(key)){ U.wizard.sig[key] = bild; render(); return; }
   if(key === "mon"){ nachweisUnterschreiben(bild); return; }
-  if(key.indexOf("bes") === 0){ var i = +key.slice(3); var b = bericht(); b.besetzung[i].sig = bild; b.besetzung[i].um = uhr(); U.modal = null; commit(); }
+  if(key.indexOf("bes") === 0){ var i = +key.slice(3); var b = bericht(); b.besetzung[i].sig = bild; b.besetzung[i].um = b.status === "abgeschlossen" ? "nachgeholt " + kurz(H) + " " + uhr() : uhr(); if(b.status === "abgeschlossen") b.nachtraege.push({text:"Unterschrift von " + b.besetzung[i].name + " nachgeholt.", um:kurz(H) + " · " + uhr(), von:b.besetzung[i].name}); U.modal = null; commit(); }
 }
 function schrittInhalt(){
   var w = wz(), i = w.schritt;
@@ -1536,10 +1628,10 @@ function dienstAnsicht(){
   }
   var zu = b.status === "abgeschlossen", f = b.f;
   var kopf = letzterDienstHinweis() + '<div class="nu-bericht" style="gap:16px">' +
-    (zu ? '<div class="nu-gesperrt">' + svg("schloss", U.geradeZu ? "zu" : "") + '<div style="flex:1">Bericht abgeschlossen<small>' + esc(b.zuUm) + ' · ' + b.besetzung.map(function(x){ return x.name; }).join(", ") + ' · PDF gespeichert' + (S.sync.offline ? ', wartet auf Abgleich' : ' und abgeglichen') + '</small></div><button class="nu-btn nu-btn--klein nu-btn--rahmen" data-act="pdfZeigen">' + svg("pdf") + 'PDF ansehen</button><button class="nu-btn nu-btn--klein nu-btn--rahmen" data-act="teilen">' + svg("teilen") + 'Teilen</button></div>' : '') +
+    (zu ? '<div class="nu-gesperrt">' + svg("schloss", U.geradeZu ? "zu" : "") + '<div style="flex:1">Bericht abgeschlossen' + ((b.ohneUnterschrift || []).length ? ' <span class="nu-pille nu-pille--warnung">' + svg("warnung","klein") + 'ohne Unterschrift: ' + esc(b.ohneUnterschrift.join(", ")) + '</span>' : '') + '<small>' + esc(b.zuUm) + ' · ' + b.besetzung.map(function(x){ return x.name; }).join(", ") + ' · PDF gespeichert' + (S.sync.offline ? ', wartet auf Abgleich' : ' und abgeglichen') + ' · nicht mehr änderbar, nur ergänzen</small></div><button class="nu-btn nu-btn--klein nu-btn--rahmen" data-act="berichtPdf">' + svg("pdf") + 'PDF ansehen</button><button class="nu-btn nu-btn--klein nu-btn--rahmen" data-act="teilen">' + svg("teilen") + 'Teilen</button></div>' : '') +
     '<div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><h2 class="titel" style="margin:0;flex:1">' + esc(lang(tagDatum())) + '</h2><span class="nu-beschr">begonnen ' + esc(b.begonnen) + '</span></div>' +
     b.besetzung.map(function(x, i){ return '<div class="nu-besetzung"><span class="rolle">' + esc(x.rolle) + '</span><button class="nu-person" data-act="personTauschen" data-arg="' + i + '"' + (zu ? ' disabled' : '') + ' aria-pressed="false" style="' + (x.name === "offen" ? 'box-shadow:inset 0 0 0 1.5px var(--linie-stark)' : '') + '"><span class="nu-kuerzel">' + esc(x.name === "offen" ? "?" : x.name.slice(0,2).toUpperCase()) + '</span>' + esc(x.name) + (zu ? '' : svg("tauschen","klein")) + '</button>' +
-      (x.sig ? '<div class="nu-mini-unterschrift is-fertig" style="justify-content:space-between;padding:0 12px"><img class="p-mini-sig" src="' + x.sig + '" alt="Unterschrift ' + esc(x.name) + '" style="width:60%">' + svg("check","klein") + esc(x.um) + '</div>' : '<button class="nu-mini-unterschrift" data-act="besetzungUnterschrift" data-arg="' + i + '"' + (x.name === "offen" || zu ? ' disabled' : '') + '>' + svg("unterschrift","klein") + (x.name === "offen" ? "Erst Person wählen" : "Tippen zum Unterschreiben") + '</button>') + '</div>'; }).join("") + '</div>';
+      (x.sig ? '<div class="nu-mini-unterschrift is-fertig" style="justify-content:space-between;padding:0 12px"><img class="p-mini-sig" src="' + x.sig + '" alt="Unterschrift ' + esc(x.name) + '" style="width:60%">' + svg("check","klein") + esc(x.um) + '</div>' : '<button class="nu-mini-unterschrift" data-act="besetzungUnterschrift" data-arg="' + i + '"' + (x.name === "offen" ? ' disabled' : '') + '>' + svg("unterschrift","klein") + (x.name === "offen" ? "Erst Person wählen" : zu ? "Unterschrift nachholen" : "Tippen zum Unterschreiben") + '</button>') + '</div>'; }).join("") + '</div>';
   var abw = BETTEN_HAUS.concat(BETTEN_NIKO).filter(function(x){ var s = status(x.nr); return s === "gehalten" || s === "freibis" || s === "fehlt" || s === "fehlt2"; }).map(function(x){ var g = gastVon(x.nr), s = status(x.nr), bb = S.betten[x.nr];
     var text = s === "gehalten" ? "freigehalten bis " + kurz(pd(bb.bis)) : s === "freibis" ? "frei bis " + kurz(pd(bb.bis)) : s === "fehlt" ? "fehlt unentschuldigt, 1. Nacht" : "fehlt " + (bb.n || 2) + ". Nacht in Folge, Bett zählt als frei";
     return '<div class="nu-zeile' + (s === "fehlt" || s === "fehlt2" ? ' nu-zeile--warnung' : '') + '">' + svg(s === "gehalten" ? "schloss" : s === "freibis" ? "rueckkehr" : "abwesend") + '<div>' + esc(g.vorname) + ' · ' + x.nr + ' · ' + text + '<small>aus dem Bettenplan</small></div></div>'; }).join("") || '<p class="nu-beschr">Keine Abwesenheiten.</p>';
@@ -1548,33 +1640,34 @@ function dienstAnsicht(){
   var pflicht = function(w){ return !zu && U.pruefen && w == null ? '<span class="nu-pille nu-pille--warnung">' + svg("warnung","klein") + 'Pflichtfeld</span>' : ''; };
   var felder = '<div class="nu-bericht' + (f.vorfall === "ja" ? ' is-vorfall' : '') + '" id="bericht">' +
     (f.vorfall === "ja" ? '<div style="display:flex;align-items:center;gap:8px;color:var(--vorfall);font-weight:700">' + svg("vorfall") + 'Bericht mit Vorfall</div>' : '') +
-    t("hinweise", "Wichtige Hinweise", "Was sollen die nächsten wissen? @ erwähnt einen Gast. Ein Absatz mit „Verwarnung“, „Gelbe Karte“ oder „Hausverbot“ am Anfang legt eine Sanktion für genau eine Person an, die anderen bekommen nur eine Notiz.") +
     '<div class="nu-bericht-zeile"><span class="nu-feldname">Hat KHT angerufen?</span><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">' + jaNein("kht", f.kht, zu) + '<button class="nu-pille" data-act="khtBlatt" style="border:0;cursor:pointer">' + svg("telefon","klein") + 'KHT-Nummer ' + k.belegt + '</button>' + pflicht(f.kht) + '</div></div>' +
-    '<div class="nu-bericht-zeile"><span class="nu-feldname">Vorfälle</span><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">' + jaNein("vorfall", f.vorfall, zu) + pflicht(f.vorfall) + (f.vorfall === "ja" ? '<span class="nu-beschr">Einzelheiten unter „Wichtige Hinweise“.</span>' : '') + '</div></div>' +
-    '<div class="nu-bericht-zeile"><span class="nu-feldname">Fehlt etwas</span><div class="nu-checkliste">' + FEHLT.map(function(x){ var an = f.fehlt.indexOf(x) >= 0; return '<button class="nu-chip" aria-pressed="' + an + '" data-act="fehlt" data-arg="' + x + '"' + (zu ? ' disabled' : '') + '>' + (an ? svg("check","klein") : '') + x + '</button>'; }).join("") + '<input class="nu-eingabe" data-feld="fehltText" id="f-fehltText" style="flex:1 1 260px" placeholder="Was genau? z. B. Müllbeutel 120 l, Duschgel" value="' + esc(f.fehltText) + '"' + (zu ? ' readonly' : '') + '></div></div>' +
+    t("hinweise", "Wichtige Hinweise", "Was sollen die nächsten wissen? @ erwähnt einen Gast. Ein Absatz mit „Verwarnung“, „Gelbe Karte“ oder „Hausverbot“ am Anfang legt eine Sanktion für genau eine Person an, die anderen bekommen nur eine Notiz.") +
     t("fragen", "Fragen von Gästen", "z. B. Max fragt nach einer zweiten Decke") +
-    '<div class="nu-bericht-zeile"><span class="nu-feldname">Abwesenheit von Gästen</span><div class="p-liste">' + abw + '</div></div>' +
-    '<div class="nu-bericht-zeile"><span class="nu-feldname">Schlüssel fehlt</span><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">' + jaNein("schluessel", f.schluessel, zu) + (f.schluessel === "ja" ? '<input class="nu-eingabe" data-feld="schluesselNr" id="f-schluesselNr" style="max-width:200px" inputmode="numeric" placeholder="Nummer(n)" value="' + esc(f.schluesselNr) + '"' + (zu ? ' readonly' : '') + '>' : '') + '</div></div>' +
+    '<div class="nu-bericht-zeile"><span class="nu-feldname">Abwesenheiten</span><div class="p-liste">' + abw + '</div></div>' +
     '<div class="nu-bericht-zeile"><span class="nu-feldname">Externe Gäste</span><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">' + f.extern.map(function(n){ return '<span class="nu-pille">' + svg("person","klein") + esc(n) + '</span>'; }).join("") + (zu ? '' : '<button class="nu-chip" data-act="externBlatt">' + svg("plus","klein") + 'Gast hinzufügen</button>') + '</div></div>' +
+    '<div class="nu-bericht-zeile"><span class="nu-feldname">Vorfälle</span><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">' + jaNein("vorfall", f.vorfall, zu) + pflicht(f.vorfall) + (f.vorfall === "ja" ? '<span class="nu-beschr">Einzelheiten unter „Wichtige Hinweise“.</span>' : '') + '</div></div>' +
+    '<div class="nu-bericht-zeile"><span class="nu-feldname">Schlüssel fehlt</span><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">' + jaNein("schluessel", f.schluessel, zu) + (f.schluessel === "ja" ? '<input class="nu-eingabe" data-feld="schluesselNr" id="f-schluesselNr" style="max-width:200px" inputmode="numeric" placeholder="Nummer(n)" value="' + esc(f.schluesselNr) + '"' + (zu ? ' readonly' : '') + '>' : '') + '</div></div>' +
+    '<div class="nu-bericht-zeile"><span class="nu-feldname">Fehlt etwas</span><div class="nu-checkliste">' + FEHLT.map(function(x){ var an = f.fehlt.indexOf(x) >= 0; return '<button class="nu-chip" aria-pressed="' + an + '" data-act="fehlt" data-arg="' + x + '"' + (zu ? ' disabled' : '') + '>' + (an ? svg("check","klein") : '') + x + '</button>'; }).join("") + '<input class="nu-eingabe" data-feld="fehltText" id="f-fehltText" style="flex:1 1 260px" placeholder="Was genau? z. B. Müllbeutel 120 l, Duschgel" value="' + esc(f.fehltText) + '"' + (zu ? ' readonly' : '') + '></div></div>' +
     t("sonstiges", "Sonstiges", "") + '</div>';
-  var nachtraege = b.nachtraege.map(function(n){ return '<div class="nu-nachtrag"><b>Nachtrag</b>' + esc(n.text) + '<small>' + esc(n.um) + ' · ' + esc(n.von) + '</small></div>'; }).join("");
-  var fuss = zu ? nachtraege + '<button class="nu-btn nu-btn--rahmen" data-act="nachtragBlatt" style="justify-self:start">' + svg("stift") + 'Nachtrag hinzufügen</button>' :
+  var nachtraege = b.nachtraege.map(function(n){ return '<div class="nu-nachtrag"><b>Ergänzung</b>' + esc(n.text) + '<small>' + esc(n.um) + ' · ' + esc(n.von) + '</small></div>'; }).join("");
+  var fuss = zu ? nachtraege + '<button class="nu-btn nu-btn--rahmen" data-act="nachtragBlatt" style="justify-self:start">' + svg("stift") + 'Ergänzen</button>' :
     '<div style="display:flex;justify-content:flex-end;align-items:center;gap:12px;flex-wrap:wrap"><span class="nu-beschr" id="pflicht-text">' + pflichtText() + '</span><button class="nu-btn nu-btn--primaer" data-act="abschliessen">' + svg("schloss") + 'Bericht abschließen</button></div>';
-  var seite = '<aside class="p-seite"><b class="abschnitt">Hinweise</b>' + S.hinweise.filter(function(h){ return h.bis >= iso(H); }).map(function(h){ return '<div class="nu-hinweis' + (h.wichtig ? ' is-wichtig' : '') + '"><div class="nu-hinweis-kopf">' + svg(h.wichtig ? "warnung" : "person","klein") + '<b>' + esc(h.von) + '</b>· ' + (h.wichtig ? "wichtig · " : "") + 'bis ' + kurz(pd(h.bis)) + '</div><div>' + esc(h.text) + '</div></div>'; }).join("") +
-    (U.tag === 0 && !zu ? '<button class="nu-btn nu-btn--rahmen nu-btn--klein" data-act="hinweisBlatt" style="justify-self:start">' + svg("plus") + 'Hinweis für die nächsten Tage</button>' : '') +
+  var waesche = S.termine.filter(function(x){ return x.datum === iso(tagDatum()) && x.art === "Bettwäsche"; });
+  var seite = '<aside class="p-seite"><b class="abschnitt">Hinweise</b>' + waesche.map(function(x){ return '<div class="nu-hinweis is-wichtig"><div class="nu-hinweis-kopf">' + svg("wiederholen","klein") + '<b>Kalender</b>· wichtig · heute</div><div>' + esc(x.titel) + '</div></div>'; }).join("") + S.hinweise.filter(function(h){ return hinweisAktiv(h, iso(tagDatum())); }).map(function(h){ return '<div class="nu-hinweis' + (h.wichtig ? ' is-wichtig' : '') + '"><div class="nu-hinweis-kopf">' + svg(h.wichtig ? "warnung" : "person","klein") + '<b>' + esc(h.von) + '</b>· ' + (h.wichtig ? "wichtig · " : "") + (h.ab === h.bis ? 'nur heute' : 'bis ' + kurz(pd(h.bis))) + (h.bezug ? ' · zu Bericht ' + kurz(pd(h.bezug)) : '') + '</div><div>' + esc(h.text) + '</div></div>'; }).join("") +
+    (U.tag === 0 && !zu ? '<button class="nu-btn nu-btn--rahmen nu-btn--klein" data-act="hinweisBlatt" style="justify-self:start">' + svg("plus") + 'Hinweis hinterlegen</button>' : '') +
     '<b class="abschnitt" style="margin-top:12px">Seit deinem letzten Dienst</b>' + S.archiv.slice().sort(function(a, b){ return (b.vorfall ? 1 : 0) - (a.vorfall ? 1 : 0); }).map(function(a){ return '<div class="nu-hinweis"' + (a.vorfall ? ' style="box-shadow:inset 0 0 0 3px var(--vorfall)"' : '') + '><div class="nu-hinweis-kopf">' + svg(a.vorfall ? "vorfall" : "bericht","klein") + '<b>Bericht ' + kurz(pd(a.datum)) + '</b>' + (a.vorfall ? '· Vorfall' : '') + '</div><div>' + esc(a.text) + '</div></div>'; }).join("") +
-    '<b class="abschnitt" style="margin-top:12px">Heute</b>' + (S.termine.filter(function(x){ return x.datum === iso(tagDatum()); }).map(function(x){ return '<div class="nu-hinweis"><div class="nu-hinweis-kopf">' + svg(x.sym,"klein") + '<b>Kalender</b>· ' + esc(x.art) + '</div><div>' + esc(x.titel) + '</div></div>'; }).join("") || '<p class="nu-beschr">Keine Termine.</p>') + '</aside>';
+    '<b class="abschnitt" style="margin-top:12px">Heute</b>' + (S.termine.filter(function(x){ return x.datum === iso(tagDatum()) && x.art !== "Bettwäsche"; }).map(function(x){ return '<div class="nu-hinweis"><div class="nu-hinweis-kopf">' + svg(x.sym,"klein") + '<b>Kalender</b>· ' + esc(x.art) + '</div><div>' + esc(x.titel) + '</div></div>'; }).join("") || '<p class="nu-beschr">Keine Termine.</p>') + '</aside>';
   return reiter + '<div class="p-bericht-raster' + (U.schreiben ? ' is-schreiben' : '') + '"><div style="display:grid;gap:16px">' + kopf + felder + fuss + '</div>' + seite + '</div>' +
     (U.schreiben && !zu ? '<div class="p-tastenleiste nu-tastenleiste" id="tastenleiste"><button class="nu-chip" data-act="einfuegen" data-arg="@"><b>@</b> Gast</button><button class="nu-chip" data-act="einfuegen" data-arg="Verwarnung ">' + svg("verwarnung","klein") + 'Verwarnung</button><button class="nu-chip" data-act="einfuegen" data-arg="Gelbe Karte ">' + svg("karte-gelb","klein") + 'Gelbe Karte</button><button class="nu-chip" data-act="einfuegen" data-arg="Hausverbot ">' + svg("karte-rot","klein") + 'Hausverbot</button><button class="nu-btn nu-btn--primaer nu-btn--klein" data-act="schreibenFertig">' + svg("check") + 'Fertig</button></div>' : '');
 }
 function pflichtText(){
   var b = bericht(); if(!b) return "";
-  var fehlt = [];
-  b.besetzung.forEach(function(x){ if(x.name !== "offen" && !x.sig) fehlt.push("Unterschrift " + x.name); });
+  var fehlt = [], ohne = b.besetzung.filter(function(x){ return x.name !== "offen" && !x.sig; }).map(function(x){ return x.name; });
   if(b.f.kht == null) fehlt.push("KHT-Anruf");
   erkennen(b.f.hinweise, b.f.ziele).mehrdeutig.forEach(function(m){ fehlt.push("@" + m.name + " eindeutig machen"); });
   if(b.f.vorfall == null) fehlt.push("Vorfälle");
-  return fehlt.length ? "Es fehlt: " + fehlt.join(", ") : "Alles ausgefüllt.";
+  var u = ohne.length ? "Unterschrift " + ohne.join(", ") + " fehlt (geht auch ohne)" : "";
+  return fehlt.length ? "Es fehlt: " + fehlt.join(", ") + (u ? ". " + u : "") : u || "Alles ausgefüllt.";
 }
 var aktivesFeld = null;
 function dienstNachRender(){
@@ -1602,18 +1695,41 @@ function einfuegenText(txt){
   else { el.value = v.slice(0, a) + txt + v.slice(b); a = b = a + txt.length; }
   el.focus(); el.setSelectionRange(a, b); el.dispatchEvent(new Event("input"));
 }
-function abschliessen(){
+// PDF-Vorschau des Dienstberichts (so sieht die erste Seite im gespeicherten PDF aus)
+function abwTexte(){ return BETTEN_HAUS.concat(BETTEN_NIKO).filter(function(x){ var s = status(x.nr); return s === "gehalten" || s === "freibis" || s === "fehlt" || s === "fehlt2"; }).map(function(x){ var g = gastVon(x.nr), s = status(x.nr), bb = S.betten[x.nr];
+  return g.vorname + " (" + x.nr + "): " + (s === "gehalten" ? "freigehalten bis " + kurz(pd(bb.bis)) : s === "freibis" ? "frei bis " + kurz(pd(bb.bis)) : s === "fehlt" ? "fehlt unentschuldigt, 1. Nacht" : "fehlt " + (bb.n || 2) + ". Nacht in Folge"); }); }
+function berichtPdf(b){
+  var f = b.f, jn = function(w){ return w === "ja" ? "Ja" : w === "nein" ? "Nein" : "–"; };
+  var zeile = function(name, wert){ return '<tr><th>' + name + '</th><td>' + (wert ? esc(wert).replace(/\n/g, "<br>") : "–") + '</td></tr>'; };
+  var ohne = b.ohneUnterschrift || [];
+  return '<div class="p-pdf">' +
+    (ohne.length ? '<div class="p-pdf-stempel">Ohne Unterschrift abgeschlossen: ' + esc(ohne.join(", ")) + (b.besetzung.every(function(x){ return x.name === "offen" || x.sig; }) ? ' · nachgeholt' : '') + '</div>' : '') +
+    '<div class="p-pdf-kopf"><b>Dienstbericht Notübernachtung</b><span>' + esc(lang(H)) + ' ' + H.getFullYear() + ' · abgeschlossen ' + esc(b.zuUm || "") + '</span></div>' +
+    '<table><tbody>' + b.besetzung.map(function(x){ var nachgeholt = x.sig && ohne.indexOf(x.name) >= 0;
+      return '<tr><th>' + esc(x.rolle) + '</th><td>' + esc(x.name) + '</td><td class="p-pdf-sig">' + (x.sig ? '<img src="' + x.sig + '" alt="">' + (nachgeholt ? '<small>' + esc(x.um) + '</small>' : '') : '<span class="p-pdf-fehlt">ohne Unterschrift</span>') + '</td></tr>'; }).join("") + '</tbody></table>' +
+    '<table><tbody>' +
+      zeile("Hat KHT angerufen?", jn(f.kht) + " · KHT-Nummer " + (b.khtNr != null ? b.khtNr : kennzahlen().belegt)) +
+      zeile("Wichtige Hinweise", f.hinweise) + zeile("Fragen von Gästen", f.fragen) + zeile("Abwesenheiten", (b.abw || abwTexte()).join("\n")) +
+      zeile("Externe Gäste", f.extern.join(", ")) + zeile("Vorfälle", jn(f.vorfall)) + zeile("Schlüssel fehlt", jn(f.schluessel) + (f.schluesselNr ? " · " + f.schluesselNr : "")) +
+      zeile("Fehlt etwas", f.fehlt.concat(f.fehltText ? [f.fehltText] : []).join(", ")) + zeile("Sonstiges", f.sonstiges) +
+    '</tbody></table>' + (b.nachtraege.length ? '<div class="p-pdf-nachtrag"><b>Nachträge</b>' + b.nachtraege.map(function(n){ return '<div>' + esc(n.um) + ' · ' + esc(n.von || "") + ': ' + esc(n.text) + '</div>'; }).join("") + '</div>' : '') + '</div>';
+}
+function abschliessen(trotzdem){
   var b = bericht(); U.pruefen = true;
-  var offen = b.besetzung.some(function(x){ return x.name !== "offen" && !x.sig; }) || b.f.kht == null || b.f.vorfall == null || erkennen(b.f.hinweise, b.f.ziele).mehrdeutig.length > 0;
+  var fehlend = b.besetzung.filter(function(x){ return x.name !== "offen" && !x.sig; }), ohne = fehlend.map(function(x){ return x.name; });
+  var nurKueche = fehlend.length > 0 && fehlend.every(function(x){ return x.rolle === "Küche"; });
+  var offen = b.f.kht == null || b.f.vorfall == null || erkennen(b.f.hinweise, b.f.ziele).mehrdeutig.length > 0;
+  if(!offen && ohne.length && !trotzdem){ modal(dialog("Wirklich ohne Unterschrift abschließen?", "Es fehlt die Unterschrift von " + esc(fehlend.map(function(x){ return x.name + " (" + x.rolle + ")"; }).join(" und ")) + ". " + (nurKueche ? "Der Küchendienst geht oft früher, das ist in Ordnung. " : "") + "Der Bericht wird im PDF als „ohne Unterschrift“ markiert. Der Dienst zählt im Monatsabschluss erst, wenn die Unterschrift nachgeholt ist.",
+    '<button class="nu-btn nu-btn--klein" data-act="modalZu" data-fokus>Zurück</button><button class="nu-btn nu-btn--gefahr-voll nu-btn--klein" data-act="abschliessenTrotzdem">Ja, trotzdem abschließen</button>')); return; }
   if(offen){ render(); var p = $(".nu-pille--warnung, .nu-mini-unterschrift:not(.is-fertig):not([disabled])"); if(p) p.scrollIntoView({block:"center", behavior:"smooth"}); toast("warnung", "Bericht noch nicht vollständig", pflichtText(), 5000); return; }
   var e = erkennen(b.f.hinweise, b.f.ziele), anzahl = 0, quelle = "aus Bericht vom " + kurz(H);
   e.absaetze.forEach(function(a){
     if(a.stufe && a.ziel){ anzahl++; a.ziel.sanktionen.push({stufe:a.stufe, datum:iso(H), grund:a.text.replace(STUFE_RE, "").replace(/^\s*(für)?\s*/i, ""), von:aktivePerson(), bis:a.stufe === "Hausverbot" ? null : undefined}); a.ziel.notizen.push({datum:iso(H), text:a.text, von:aktivePerson(), quelle:quelle + " · " + a.stufe}); }
     a.rest.forEach(function(g){ g.notizen.push({datum:iso(H), text:a.text, von:aktivePerson(), quelle:quelle + (a.stufe ? " · erwähnt, keine Sanktion" : "")}); });
   });
-  b.status = "abgeschlossen"; b.zuUm = kurz(H) + " · " + uhr(); U.schreiben = false; U.pruefen = false; U.geradeZu = true;
+  b.khtNr = kennzahlen().belegt; b.abw = abwTexte(); b.ohneUnterschrift = ohne; b.status = "abgeschlossen"; b.zuUm = kurz(H) + " · " + uhr(); U.modal = null; U.schreiben = false; U.pruefen = false; U.geradeZu = true;
   commit();
-  toast("pdf", "Bericht abgeschlossen", iso(H) + "_Dienstbericht.pdf gespeichert" + (anzahl ? " · " + anzahl + (anzahl === 1 ? " Sanktion" : " Sanktionen") + " angelegt" : ""), 5000);
+  toast(ohne.length ? "warnung" : "pdf", "Bericht abgeschlossen", iso(H) + "_Dienstbericht.pdf gespeichert" + (ohne.length ? " · ohne Unterschrift von " + ohne.join(", ") : "") + (anzahl ? " · " + anzahl + (anzahl === 1 ? " Sanktion" : " Sanktionen") + " angelegt" : ""), 5000);
 }
 var SLOTS = ["19:00","19:30","20:00","20:30","21:00","21:30"];
 function duschDatum(){ return U.tag < 0 ? tagDatum() : plus(H, U.duschTag || 0); }
@@ -1624,98 +1740,167 @@ function duschplan(){
     SLOTS.map(function(z){ var x = d[z], g = x && S.G[x.g]; var bett = g && Object.keys(S.betten).find(function(n){ return S.betten[n].g === g.id; });
       return '<button class="nu-slot" data-s="' + (x ? x.s : "frei") + '" data-act="slot" data-arg="' + z + '"' + (U.tag < 0 ? ' disabled' : '') + '><span class="zeit">' + z + (x && x.s === "erledigt" ? " ✓" : "") + '</span><b>' + (g ? esc(g.vorname) : "frei") + '</b><span class="nu-beschr">' + (g ? (bett || "") + (x.s === "verpasst" ? " · verpasst" : x.s === "erledigt" ? " · erledigt" : "") : "antippen") + '</span></button>'; }).join("") + '</div></div>';
 }
+// Hinweise für die nächsten Dienste: sichtbar von „ab“ bis „bis“ (je einschließlich), vorzeitig beendbar
+function hinweisAktiv(h, di){ return !h.beendet && (h.ab || "") <= di && h.bis >= di; }
+function naechsterDienst(){ var b = S.berichte[iso(H)]; return b && b.status === "abgeschlossen" ? plus(H, 1) : H; }
+var DAUERN = [["1","Nächster Dienst"],["3","3 Tage"],["7","1 Woche"],["14","2 Wochen"],["datum","Bis Datum"]];
+function dauerText(a, ab){ if(a === "datum") return "Bis einschließlich dem gewählten Tag."; var bis = plus(ab, +a - 1); return +a === 1 ? "Nur im Dienst am " + kurz(ab) : "Vom " + kurz(ab) + " bis " + kurz(bis) + " (" + a + " Dienste)"; }
+function zeitraum(h){ if(h.ab === h.bis) return "nur am " + kurz(pd(h.bis)); return (h.ab && h.ab > iso(H) ? "ab " + kurz(pd(h.ab)) + " " : "") + "bis " + kurz(pd(h.bis)); }
+function hinweisListe(){
+  var di = iso(H), aktiv = S.hinweise.filter(function(h){ return !h.beendet && h.bis >= di; }), alt = S.hinweise.filter(function(h){ return h.beendet || h.bis < di; });
+  var karte = function(h, vorbei){ return '<div class="nu-hinweis' + (h.wichtig ? ' is-wichtig' : '') + '"' + (vorbei ? ' style="opacity:.7"' : '') + '><div class="nu-hinweis-kopf">' + svg(h.wichtig ? "warnung" : "person","klein") + '<b>' + esc(h.von) + '</b>· ' + (h.wichtig ? "wichtig · " : "") + (vorbei ? (h.beendet ? "beendet " + esc(h.beendet) : "abgelaufen " + kurz(pd(h.bis))) : esc(zeitraum(h)) + (h.dauer ? " · " + esc(h.dauer) : "")) +
+    (!vorbei && h.ab && h.ab > di ? ' <span class="nu-pille" style="margin-left:6px">geplant</span>' : '') + (vorbei ? '' : '<button class="nu-btn nu-btn--klein nu-btn--rahmen" style="margin-left:auto" data-act="hinweisEnde" data-arg="' + h.id + '">Beenden</button>') + '</div><div>' + esc(h.text) + '</div></div>'; };
+  return '<div class="nu-bericht" style="gap:12px"><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><b class="abschnitt" style="flex:1">Hinweise für die nächsten Dienste</b><button class="nu-btn nu-btn--primaer nu-btn--klein" data-act="hinweisBlatt" data-arg="archiv">' + svg("plus") + 'Hinweis hinterlegen</button></div>' +
+    '<p class="nu-beschr" style="margin:0">Erscheinen im Bericht unter „Hinweise“, solange sie gelten.</p>' +
+    (aktiv.map(function(h){ return karte(h, false); }).join("") || '<p class="nu-beschr">Keine Hinweise hinterlegt.</p>') +
+    (alt.length ? '<details class="p-alt"><summary class="nu-beschr">Abgelaufen und beendet (' + alt.length + ')</summary><div class="p-liste" style="margin-top:8px">' + alt.map(function(h){ return karte(h, true); }).join("") + '</div></details>' : '') + '</div>';
+}
+function archivEintraege(){
+  var out = S.archiv.slice(), b = S.berichte[iso(H)];
+  if(b && b.status === "abgeschlossen"){ b.kommentare = b.kommentare || []; out.push({datum:iso(H), vorfall:b.f.vorfall === "ja", personen:b.besetzung.map(function(x){ return x.name; }).join(", "), text:b.f.hinweise || "–", fehlt:b.f.fehlt, fehltText:b.f.fehltText, fragen:b.f.fragen, kommentare:b.kommentare, heute:true}); }
+  return out.sort(function(x, y){ return x.datum < y.datum ? 1 : -1; });
+}
+// Gäste, die in einem Text vorkommen: @Vorname (Bett), Vorname (Bett), Vorname Nachname oder eindeutiges @Vorname
+function genannteGaeste(text){
+  return Object.keys(S.G).map(function(k){ return S.G[k]; }).filter(function(g){ var bett = bettVon(g.id);
+    return (bett && text.indexOf(g.vorname + " (" + bett + ")") >= 0) || (g.nachname && text.indexOf(g.vorname + " " + g.nachname) >= 0) || (!gleicherVorname(g) && new RegExp("@" + g.vorname + "(?![A-Za-zÄÖÜäöüß])").test(text)); });
+}
+function fehltListe(a){ return (a.fehlt || []).concat(a.fehltText ? [a.fehltText] : []); }
+var KOMMENTAR_ART = [["kommentar","Kommentar"],["antwort","Antwort auf Frage"],["hinweis","Wichtiger Hinweis"]];
 function archivListe(){
-  return '<div class="p-liste">' + S.archiv.map(function(a){ return '<div class="nu-bericht" style="gap:8px;padding:18px' + (a.vorfall ? ';box-shadow:inset 0 0 0 3px var(--vorfall)' : '') + '"><div style="display:flex;align-items:center;gap:8px">' + svg(a.vorfall ? "vorfall" : "bericht") + '<b style="flex:1">' + esc(lang(pd(a.datum))) + '</b><span class="nu-beschr">' + esc(a.personen) + '</span><span class="nu-nurlesen">' + svg("schloss","klein") + 'abgeschlossen</span></div><div style="color:var(--tinte-2)">' + esc(a.text) + '</div></div>'; }).join("") + '<p class="nu-beschr">Im Prototyp stehen hier Beispielberichte. Filter, Volltextsuche und „Verlauf exportieren“ sind <span class="nu-bald">' + svg("uhr","klein") + 'noch nicht verfügbar</span></p></div>';
+  var eintraege = archivEintraege();
+  var offen = [];
+  eintraege.forEach(function(a){ fehltListe(a).forEach(function(x){ offen.push({datum:a.datum, was:x, erledigt:!!S.fehltErledigt[a.datum + "|" + x]}); }); });
+  var fehltKarte = '<div class="nu-bericht" style="gap:10px"><b class="abschnitt">Fehlt etwas</b><p class="nu-beschr" style="margin:0">Aus den letzten Berichten. Abhaken, wenn es besorgt ist.</p>' +
+    (offen.length ? '<div class="nu-checkliste">' + offen.map(function(o){ return '<button class="nu-chip" aria-pressed="' + o.erledigt + '" data-act="fehltErledigt" data-arg="' + esc(o.datum + "|" + o.was) + '">' + (o.erledigt ? svg("check","klein") : svg("einkauf","klein")) + esc(o.was) + ' <small style="font-weight:400">' + kurz(pd(o.datum)) + '</small></button>'; }).join("") + '</div>' : '<p class="nu-beschr">Nichts offen.</p>') + '</div>';
+  var karte = function(a){
+    var komm = (a.kommentare || []).map(function(c){ var g = c.gast && S.G[c.gast];
+      return '<div class="nu-nachtrag"><b>' + esc(c.von) + ' · ' + esc(KOMMENTAR_ART.filter(function(x){ return x[0] === c.art; })[0][1]) + '</b>' + esc(c.text) + '<small>' + esc(c.um) + (g ? ' · betrifft ' + esc(anzeige(g)) + (c.aufnahme ? ', bei Wiederaufnahme' : '') : '') + (c.bis ? ' · im Dienst bis ' + kurz(pd(c.bis)) : '') + '</small></div>'; }).join("");
+    var fl = fehltListe(a);
+    return '<div class="nu-bericht" style="gap:10px;padding:18px' + (a.vorfall ? ';box-shadow:inset 0 0 0 3px var(--vorfall)' : '') + '"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">' + svg(a.vorfall ? "vorfall" : "bericht") + '<b style="flex:1">' + esc(lang(pd(a.datum))) + '</b><span class="nu-beschr">' + esc(a.personen) + '</span><span class="nu-nurlesen">' + svg("schloss","klein") + 'abgeschlossen</span></div>' +
+      '<div style="color:var(--tinte-2)">' + esc(a.text) + '</div>' +
+      (a.fragen ? '<div class="nu-zeile">' + svg("sprache") + '<div>Frage von Gästen<small>' + esc(a.fragen) + '</small></div><button class="nu-btn nu-btn--klein nu-btn--rahmen" data-act="kommentarBlatt" data-arg="' + a.datum + ',antwort">Antworten</button></div>' : '') +
+      (fl.length ? '<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><span class="nu-beschr">Fehlt:</span>' + fl.map(function(x){ var ok = S.fehltErledigt[a.datum + "|" + x]; return '<span class="nu-pille' + (ok ? '' : ' nu-pille--warnung') + '">' + svg(ok ? "check" : "einkauf","klein") + esc(x) + '</span>'; }).join("") + '</div>' : '') +
+      komm + '<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="nu-btn nu-btn--klein nu-btn--rahmen" data-act="kommentarBlatt" data-arg="' + a.datum + ',kommentar">' + svg("notiz") + 'Kommentieren</button><button class="nu-btn nu-btn--klein nu-btn--rahmen" data-act="kommentarBlatt" data-arg="' + a.datum + ',hinweis">' + svg("warnung") + 'Wichtiger Hinweis</button></div></div>'; };
+  return '<div class="p-liste">' + hinweisListe() + fehltKarte + '<b class="abschnitt" style="margin-top:8px">Berichte</b>' + eintraege.map(karte).join("") + '<p class="nu-beschr">Filter, Volltextsuche und „Verlauf exportieren“ sind <span class="nu-bald">' + svg("uhr","klein") + 'noch nicht verfügbar</span></p></div>';
 }
 
 // ---------- Monatsabschluss ----------
+// Je Person und Bereich (Betreuung, Küche) ein eigener Nachweis: beide Bereiche werden getrennt abgerechnet.
 // Geplant = Originalplan vor Monatsanfang (korrigierbar mit Warnung). Gemacht = Dienste mit Unterschrift im Dienstbericht bis zur Unterschrift unter den Nachweis.
+var BEREICHE = [["betreuung","Betreuung","Betreuung"],["kueche","Küche","Kueche"]];
+function bereichName(b){ return b === "kueche" ? "Küche" : "Betreuung"; }
 function mKey(d){ return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0"); }
 function monatName(k){ var p = k.split("-"); return new Date(+p[0], +p[1] - 1, 1).toLocaleDateString("de-DE", {month:"long", year:"numeric"}); }
 function tageVon(k){ var p = k.split("-"), out = [], d = new Date(+p[0], +p[1] - 1, 1); while(d.getMonth() === +p[1] - 1){ out.push(iso(d)); d = plus(d, 1); } return out; }
 function planAm(di){ return S.plan0[di] || {nacht:S.dienstplan[di] || [], kueche:S.kueche[di] || ""}; }
-function rollenGeplant(di, name){ var p = planAm(di), r = []; p.nacht.forEach(function(n, i){ if(n === name) r.push("Betreuung " + (i + 1)); }); if(p.kueche === name) r.push("Küche"); return r; }
+function imBereich(rolle, b){ return b === "kueche" ? rolle === "Küche" : rolle.indexOf("Betreuung") === 0; }
+function rollenGeplant(di, name, b){ var p = planAm(di), r = []; if(b === "kueche"){ if(p.kueche === name) r.push("Küche"); } else p.nacht.forEach(function(n, i){ if(n === name) r.push("Betreuung " + (i + 1)); }); return r; }
 function einsaetzeAm(di){
   if(di === iso(H)){ var b = bericht(di); return b ? b.besetzung.filter(function(x){ return x.sig && x.name !== "offen"; }).map(function(x){ return {name:x.name, rolle:x.rolle, geplant:x.geplant || x.name, grund:x.grund || ""}; }) : []; }
   return S.einsaetze[di] || [];
 }
-function nachweisDaten(k, name){
-  var zeilen = [], sum = {geplant:0, gemacht:0, krank:0, vertretung:0, abgegeben:0}, h = iso(H);
+function nachweisDaten(k, name, b){
+  var zeilen = [], sum = {geplant:0, gemacht:0, abgegeben:0, vertretung:0}, h = iso(H);
   tageVon(k).forEach(function(di){
-    var gp = rollenGeplant(di, name), es = einsaetzeAm(di), selbst = es.filter(function(e){ return e.name === name; }), fuer = es.filter(function(e){ return e.geplant === name && e.name !== name; });
+    var gp = rollenGeplant(di, name, b), es = einsaetzeAm(di).filter(function(e){ return imBereich(e.rolle, b); });
+    var selbst = es.filter(function(e){ return e.name === name; }), fuer = es.filter(function(e){ return e.geplant === name && e.name !== name; });
     if(!gp.length && !selbst.length) return;
     var z = {datum:di, geplant:gp.length > 0, gemacht:selbst.length > 0, rolle:(selbst[0] || {}).rolle || gp[0], text:""};
     if(z.geplant) sum.geplant++;
-    if(z.gemacht){ sum.gemacht++; var v = selbst.filter(function(e){ return e.geplant !== name; })[0]; if(v){ sum.vertretung++; z.text = "Vertretung für " + v.geplant + (v.grund ? " · " + v.grund : ""); } }
-    else if(di < h){ var e = fuer[0]; z.text = e ? (e.grund === "Krankheit" ? "krank · vertreten durch " : "vertreten durch ") + e.name + (e.grund && e.grund !== "Krankheit" ? " · " + e.grund : "") : "ohne Unterschrift im Bericht"; if(e && e.grund === "Krankheit") sum.krank++; else if(e) sum.abgegeben++; z.abw = true; }
+    if(z.gemacht){ sum.gemacht++; var v = selbst.filter(function(e){ return e.geplant !== name; })[0]; if(v){ sum.vertretung++; z.abw = true; z.text = "Vertretung für " + v.geplant + (v.grund === "Sonstiges" ? " · Sonstiges" : ""); } }
+    else if(di < h){ var e = fuer[0]; z.abw = true; if(e){ sum.abgegeben++; z.text = "abgegeben an " + e.name + (e.grund === "Sonstiges" ? " · Sonstiges" : ""); } else z.text = "ohne Unterschrift im Bericht"; }
     else if(di === h) z.text = "heute · zählt, sobald im Bericht unterschrieben";
     else z.text = "geplant";
-    if(z.text.indexOf("Vertretung") === 0) z.abw = true;
     zeilen.push(z);
   });
   return {zeilen:zeilen, sum:sum};
 }
-function personenIm(k){ var n = {}; tageVon(k).forEach(function(di){ var p = planAm(di); p.nacht.concat([p.kueche]).forEach(function(x){ if(x) n[x] = 1; }); einsaetzeAm(di).forEach(function(e){ n[e.name] = 1; }); });
-  return Object.keys(n).sort(function(a, b){ return (TEAM.indexOf(a) + 99) % 99 - (TEAM.indexOf(b) + 99) % 99 || a.localeCompare(b); }); }
-function letzterGeplanter(k, name){ var t = tageVon(k).filter(function(di){ return rollenGeplant(di, name).length; }); return t[t.length - 1] || null; }
-function nachweisVon(k, name){ return (S.nachweise[k] || {})[name] || null; }
-function nachweisPdf(k, name){ return k + "_Dienstnachweis_" + name + ".pdf"; }
+function personenIm(k, b){ var n = {}; tageVon(k).forEach(function(di){ var p = planAm(di); (b === "kueche" ? [p.kueche] : p.nacht).forEach(function(x){ if(x) n[x] = 1; }); einsaetzeAm(di).forEach(function(e){ if(imBereich(e.rolle, b)) n[e.name] = 1; }); });
+  return Object.keys(n).sort(function(a, c){ return (TEAM.indexOf(a) + 99) % 99 - (TEAM.indexOf(c) + 99) % 99 || a.localeCompare(c); }); }
+function letzterGeplanter(k, name, b){ var t = tageVon(k).filter(function(di){ return rollenGeplant(di, name, b).length; }); return t[t.length - 1] || null; }
+function nachweisVon(k, name, b){ return ((S.nachweise[k] || {})[b] || {})[name] || null; }
+function nachweisPdf(k, name, b){ return k + "_Dienstnachweis_" + (b === "kueche" ? "Kueche" : "Betreuung") + "_" + name + ".pdf"; }
 function sigBild(seed){ var s = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 100"><path d="M20 70c' + (10 + seed % 7) + '-30 25-45 35-20s-5 30 12 12 28-38 38-8 18 6 34-12 22-4 40 2" fill="none" stroke="#1B3A8C" stroke-width="3" stroke-linecap="round"/></svg>'; return "data:image/svg+xml;utf8," + encodeURIComponent(s); }
-function nachweisSpeichern(k, name, bild, um){ var d = nachweisDaten(k, name); S.nachweise[k] = S.nachweise[k] || {};
-  S.nachweise[k][name] = {um:um, sig:bild, zeilen:d.zeilen, geplant:d.sum.geplant, gemacht:d.sum.gemacht, krank:d.sum.krank, vertretung:d.sum.vertretung, abgegeben:d.sum.abgegeben, pdf:nachweisPdf(k, name)}; }
-if(nachweisBeispielOffen){ var kv = mKey(new Date(H.getFullYear(), H.getMonth() - 1, 1)); ["Kim","Sam","Mika"].forEach(function(n, i){ nachweisSpeichern(kv, n, sigBild(i * 3 + 1), "01." + String(H.getMonth() + 1).padStart(2, "0") + ". 0" + (7 + i) + ":1" + i); }); delete S.nachweisBeispiel; speichern(); }
+function nachweisSpeichern(k, name, b, bild, um){ var d = nachweisDaten(k, name, b); S.nachweise[k] = S.nachweise[k] || {}; S.nachweise[k][b] = S.nachweise[k][b] || {};
+  S.nachweise[k][b][name] = {um:um, sig:bild, zeilen:d.zeilen, geplant:d.sum.geplant, gemacht:d.sum.gemacht, abgegeben:d.sum.abgegeben, vertretung:d.sum.vertretung, pdf:nachweisPdf(k, name, b)}; }
+if(nachweisBeispielOffen){ var kv = mKey(new Date(H.getFullYear(), H.getMonth() - 1, 1)), mm = "01." + String(H.getMonth() + 1).padStart(2, "0") + ". ";
+  nachweisSpeichern(kv, "Kim", "betreuung", sigBild(1), mm + "07:10"); nachweisSpeichern(kv, "Sam", "betreuung", sigBild(4), mm + "08:11"); nachweisSpeichern(kv, "Mika", "kueche", sigBild(7), mm + "09:12");
+  delete S.nachweisBeispiel; speichern(); }
 function letzterDienstHinweis(){
   if(U.tag !== 0) return "";
-  var k = mKey(H), heute = iso(H), wer = (S.dienstplan[heute] || []).concat([S.kueche[heute]]).filter(Boolean);
-  return wer.filter(function(n){ return letzterGeplanter(k, n) === heute && !nachweisVon(k, n) && !(U.spaeter || {})[n]; }).map(function(n){
-    return '<div class="nu-banner" style="background:var(--erwartet-flaeche);color:var(--blau)">' + svg("unterschrift") + '<div>' + esc(n) + ': Heute ist dein letzter geplanter Dienst im ' + esc(monatName(k).split(" ")[0]) + '.<small>Dienstnachweis jetzt ansehen und unterschreiben? Freiwillig, geht auch später im Monatsabschluss.</small></div><button class="nu-btn nu-btn--klein" data-act="nachweisSpaeter" data-arg="' + esc(n) + '">Später</button><button class="nu-btn nu-btn--klein nu-btn--primaer" data-act="nachweis" data-arg="' + k + ',' + esc(n) + '">Ansehen</button></div>'; }).join("");
+  var k = mKey(H), heute = iso(H), wer = (S.dienstplan[heute] || []).filter(Boolean).map(function(n){ return [n, "betreuung"]; }).concat(S.kueche[heute] ? [[S.kueche[heute], "kueche"]] : []);
+  return wer.filter(function(x){ return letzterGeplanter(k, x[0], x[1]) === heute && !nachweisVon(k, x[0], x[1]) && !(U.spaeter || {})[x[0] + x[1]]; }).map(function(x){
+    return '<div class="nu-banner" style="background:var(--erwartet-flaeche);color:var(--blau)">' + svg("unterschrift") + '<div>' + esc(x[0]) + ': Heute ist dein letzter geplanter Dienst (' + bereichName(x[1]) + ') im ' + esc(monatName(k).split(" ")[0]) + '.<small>Dienstnachweis jetzt ansehen und unterschreiben? Freiwillig, geht auch später im Monatsabschluss.</small></div><button class="nu-btn nu-btn--klein" data-act="nachweisSpaeter" data-arg="' + esc(x[0] + x[1]) + '">Später</button><button class="nu-btn nu-btn--klein nu-btn--primaer" data-act="nachweis" data-arg="' + k + ',' + esc(x[0]) + ',' + x[1] + '">Ansehen</button></div>'; }).join("");
 }
 function monatAnsicht(){
   var k = U.monat || mKey(H), kv = mKey(new Date(H.getFullYear(), H.getMonth() - 1, 1)), kh = mKey(H);
   var wahl = '<div class="nu-seg" role="radiogroup" aria-label="Monat">' + [kv, kh].map(function(x){ return '<button role="radio" aria-checked="' + (x === k) + '" data-act="monatWahl" data-arg="' + x + '">' + esc(monatName(x)) + '</button>'; }).join("") + '</div>';
-  var leute = personenIm(k), unterschrieben = leute.filter(function(n){ return nachweisVon(k, n); });
-  var zeilen = leute.map(function(n){ var nw = nachweisVon(k, n), d = nw ? {sum:nw} : nachweisDaten(k, n), s = d.sum, abw = [s.krank ? s.krank + " krank" : "", s.abgegeben ? s.abgegeben + " abgegeben" : "", s.vertretung ? s.vertretung + " Vertretung" : ""].filter(Boolean).join(" · ");
-    return '<tr><td><b>' + esc(n) + '</b></td><td class="zahl">' + s.geplant + '</td><td class="zahl">' + s.gemacht + '</td><td>' + (abw || '–') + '</td><td>' + (nw ? '<span class="nu-pille nu-pille--frei">' + svg("check","klein") + 'unterschrieben ' + esc(nw.um) + '</span>' : '<span class="nu-pille nu-pille--warnung">offen</span>') + '</td><td style="text-align:right"><button class="nu-btn nu-btn--klein nu-btn--rahmen" data-act="nachweis" data-arg="' + k + ',' + esc(n) + '">' + (nw ? 'Ansehen' : 'Öffnen') + '</button></td></tr>'; }).join("");
-  var lohn = unterschrieben.map(function(n){ var nw = nachweisVon(k, n); return '<tr><td><b>' + esc(n) + '</b></td><td class="zahl">' + nw.geplant + '</td><td class="zahl">' + nw.gemacht + '</td><td class="zahl">' + nw.krank + '</td><td class="zahl">' + (nw.abgegeben || 0) + '</td><td class="zahl">' + nw.vertretung + '</td><td>' + esc(nw.um) + '</td><td>' + svg("pdf","klein") + ' ' + esc(nw.pdf) + '</td></tr>'; }).join("");
-  return '<div class="nu-bericht" style="gap:16px"><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><b class="abschnitt" style="flex:1">Monatsabschluss · ' + esc(monatName(k)) + '</b>' + wahl + '</div>' +
-    '<p class="nu-beschr" style="font-size:15px;line-height:22px">Jede Person unterschreibt einmal im Monat: geplante Dienste laut Originalplan, gemachte Dienste mit Unterschrift im Bericht. ' + unterschrieben.length + ' von ' + leute.length + ' unterschrieben.</p>' +
-    '<div style="overflow:auto"><table class="nu-tabelle"><thead><tr><th>Person</th><th class="zahl">Geplant</th><th class="zahl">Gemacht</th><th>Abweichung</th><th>Status</th><th></th></tr></thead><tbody>' + zeilen + '</tbody></table></div></div>' +
-    '<div class="nu-bericht" style="gap:12px;margin-top:16px"><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><b class="abschnitt" style="flex:1">Für die Lohnabrechnung</b><span class="nu-bald">' + svg("uhr","klein") + 'Export als Datei noch nicht verfügbar</span></div>' +
-    (lohn ? '<div style="overflow:auto"><table class="nu-tabelle"><thead><tr><th>Person</th><th class="zahl">Geplant</th><th class="zahl">Gemacht</th><th class="zahl">Krank</th><th class="zahl">Abgegeben</th><th class="zahl">Vertretung</th><th>Unterschrieben</th><th>PDF</th></tr></thead><tbody>' + lohn + '</tbody></table></div>' : '<p class="nu-beschr">Noch niemand hat unterschrieben.</p>') +
-    '<p class="nu-beschr">Nur unterschriebene Nachweise kommen in die Tabelle; sie liegt mit den PDFs in Nextcloud unter Lohnabrechnung_' + k + '.</p></div>';
+  var teil = function(b){
+    var leute = personenIm(k, b), unter = leute.filter(function(n){ return nachweisVon(k, n, b); });
+    var zeilen = leute.map(function(n){ var nw = nachweisVon(k, n, b), s = nw ? nw : nachweisDaten(k, n, b).sum, abw = [s.abgegeben ? s.abgegeben + " abgegeben" : "", s.vertretung ? s.vertretung + " Vertretung" : ""].filter(Boolean).join(" · ");
+      return '<tr><td><b>' + esc(n) + '</b></td><td class="zahl">' + s.geplant + '</td><td class="zahl">' + s.gemacht + '</td><td>' + (abw || '–') + '</td><td>' + (nw ? '<span class="nu-pille nu-pille--frei">' + svg("check","klein") + 'unterschrieben ' + esc(nw.um) + '</span>' : '<span class="nu-pille nu-pille--warnung">offen</span>') + '</td><td style="text-align:right"><button class="nu-btn nu-btn--klein nu-btn--rahmen" data-act="nachweis" data-arg="' + k + ',' + esc(n) + ',' + b + '">' + (nw ? 'Ansehen' : 'Öffnen') + '</button></td></tr>'; }).join("");
+    return '<div style="display:flex;align-items:baseline;gap:12px;margin-top:6px"><b class="abschnitt" style="flex:1">' + svg(b === "kueche" ? "kueche" : "personen") + ' ' + bereichName(b) + '</b><span class="nu-beschr">' + unter.length + ' von ' + leute.length + ' unterschrieben</span></div>' +
+      '<div style="overflow:auto"><table class="nu-tabelle"><thead><tr><th>Person</th><th class="zahl">Geplant</th><th class="zahl">Gemacht</th><th>Abweichung</th><th>Status</th><th></th></tr></thead><tbody>' + zeilen + '</tbody></table></div>';
+  };
+  var lohn = function(b){ var leute = personenIm(k, b).filter(function(n){ return nachweisVon(k, n, b); });
+    return '<div style="display:flex;align-items:baseline;gap:12px;margin-top:6px"><b class="abschnitt" style="flex:1">Lohnabrechnung ' + bereichName(b) + '</b><span class="nu-beschr">Lohnabrechnung_' + k + '_' + (b === "kueche" ? "Kueche" : "Betreuung") + '.csv</span></div>' +
+      (leute.length ? '<div style="overflow:auto"><table class="nu-tabelle"><thead><tr><th>Person</th><th class="zahl">Geplant</th><th class="zahl">Gemacht</th><th class="zahl">Abgegeben</th><th class="zahl">Vertretung</th><th>Unterschrieben</th><th>PDF</th></tr></thead><tbody>' +
+        leute.map(function(n){ var nw = nachweisVon(k, n, b); return '<tr><td><b>' + esc(n) + '</b></td><td class="zahl">' + nw.geplant + '</td><td class="zahl">' + nw.gemacht + '</td><td class="zahl">' + nw.abgegeben + '</td><td class="zahl">' + nw.vertretung + '</td><td>' + esc(nw.um) + '</td><td>' + svg("pdf","klein") + ' ' + esc(nw.pdf) + '</td></tr>'; }).join("") + '</tbody></table></div>' : '<p class="nu-beschr">Noch niemand hat unterschrieben.</p>'); };
+  return '<div class="nu-bericht" style="gap:14px"><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><b class="abschnitt" style="flex:1">Monatsabschluss · ' + esc(monatName(k)) + '</b>' + wahl + '</div>' +
+    '<p class="nu-beschr" style="font-size:15px;line-height:22px">Jede Person unterschreibt einmal im Monat, Betreuung und Küche getrennt: geplante Dienste laut Originalplan, gemachte Dienste mit Unterschrift im Bericht.</p>' + teil("betreuung") + teil("kueche") + '</div>' +
+    '<div class="nu-bericht" style="gap:12px;margin-top:16px"><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><b class="titel" style="flex:1;font-size:20px">Für die Lohnabrechnung</b><span class="nu-bald">' + svg("uhr","klein") + 'Export als Datei noch nicht verfügbar</span></div>' + lohn("betreuung") + lohn("kueche") +
+    '<p class="nu-beschr">Nur unterschriebene Nachweise kommen in die Tabellen; sie liegen mit den PDFs in Nextcloud unter Personal/Monatsabschluss/' + k + '.</p></div>';
 }
-function nachweisBlatt(k, name){
-  var nw = nachweisVon(k, name), d = nw ? {zeilen:nw.zeilen, sum:nw} : nachweisDaten(k, name), s = d.sum;
+function nachweisBlatt(k, name, b){
+  var nw = nachweisVon(k, name, b), d = nw ? {zeilen:nw.zeilen, sum:nw} : nachweisDaten(k, name, b), s = d.sum;
   var tab = '<div style="overflow:auto;max-height:300px"><table class="nu-tabelle"><thead><tr><th>Datum</th><th>Geplant</th><th>Gemacht</th><th>Bemerkung</th></tr></thead><tbody>' + d.zeilen.map(function(z){
     return '<tr' + (z.abw ? ' class="is-abweichung"' : '') + '><td class="zahl" style="text-align:left">' + esc(pd(z.datum).toLocaleDateString("de-DE", {weekday:"short"}).replace(".", "") + " " + kurz(pd(z.datum))) + '</td><td>' + (z.geplant ? svg("check","klein") : '–') + '</td><td>' + (z.gemacht ? svg("check","klein") + ' ' + esc(z.rolle || "") : '–') + '</td><td>' + esc(z.text) + '</td></tr>'; }).join("") + '</tbody></table></div>';
-  var kz = '<div class="nu-kennzahlen" style="background:var(--flaeche-2)"><span class="nu-kennzahl">Geplant<b>' + s.geplant + '</b></span><span class="nu-kennzahl">Gemacht<b>' + s.gemacht + '</b></span><span class="nu-kennzahl">Krank<b>' + s.krank + '</b></span><span class="nu-kennzahl">Abgegeben<b>' + (s.abgegeben || 0) + '</b></span><span class="nu-kennzahl">Vertretung<b>' + s.vertretung + '</b></span></div>' +
-    S.planLog.filter(function(l){ return l.monat === k && l.name === name; }).map(function(l){ return '<div class="nu-zeile nu-zeile--warnung">' + svg("stift") + '<div><b>Plan korrigiert: ' + esc(l.aenderungen.join(", ")) + '</b><small>' + esc(l.grund) + ' · ' + esc(l.von) + ' · ' + esc(l.um) + '</small></div></div>'; }).join("");
-  var unten = nw ? '<div class="nu-gesperrt">' + svg("schloss") + '<div style="flex:1">Unterschrieben ' + esc(nw.um) + '<small>' + esc(nw.pdf) + ' · in der Lohntabelle · nicht mehr änderbar</small></div><img src="' + nw.sig + '" alt="Unterschrift ' + esc(name) + '" style="height:48px;background:var(--papier);border-radius:8px;padding:2px 8px"></div>'
-    : '<button class="nu-btn nu-btn--rahmen nu-btn--klein" style="justify-self:start" data-act="planKorrektur" data-arg="' + k + ',' + esc(name) + '">' + svg("stift") + 'Geplante Dienste korrigieren</button>' +
+  var kz = '<div class="nu-kennzahlen" style="background:var(--flaeche-2)"><span class="nu-kennzahl">Geplant<b>' + s.geplant + '</b></span><span class="nu-kennzahl">Gemacht<b>' + s.gemacht + '</b></span><span class="nu-kennzahl">Abgegeben<b>' + (s.abgegeben || 0) + '</b></span><span class="nu-kennzahl">Vertretung<b>' + s.vertretung + '</b></span></div>' +
+    S.planLog.filter(function(l){ return l.monat === k && l.name === name && l.bereich === b; }).map(function(l){ return '<div class="nu-zeile nu-zeile--warnung">' + svg("stift") + '<div><b>Plan korrigiert: ' + esc(l.aenderungen.join(", ")) + '</b><small>' + esc(l.grund) + ' · ' + esc(l.von) + ' · ' + esc(l.um) + '</small></div></div>'; }).join("");
+  var arg = k + ',' + esc(name) + ',' + b;
+  var unten = nw ? '<div class="nu-gesperrt">' + svg("schloss") + '<div style="flex:1">Unterschrieben ' + esc(nw.um) + '<small>' + esc(nw.pdf) + ' · in der Lohntabelle ' + bereichName(b) + ' · nicht mehr änderbar</small></div><img src="' + nw.sig + '" alt="Unterschrift ' + esc(name) + '" style="height:48px;background:var(--papier);border-radius:8px;padding:2px 8px"></div>'
+    : '<button class="nu-btn nu-btn--rahmen nu-btn--klein" style="justify-self:start" data-act="planKorrektur" data-arg="' + arg + '">' + svg("stift") + 'Geplante Dienste korrigieren</button>' +
       '<div class="nu-unterschrift" data-pad="mon"><div class="nu-unterschrift-kopf"><b>' + esc(name) + '</b><small>Die Angaben stimmen</small></div><div class="nu-unterschrift-feld" style="height:150px"><span class="nu-unterschrift-marke">' + svg("check","klein") + 'Bestätigt</span><span class="nu-unterschrift-hilfe">Mit Finger oder Stift unterschreiben</span></div><div class="nu-unterschrift-knoepfe"><button class="nu-btn nu-btn--klein" data-pad-act="leeren">' + svg("rueckgaengig") + 'Löschen</button><button class="nu-btn nu-btn--primaer nu-btn--klein" data-pad-act="ok" disabled>Unterschreiben</button></div></div>';
-  return blatt("Dienstnachweis " + monatName(k) + " · " + name, nw ? "" : "Gemacht zählt jeder Dienst mit Unterschrift im Bericht bis jetzt. Nach der Unterschrift ist der Nachweis gesperrt.", kz + tab + unten, '<button class="nu-btn nu-btn--klein" data-act="modalZu">Schließen</button>').replace('class="p-blatt"', 'class="p-blatt p-blatt--breit"');
+  return blatt("Dienstnachweis " + bereichName(b) + " · " + monatName(k) + " · " + name, nw ? "" : "Gemacht zählt jeder Dienst mit Unterschrift im Bericht bis jetzt. Nach der Unterschrift ist der Nachweis gesperrt.", kz + tab + unten, '<button class="nu-btn nu-btn--klein" data-act="modalZu">Schließen</button>').replace('class="p-blatt"', 'class="p-blatt p-blatt--breit"');
 }
-function nachweisUnterschreiben(bild){ var n = U.nachweis; if(!n || nachweisVon(n.k, n.name)) return;
-  nachweisSpeichern(n.k, n.name, bild, kurz(H) + " " + uhr()); U.modal = null; commit(); ACT.nachweis(n.k + "," + n.name);
-  toast("pdf", "Dienstnachweis unterschrieben", nachweisPdf(n.k, n.name) + " · in die Lohntabelle übernommen", 5000); }
+function nachweisUnterschreiben(bild){ var n = U.nachweis; if(!n || nachweisVon(n.k, n.name, n.b)) return;
+  nachweisSpeichern(n.k, n.name, n.b, bild, kurz(H) + " " + uhr()); U.modal = null; commit(); ACT.nachweis(n.k + "," + n.name + "," + n.b);
+  toast("pdf", "Dienstnachweis unterschrieben", nachweisPdf(n.k, n.name, n.b) + " · Lohntabelle " + bereichName(n.b), 5000); }
 
 // ---------- Kalender ----------
 function kw(d){ var t = new Date(d.getFullYear(), d.getMonth(), d.getDate()); t.setDate(t.getDate() + 3 - (t.getDay() + 6) % 7); var w1 = new Date(t.getFullYear(), 0, 4); return 1 + Math.round(((t - w1) / 864e5 - 3 + (w1.getDay() + 6) % 7) / 7); }
 function terminChip(t, gross){ return '<span class="nu-termin' + (t.art === "Feiertag" ? ' nu-termin--feiertag' : '') + '">' + svg(t.sym) + (gross ? '<span>' + esc(t.titel) + '<small>' + esc(t.art) + '</small></span>' : esc(t.titel)) + '</span>'; }
+var ROLLEN = ["Betreuung 1","Betreuung 2","Küche"];
+function dienstRollen(di){ var dp = S.dienstplan[di] || ["",""], o = planAm(di); return [[ROLLEN[0], dp[0] || "", (o.nacht || [])[0] || ""], [ROLLEN[1], dp[1] || "", (o.nacht || [])[1] || ""], [ROLLEN[2], S.kueche[di] || "", o.kueche || ""]]; }
+function aenderungenVon(di, rolle){ return S.planAenderungen.filter(function(a){ return a.datum === di && a.rolle === rolle; }); }
+function dienstGeaendert(di, r){ return aenderungenVon(di, r[0]).length > 0 || (!!S.plan0[di] && r[1] !== r[2]); }
+function dienstZeile(di, i, r){
+  var ge = dienstGeaendert(di, r), cls = 'nu-dienstzeile' + (i === 2 ? ' nu-dienstzeile--kueche' : '') + (ge ? ' is-geaendert' : '') + (r[1] ? '' : ' is-offen');
+  var inner = '<span class="nu-dienstzeile-rolle">' + r[0] + (ge ? ' · geändert' : '') + '</span><b>' + esc(r[1] || "offen") + '</b>' + (ge && r[2] !== r[1] ? '<s>' + esc(r[2] || "offen") + '</s>' : '');
+  if(U.kalEdit && di >= iso(H)) return '<button class="' + cls + ' is-aenderbar" data-act="dienstAendern" data-arg="' + di + ',' + i + '" aria-label="' + esc(r[0] + " am " + kurz(pd(di)) + " ändern") + '">' + inner + '</button>';
+  return ge ? '<button class="' + cls + '" data-act="dienstInfo" data-arg="' + di + ',' + i + '">' + inner + '</button>' : '<div class="' + cls + '">' + inner + '</div>';
+}
+function dienstBlock(di){ return '<div class="nu-dienste">' + dienstRollen(di).map(function(r, i){ return dienstZeile(di, i, r); }).join("") + '</div>'; }
+function terminKnopf(t, gross){ var idx = S.termine.indexOf(t), chip = terminChip(t, gross);
+  if(t.geaendert) chip = chip.replace('<span class="nu-termin', '<span class="nu-termin is-geaendert');
+  return U.kalEdit && t.datum >= iso(H) ? '<button class="nu-termin-knopf is-aenderbar" data-act="terminAendern" data-arg="' + idx + '">' + chip + '</button>' : chip; }
+function kalKopfKnoepfe(){ return U.kalEdit ? '<button class="nu-btn nu-btn--primaer nu-btn--klein" data-act="kalBearbeiten">' + svg("check") + 'Fertig</button>' : '<button class="nu-btn nu-btn--rahmen nu-btn--klein" data-act="kalBearbeiten">' + svg("schloss") + 'Ändern</button>'; }
+function kalBanner(){ return U.kalEdit ? '<div class="nu-banner" style="margin-bottom:12px">' + svg("stift") + '<div>Ändern ist freigeschaltet<small>Dienst oder Termin antippen. Jede Änderung wird mit Namen vermerkt und im Kalender markiert. Der Originalplan bleibt für den Monatsabschluss gespeichert.</small></div></div>' : ''; }
+function pinBlatt(titel){ return blatt(titel, "Admin-PIN eingeben. Im Prototyp lautet sie 1234.", '<div class="nu-pin" style="padding:4px 0 8px"><div class="nu-pin-punkte' + (U.pin2Falsch ? ' is-falsch' : '') + '">' + [0,1,2,3].map(function(i){ return '<i class="' + (i < (U.pin2 || "").length ? 'is-voll' : '') + '"></i>'; }).join("") + '</div><div class="nu-pin-tasten">' + ["1","2","3","4","5","6","7","8","9","","0","⌫"].map(function(x){ return x ? '<button data-act="pin2" data-arg="' + x + '" aria-label="' + (x === "⌫" ? "Löschen" : x) + '">' + x + '</button>' : '<span></span>'; }).join("") + '</div></div>', '<button class="nu-btn nu-btn--klein" data-act="modalZu">Abbrechen</button>'); }
 function wocheAnsicht(){
   var basis = pd(U.kalTag), start = plus(basis, -((basis.getDay() + 6) % 7)), ende = plus(start, 6);
   var tage = [0,1,2,3,4,5,6].map(function(i){ var d = plus(start, i), di = iso(d), dp = S.dienstplan[di];
     return '<div class="nu-woche-tag' + (di === iso(H) ? ' is-heute' : d < H ? ' is-vorbei' : '') + '"><div class="nu-woche-kopf"><b>' + d.getDate() + '</b><span>' + d.toLocaleDateString("de-DE", {weekday:"short"}).replace(".", "") + '</span></div>' +
-      '<span class="nu-termin nu-termin--dienst">' + svg("personen") + '<span>Nachtdienst<small>' + esc(dp ? (dp.filter(Boolean).join(", ") || "offen") : "offen") + '</small></span></span>' +
-      '<span class="nu-termin">' + svg("kueche") + '<span>Küche<small>' + esc(S.kueche[di] || "offen") + '</small></span></span>' +
-      S.termine.filter(function(t){ return t.datum === di; }).map(function(t){ return terminChip(t, true); }).join("") +
+      dienstBlock(di) +
+      S.termine.filter(function(t){ return t.datum === di; }).map(function(t){ return terminKnopf(t, true); }).join("") +
       '<button class="nu-woche-plus" data-act="terminNeu" data-arg="' + di + '">' + svg("plus","klein") + 'Termin</button></div>'; }).join("");
   return {titel:"KW " + kw(start) + " · " + kurz(start) + " – " + kurz(ende) + ende.getFullYear(), html:'<div class="nu-woche">' + tage + '</div>'};
 }
 function kalenderAnsicht(){
   var umschalter = '<div class="nu-seg" role="radiogroup" aria-label="Ansicht"><button role="radio" aria-checked="' + (U.kalAnsicht === "woche") + '" data-act="kalAnsicht" data-arg="woche">7 Tage</button><button role="radio" aria-checked="' + (U.kalAnsicht === "monat") + '" data-act="kalAnsicht" data-arg="monat">Monat</button></div>';
   if(U.kalAnsicht === "woche"){ var w = wocheAnsicht();
-    return '<div class="p-plan-zeile" style="margin-bottom:12px"><h1 class="titel-gross" style="margin:0;flex:1">' + esc(w.titel) + '</h1>' + umschalter + '<button class="nu-iconbtn nu-iconbtn--fl" data-act="woche" data-arg="-7" aria-label="Vorige Woche">' + svg("zurueck") + '</button><button class="nu-btn nu-btn--rahmen nu-btn--klein" data-act="woche" data-arg="0">Heute</button><button class="nu-iconbtn nu-iconbtn--fl" data-act="woche" data-arg="7" aria-label="Nächste Woche">' + svg("weiter") + '</button><button class="nu-btn nu-btn--rahmen nu-btn--klein" data-act="importBlatt">' + svg("scannen") + 'Dienstplan einlesen</button></div>' + w.html;
+    return '<div class="p-plan-zeile" style="margin-bottom:12px"><h1 class="titel-gross" style="margin:0;flex:1">' + esc(w.titel) + '</h1>' + umschalter + '<button class="nu-iconbtn nu-iconbtn--fl" data-act="woche" data-arg="-7" aria-label="Vorige Woche">' + svg("zurueck") + '</button><button class="nu-btn nu-btn--rahmen nu-btn--klein" data-act="woche" data-arg="0">Heute</button><button class="nu-iconbtn nu-iconbtn--fl" data-act="woche" data-arg="7" aria-label="Nächste Woche">' + svg("weiter") + '</button>' + kalKopfKnoepfe() + '</div>' + kalBanner() + w.html;
   }
   var basis = pd(U.kalTag), jahr = basis.getFullYear(), monat = basis.getMonth();
   var erster = new Date(jahr, monat, 1), versatz = (erster.getDay() + 6) % 7, start = plus(erster, -versatz);
@@ -1724,20 +1909,21 @@ function kalenderAnsicht(){
   for(var i = 0; i < 42; i++){
     var d = plus(start, i), di = iso(d), anders = d.getMonth() !== monat;
     var dp = S.dienstplan[di], ev = S.termine.filter(function(t){ return t.datum === di; });
-    var chips = (dp && !anders ? '<span class="nu-termin nu-termin--dienst">' + svg("personen") + esc(dp.filter(Boolean).join(" + ") || "offen") + '</span>' : '') + ev.map(function(t){ return '<span class="nu-termin' + (t.art === "Feiertag" ? ' nu-termin--feiertag' : '') + '">' + svg(t.sym) + esc(t.titel) + '</span>'; }).join("");
+    var geTag = !anders && dienstRollen(di).some(function(r){ return dienstGeaendert(di, r); });
+    var chips = (dp && !anders ? '<span class="nu-termin nu-termin--dienst' + (geTag ? ' is-geaendert' : '') + '">' + svg(geTag ? "stift" : "personen") + esc(dp.filter(Boolean).join(" + ") || "offen") + '</span>' : '') + ev.map(function(t){ return '<span class="nu-termin' + (t.art === "Feiertag" ? ' nu-termin--feiertag' : '') + '">' + svg(t.sym) + esc(t.titel) + '</span>'; }).join("");
     zellen += '<button class="nu-tag' + (anders ? ' is-anders' : '') + (di === iso(H) ? ' is-heute' : '') + '" data-act="kalTag" data-arg="' + di + '"' + (di === U.kalTag ? ' style="box-shadow:inset 0 0 0 2px var(--tinte)"' : '') + '><span class="d">' + d.getDate() + '</span>' + chips + '</button>';
   }
   var sel = pd(U.kalTag), dpSel = S.dienstplan[U.kalTag] || ["",""], evSel = S.termine.filter(function(t){ return t.datum === U.kalTag; });
   var seite = '<aside class="p-tag-detail"><b class="titel" style="font-size:20px">' + esc(lang(sel)) + '</b>' +
-    '<div class="nu-zeile">' + svg("personen") + '<div>Nachtdienst 18:45–08:00<small>' + esc(dpSel.filter(Boolean).join(", ") || "offen") + '</small></div></div><div class="nu-zeile">' + svg("kueche") + '<div>Küche 17:00–21:00<small>' + esc(S.kueche[U.kalTag] || "offen") + '</small></div></div>' +
-    evSel.map(function(t){ return '<div class="nu-zeile' + (t.art === "Feiertag" ? ' nu-zeile--warnung' : '') + '">' + svg(t.sym) + '<div>' + esc(t.titel) + '<small>' + esc(t.art) + '</small></div></div>'; }).join("") +
+    '<span class="nu-beschr">Nachtdienst 18:45–08:00 · Küche 17:00–21:00</span>' + dienstBlock(U.kalTag) +
+    evSel.map(function(t){ return terminKnopf(t, true); }).join("") +
     '<button class="nu-btn nu-btn--rahmen nu-btn--klein" data-act="terminBlatt" style="justify-self:start">' + svg("plus") + 'Termin</button></aside>';
-  return '<div class="p-plan-zeile" style="margin-bottom:12px"><h1 class="titel-gross" style="margin:0;flex:1">' + esc(titel) + '</h1>' + umschalter + '<button class="nu-iconbtn nu-iconbtn--fl" data-act="monat" data-arg="-1" aria-label="Voriger Monat">' + svg("zurueck") + '</button><button class="nu-iconbtn nu-iconbtn--fl" data-act="monat" data-arg="1" aria-label="Nächster Monat">' + svg("weiter") + '</button><button class="nu-btn nu-btn--rahmen nu-btn--klein" data-act="importBlatt">' + svg("scannen") + 'Dienstplan einlesen</button></div>' +
+  return '<div class="p-plan-zeile" style="margin-bottom:12px"><h1 class="titel-gross" style="margin:0;flex:1">' + esc(titel) + '</h1>' + umschalter + '<button class="nu-iconbtn nu-iconbtn--fl" data-act="monat" data-arg="-1" aria-label="Voriger Monat">' + svg("zurueck") + '</button><button class="nu-iconbtn nu-iconbtn--fl" data-act="monat" data-arg="1" aria-label="Nächster Monat">' + svg("weiter") + '</button>' + kalKopfKnoepfe() + '</div>' + kalBanner() +
     '<div class="p-kal-raster"><div class="nu-monat">' + zellen + '</div>' + seite + '</div>';
 }
 
 // ---------- Einstellungen ----------
-var EINST = [["darstellung","mond","Darstellung"],["betten","bett","Betten und Zimmer"],["ampel","ampel","Ampel und KHT"],["abgleich","abgleich","Abgleich"],["daten","loeschen","Beispieldaten"]];
+var EINST = [["darstellung","mond","Darstellung"],["betten","bett","Betten und Zimmer"],["ampel","ampel","Ampel und KHT"],["dienstplan","scannen","Dienstplan einlesen"],["abgleich","abgleich","Abgleich"],["daten","loeschen","Beispieldaten"]];
 function einstellungenAnsicht(){
   if(!U.pinOk){
     return '<div class="p-leer" style="padding-top:24px"><div class="nu-pin">' + svg("schloss") + '<b class="titel">Admin-PIN eingeben</b><div class="nu-pin-punkte' + (U.pinFalsch ? ' is-falsch' : '') + '">' + [0,1,2,3].map(function(i){ return '<i class="' + (i < U.pin.length ? 'is-voll' : '') + '"></i>'; }).join("") + '</div>' +
@@ -1758,11 +1944,45 @@ function einstellungenAnsicht(){
     z("wolke-ok", "Meldung an die Ampel", "Freie Betten, nie Namen", bald);
   if(U.einst === "abgleich") inhalt = z("abgleich", "Zeitplan", "17:00–09:00 stündlich, tagsüber Pause, nach „Bericht abschließen“ sofort", bald) +
     z("wolke-aus", "Offline ausprobieren", "Zeigt, wie ausstehende Änderungen angezeigt werden", '<button class="nu-schalter" role="switch" aria-checked="' + S.sync.offline + '" data-act="offline" aria-label="Offline ausprobieren"></button>');
+  if(U.einst === "dienstplan") inhalt = scanAnsicht();
   if(U.einst === "daten") inhalt = z("loeschen", "Beispieldaten zurücksetzen", "Alle Änderungen in diesem Browser verwerfen", '<button class="nu-btn nu-btn--gefahr nu-btn--klein" data-act="reset">Zurücksetzen</button>') +
     '<p class="nu-beschr">Alles, was du im Prototyp änderst, bleibt nur in diesem Browser. Es gibt keine Verbindung zu Nextcloud.</p>';
   return '<div class="p-plan-zeile" style="margin-bottom:12px"><h1 class="titel-gross" style="margin:0;flex:1">Einstellungen</h1><button class="nu-btn nu-btn--rahmen nu-btn--klein" data-act="pinSperren">' + svg("schloss") + 'Sperren</button></div><div class="p-einst-raster">' + nav + '<div class="p-liste">' + inhalt + '</div></div>';
 }
 
+// ---------- Einstellungen: Dienstplan einlesen ----------
+// Einmal zu Monatsbeginn durch die Leitung: Foto oder Datei, dann jeder Dienst einzeln prüfen. Ergebnis = Originalplan (geplante Dienste).
+function scanDaten(k){ var betr = ["Kim","Sam","Robin","Chris"], ku = ["Jule","Mika"];
+  return tageVon(k).map(function(di, n){ var foto = [betr[n % 4], betr[(n + 1) % 4], ku[n % 2]]; if(n % 7 === 6) foto[1] = "";
+    var erkannt = foto.slice(), unsicher = [false, false, false];
+    if(n === 4){ foto[1] = "Jule"; erkannt[1] = "Sam"; unsicher[1] = true; foto[2] = erkannt[2] = "Mika"; }
+    if(n === 10) unsicher[0] = true;
+    if(n === 17){ erkannt[2] = ""; unsicher[2] = true; }
+    if(n === 23) unsicher[1] = true;
+    return {datum:di, foto:foto, erkannt:erkannt, wahl:erkannt.slice(), unsicher:unsicher, geprueft:unsicher.map(function(u){ return !u; }), ok:false}; });
+}
+function scanAnsicht(){
+  var sc = U.scan, monate = [mKey(H), mKey(new Date(H.getFullYear(), H.getMonth() + 1, 1))];
+  if(!sc) return '<p class="nu-beschr" style="font-size:15px;line-height:22px">Einmal zu Monatsbeginn durch die Leitung. Jeder Dienst wird einzeln mit dem Foto verglichen und bestätigt. Daraus entstehen die <b>geplanten Dienste</b> für den Monatsabschluss. Spätere Änderungen nur im Kalender (PIN, mit Namen vermerkt).</p>' +
+    monate.map(function(k){ var imp = S.planImporte[k];
+      return '<div class="nu-einstellung">' + svg(imp ? "check" : "scannen") + '<div><b>' + esc(monatName(k)) + '</b><small>' + (imp ? 'Eingelesen am ' + esc(imp.um) + ' von ' + esc(imp.von) + ' · ' + imp.dienste + ' Dienste, ' + imp.korrigiert + ' korrigiert. Originalplan steht fest.' : 'Noch nicht eingelesen. Im Kalender steht ein vorläufiger Plan.') + '</small></div>' +
+        (imp ? '<span class="nu-pille">' + svg("schloss","klein") + 'fest</span>' : '<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="nu-btn nu-btn--primaer nu-btn--klein" data-act="scanStart" data-arg="' + k + ',Foto">' + svg("kamera") + 'Foto</button><button class="nu-btn nu-btn--rahmen nu-btn--klein" data-act="scanStart" data-arg="' + k + ',Datei">' + svg("wolke-ok") + 'Datei aus Nextcloud</button></div>') + '</div>'; }).join("");
+  if(sc.fertig){ var korr = sc.tage.reduce(function(n, t){ return n + t.wahl.filter(function(w, j){ return w !== t.erkannt[j]; }).length; }, 0);
+    return '<div class="nu-bericht" style="gap:14px"><b class="titel">' + esc(monatName(sc.monat)) + ' geprüft</b><div class="nu-kennzahlen" style="position:static;padding:0;box-shadow:none;background:none"><div class="nu-kennzahl">Tage<b>' + sc.tage.length + '</b></div><div class="nu-kennzahl">Dienste<b>' + sc.tage.length * 3 + '</b></div><div class="nu-kennzahl">Korrigiert<b>' + korr + '</b></div></div>' +
+      '<div class="nu-feld"><span class="nu-feldname">Eingelesen von</span><div class="nu-checkliste">' + [LEITUNG].concat(TEAM).map(function(n){ return '<button class="nu-chip" aria-pressed="' + (n === LEITUNG) + '" data-act="vonWahl" data-arg="' + esc(n) + '">' + (n === LEITUNG ? svg("check","klein") : '') + esc(n) + (n === LEITUNG ? ' (Schwester)' : '') + '</button>'; }).join("") + '</div></div>' +
+      '<div class="nu-banner">' + svg("info") + '<div>Danach steht der Originalplan fest<small>Er ist die Grundlage für „geplant“ im Monatsabschluss. Änderungen im Kalender werden markiert, der Originalplan bleibt.</small></div></div>' +
+      '<div style="display:flex;gap:10px;justify-content:flex-end"><button class="nu-btn nu-btn--rahmen nu-btn--klein" data-act="scanSchritt" data-arg="-1">Zurück</button><button class="nu-btn nu-btn--primaer" data-act="scanSpeichern">' + svg("check") + 'Als Originalplan speichern</button></div></div>'; }
+  var t = sc.tage[sc.i], d = pd(t.datum), alleOk = t.geprueft.every(Boolean);
+  var foto = '<div class="nu-scan-foto" aria-label="Ausschnitt aus dem Foto"><div class="nu-scan-blatt"><div class="nu-scan-zeile nu-scan-zeile--kopf"><span>Tag</span><span>Nacht</span><span>Nacht</span><span>Küche</span></div>' +
+    sc.tage.slice(Math.max(0, sc.i - 2), sc.i + 3).map(function(x){ return '<div class="nu-scan-zeile' + (x === t ? ' is-aktuell' : '') + '"><span>' + pd(x.datum).getDate() + '.</span>' + x.foto.map(function(f){ return '<span>' + esc(f || "—") + '</span>'; }).join("") + '</div>'; }).join("") + '</div><span class="nu-beschr">' + (sc.quelle === "Foto" ? "Foto" : "Datei") + ': Dienstplan_' + sc.monat + (sc.quelle === "Foto" ? '.jpg' : '.pdf') + '</span></div>';
+  var zeilen = ROLLEN.map(function(rolle, j){ var unsicher = t.unsicher[j] && !t.geprueft[j];
+    return '<div class="nu-scan-pruef' + (t.unsicher[j] ? ' is-unsicher' : '') + (t.geprueft[j] ? ' is-geprueft' : '') + '"><div class="nu-scan-pruef-kopf"><b>' + rolle + '</b>' + (t.unsicher[j] ? (unsicher ? '<span class="nu-pille nu-pille--warnung">' + svg("warnung","klein") + 'unsicher erkannt: ' + esc(t.erkannt[j] || "nichts") + '</span>' : '<span class="nu-pille">' + svg("check","klein") + 'geprüft</span>') : '<span class="nu-beschr">erkannt</span>') + '</div>' +
+      '<div class="nu-checkliste">' + TEAM.concat([""]).map(function(n){ return '<button class="nu-chip" aria-pressed="' + (t.wahl[j] === n) + '" data-act="scanWahl" data-arg="' + j + ',' + esc(n) + '">' + esc(n || "offen") + '</button>'; }).join("") + '</div></div>'; }).join("");
+  return '<div class="nu-scan"><div class="nu-scan-kopf"><b class="titel" style="font-size:20px;flex:1">' + esc(monatName(sc.monat)) + ' prüfen</b><span class="nu-beschr">Tag ' + (sc.i + 1) + ' von ' + sc.tage.length + '</span><button class="nu-btn nu-btn--klein" data-act="scanAbbrechen">Abbrechen</button></div>' +
+    '<div class="nu-scan-fortschritt"><i style="width:' + Math.round(sc.i / sc.tage.length * 100) + '%"></i></div>' +
+    '<div class="nu-scan-raster">' + foto + '<div class="nu-scan-rechts"><b class="titel" style="font-size:22px">' + esc(d.toLocaleDateString("de-DE", {weekday:"long", day:"numeric", month:"long"})) + '</b><p class="nu-beschr" style="margin:0">Mit dem Foto vergleichen. Stimmt etwas nicht, den richtigen Namen antippen.</p>' + zeilen +
+    '<div style="display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap"><button class="nu-btn nu-btn--rahmen nu-btn--klein" data-act="scanSchritt" data-arg="-1"' + (sc.i === 0 ? ' disabled' : '') + '>' + svg("zurueck") + 'Zurück</button><button class="nu-btn nu-btn--primaer" data-act="scanTagOk"' + (alleOk ? '' : ' disabled') + '>' + svg("check") + (alleOk ? 'Tag stimmt, weiter' : 'Erst Unsicheres prüfen') + '</button></div></div></div></div>';
+}
 // ---------- Einstellungen: Zimmerkarte ----------
 function einstZimmer(r){
   var an = !S.offRooms[r.id], extra = r.id === "X" || r.id === "NX", niko = r.id === "N" || r.id === "NX";
@@ -1816,7 +2036,7 @@ function akteHtml(g){
   var la = nik ? dz("laeuseschein", "Läuseschein", "in St. Nikolaus nicht erfasst", '') : g.laus === "liegt" ? dz("laeuseschein", "Läuseschein", "liegt vor" + (g.lausVon ? " · geprüft von " + esc(g.lausVon) : "") + " · gilt die ganze Saison", '') : g.laus === "fehlt" ? dz("laeuseschein-fehlt", "Läuseschein", "fehlt seit " + lausTage(g) + " Tagen", '<button class="nu-btn nu-btn--klein nu-btn--rahmen" data-act="lausScan" data-arg="' + g.id + '">' + svg("scannen") + 'Scannen</button>', true) : dz("laeuseschein", "Läuseschein", "nicht nötig (eine Nacht)", '');
   var weitere = g.dokumente.filter(function(d){ return d.art !== "Hausordnung und Datenschutz"; }).map(function(d){ return dz(d.foto ? "kamera" : "pdf", esc(d.art), esc(d.datei) + " · " + kurz(pd(d.datum)) + " · " + esc(d.von), ''); }).join("");
   var sank = g.sanktionen.length ? g.sanktionen.map(function(x){ return '<div class="nu-zeile">' + svg(stufeSym(x.stufe)) + '<div>' + esc(x.stufe) + ' · ' + kurz(pd(x.datum)) + (x.bis ? ' · bis ' + kurz(pd(x.bis)) : '') + '<small>' + esc(x.grund) + ', eingetragen von ' + esc(x.von) + '</small></div></div>'; }).join("") : '<p class="nu-beschr">Keine Einträge.</p>';
-  var notizen = g.notizen.slice().reverse().map(function(n){ return '<div class="nu-notiz">' + esc(n.text) + '<small>' + kurz(pd(n.datum)) + ' · ' + esc(n.von) + (n.quelle ? ' · ' + esc(n.quelle) : '') + '</small></div>'; }).join("") || '<p class="nu-beschr">Noch keine Notizen.</p>';
+  var notizen = notizenHtml(g);
   return '<article class="p-akte" aria-label="Gastakte ' + esc(anzeige(g)) + '"><div style="display:flex;gap:14px;align-items:flex-start"><span class="nu-treffer-bett' + (bett ? '' : ' is-leer') + '" style="min-width:64px;height:52px;font-size:20px">' + (bett || "–") + '</span><div style="flex:1;min-width:0"><h2 style="margin:0;font:700 24px/30px var(--font-ui)">' + esc(g.vorname + (g.nachname ? " " + g.nachname : "")) + (g.spitz ? ' <span style="font-weight:400;color:var(--tinte-2)">„' + esc(g.spitz) + '“</span>' : '') + '</h2><p class="nu-beschr" style="font-size:15px;line-height:22px">' + (g.nr ? 'Aufnahme ' + esc(g.nr) + ' · ' : '') + esc(SPRACHE[g.sprache][2]) + ' · ' + naechteText(g.naechte) + ' · erste Aufnahme ' + kurz(pd(g.erste)) + (gleicherVorname(g) ? ' · angezeigt als ' + esc(anzeige(g)) : '') + '</p></div>' + (bett ? '<button class="nu-btn nu-btn--klein nu-btn--rahmen" data-act="imPlan" data-arg="' + bett + '">' + svg("bett") + 'Im Plan</button>' : '') + (U.akte && schmal() ? '<button class="nu-iconbtn nu-iconbtn--fl" data-act="akteZu" aria-label="Schließen">' + svg("schliessen") + '</button>' : '') + '</div>' +
     (hv ? '<div class="nu-zeile nu-zeile--vorfall">' + svg("karte-rot") + '<div><b>Hausverbot ' + (hv.bis ? 'bis ' + kurz(pd(hv.bis)) : 'unbefristet') + '</b><small>' + esc(hv.grund) + '</small></div></div>' : '') +
     '<section class="nu-abschnitt"><h3>Dokumente</h3>' + ho + ds + la + weitere + '<button class="nu-btn nu-btn--rahmen" style="justify-self:start" data-act="dokBlatt" data-arg="' + g.id + '">' + svg("dokument-plus") + 'Dokument hinterlegen</button></section>' +
@@ -1840,7 +2060,7 @@ function gaesteNachRender(){
 function glockenListe(){
   var e = erinnerungen();
   return '<div class="p-glocke"><div class="nu-glocke-liste" role="dialog" aria-label="Erinnerungen"><div style="display:flex;align-items:center;padding:6px 6px 6px 10px"><b style="flex:1">' + (e.length ? e.length + " offene Erinnerungen" : "Keine offenen Erinnerungen") + '</b><button class="nu-iconbtn" data-act="glocke" aria-label="Schließen">' + svg("schliessen") + '</button></div>' +
-    e.map(function(x){ return '<button class="nu-zeile' + (x.warn ? ' nu-zeile--warnung' : '') + '" style="border:0;text-align:left;cursor:pointer;width:100%;font:inherit" data-act="erinnerung" data-arg="' + (x.nr || (x.dusche ? "dusche" : "dienst")) + '">' + svg(x.sym) + '<div>' + esc(x.text) + '<small>' + esc(x.klein) + '</small></div></button>'; }).join("") + '</div></div>';
+    e.map(function(x){ return '<button class="nu-zeile' + (x.warn ? ' nu-zeile--warnung' : '') + '" style="border:0;text-align:left;cursor:pointer;width:100%;font:inherit" data-act="erinnerung" data-arg="' + (x.nr || (x.bad ? "bad" : x.dusche ? "dusche" : "dienst")) + '">' + svg(x.sym) + '<div>' + esc(x.text) + '<small>' + esc(x.klein) + '</small></div></button>'; }).join("") + '</div></div>';
 }
 
 // ---------- Handlungen ----------
@@ -1888,7 +2108,7 @@ var ACT = {
   aktiv:function(a){ S.aktiv = +a; speichern(); render(); },
   reiter:function(a){ U.reiter = a; U.detail = null; U.schnell = null; render(); },
   glocke:function(){ U.glocke = !U.glocke; render(); },
-  erinnerung:function(a){ U.glocke = false; if(a === "dusche"){ U.bereich = "dienst"; U.dienstReiter = "dusche"; } else if(a === "dienst"){ U.bereich = "dienst"; U.dienstReiter = "bericht"; } else { U.bereich = "plan"; U.reiter = "haus"; U.detail = a; U.offen = a; U.detailRein = true; } render(); },
+  erinnerung:function(a){ U.glocke = false; if(a === "bad"){ U.bereich = "plan"; U.reiter = "haus"; U.tag = 0; render(); var e = $(".nu-bad"); if(e){ e.scrollIntoView({block:"center", behavior:"smooth"}); e.focus({preventScroll:true}); } return; } if(a === "dusche"){ U.bereich = "dienst"; U.dienstReiter = "dusche"; } else if(a === "dienst"){ U.bereich = "dienst"; U.dienstReiter = "bericht"; } else { U.bereich = "plan"; U.reiter = "haus"; U.detail = a; U.offen = a; U.detailRein = true; } render(); },
   abgleichBlatt:function(){ var sy = S.sync; modal(blatt("Abgleich mit Nextcloud", "Im Prototyp gibt es keine Verbindung. Die Anzeige zeigt, wie der Abgleich in der App erscheint.",
     '<div class="nu-zeile">' + svg(sy.offline ? "wolke-aus" : "wolke-ok") + '<div>' + (sy.offline ? "Offline" : "Zuletzt synchronisiert " + esc(sy.zuletzt)) + '<small>' + (sy.ausstehend ? sy.ausstehend + " Änderungen warten auf den Abgleich" : "Keine ausstehenden Änderungen") + '</small></div></div><div class="nu-einstellung" style="background:var(--flaeche-2)">' + svg("wolke-aus") + '<div><b>Offline ausprobieren</b><small>Änderungen sammeln sich, bis wieder Netz da ist</small></div><button class="nu-schalter" role="switch" aria-checked="' + sy.offline + '" data-act="offline" aria-label="Offline ausprobieren"></button></div>',
     '<button class="nu-btn nu-btn--primaer nu-btn--klein" data-act="jetztSync"' + (sy.offline ? ' disabled' : '') + '>' + svg("abgleich") + 'Jetzt synchronisieren</button>')); },
@@ -1950,7 +2170,14 @@ var ACT = {
       modal(blatt("Dusche " + z + " · " + kurz(duschDatum()), (U.duschTag || 0) === 0 ? "Aus den anwesenden Gästen" : "Aus den Gästen mit Bett", '<div class="p-liste">' + kandidaten.map(function(b){ var g = gastVon(b.nr); return '<button class="nu-treffer" data-act="slotSetzen" data-arg="' + z + ',' + g.id + '">' + svg("person") + '<div><b>' + esc(anzeige(g)) + '</b><small>' + b.nr + '</small></div></button>'; }).join("") + '</div>', '<button class="nu-btn nu-btn--klein" data-act="modalZu">Abbrechen</button>')); return; }
     var g = S.G[x.g]; modal(blatt("Dusche " + z + " · " + g.vorname, "", '<div class="p-drei"><button class="nu-wahl" data-act="slotStatus" data-arg="' + z + ',erledigt"><b>Erledigt</b></button><button class="nu-wahl" data-act="slotStatus" data-arg="' + z + ',verpasst"><b>Verpasst</b></button><button class="nu-wahl" data-act="slotStatus" data-arg="' + z + ',frei"><b>Freigeben</b></button></div>', '<button class="nu-btn nu-btn--klein" data-act="modalZu">Abbrechen</button>')); },
   slotSetzen:function(a){ var p = a.split(","); S.dusche[iso(duschDatum())][p[0]] = {g:p[1], s:"geplant"}; U.modal = null; commit(); },
-  slotStatus:function(a){ var p = a.split(","), d = S.dusche[iso(duschDatum())]; if(p[1] === "frei") delete d[p[0]]; else d[p[0]].s = p[1]; U.modal = null; commit(); },
+  slotStatus:function(a){ var p = a.split(","), d = S.dusche[iso(duschDatum())], vorher = badZustand(); if(p[1] === "frei") delete d[p[0]]; else d[p[0]].s = p[1]; U.modal = null; commit();
+    if(vorher === "zu" && badZustand() === "erinnern") toast("schloss-offen", "Bad aufschließen", "Alle haben geduscht. Danach im Grundriss auf das Bad tippen.", 6000); },
+  bad:function(){ if(U.tag !== 0) return; var bz = badZustand(), offen = duschenOffen();
+    if(bz === "erinnern") return ACT.badAuf();
+    if(bz === "zu") return modal(dialog("Bad schon aufschließen?", "Noch nicht geduscht: " + esc(offen.join(", ")) + ".", '<button class="nu-btn nu-btn--klein" data-act="modalZu" data-fokus>Abbrechen</button><button class="nu-btn nu-btn--primaer nu-btn--klein" data-act="badAuf">Trotzdem aufschließen</button>'));
+    modal(dialog("Bad wieder abschließen?", "Zum Beispiel für eine Dusche außer der Reihe. Danach erinnert die App wieder ans Aufschließen.", '<button class="nu-btn nu-btn--klein" data-act="modalZu" data-fokus>Abbrechen</button><button class="nu-btn nu-btn--primaer nu-btn--klein" data-act="badZu">Abschließen</button>')); },
+  badAuf:function(){ S.bad = S.bad || {}; S.bad[iso(H)] = {zu:false, um:uhr(), von:aktivePerson()}; U.modal = null; commit(); toast("schloss-offen", "Bad ist frei", "Aufgeschlossen um " + uhr() + ".", 3000); },
+  badZu:function(){ S.bad = S.bad || {}; S.bad[iso(H)] = {zu:true, um:uhr(), von:aktivePerson()}; U.modal = null; commit(); },
   duschTest:function(){ var d = S.dusche[iso(H)] || {}, k = Object.keys(d).find(function(z){ return d[z].s === "geplant"; }); var g = k && S.G[d[k].g]; var bett = g && Object.keys(S.betten).find(function(n){ return S.betten[n].g === g.id; }); toast("dusche", "Dusche " + (k || "20:30"), g ? g.vorname + ", Bett " + bett : "Beispiel"); },
   sanktionBlatt:function(nr){ var g = gastVon(nr); modal(blatt("Sanktion für " + g.vorname, "Die Stufen steigen von oben nach unten. Grund ist Pflicht.", '<div class="p-liste">' + [["Verwarnung","verwarnung","Schon mehrmals hingewiesen, soll es nicht wiederholen"],["Gelbe Karte","karte-gelb","Noch einmal, dann Hausverbot"],["Hausverbot","karte-rot","Aufnahme gesperrt, 3 Jahre aufbewahrt"]].map(function(x, i){ return '<button class="nu-wahl" role="radio" aria-checked="' + (i === 0) + '" data-act="stufeWahl" data-arg="' + x[0] + '" style="grid-template-columns:auto 1fr;align-items:center;column-gap:14px;min-height:72px">' + svg(x[1]) + '<span style="display:grid"><b>' + x[0] + '</b><span>' + x[2] + '</span></span></button>'; }).join("") + '</div><div class="nu-feld"><label for="sk-grund">Grund</label><input class="nu-eingabe" id="sk-grund" placeholder="Was ist passiert?"></div><div class="nu-feld" id="sk-bis-feld" hidden><label for="sk-bis">Gültig bis (leer = unbefristet)</label><input class="nu-eingabe" type="date" id="sk-bis"></div>',
     '<button class="nu-btn nu-btn--klein" data-act="modalZu">Abbrechen</button><button class="nu-btn nu-btn--gefahr-voll nu-btn--klein" data-act="sanktionSpeichern" data-arg="' + nr + '">Eintragen</button>')); },
@@ -1965,7 +2192,10 @@ var ACT = {
   aufnahme:function(nr){ aufnahmeStart(nr); },
   aufnahmeAbbrechen:function(){ modal(dialog("Aufnahme verwerfen?", "Die Eingaben dieser Aufnahme gehen verloren.", '<button class="nu-btn nu-btn--klein" data-act="modalZu">Weiter aufnehmen</button><button class="nu-btn nu-btn--gefahr-voll nu-btn--klein" data-act="aufnahmeVerwerfen">Verwerfen</button>')); },
   aufnahmeVerwerfen:function(){ U.modal = null; U.wizard = null; render(); },
-  gastWaehlen:function(id){ var w = wz(); w.g = id; w.verbotOk = false; w.grund = ""; var g = S.G[id]; w.sprache = g.sprache; render(); },
+  gastWaehlen:function(id){ var w = wz(); w.g = id; w.verbotOk = false; w.grund = ""; var g = S.G[id]; w.sprache = g.sprache; render();
+    var hw = g.notizen.map(function(n, i){ return {n:n, i:i}; }).filter(function(x){ return x.n.aufnahme; });
+    if(hw.length) modal(dialog("Hinweis zu " + anzeige(g), hw.map(function(x){ return '<b>' + esc(x.n.von) + ':</b> ' + esc(x.n.text) + '<br><small>' + esc(x.n.quelle || "") + '</small>'; }).join("<br><br>"),
+      '<button class="nu-btn nu-btn--klein" data-act="aufnahmeHinweisAus" data-arg="' + id + ',' + hw[0].i + '">Nicht mehr zeigen</button><button class="nu-btn nu-btn--primaer nu-btn--klein" data-act="modalZu" data-fokus>Verstanden</button>')); },
   gastNeu:function(){ var w = wz(); w.g = null; render(); },
   verbotOk:function(){ var w = wz(); w.verbotOk = !w.verbotOk; render(); },
   dauer:function(a){ wz().dauer = a; render(); },
@@ -1979,28 +2209,29 @@ var ACT = {
   wZurueck:function(){ var w = wz(), l = schrittListe(), p = l.indexOf(w.schritt); if(p > 0){ w.schritt = l[p - 1]; w.richtung = "zurueck"; render(); } },
   dienstBeginnen:function(){ dienstBeginnen(); },
   monatWahl:function(k){ U.monat = k; render(); },
-  nachweis:function(a){ var p = a.split(","); U.nachweis = {k:p[0], name:p[1]}; modal(nachweisBlatt(p[0], p[1])); },
+  nachweis:function(a){ var p = a.split(","); U.nachweis = {k:p[0], name:p[1], b:p[2] || "betreuung"}; modal(nachweisBlatt(p[0], p[1], p[2] || "betreuung")); },
   nachweisSpaeter:function(n){ U.spaeter = U.spaeter || {}; U.spaeter[n] = true; render(); },
-  planKorrektur:function(a){ var p = a.split(","), k = p[0], name = p[1]; if(nachweisVon(k, name)) return;
-    modal(blatt("Geplante Dienste korrigieren · " + name, "", '<div class="nu-banner">' + svg("warnung") + '<div>Der Originalplan ist Grundlage der Lohnabrechnung.<small>Nur korrigieren, wenn er falsch übernommen wurde. Die Änderung wird mit Name und Uhrzeit gespeichert.</small></div></div>' +
-      '<div class="nu-feld"><span class="nu-feldname">Geplante Tage im ' + esc(monatName(k)) + '</span><div class="nu-checkliste">' + tageVon(k).map(function(di){ var an = rollenGeplant(di, name).length > 0; return '<button class="nu-chip" style="min-width:64px;justify-content:center" aria-pressed="' + an + '" data-act="planTag" data-arg="' + di + '">' + kurz(pd(di)) + '</button>'; }).join("") + '</div></div>' +
+  planKorrektur:function(a){ var p = a.split(","), k = p[0], name = p[1], b = p[2]; if(nachweisVon(k, name, b)) return;
+    modal(blatt("Geplante Dienste korrigieren · " + bereichName(b) + " · " + name, "", '<div class="nu-banner">' + svg("warnung") + '<div>Der Originalplan ist Grundlage der Lohnabrechnung.<small>Nur korrigieren, wenn er falsch übernommen wurde. Die Änderung wird mit Name und Uhrzeit gespeichert.</small></div></div>' +
+      '<div class="nu-feld"><span class="nu-feldname">Geplante Tage im ' + esc(monatName(k)) + ' (' + bereichName(b) + ')</span><div class="nu-checkliste">' + tageVon(k).map(function(di){ var an = rollenGeplant(di, name, b).length > 0; return '<button class="nu-chip" style="min-width:64px;justify-content:center" aria-pressed="' + an + '" data-act="planTag" data-arg="' + di + '">' + kurz(pd(di)) + '</button>'; }).join("") + '</div></div>' +
       '<div class="nu-feld"><label for="pk-grund">Grund (Pflicht)</label><input class="nu-eingabe" id="pk-grund" placeholder="z. B. Dienstplan falsch abgeschrieben"></div>',
-      '<button class="nu-btn nu-btn--klein" data-act="nachweis" data-arg="' + k + ',' + esc(name) + '">Abbrechen</button><button class="nu-btn nu-btn--gefahr-voll nu-btn--klein" data-act="planSpeichern" data-arg="' + k + ',' + esc(name) + '">Korrektur speichern</button>').replace('class="p-blatt"', 'class="p-blatt p-blatt--breit"')); },
+      '<button class="nu-btn nu-btn--klein" data-act="nachweis" data-arg="' + a + '">Abbrechen</button><button class="nu-btn nu-btn--gefahr-voll nu-btn--klein" data-act="planSpeichern" data-arg="' + a + '">Korrektur speichern</button>').replace('class="p-blatt"', 'class="p-blatt p-blatt--breit"')); },
   planTag:function(a, el){ el.setAttribute("aria-pressed", String(el.getAttribute("aria-pressed") !== "true")); },
-  planSpeichern:function(a){ var p = a.split(","), k = p[0], name = p[1], grund = $("#pk-grund").value.trim(); if(!grund){ $("#pk-grund").focus(); $("#pk-grund").style.borderColor = "var(--warnung)"; return; }
+  planSpeichern:function(a){ var p = a.split(","), k = p[0], name = p[1], b = p[2], grund = $("#pk-grund").value.trim(); if(!grund){ $("#pk-grund").focus(); $("#pk-grund").style.borderColor = "var(--warnung)"; return; }
     var aenderungen = [];
-    $$('[data-act="planTag"]').forEach(function(b){ var di = b.dataset.arg, soll = b.getAttribute("aria-pressed") === "true", ist = rollenGeplant(di, name).length > 0; if(soll === ist) return;
+    $$('[data-act="planTag"]').forEach(function(btn){ var di = btn.dataset.arg, soll = btn.getAttribute("aria-pressed") === "true", ist = rollenGeplant(di, name, b).length > 0; if(soll === ist) return;
       var pl = S.plan0[di] = S.plan0[di] || {nacht:(S.dienstplan[di] || []).slice(), kueche:S.kueche[di] || ""};
-      if(soll){ var frei = pl.nacht.indexOf(""); if(frei >= 0) pl.nacht[frei] = name; else pl.nacht.push(name); } else { pl.nacht = pl.nacht.map(function(n){ return n === name ? "" : n; }); if(pl.kueche === name) pl.kueche = ""; }
+      if(b === "kueche") pl.kueche = soll ? name : "";
+      else if(soll){ var frei = pl.nacht.indexOf(""); if(frei >= 0) pl.nacht[frei] = name; else pl.nacht.push(name); } else pl.nacht = pl.nacht.map(function(n){ return n === name ? "" : n; });
       aenderungen.push((soll ? "+" : "−") + kurz(pd(di))); });
-    if(aenderungen.length) S.planLog.push({monat:k, name:name, aenderungen:aenderungen, grund:grund, von:aktivePerson(), um:kurz(H) + " " + uhr()});
-    commit(); ACT.nachweis(k + "," + name); if(aenderungen.length) toast("warnung", "Plan korrigiert", name + ": " + aenderungen.join(", "), 5000); },
+    if(aenderungen.length) S.planLog.push({monat:k, name:name, bereich:b, aenderungen:aenderungen, grund:grund, von:aktivePerson(), um:kurz(H) + " " + uhr()});
+    commit(); ACT.nachweis(a); if(aenderungen.length) toast("warnung", "Plan korrigiert", name + " (" + bereichName(b) + "): " + aenderungen.join(", "), 5000); },
   dienstReiter:function(a){ U.oben = true; U.dienstReiter = a; U.schreiben = false; render(); },
   feldJaNein:function(a){ var p = a.split(","), b = bericht(); b.f[p[0]] = b.f[p[0]] === p[1] ? null : p[1]; commit(); },
   fehlt:function(a){ var f = bericht().f.fehlt, i = f.indexOf(a); if(i >= 0) f.splice(i, 1); else f.push(a); commit(); },
   besetzungUnterschrift:function(i){ var x = bericht().besetzung[+i]; modal(blatt("Unterschrift " + x.name, x.rolle + " · Dienst " + kurz(H), '<div class="nu-unterschrift" data-pad="bes' + i + '"><div class="nu-unterschrift-kopf"><b>' + esc(x.name) + '</b><small>' + esc(x.rolle) + '</small></div><div class="nu-unterschrift-feld"><span class="nu-unterschrift-marke">' + svg("check","klein") + 'Bestätigt</span><span class="nu-unterschrift-hilfe">Mit Finger oder Stift unterschreiben</span></div><div class="nu-unterschrift-knoepfe"><button class="nu-btn nu-btn--klein" data-pad-act="leeren">' + svg("rueckgaengig") + 'Löschen</button><button class="nu-btn nu-btn--primaer nu-btn--klein" data-pad-act="ok" disabled>Bestätigen</button></div></div>', '')); },
   personTauschen:function(i){ modal(blatt("Person tauschen", "Geplante und tatsächliche Person werden beide gespeichert und zählen im Monatsabschluss.",
-    '<div class="nu-feld"><span class="nu-feldname">Grund</span><div class="nu-seg" role="radiogroup">' + ["Krankheit","Tausch","Sonstiges"].map(function(g, k){ return '<button role="radio" aria-checked="' + (k === 0) + '" data-act="grundWahl" data-arg="' + g + '">' + g + '</button>'; }).join("") + '</div></div>' +
+    '<div class="nu-feld"><span class="nu-feldname">Grund</span><div class="nu-seg" role="radiogroup">' + ["Tausch","Sonstiges"].map(function(g, k){ return '<button role="radio" aria-checked="' + (k === 0) + '" data-act="grundWahl" data-arg="' + g + '">' + g + '</button>'; }).join("") + '</div></div>' +
     '<div class="nu-feld"><span class="nu-feldname">Wer macht den Dienst?</span><div class="nu-checkliste">' + TEAM.map(function(n){ return '<button class="nu-chip" data-act="personSetzen" data-arg="' + i + ',' + n + '">' + esc(n) + '</button>'; }).join("") + '</div></div>', '<button class="nu-btn nu-btn--klein" data-act="modalZu">Abbrechen</button>')); },
   grundWahl:function(a, el){ $$('[data-act="grundWahl"]').forEach(function(b){ b.setAttribute("aria-checked", String(b === el)); }); },
   personSetzen:function(a){ var p = a.split(","), x = bericht().besetzung[+p[0]], gr = $('[data-act="grundWahl"][aria-checked="true"]'); x.geplant = x.geplant || x.name; x.name = p[1]; x.grund = x.name === x.geplant ? "" : (gr ? gr.dataset.arg : ""); x.sig = null; U.modal = null; commit(); },
@@ -2009,18 +2240,49 @@ var ACT = {
   schreibenFertig:function(){ U.schreiben = false; if(document.activeElement) document.activeElement.blur(); render(); },
   externBlatt:function(){ var namen = Object.keys(S.G).map(function(k){ return S.G[k]; }).filter(function(g){ return !Object.keys(S.betten).some(function(n){ return S.betten[n].g === g.id && g.standort === "haus"; }); }); modal(blatt("Externe Gäste", "Personen, die nur zum Essen kommen, auch aus St. Nikolaus.", '<div class="nu-checkliste">' + namen.map(function(g){ return '<button class="nu-chip" data-act="externDazu" data-arg="' + esc(g.vorname) + '">' + esc(g.vorname) + (g.standort === "nikolaus" ? " · St. Nikolaus" : "") + '</button>'; }).join("") + '</div>', '<button class="nu-btn nu-btn--klein" data-act="modalZu">Fertig</button>')); },
   externDazu:function(n){ var e = bericht().f.extern; if(e.indexOf(n) < 0) e.push(n); U.modal = null; commit(); },
-  hinweisBlatt:function(){ var dienst = (S.dienstplan[iso(H)] || []).filter(Boolean), wer = aktivePerson();
-    var namen = dienst.concat([LEITUNG]).concat(TEAM.filter(function(n){ return dienst.indexOf(n) < 0; }));
-    modal(blatt("Hinweis für die nächsten Tage", "Erscheint bei den nächsten Diensten oben im Bericht.",
+  hinweisBlatt:function(a){ var dienst = (S.dienstplan[iso(H)] || []).filter(Boolean), wer = a === "archiv" ? LEITUNG : aktivePerson(), ab = naechsterDienst();
+    var namen = [LEITUNG].concat(dienst).concat(TEAM.filter(function(n){ return dienst.indexOf(n) < 0; }));
+    modal(blatt("Hinweis für die nächsten Dienste", "Erscheint im Bericht unter „Hinweise“, ab dem Dienst am " + kurz(ab),
       '<div class="nu-feld"><span class="nu-feldname">Von</span><div class="nu-checkliste">' + namen.map(function(n){ return '<button class="nu-chip" aria-pressed="' + (n === wer) + '" data-act="vonWahl" data-arg="' + esc(n) + '">' + (n === wer ? svg("check","klein") : '') + esc(n) + (n === LEITUNG ? ' (Schwester)' : '') + '</button>'; }).join("") + '</div></div>' +
-      '<div class="nu-feld"><label for="hw-text">Hinweis</label><textarea class="nu-eingabe" id="hw-text"></textarea></div><div class="p-zwei"><div class="nu-feld"><label for="hw-bis">Gültig bis</label>' + datumsFeld("hw-bis", iso(plus(H,3))) + '</div><div class="nu-feld"><span class="nu-feldname">Priorität</span><div style="display:flex;align-items:center;gap:12px"><button class="nu-schalter" role="switch" aria-checked="false" id="hw-wichtig" data-act="schalter" aria-label="Wichtig"></button>wichtig</div></div></div>',
+      '<div class="nu-feld"><label for="hw-text">Hinweis</label><textarea class="nu-eingabe" id="hw-text"></textarea></div>' +
+      '<div class="nu-feld"><span class="nu-feldname">Wie lange anzeigen?</span><div class="nu-checkliste">' + DAUERN.map(function(d, i){ return '<button class="nu-chip" aria-pressed="' + (i === 1) + '" data-act="dauerWahl" data-arg="' + d[0] + '">' + d[1] + '</button>'; }).join("") + '</div><div id="hw-bis-feld" hidden style="margin-top:8px">' + datumsFeld("hw-bis", iso(plus(ab, 3))) + '</div><span class="nu-beschr" id="hw-zeit">' + esc(dauerText("3", ab)) + '</span></div>' +
+      '<div class="nu-feld"><span class="nu-feldname">Priorität</span><div style="display:flex;align-items:center;gap:12px"><button class="nu-schalter" role="switch" aria-checked="false" id="hw-wichtig" data-act="schalter" aria-label="Wichtig"></button>wichtig</div></div>',
       '<button class="nu-btn nu-btn--klein" data-act="modalZu">Abbrechen</button><button class="nu-btn nu-btn--primaer nu-btn--klein" data-act="hinweisSpeichern">Speichern</button>')); },
+  dauerWahl:function(a, el){ $$('[data-act="dauerWahl"]').forEach(function(b){ b.setAttribute("aria-pressed", String(b === el)); }); $("#hw-bis-feld").hidden = a !== "datum"; $("#hw-zeit").textContent = a === "0" ? "Nur hier im Archiv." : dauerText(a, naechsterDienst()); },
+  kommentarBlatt:function(a){ var p = a.split(","), e = archivEintraege().filter(function(x){ return x.datum === p[0]; })[0]; if(!e) return;
+    var gaeste = genannteGaeste(e.text + " " + (e.fragen || "")), namen = [LEITUNG].concat(TEAM);
+    U.komm = {datum:p[0], art:p[1]};
+    modal(blatt((p[1] === "antwort" ? "Frage beantworten" : p[1] === "hinweis" ? "Wichtiger Hinweis" : "Kommentar") + " · Bericht " + kurz(pd(p[0])), p[1] === "antwort" ? esc(e.fragen) : "Erscheint im Archiv beim Bericht und auf Wunsch oben im nächsten Dienst.",
+      '<div class="nu-feld"><span class="nu-feldname">Von</span><div class="nu-checkliste">' + namen.map(function(n){ return '<button class="nu-chip" aria-pressed="' + (n === LEITUNG) + '" data-act="vonWahl" data-arg="' + esc(n) + '">' + (n === LEITUNG ? svg("check","klein") : '') + esc(n) + (n === LEITUNG ? ' (Schwester)' : '') + '</button>'; }).join("") + '</div></div>' +
+      '<div class="nu-feld"><span class="nu-feldname">Art</span><div class="nu-seg" role="radiogroup">' + KOMMENTAR_ART.map(function(x){ return '<button role="radio" aria-checked="' + (x[0] === p[1]) + '" data-act="kommArt" data-arg="' + x[0] + '">' + x[1] + '</button>'; }).join("") + '</div></div>' +
+      '<div class="nu-feld"><label for="ko-text">Text</label><textarea class="nu-eingabe" id="ko-text"></textarea></div>' +
+      '<div class="nu-feld"><span class="nu-feldname">Betrifft Gast</span><div class="nu-checkliste">' + gaeste.map(function(g, i){ return '<button class="nu-chip" aria-pressed="' + (i === 0 && p[1] !== "kommentar") + '" data-act="kommGast" data-arg="' + g.id + '">' + esc(anzeige(g)) + '</button>'; }).join("") + '<button class="nu-chip" aria-pressed="' + (!gaeste.length || p[1] === "kommentar") + '" data-act="kommGast" data-arg="">Keinen</button></div>' +
+      '<div style="display:flex;align-items:center;gap:12px;margin-top:8px"><button class="nu-schalter" role="switch" aria-checked="true" id="ko-aufnahme" data-act="schalter" aria-label="Bei Wiederaufnahme anzeigen"></button>Steht in den Notizen des Gastes und erscheint bei der Wiederaufnahme</div></div>' +
+      '<div class="nu-feld"><span class="nu-feldname">Oben im Dienst zeigen</span><div class="nu-checkliste">' + [["0","Nur im Archiv"]].concat(DAUERN).map(function(d){ return '<button class="nu-chip" aria-pressed="' + (d[0] === (p[1] === "kommentar" ? "0" : "1")) + '" data-act="dauerWahl" data-arg="' + d[0] + '">' + d[1] + '</button>'; }).join("") + '</div><div id="hw-bis-feld" hidden style="margin-top:8px">' + datumsFeld("hw-bis", iso(plus(naechsterDienst(), 3))) + '</div><span class="nu-beschr" id="hw-zeit">' + esc(p[1] === "kommentar" ? "Nur hier im Archiv." : dauerText("1", naechsterDienst())) + '</span></div>',
+      '<button class="nu-btn nu-btn--klein" data-act="modalZu">Abbrechen</button><button class="nu-btn nu-btn--primaer nu-btn--klein" data-act="kommentarSpeichern">Speichern</button>')); },
+  kommArt:function(a, el){ $$('[data-act="kommArt"]').forEach(function(b){ b.setAttribute("aria-checked", String(b === el)); }); U.komm.art = a; },
+  kommGast:function(a, el){ $$('[data-act="kommGast"]').forEach(function(b){ b.setAttribute("aria-pressed", String(b === el)); }); },
+  kommentarSpeichern:function(){ var t = $("#ko-text").value.trim(); if(!t){ $("#ko-text").focus(); return; }
+    var e = archivEintraege().filter(function(x){ return x.datum === U.komm.datum; })[0], von = $('[data-act="vonWahl"][aria-pressed="true"]').dataset.arg, art = U.komm.art;
+    var gEl = $('[data-act="kommGast"][aria-pressed="true"]'), gast = gEl && gEl.dataset.arg ? gEl.dataset.arg : null, aufnahme = !!gast && $("#ko-aufnahme").getAttribute("aria-checked") === "true";
+    var dw = $('[data-act="dauerWahl"][aria-pressed="true"]').dataset.arg, ab = naechsterDienst(), bis = dw === "0" ? null : dw === "datum" ? $("#hw-bis").value : iso(plus(ab, +dw - 1));
+    var c = {von:von, art:art, text:t, um:kurz(H) + " " + uhr(), gast:gast, aufnahme:aufnahme, bis:bis};
+    var ziel = e.heute ? S.berichte[iso(H)] : S.archiv.filter(function(x){ return x.datum === e.datum; })[0]; ziel.kommentare = ziel.kommentare || []; ziel.kommentare.push(c);
+    if(bis) S.hinweise.unshift({id:"h" + Date.now(), von:von, text:(art === "antwort" ? "Antwort: " : "") + t, ab:iso(ab), bis:bis < iso(ab) ? iso(ab) : bis, dauer:DAUERN.filter(function(d){ return d[0] === dw; })[0][1], wichtig:art === "hinweis", quelle:"Archiv", bezug:e.datum});
+    if(gast) S.G[gast].notizen.push({datum:iso(H), text:t, von:von, quelle:(art === "antwort" ? "Antwort" : art === "hinweis" ? "Wichtiger Hinweis" : "Kommentar") + " zu Bericht vom " + kurz(pd(e.datum)), aufnahme:aufnahme});
+    U.modal = null; commit(); toast("check", "Gespeichert", (bis ? "Oben im Dienst " + zeitraum(S.hinweise[0]) : "Im Archiv") + (gast ? " · Notiz bei " + anzeige(S.G[gast]) : ""), 4000); },
+  fehltErledigt:function(a){ if(S.fehltErledigt[a]) delete S.fehltErledigt[a]; else S.fehltErledigt[a] = {von:aktivePerson(), um:kurz(H) + " " + uhr()}; commit(); },
+  aufnahmeHinweisAus:function(a){ var p = a.split(","), g = S.G[p[0]]; g.notizen[+p[1]].aufnahme = false; modalZu(); },
+  hinweisEnde:function(id){ var h = S.hinweise.filter(function(x){ return x.id === id; })[0]; if(!h) return; h.beendet = kurz(H) + " " + uhr(); commit(); toast("check", "Hinweis beendet", "Er erscheint nicht mehr im Bericht.", 3000); },
   vonWahl:function(a, el){ $$('[data-act="vonWahl"]').forEach(function(b){ var an = b === el; b.setAttribute("aria-pressed", String(an)); b.innerHTML = (an ? svg("check","klein") : '') + esc(b.dataset.arg) + (b.dataset.arg === LEITUNG ? ' (Schwester)' : ''); }); },
   schalter:function(a, el){ el.setAttribute("aria-checked", String(el.getAttribute("aria-checked") !== "true")); },
-  hinweisSpeichern:function(){ var t = $("#hw-text").value.trim(); if(!t) return; var von = $('[data-act="vonWahl"][aria-pressed="true"]'); S.hinweise.unshift({id:"h" + Date.now(), von:von ? von.dataset.arg : aktivePerson(), text:t, bis:$("#hw-bis").value, wichtig:$("#hw-wichtig").getAttribute("aria-checked") === "true", quelle:"App"}); U.modal = null; commit(); },
-  abschliessen:function(){ abschliessen(); },
-  nachtragBlatt:function(){ modal(blatt("Nachtrag", "Der Bericht bleibt unverändert; der Nachtrag steht mit Zeit und Namen darunter.", '<div class="nu-feld"><label for="na-text">Nachtrag</label><textarea class="nu-eingabe" id="na-text"></textarea></div>', '<button class="nu-btn nu-btn--klein" data-act="modalZu">Abbrechen</button><button class="nu-btn nu-btn--primaer nu-btn--klein" data-act="nachtragSpeichern">Speichern</button>')); },
+  hinweisSpeichern:function(){ var t = $("#hw-text").value.trim(); if(!t) return; var von = $('[data-act="vonWahl"][aria-pressed="true"]'); var dw = $('[data-act="dauerWahl"][aria-pressed="true"]').dataset.arg, ab = naechsterDienst(), bis = dw === "datum" ? $("#hw-bis").value : iso(plus(ab, +dw - 1)); if(bis < iso(ab)) bis = iso(ab);
+    S.hinweise.unshift({id:"h" + Date.now(), von:von ? von.dataset.arg : aktivePerson(), text:t, ab:iso(ab), bis:bis, dauer:DAUERN.filter(function(d){ return d[0] === dw; })[0][1], wichtig:$("#hw-wichtig").getAttribute("aria-checked") === "true", quelle:"App"}); U.modal = null; commit(); toast("check", "Hinweis hinterlegt", zeitraum(S.hinweise[0]), 3000); },
+  abschliessen:function(){ abschliessen(false); },
+  abschliessenTrotzdem:function(){ abschliessen(true); },
+  nachtragBlatt:function(){ modal(blatt("Bericht ergänzen", "Der abgeschlossene Bericht lässt sich nicht mehr ändern. Die Ergänzung steht mit Zeit und Namen darunter und kommt ins PDF.", '<div class="nu-feld"><label for="na-text">Ergänzung</label><textarea class="nu-eingabe" id="na-text"></textarea></div>', '<button class="nu-btn nu-btn--klein" data-act="modalZu">Abbrechen</button><button class="nu-btn nu-btn--primaer nu-btn--klein" data-act="nachtragSpeichern">Speichern</button>')); },
   nachtragSpeichern:function(){ var t = $("#na-text").value.trim(); if(!t) return; bericht().nachtraege.push({text:t, um:kurz(pd()) + " · " + uhr(), von:aktivePerson()}); U.modal = null; commit(); },
+  berichtPdf:function(){ var b = bericht(); modal(blatt(iso(H) + "_Dienstbericht.pdf", "Vorschau der ersten Seite.", berichtPdf(b), '<button class="nu-btn nu-btn--klein nu-btn--rahmen" data-act="teilen">' + svg("teilen") + 'Teilen</button><button class="nu-btn nu-btn--klein" data-act="modalZu">Schließen</button>')); var e = $(".p-modal .p-blatt"); if(e) e.classList.add("p-blatt--breit"); },
   pdfZeigen:function(){ modal(blatt("PDF", "In der App öffnet sich das gespeicherte PDF.", '<span class="nu-bald">' + svg("uhr","klein") + 'im Prototyp noch nicht verfügbar</span>', '<button class="nu-btn nu-btn--klein" data-act="modalZu">Schließen</button>')); },
   teilen:function(){ toast("teilen", "Teilen", "In der App öffnet sich der Android-Teilen-Dialog mit dem PDF. Den Empfänger wählst du dort selbst.", 4000); },
   zielWaehlen:function(idx){ var b = bericht(), a = erkennen(b.f.hinweise, b.f.ziele).absaetze.filter(function(x){ return x.idx === +idx; })[0]; if(!a) return;
@@ -2029,6 +2291,54 @@ var ACT = {
       '<button class="nu-wahl" role="radio" aria-checked="' + (!a.ziel) + '" data-act="zielSetzen" data-arg="' + idx + ',keiner" style="min-height:64px"><b>Niemand</b><span>Nur Notizen, keine Sanktion</span></button></div>',
       '<button class="nu-btn nu-btn--klein" data-act="modalZu">Abbrechen</button>')); },
   zielSetzen:function(a){ var p = a.split(","), b = bericht(); b.f.ziele = b.f.ziele || {}; b.f.ziele[p[0]] = p[1]; U.modal = null; commit(); },
+  scanStart:function(a){ var p = a.split(","); U.scan = {monat:p[0], quelle:p[1], tage:scanDaten(p[0]), i:0}; render(); },
+  scanWahl:function(a){ var p = a.split(","), t = U.scan.tage[U.scan.i], j = +p[0]; t.wahl[j] = p.slice(1).join(","); t.geprueft[j] = true; render(); },
+  scanTagOk:function(){ var sc = U.scan, t = sc.tage[sc.i]; if(!t.geprueft.every(Boolean)) return; t.ok = true; if(sc.i < sc.tage.length - 1) sc.i++; else sc.fertig = true; render(); },
+  scanSchritt:function(a){ var sc = U.scan; if(sc.fertig){ sc.fertig = false; render(); return; } sc.i = Math.max(0, sc.i + +a); render(); },
+  scanAbbrechen:function(){ modal(dialog("Prüfung abbrechen?", "Die bisher geprüften Tage werden verworfen.", '<button class="nu-btn nu-btn--klein" data-act="modalZu" data-fokus>Weiter prüfen</button><button class="nu-btn nu-btn--gefahr-voll nu-btn--klein" data-act="scanVerwerfen">Abbrechen</button>')); },
+  scanVerwerfen:function(){ U.scan = null; U.modal = null; render(); },
+  scanSpeichern:function(){ var sc = U.scan, von = $('[data-act="vonWahl"][aria-pressed="true"]').dataset.arg, korr = 0;
+    sc.tage.forEach(function(t){ S.dienstplan[t.datum] = [t.wahl[0], t.wahl[1]]; S.kueche[t.datum] = t.wahl[2]; S.plan0[t.datum] = {nacht:[t.wahl[0], t.wahl[1]], kueche:t.wahl[2]}; korr += t.wahl.filter(function(w, j){ return w !== t.erkannt[j]; }).length; });
+    S.planImporte[sc.monat] = {von:von, um:kurz(H) + " " + uhr(), dienste:sc.tage.length * 3, korrigiert:korr, quelle:sc.quelle};
+    var m = monatName(sc.monat); U.scan = null; commit(); toast("check", "Originalplan gespeichert", m + " · " + korr + " korrigiert · eingelesen von " + von, 5000); },
+  kalBearbeiten:function(){ if(U.kalEdit){ U.kalEdit = false; render(); return; } if(U.pinOk){ U.kalEdit = true; render(); return; } U.pin2 = ""; U.pin2Falsch = false; U.pinZiel = "kal"; modal(pinBlatt("Kalender ändern")); },
+  pin2:function(x){ if(x === "⌫") U.pin2 = (U.pin2 || "").slice(0, -1); else if((U.pin2 || "").length < 4) U.pin2 = (U.pin2 || "") + x; U.pin2Falsch = false;
+    if(U.pin2.length === 4){ if(U.pin2 === "1234"){ U.pin2 = ""; U.modal = null; if(U.pinZiel === "kal") U.kalEdit = true; render(); toast("schloss-offen", "Ändern freigeschaltet", "Bis „Fertig“ oder bis die App gesperrt wird.", 3000); return; } U.pin2 = ""; U.pin2Falsch = true; }
+    modal(pinBlatt("Kalender ändern")); },
+  dienstInfo:function(a){ var p = a.split(","), di = p[0], r = dienstRollen(di)[+p[1]], log = aenderungenVon(di, r[0]);
+    modal(blatt(r[0] + " · " + kurz(pd(di)), "Originalplan: " + esc(r[2] || "offen") + " · jetzt: " + esc(r[1] || "offen"), '<div class="p-liste">' + (log.map(function(x){ return '<div class="nu-zeile">' + svg("stift") + '<div>' + esc((x.alt || "offen") + " → " + (x.neu || "offen")) + '<small>geändert von ' + esc(x.von) + ' am ' + esc(x.um) + ' · ' + esc(x.grund) + (x.notiz ? ' · ' + esc(x.notiz) : '') + '</small></div></div>'; }).join("") || '<p class="nu-beschr">Weicht vom Originalplan ab.</p>') + '</div>', '<button class="nu-btn nu-btn--klein" data-act="modalZu">Schließen</button>')); },
+  dienstAendern:function(a){ var p = a.split(","), di = p[0], i = +p[1], r = dienstRollen(di)[i]; U.dpAend = {di:di, i:i};
+    var kand = TEAM.slice().sort(function(x, y){ var kx = x === "Jule" || x === "Mika", ky = y === "Jule" || y === "Mika"; return i === 2 ? (ky - kx) : (kx - ky); });
+    modal(blatt(r[0] + " am " + kurz(pd(di)) + " ändern", "Originalplan: " + esc(r[2] || "offen") + (r[1] !== r[2] ? " · jetzt: " + esc(r[1] || "offen") : ""),
+      '<div class="nu-feld"><span class="nu-feldname">Wer macht den Dienst?</span><div class="nu-checkliste">' + kand.concat([""]).map(function(n){ return '<button class="nu-chip" aria-pressed="' + (n === r[1]) + '" data-act="dpPerson" data-arg="' + esc(n) + '">' + esc(n || "offen") + '</button>'; }).join("") + '</div></div>' +
+      '<div class="nu-feld"><span class="nu-feldname">Wer ändert?</span><div class="nu-checkliste">' + [LEITUNG].concat(TEAM).map(function(n){ return '<button class="nu-chip" aria-pressed="false" data-act="dpVon" data-arg="' + esc(n) + '">' + esc(n) + (n === LEITUNG ? ' (Schwester)' : '') + '</button>'; }).join("") + '</div><span class="nu-beschr" id="dp-von-hinweis">Bitte auswählen. Die Änderung wird mit Namen vermerkt.</span></div>' +
+      '<div class="nu-feld"><span class="nu-feldname">Grund</span><div class="nu-seg" role="radiogroup">' + ["Tausch","Sonstiges"].map(function(g, j){ return '<button role="radio" aria-checked="' + (j === 0) + '" data-act="dpGrund" data-arg="' + g + '">' + g + '</button>'; }).join("") + '</div></div>' +
+      '<div class="nu-feld"><label for="dp-notiz">Notiz (freiwillig)</label><input class="nu-eingabe" id="dp-notiz" placeholder="z. B. getauscht mit 14.10."></div>',
+      '<button class="nu-btn nu-btn--klein" data-act="modalZu">Abbrechen</button><button class="nu-btn nu-btn--primaer nu-btn--klein" data-act="dienstSpeichern">Speichern</button>')); },
+  dpPerson:function(a, el){ $$('[data-act="dpPerson"]').forEach(function(b){ b.setAttribute("aria-pressed", String(b === el)); }); },
+  dpVon:function(a, el){ $$('[data-act="dpVon"]').forEach(function(b){ b.setAttribute("aria-pressed", String(b === el)); }); var h = $("#dp-von-hinweis"); h.style.color = ""; h.textContent = "Wird vermerkt: geändert von " + a + "."; },
+  dpGrund:function(a, el){ $$('[data-act="dpGrund"]').forEach(function(b){ b.setAttribute("aria-checked", String(b === el)); }); },
+  dienstSpeichern:function(){ var von = $('[data-act="dpVon"][aria-pressed="true"]'), h = $("#dp-von-hinweis");
+    if(!von){ h.style.color = "var(--vorfall)"; h.textContent = "Bitte zuerst auswählen, wer ändert."; h.parentNode.classList.remove("is-wackeln"); void h.offsetWidth; h.parentNode.classList.add("is-wackeln"); return; }
+    var di = U.dpAend.di, i = U.dpAend.i, r = dienstRollen(di)[i], neu = $('[data-act="dpPerson"][aria-pressed="true"]').dataset.arg;
+    if(neu === r[1]){ modalZu(); return; }
+    if(i === 2) S.kueche[di] = neu; else { S.dienstplan[di] = (S.dienstplan[di] || ["",""]).slice(); S.dienstplan[di][i] = neu; }
+    S.planAenderungen.push({datum:di, rolle:r[0], alt:r[1], neu:neu, von:von.dataset.arg, grund:$('[data-act="dpGrund"][aria-checked="true"]').dataset.arg, notiz:$("#dp-notiz").value.trim(), um:kurz(H) + " " + uhr()});
+    var b = S.berichte[di]; if(b && b.status !== "abgeschlossen" && b.besetzung[i] && !b.besetzung[i].sig){ b.besetzung[i].name = neu || "offen"; }
+    U.modal = null; commit(); toast("stift", "Dienst geändert", r[0] + " " + kurz(pd(di)) + ": " + (neu || "offen") + " · vermerkt: " + von.dataset.arg, 4000); },
+  terminAendern:function(idx){ var t = S.termine[+idx]; if(!t) return; U.tAend = +idx;
+    modal(blatt("Termin ändern", t.geaendert ? "Zuletzt geändert von " + esc(t.geaendert.von) + " am " + esc(t.geaendert.um) : "",
+      '<div class="nu-feld"><label for="ta-titel">Titel</label><input class="nu-eingabe" id="ta-titel" value="' + esc(t.titel) + '"></div><div class="p-zwei"><div class="nu-feld"><label for="ta-datum">Datum</label>' + datumsFeld("ta-datum", t.datum) + '</div>' +
+      '<div class="nu-feld"><span class="nu-feldname">Art</span><div class="nu-checkliste">' + [["Aufgabe","bericht"],["Bettwäsche","wiederholen"],["Sondertermin","kalender"],["Feiertag","einkauf"]].map(function(x){ return '<button class="nu-chip" aria-pressed="' + (x[0] === t.art) + '" data-act="artWahl" data-arg="' + x[0] + ',' + x[1] + '">' + svg(x[1],"klein") + x[0] + '</button>'; }).join("") + '</div></div></div>' +
+      '<div class="nu-feld"><span class="nu-feldname">Wer ändert?</span><div class="nu-checkliste">' + [LEITUNG].concat(TEAM).map(function(n){ return '<button class="nu-chip" aria-pressed="false" data-act="dpVon" data-arg="' + esc(n) + '">' + esc(n) + (n === LEITUNG ? ' (Schwester)' : '') + '</button>'; }).join("") + '</div><span class="nu-beschr" id="dp-von-hinweis">Bitte auswählen. Die Änderung wird mit Namen vermerkt.</span></div>',
+      '<button class="nu-btn nu-btn--gefahr nu-btn--klein" data-act="terminSpeichern2" data-arg="loeschen" style="margin-right:auto">' + svg("loeschen") + 'Löschen</button><button class="nu-btn nu-btn--klein" data-act="modalZu">Abbrechen</button><button class="nu-btn nu-btn--primaer nu-btn--klein" data-act="terminSpeichern2" data-arg="speichern">Speichern</button>')); },
+  terminSpeichern2:function(a){ var von = $('[data-act="dpVon"][aria-pressed="true"]'), h = $("#dp-von-hinweis");
+    if(!von){ h.style.color = "var(--vorfall)"; h.textContent = "Bitte zuerst auswählen, wer ändert."; return; }
+    var t = S.termine[U.tAend], vorher = {datum:t.datum, titel:t.titel};
+    if(a === "loeschen"){ S.termine.splice(U.tAend, 1); S.planAenderungen.push({datum:vorher.datum, rolle:"Termin", alt:vorher.titel, neu:"gelöscht", von:von.dataset.arg, grund:"Termin", notiz:"", um:kurz(H) + " " + uhr()}); U.modal = null; commit(); toast("loeschen", "Termin gelöscht", vorher.titel + " · vermerkt: " + von.dataset.arg, 4000); return; }
+    var art = $('[data-act="artWahl"][aria-pressed="true"]').dataset.arg.split(",");
+    t.titel = $("#ta-titel").value.trim() || t.titel; t.datum = $("#ta-datum").value || t.datum; t.art = art[0]; t.sym = art[1]; t.geaendert = {von:von.dataset.arg, um:kurz(H) + " " + uhr(), vorher:vorher};
+    U.modal = null; commit(); toast("stift", "Termin geändert", t.titel + " · " + kurz(pd(t.datum)) + " · vermerkt: " + von.dataset.arg, 4000); },
   kalTag:function(a){ U.kalTag = a; render(); },
   kalAnsicht:function(a){ U.kalAnsicht = a; render(); },
   woche:function(a){ U.kalTag = +a === 0 ? iso(H) : iso(plus(pd(U.kalTag), +a)); render(); },
