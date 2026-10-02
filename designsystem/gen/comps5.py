@@ -27,11 +27,11 @@ KOPF2 = '''<header class="nu-kopf">
   <span class="nu-kopf-raum"></span>
   <button class="nu-sync" data-s="ok"><i data-icon="wolke-ok"></i>Synchronisiert 21:00</button>
   <button class="nu-iconbtn nu-iconbtn--fl" aria-label="3 offene Erinnerungen"><i data-icon="glocke"></i><span class="nu-zaehler">3</span></button>
-  <div class="nu-dienst"><button class="nu-person" aria-pressed="true"><span class="nu-kuerzel">JO</span>Jonas</button><button class="nu-person" aria-pressed="false"><span class="nu-kuerzel">SI</span>Silke</button></div>
+  <div class="nu-dienst"><button class="nu-person" aria-pressed="true"><span class="nu-kuerzel">KI</span>Kim</button><button class="nu-person" aria-pressed="false"><span class="nu-kuerzel">SA</span>Sam</button></div>
 </header>'''
-KENNZAHLEN = '''<div class="nu-kennzahlen"><span class="nu-ampel" data-s="gruen"><span class="nu-ampel-licht">5</span><span class="nu-ampel-wort">5 Betten frei<small>Ampel grün · ohne Notbett</small></span></span><button class="nu-kht"><small>Für das Kältehilfetelefon</small><b>24 belegt · 29 gesamt</b><small>beide Standorte · antippen für Rechnung</small></button><span class="nu-kennzahl">St. Pius<b>11 da · 4 erwartet</b></span><span class="nu-kennzahl">St. Nikolaus<b>7 von 7</b></span></div>'''
-PLAETZE_JS = '''function plaetze(){var B=Nu.bett;return '<div class="nu-plaetze"><div class="nu-plaetze-titel">Loggien<span>1 von 5 frei</span></div>'+B({nr:"L1",s:"anwesend",name:"Emil",naechte:6})+B({nr:"L2",s:"fehlt",name:"Kasia",naechte:2})+B({nr:"L3",s:"frei"}).replace("<span>Gast aufnehmen</span>","<span>Loggia · Notbett</span>")+B({nr:"L4",s:"anwesend",name:"Jana",naechte:5})+B({nr:"L5",s:"anwesend",name:"Ali",naechte:5})+
-'<div class="nu-plaetze-titel">Esszimmer<span>1 von 1 frei</span></div>'+B({nr:"E1",s:"frei"}).replace("<span>Gast aufnehmen</span>","<span>Esszimmer · Notbett</span>")+'<div class="nu-plaetze-titel">Tiny House<span>0 von 1 frei</span></div>'+B({nr:"TH1",s:"anwesend",name:"Ole",naechte:9})+'</div>';}'''
+KENNZAHLEN = '''<div class="nu-kennzahlen"><span class="nu-ampel" data-s="gruen"><span class="nu-ampel-licht">6</span><span class="nu-ampel-wort">6 Betten frei<small>Ampel grün</small></span></span><button class="nu-kennzahl">KHT-Nummer<b>25</b></button><span class="nu-kennzahl">St. Pius<b>12 da · 4 erwartet</b></span><span class="nu-kennzahl">St. Nikolaus<b>7 von 8</b></span></div>'''
+PLAETZE_JS = '''function plaetze(){var B=Nu.bett;return '<div class="nu-plaetze"><div class="nu-plaetze-titel">Loggien<span>1 von 5 frei</span></div>'+B({nr:"L1",s:"anwesend",name:"Noah",naechte:6})+B({nr:"L2",s:"fehlt",name:"Julia",naechte:2})+B({nr:"L3",s:"frei"}).replace("<span>Gast aufnehmen</span>","<span>Loggia · Notbett</span>")+B({nr:"L4",s:"anwesend",name:"Nina",naechte:5})+B({nr:"L5",s:"anwesend",name:"Max",naechte:5})+
+'<div class="nu-plaetze-titel">Esszimmer<span>1 von 1 frei</span></div>'+B({nr:"E1",s:"frei"}).replace("<span>Gast aufnehmen</span>","<span>Esszimmer · Notbett</span>")+'<div class="nu-plaetze-titel">Tiny House<span>0 von 1 frei</span></div>'+B({nr:"TH1",s:"anwesend",name:"Kai",naechte:9})+'</div>';}'''
 
 # ---------------------------------------------------------------- Grundgerüst
 ersetze("Navigationsleiste", html=f'''<div class="nu" style="height:600px;width:104px;display:flex">{RAIL5}</div>''', readme='''# Navigationsleiste
@@ -79,7 +79,7 @@ document.getElementById("gr").innerHTML=grundriss(BEISPIEL);document.getElementB
 Das Gerüst jeder Ansicht im Querformat: Navigationsleiste links, Kopfzeile oben, Inhalt darunter, Detailbereich bei Bedarf rechts.
 
 - Raster für 10–12-Zoll-Tablets im Querformat (z. B. 1280 × 800 dp): Leiste `leiste-breite` 104 dp, Kopf `kopf-hoehe` 72 dp, Inhalt mit `abstand-4` (16 dp) Rand links und 20 dp rechts.
-- **Bettenplan:** oben Ampel und KHT-Zahlen (bleiben beim Scrollen stehen), darunter die Reiter **St. Pius** und **St. Nikolaus** und „Gast aufnehmen“. St. Pius zeigt den Grundriss, rechts daneben Loggien, Esszimmer, Tiny House und weitere Plätze untereinander (`nu-plan-raster`: Plan flexibel, Spalte 176 dp).
+- **Bettenplan:** oben Ampel und KHT-Nummer (bleiben beim Scrollen stehen), darunter die Reiter **St. Pius** und **St. Nikolaus** und „Gast aufnehmen“. St. Pius zeigt den Grundriss, rechts daneben Loggien, Esszimmer, Tiny House und weitere Plätze untereinander (`nu-plan-raster`: Plan flexibel, Spalte 176 dp).
 - Der **Detailbereich** (`detail-breite` 460 dp) schiebt sich rechts über den Inhalt; der Plan bleibt links sichtbar und bedienbar (Bett antippen wechselt den Gast im Detailbereich).
 - **Assistent** und **Dialoge** liegen über allem mit `abdunklung`.
 - Unter 900 dp Breite (Hochformat, Handy): Navigation unten, Kennzahlen gestapelt, statt Grundriss die Zimmerrahmen untereinander, Detailbereich als Vollbild.
@@ -94,12 +94,12 @@ ersetze("Bettkarte", height=660, html='''<div class="nu nu-vorschau nu-vorschau-
 <div id="k" style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap"></div>
 </div>
 <script>
-var L=[["frei",{nr:"B2",s:"frei"}],["erwartet",{nr:"D4",s:"erwartet",name:"Ali",naechte:12,dusche:"20:30"}],["anwesend",{nr:"D1",s:"anwesend",name:"Jonas",naechte:21}],["freigehalten bis",{nr:"D6",s:"gehalten",name:"Petra",bis:"06.10."}],
-["fehlt, 1. Nacht (zählt belegt)",{nr:"L2",s:"fehlt",name:"Kasia",naechte:2}],["fehlt, 2. Nacht (zählt frei)",{nr:"F2",s:"fehlt2",name:"Ben",fehltN:2}],["frei bis Rückkehr",{nr:"T2",s:"freibis",name:"Hamid",bis:"08.10."}],["gesperrt",{nr:"F4",s:"aus"}],
-["Läuseschein fehlt seit 3 Tagen",{nr:"T1",s:"anwesend",name:"Yusuf",naechte:3,symbole:["warnung"],warn:true}],["Gelbe Karte, Notiz",{nr:"D5",s:"anwesend",name:"Dimitri",naechte:9,symbole:["karte-gelb","notiz"]}],["Hausverbot",{nr:"B3",s:"erwartet",name:"Ion",naechte:2,symbole:["karte-rot"]}],["geöffnet",{nr:"F1",s:"anwesend",name:"Samir",naechte:20}]];
+var L=[["frei",{nr:"B2",s:"frei"}],["erwartet",{nr:"D4",s:"erwartet",name:"Max",naechte:12,dusche:"20:30"}],["anwesend",{nr:"D1",s:"anwesend",name:"Paul",naechte:21}],["freigehalten bis",{nr:"D6",s:"gehalten",name:"Anna",bis:"06.10."}],
+["fehlt, 1. Nacht (zählt belegt)",{nr:"L2",s:"fehlt",name:"Julia",naechte:2}],["fehlt, 2. Nacht (zählt frei)",{nr:"F2",s:"fehlt2",name:"Simon",fehltN:2}],["frei bis Rückkehr",{nr:"T2",s:"freibis",name:"Leon",bis:"08.10."}],["gesperrt",{nr:"F4",s:"aus"}],
+["Läuseschein fehlt seit 3 Tagen",{nr:"T1",s:"anwesend",name:"Jan",naechte:3,symbole:["warnung"],warn:true}],["Gelbe Karte, Notiz",{nr:"D5",s:"anwesend",name:"Felix",naechte:9,symbole:["karte-gelb","notiz"]}],["Hausverbot",{nr:"B3",s:"erwartet",name:"Lukas",naechte:2,symbole:["karte-rot"]}],["geöffnet",{nr:"F1",s:"anwesend",name:"Moritz",naechte:20}]];
 document.getElementById("v").innerHTML=L.map(function(x){return '<div style="display:grid;gap:8px"><span class="nu-beschr">'+x[0]+'</span>'+Nu.bett(x[1])+'</div>';}).join("");
 document.querySelectorAll("#v .nu-bett")[11].classList.add("is-offen");
-var K=[[150,64,{nr:"D1",s:"anwesend",name:"Jonas"}],[150,64,{nr:"D6",s:"gehalten",name:"Petra",bis:"06.10."}],[150,64,{nr:"B2",s:"frei"}],[74,78,{nr:"D4",s:"erwartet",name:"Ali"}],[74,78,{nr:"T1",s:"fehlt",name:"Yusuf",symbole:["warnung"],warn:true}],[74,78,{nr:"T2",s:"freibis",name:"Hamid",bis:"08.10."}],[74,78,{nr:"F2",s:"fehlt2",name:"Ben",fehltN:2}],[74,78,{nr:"D5",s:"anwesend",name:"Dimitri",symbole:["karte-gelb"]}],[74,78,{nr:"F4",s:"aus"}]];
+var K=[[150,64,{nr:"D1",s:"anwesend",name:"Paul"}],[150,64,{nr:"D6",s:"gehalten",name:"Anna",bis:"06.10."}],[150,64,{nr:"B2",s:"frei"}],[74,78,{nr:"D4",s:"erwartet",name:"Max"}],[74,78,{nr:"T1",s:"fehlt",name:"Jan",symbole:["warnung"],warn:true}],[74,78,{nr:"T2",s:"freibis",name:"Leon",bis:"08.10."}],[74,78,{nr:"F2",s:"fehlt2",name:"Simon",fehltN:2}],[74,78,{nr:"D5",s:"anwesend",name:"Felix",symbole:["karte-gelb"]}],[74,78,{nr:"F4",s:"aus"}]];
 document.getElementById("k").innerHTML=K.map(function(x){x[2].kompakt=true;return '<div class="nu-grundriss-platz" style="position:relative;width:'+x[0]+'px;height:'+x[1]+'px">'+Nu.bett(x[2])+'</div>';}).join("");
 </script>''', readme='''# Bettkarte
 
@@ -113,18 +113,18 @@ Eine Bettkarte zeigt auf einen Blick, wer im Bett liegt und was heute zu beachte
 | erwartet | `erwartet-flaeche` | 2 dp `blau` | `erwartet` | „erwartet“, Name | belegt |
 | anwesend | `anwesend` | – | `anwesend` | Name in `auf-anwesend` | belegt |
 | fehlt (1. Nacht unentschuldigt) | `erwartet-flaeche` | 2 dp `warnung` | `abwesend` | „fehlt“, Name, „unentschuldigt“ | belegt |
-| fehlt (ab 2. Nacht in Folge) | `frei-flaeche` | 2 dp `frei` | `abwesend` in `warnung` | „fehlt 2 N.“, „frei“, „Ben fehlt“ | frei |
+| fehlt (ab 2. Nacht in Folge) | `frei-flaeche` | 2 dp `frei` | `abwesend` in `warnung` | „fehlt 2 N.“, „frei“, „Simon fehlt“ | frei |
 | freigehalten bis | `gehalten-flaeche` | 2 dp `linie-stark` | `schloss` | „bis 06.10.“ | belegt |
-| frei bis Rückkehr | `frei-flaeche` | 2 dp `frei` | `rueckkehr` | „bis 08.10.“, „Hamid kommt zurück“ | frei |
+| frei bis Rückkehr | `frei-flaeche` | 2 dp `frei` | `rueckkehr` | „bis 08.10.“, „Leon kommt zurück“ | frei |
 | gesperrt | Schraffur `aus-schraffur` auf `aus-flaeche` | 1,5 dp | `deaktiviert` | „aus“ | nicht gezählt |
 
-Die Füllung folgt der Zählung: **grün heißt frei für das Kältehilfetelefon, blau heißt belegt.** Deshalb wird ein Bett, dessen Gast die 2. Nacht in Folge unentschuldigt fehlt, grün; der Name bleibt klein sichtbar.
+Die Füllung folgt der Zählung: **grün heißt frei, blau heißt belegt.** Ausnahme: ein freies Notbett ist grün, zählt aber nicht als frei (es wird nur über den Kältebus belegt); belegt zählt es mit. Deshalb wird ein Bett, dessen Gast die 2. Nacht in Folge unentschuldigt fehlt, grün; der Name bleibt klein sichtbar.
 
 **Kompakte Bettkarte** (`nu-bett--kompakt`) im Grundriss: füllt die gezeichnete Bettfläche; oben Nummer und Status-Symbol, Mitte der Name, unten „bis 08.10.“, „fehlt“ oder „fehlt 2 N.“ und höchstens zwei Symbole (Nächte und Notiz entfallen). Unter 80 dp Breite wird der Name 14,5 sp und das Wort „bis“ entfällt. Die Zielfläche bleibt mindestens 48 dp.
 
 **Symbolreihe**, in dieser Reihenfolge: `laeuseschein-fehlt` (oder `warnung` ab Tag 3), `karte-rot`, `karte-gelb`, `notiz`, `dusche`. Höchstens vier; das fünfte wird zu „+1“.
 - Läuseschein seit 3 Tagen überfällig: zusätzlich Ring 2 dp `warnung` außen um die Karte (`is-warn`) und der Klartext in der Schnellauswahl.
-- Farbe steht nie allein: jeder Status hat ein Wort oder Symbol, jede Karte eine `contentDescription` („Bett T1 oben, fehlt unentschuldigt, zählt als belegt, Yusuf“).
+- Farbe steht nie allein: jeder Status hat ein Wort oder Symbol, jede Karte eine `contentDescription` („Bett T1 oben, fehlt unentschuldigt, zählt als belegt, Jan“).
 - Geöffnet (Detailbereich zeigt diesen Gast): Ring 3 dp `fokus` mit 3 dp Abstand.
 
 **Bedienung:** frei → „Gast aufnehmen“; erwartet → „Ist da / Nicht da / Details“; fehlt → „Ist doch da / Details“; fehlt ab 2. Nacht → „Gast aufnehmen / Ist doch da / Details“; anwesend → Detailbereich. Langes Drücken → Ziehen (siehe Umziehen und Tauschen).
@@ -133,7 +133,7 @@ Die Füllung folgt der Zählung: **grün heißt frei für das Kältehilfetelefon
 ersetze("Zimmerrahmen", html='''<div class="nu nu-vorschau" id="v" style="flex-wrap:nowrap"></div>
 <script>
 var B=Nu.bett;
-document.getElementById("v").innerHTML='<section class="nu-zimmer"><div class="nu-zimmer-kopf"><span class="nu-zimmer-name">Zimmer B</span><span class="nu-zimmer-frei">1 von 4 frei</span></div><div class="nu-zimmer-betten">'+B({nr:"B1",s:"erwartet",name:"Mihai",naechte:1})+B({nr:"B2",s:"frei"})+'</div><div class="nu-zimmer-betten">'+B({nr:"B3",s:"fehlt",name:"Ion",naechte:4})+B({nr:"B4",s:"anwesend",name:"Olek",naechte:15})+'</div></section>'+
+document.getElementById("v").innerHTML='<section class="nu-zimmer"><div class="nu-zimmer-kopf"><span class="nu-zimmer-name">Zimmer B</span><span class="nu-zimmer-frei">1 von 4 frei</span></div><div class="nu-zimmer-betten">'+B({nr:"B1",s:"erwartet",name:"Tim",naechte:1})+B({nr:"B2",s:"frei"})+'</div><div class="nu-zimmer-betten">'+B({nr:"B3",s:"fehlt",name:"Lukas",naechte:4})+B({nr:"B4",s:"anwesend",name:"Erik",naechte:15})+'</div></section>'+
 '<section class="nu-zimmer is-aus" style="min-width:340px"><div class="nu-zimmer-kopf"><span class="nu-zimmer-name">Zimmer F</span><span class="nu-zimmer-frei">gesperrt</span></div><div class="nu-zimmer-betten">'+B({nr:"F1",s:"aus"})+B({nr:"F2",s:"aus"})+'</div></section>';
 </script>''', readme='''# Zimmerrahmen
 
@@ -179,69 +179,63 @@ __KZ__
 <span class="nu-ampel" data-s="gelb"><span class="nu-ampel-licht">2</span><span class="nu-ampel-wort">2 Betten frei<small>Ampel gelb</small></span></span>
 <span class="nu-ampel" data-s="rot"><span class="nu-ampel-licht">0</span><span class="nu-ampel-wort">Kein Bett frei<small>Ampel rot</small></span></span>
 </div>
-<div class="nu-bericht" style="width:640px;gap:10px;padding:18px"><b>Zahlen für das Kältehilfetelefon</b>
-<div class="nu-zeile"><i data-icon="anwesend"></i><div><b>Belegt: 24</b><small>anwesend 18 · erwartet 4 · freigehalten 1 · fehlt 1. Nacht: L2 Kasia</small></div></div>
-<div class="nu-zeile"><i data-icon="plus"></i><div><b>Frei: 5</b><small>frei: D3, B2, F4 · frei bis Rückkehr: T2 Hamid · fehlt 2 Nächte: F2 Ben</small></div></div>
-<div class="nu-zeile"><i data-icon="info"></i><div><b>Nicht gezählt</b><small>Notbett: L3, E1 · gesperrt: N4</small></div></div></div>
-</div>'''.replace('__KZ__', KENNZAHLEN), readme='''# Ampel und KHT-Zahlen
+<div class="nu-bericht" style="width:520px;gap:12px;padding:20px"><b class="abschnitt">KHT-Nummer</b><span class="nu-beschr" style="font-size:15px">Belegte Betten in St. Pius und St. Nikolaus.</span>
+<div class="nu-kennzahlen" style="background:var(--flaeche-2)"><span class="nu-kennzahl">Belegt<b>25</b></span><span class="nu-kennzahl">Frei<b>6</b></span></div>
+<p class="nu-beschr" style="font-size:15px;line-height:22px">Notbetten zählen nur, wenn sie belegt sind (Kältebus): L3 frei, zählt nicht. Wer zwei Nächte in Folge unentschuldigt fehlt, zählt nicht mehr.</p></div>
+</div>'''.replace('__KZ__', KENNZAHLEN), readme='''# Ampel und KHT-Nummer
 
-Die Leiste über dem Plan zeigt die Ampel und die Zahlen, die das Kältehilfetelefon (KHT) bekommt.
+Über dem Plan stehen nur zwei Zahlen: die freien Betten in der Ampel und die KHT-Nummer.
 
-**KHT-Zahlen** (`nu-kht`, antippbar): „24 belegt · 29 gesamt“. Rechnung (siehe Fachregeln):
-- **Gesamt** = alle Betten in Betrieb in St. Pius und St. Nikolaus, **ohne Notbett** und ohne gesperrte Betten.
-- **Belegt** = anwesend + erwartet + freigehalten + **fehlt in der 1. Nacht unentschuldigt**. Wer zwei Nächte in Folge unentschuldigt fehlt, zählt ab der 2. Nacht nicht mehr.
-- **Frei** = Gesamt − Belegt (frei, frei bis Rückkehr, fehlt ab 2. Nacht).
-- Tipp öffnet ein Blatt mit der Rechnung Bett für Bett, damit niemand nachzählen muss, wenn KHT anruft.
-
-**Ampel**: Kreis 44 dp mit der Zahl freier Betten (gleiche Rechnung), daneben das Wort. Grün ab 3 frei (`ampel-gruen`), gelb bei 1–2 (`ampel-gelb`, Zahl in `auf-gelb`), rot bei 0 (`ampel-rot`). Schwelle in den Einstellungen. Die Ampel ist ein eigenes Meldesystem, getrennt vom Anruf: Gemeldet werden frei, belegt und gesamt, nie Namen.
-
-- Standortzahlen daneben: „St. Pius 11 da · 4 erwartet“, „St. Nikolaus 7 von 7“.
-- Es gibt keinen Knopf „An KHT gemeldet“ mehr. Ob KHT angerufen hat, steht im Bericht („Hat KHT angerufen?“).
+- **Ampel:** Kreis 44 dp mit der Zahl freier Betten, daneben „6 Betten frei · Ampel grün“. Grün ab 3 frei (`ampel-gruen`), gelb bei 1–2 (`ampel-gelb`, Zahl in `auf-gelb`), rot bei 0 (`ampel-rot`). Schwelle in den Einstellungen.
+- **KHT-Nummer:** die Zahl der belegten Betten beider Standorte, als schlichte Kennzahl (`nu-kennzahl`, antippbar). Tipp öffnet ein kurzes Blatt mit Belegt, Frei und einem Satz zur Regel.
+- Regel kurz: Notbetten werden nur über den Kältebus belegt; sie zählen mit, wenn sie belegt sind, freie Notbetten zählen nicht. Wer zwei Nächte in Folge unentschuldigt fehlt, zählt nicht mehr (siehe Fachregeln).
+- Daneben die Standortzahlen „St. Pius 12 da · 4 erwartet“, „St. Nikolaus 7 von 8“.
+- Ob KHT angerufen hat, steht im Bericht („Hat KHT angerufen?“).
 - Ampelwechsel: Farbe blendet in `dauer-mittel` über, die Zahl springt.
-''', subtitle="Rechnung zum Antippen")
+''', subtitle="Nur die Nummer, Rechnung kurz")
 
 ersetze("Schnellauswahl", height=440, html='''<div class="nu nu-vorschau" style="position:relative;min-height:410px;gap:24px;flex-wrap:nowrap;align-items:flex-start">
 <div style="position:relative;width:310px"><div id="b1"></div><div class="nu-schnell" style="left:0;top:100px;--ursprung:20% 0">
-<div class="nu-schnell-kopf"><b>Ion</b><span>B3 · erwartet</span></div>
-<div class="nu-zeile nu-zeile--warnung"><i data-icon="abwesend"></i><div><b>Fehlte gestern unentschuldigt</b><small>Fehlt Ion heute wieder, zählt das Bett ab heute als frei.</small></div></div>
+<div class="nu-schnell-kopf"><b>Lukas</b><span>B3 · erwartet</span></div>
+<div class="nu-zeile nu-zeile--warnung"><i data-icon="abwesend"></i><div><b>Fehlte gestern unentschuldigt</b><small>Fehlt Lukas heute wieder, zählt das Bett ab heute als frei.</small></div></div>
 <button class="nu-btn nu-btn--primaer"><i data-icon="anwesend"></i>Ist da</button>
 <button class="nu-btn"><i data-icon="abwesend"></i>Nicht da</button>
 <button class="nu-btn"><i data-icon="person"></i>Details</button></div></div>
 <div style="position:relative;width:310px"><div id="b2"></div><div class="nu-schnell" style="left:0;top:100px;--ursprung:20% 0">
-<div class="nu-schnell-kopf"><b>Kasia</b><span>L2 · fehlt</span></div>
+<div class="nu-schnell-kopf"><b>Julia</b><span>L2 · fehlt</span></div>
 <div class="nu-zeile nu-zeile--warnung"><i data-icon="abwesend"></i><div><b>Fehlt unentschuldigt, 1. Nacht</b><small>Zählt für das Kältehilfetelefon weiter als belegt.</small></div></div>
 <button class="nu-btn nu-btn--primaer"><i data-icon="anwesend"></i>Ist doch da</button>
 <button class="nu-btn"><i data-icon="person"></i>Details</button></div></div>
 <div style="position:relative;width:310px"><div id="b3"></div><div class="nu-schnell" style="left:0;top:100px;--ursprung:20% 0">
 <div class="nu-schnell-kopf"><b>Bett F2</b><span>frei</span></div>
-<div class="nu-zeile nu-zeile--warnung"><i data-icon="abwesend"></i><div><b>Ben fehlt die 2. Nacht in Folge</b><small>Unentschuldigt. Das Bett zählt als frei und darf vergeben werden.</small></div></div>
+<div class="nu-zeile nu-zeile--warnung"><i data-icon="abwesend"></i><div><b>Simon fehlt die 2. Nacht in Folge</b><small>Unentschuldigt. Das Bett zählt als frei und darf vergeben werden.</small></div></div>
 <button class="nu-btn nu-btn--primaer"><i data-icon="person-plus"></i>Gast aufnehmen</button>
-<button class="nu-btn"><i data-icon="anwesend"></i>Ben ist doch da</button></div></div>
+<button class="nu-btn"><i data-icon="anwesend"></i>Simon ist doch da</button></div></div>
 </div>
-<script>document.getElementById("b1").innerHTML=Nu.bett({nr:"B3",s:"erwartet",name:"Ion",naechte:4});document.getElementById("b2").innerHTML=Nu.bett({nr:"L2",s:"fehlt",name:"Kasia",naechte:2});document.getElementById("b3").innerHTML=Nu.bett({nr:"F2",s:"fehlt2",name:"Ben",fehltN:2});document.querySelectorAll(".nu-bett").forEach(function(b){b.classList.add("is-offen")});Nu.mountIcons();</script>''', readme='''# Schnellauswahl
+<script>document.getElementById("b1").innerHTML=Nu.bett({nr:"B3",s:"erwartet",name:"Lukas",naechte:4});document.getElementById("b2").innerHTML=Nu.bett({nr:"L2",s:"fehlt",name:"Julia",naechte:2});document.getElementById("b3").innerHTML=Nu.bett({nr:"F2",s:"fehlt2",name:"Simon",fehltN:2});document.querySelectorAll(".nu-bett").forEach(function(b){b.classList.add("is-offen")});Nu.mountIcons();</script>''', readme='''# Schnellauswahl
 
 Eine kleine Auswahl, die am angetippten Bett aufgeht, damit Check-in und Aufnahme in höchstens drei Tipps gehen.
 
 - Breite 300 dp, `flaeche`, `radius-l`, `schatten-schwebend`. Erscheint unter der Karte (oder darüber, wenn unten kein Platz ist) und wächst aus ihr heraus (`dauer-kurz`).
 - Kopf: Name in `name-bett`, daneben „D4 · erwartet“ in `nummer`.
 - **Erwartet**: „Ist da“ (Hauptknopf), „Nicht da“, „Details“. Nach „Ist da“: „Bett dauerhaft behalten“, „Duschslot wählen“, „Abwesenheit“, „Fertig“.
-- **„Nicht da“** fragt nach: „Ion ist nicht gekommen?“ mit „Weiter warten“, „Hat sich abgemeldet“ (öffnet Abwesenheit, Bett freihalten oder frei bis Rückkehr) und „Fehlt unentschuldigt“ (Hauptknopf). Der Dialogtext sagt, was mit der Zählung passiert: 1. Nacht bleibt belegt, ab der 2. Nacht in Folge frei.
+- **„Nicht da“** fragt nach: „Lukas ist nicht gekommen?“ mit „Weiter warten“, „Hat sich abgemeldet“ (öffnet Abwesenheit, Bett freihalten oder frei bis Rückkehr) und „Fehlt unentschuldigt“ (Hauptknopf). Der Dialogtext sagt, was mit der Zählung passiert: 1. Nacht bleibt belegt, ab der 2. Nacht in Folge frei.
 - **Fehlt (1. Nacht)**: „Ist doch da“, „Details“.
-- **Fehlt ab 2. Nacht**: Das Bett gilt als frei: „Gast aufnehmen“, „Ben ist doch da“, „Details Ben“. Wird das Bett neu vergeben, bekommt Ben eine Notiz und bleibt in der Gästedatenbank.
+- **Fehlt ab 2. Nacht**: Das Bett gilt als frei: „Gast aufnehmen“, „Simon ist doch da“, „Details Simon“. Wird das Bett neu vergeben, bekommt Simon eine Notiz und bleibt in der Gästedatenbank.
 - **Frei**: „Gast aufnehmen“. **Frei bis Rückkehr**: dazu „Details“ des abwesenden Gastes.
 - Offene Erinnerungen stehen als Warnzeile oben (Läuseschein, „fehlte gestern unentschuldigt“).
 - Schließt mit Tipp daneben, Esc oder nach erledigter Handlung. Das Bett behält dann `is-gesetzt` für die Bestätigung.
 ''', width=1000)
 
 ersetze("Gastdetails", html='''<div class="nu" style="display:flex;justify-content:flex-end;background:var(--grund);height:800px;padding:0"><aside class="nu-detail" aria-label="Gastdetails">
-<div class="nu-detail-kopf"><div style="flex:1"><span class="nr">L5</span><h2>Ali (L5)</h2><p>Aufnahme 2026-27-0018 · anwesend · 5 Nächte</p></div><button class="nu-iconbtn nu-iconbtn--fl" aria-label="Schließen"><i data-icon="schliessen"></i></button></div>
+<div class="nu-detail-kopf"><div style="flex:1"><span class="nr">L5</span><h2>Max (L5)</h2><p>Aufnahme 2026-27-0018 · anwesend · 5 Nächte</p></div><button class="nu-iconbtn nu-iconbtn--fl" aria-label="Schließen"><i data-icon="schliessen"></i></button></div>
 <div class="nu-detail-inhalt">
- <section class="nu-abschnitt"><h3>Stammdaten</h3><dl class="nu-daten"><dt>Vorname</dt><dd>Ali</dd><dt>Nachname</dt><dd>–</dd><dt>Spitzname</dt><dd>–</dd><dt>Sprache</dt><dd>Farsi</dd><dt>Erste Aufnahme</dt><dd>12.09.2026</dd></dl></section>
+ <section class="nu-abschnitt"><h3>Stammdaten</h3><dl class="nu-daten"><dt>Vorname</dt><dd>Max</dd><dt>Nachname</dt><dd>–</dd><dt>Spitzname</dt><dd>–</dd><dt>Sprache</dt><dd>Farsi</dd><dt>Erste Aufnahme</dt><dd>12.09.2026</dd></dl></section>
  <section class="nu-abschnitt"><h3>Aufenthalt</h3><dl class="nu-daten"><dt>Bett</dt><dd>L5 · Loggia</dd><dt>Status</dt><dd>anwesend</dd><dt>Dauer</dt><dd>mehrere Nächte, ohne Enddatum</dd><dt>Dusche heute</dt><dd>–</dd></dl></section>
  <section class="nu-abschnitt"><h3>Dokumente</h3><div class="nu-zeile nu-zeile--warnung"><i data-icon="unterschrift"></i><div><b>Hausordnung noch nicht unterschrieben</b><small>Kann jederzeit nachgeholt werden.</small></div><button class="nu-btn nu-btn--klein nu-btn--rahmen"><i data-icon="stift"></i>Jetzt</button></div><button class="nu-btn nu-btn--rahmen nu-btn--klein" style="justify-self:start"><i data-icon="personen"></i>In der Gästedatenbank öffnen</button></section>
  <section class="nu-abschnitt"><h3>Sanktionen</h3><p class="nu-beschr">Keine Einträge.</p></section>
  <section class="nu-abschnitt"><h3>Notizen</h3>
-  <div class="nu-notiz">Im Vorfall erwähnt: Gelbe Karte für Dimitri (D5), Streit im Flur.<small>01.10. · Jonas · aus Bericht vom 01.10. · erwähnt, keine Sanktion</small></div>
+  <div class="nu-notiz">Im Vorfall erwähnt: Gelbe Karte für Felix (D5), Streit im Flur.<small>01.10. · Kim · aus Bericht vom 01.10. · erwähnt, keine Sanktion</small></div>
   <button class="nu-btn nu-btn--rahmen nu-btn--klein" style="justify-self:start"><i data-icon="plus"></i>Notiz hinzufügen</button></section>
 </div>
 <div class="nu-detail-aktionen"><button class="nu-btn nu-btn--primaer"><i data-icon="notiz"></i>Notiz</button><button class="nu-btn"><i data-icon="abwesend"></i>Abwesenheit</button><button class="nu-btn"><i data-icon="tauschen"></i>Bett wechseln</button><button class="nu-btn"><i data-icon="dusche"></i>Duschslot</button><button class="nu-btn"><i data-icon="auszug"></i>Bett frei</button><button class="nu-btn nu-btn--gefahr"><i data-icon="karte-gelb"></i>Sanktion</button></div>
@@ -250,19 +244,19 @@ ersetze("Gastdetails", html='''<div class="nu" style="display:flex;justify-conte
 Der Detailbereich rechts zeigt alles zu einem Gast und bietet die Handlungen am Bett.
 
 - Breite `detail-breite` (460 dp), Grund `flaeche`, links `radius-l`, gleitet mit `dauer-lang` und `kurve-eintritt` herein. Der Plan bleibt links bedienbar.
-- **Kopf:** Bettnummer `nummer-gross`, Name `titel` (bei gleichem Vornamen mit Bettnummer: „Ali (L5)“), darunter Aufnahmenummer, Status, Nächte in `text-klein`. Schließen oben rechts (48 dp).
+- **Kopf:** Bettnummer `nummer-gross`, Name `titel` (bei gleichem Vornamen mit Bettnummer: „Max (L5)“), darunter Aufnahmenummer, Status, Nächte in `text-klein`. Schließen oben rechts (48 dp).
 - **Warnzeilen** stehen ganz oben (`nu-zeile--warnung`): Läuseschein, fehlt unentschuldigt, Rückkehrtag. Hausverbot als `nu-zeile--vorfall`.
 - **Abschnitte** in fester Reihenfolge: Stammdaten, Aufenthalt (mit Dauer: „1 Nacht“, „mehrere Nächte, ohne Enddatum“ oder „bis 09.10.“), Läuseschein, Dokumente, Sanktionen, Notizen.
 - **Dokumente:** fehlt die Unterschrift, steht eine Warnzeile mit „Jetzt“; das startet den verkürzten Assistenten (Sprache, Hausordnung, Datenschutz, Abschluss). Darunter immer „In der Gästedatenbank öffnen“.
 - **Notizen** chronologisch, neueste oben, mit Datum, Verfasser*in und Herkunft („aus Bericht vom 01.10. · erwähnt, keine Sanktion“).
 - **Aktionen** unten fest (`flaeche-2`), zwei Spalten: Einchecken / Ist doch da / Notiz (je nach Status als Hauptknopf), Abwesenheit, Bett wechseln, Duschslot, **Bett frei**, Sanktion.
-- **Bett frei** (früher „Auszug“) fragt nach: „Bett L5 freigeben? Ali zieht aus. Das Bett ist ab heute frei, Ali bleibt in der Gästedatenbank.“
+- **Bett frei** (früher „Auszug“) fragt nach: „Bett L5 freigeben? Max zieht aus. Das Bett ist ab heute frei, Max bleibt in der Gästedatenbank.“
 - Vergangene Tage: Aktionen ausgeblendet, stattdessen „Nachtrag hinzufügen“.
 ''')
 
 # ---------------------------------------------------------------- Aufnahme
-DOKPAAR = '''<div class="nu-dokument-paar"><div class="nu-dokument" lang="de"><span class="nu-dokument-marke"><i data-icon="unterschrift" class="klein"></i>Deutsch · wird unterschrieben</span><h3>Hausordnung</h3><p style="margin:0">Willkommen, <mark>Ali</mark>. Dein Bett ist <mark>B2</mark> ab <mark>02.10.2026</mark>. Einlass ab 19:00 Uhr, Ruhe ab 22:00 Uhr. Rauchen, Alkohol und Drogen sind im Haus nicht erlaubt. Aufgenommen von <mark>Jonas</mark>.</p></div>
-<div class="nu-dokument nu-dokument--uebersetzung" dir="rtl" lang="ar"><span class="nu-dokument-marke" dir="ltr" lang="de"><i data-icon="sprache" class="klein"></i>Übersetzung Arabisch · zum Verständnis</span><h3>قواعد البيت</h3><p style="margin:0">مرحبًا <mark>Ali</mark>. سريرك هو <mark>B2</mark> ابتداءً من <mark>02.10.2026</mark>. الدخول من الساعة 19:00، والهدوء من الساعة 22:00. التدخين والكحول والمخدرات ممنوعة داخل البيت. تم الاستقبال بواسطة <mark>Jonas</mark>.</p></div></div>'''
+DOKPAAR = '''<div class="nu-dokument-paar"><div class="nu-dokument" lang="de"><span class="nu-dokument-marke"><i data-icon="unterschrift" class="klein"></i>Deutsch · wird unterschrieben</span><h3>Hausordnung</h3><p style="margin:0">Willkommen, <mark>Max</mark>. Dein Bett ist <mark>B2</mark> ab <mark>02.10.2026</mark>. Einlass ab 19:00 Uhr, Ruhe ab 22:00 Uhr. Rauchen, Alkohol und Drogen sind im Haus nicht erlaubt. Aufgenommen von <mark>Kim</mark>.</p></div>
+<div class="nu-dokument nu-dokument--uebersetzung" dir="rtl" lang="ar"><span class="nu-dokument-marke" dir="ltr" lang="de"><i data-icon="sprache" class="klein"></i>Übersetzung Arabisch · zum Verständnis</span><h3>قواعد البيت</h3><p style="margin:0">مرحبًا <mark>Max</mark>. سريرك هو <mark>B2</mark> ابتداءً من <mark>02.10.2026</mark>. الدخول من الساعة 19:00، والهدوء من الساعة 22:00. التدخين والكحول والمخدرات ممنوعة داخل البيت. تم الاستقبال بواسطة <mark>Kim</mark>.</p></div></div>'''
 
 ersetze("Assistent", height=700, html='''<div class="nu" style="height:700px;width:1180px"><div class="nu-assistent">
 <ol class="nu-schritte">
@@ -272,8 +266,8 @@ ersetze("Assistent", height=700, html='''<div class="nu" style="height:700px;wid
  <h2 class="titel" style="margin:0">Hausordnung</h2>
  __DOK__
  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-  <div class="nu-unterschrift is-gezeichnet is-bestaetigt"><div class="nu-unterschrift-kopf"><b>Gast: Ali</b><small>bestätigt 19:42</small></div><div class="nu-unterschrift-feld" style="height:150px"><span class="nu-unterschrift-marke"><i data-icon="check" class="klein"></i>Bestätigt</span><svg viewBox="0 0 300 150" style="position:absolute;inset:0;width:100%;height:100%"><path d="M40 100c20-30 30-50 40-30s-10 40 10 20 30-40 40-10 20 10 40-10 20-5 40 0" fill="none" stroke="var(--stift-tinte)" stroke-width="3" stroke-linecap="round"/></svg></div></div>
-  <div class="nu-unterschrift"><div class="nu-unterschrift-kopf"><b>Betreuung: Jonas</b><small>noch offen</small></div><div class="nu-unterschrift-feld" style="height:150px"><span class="nu-unterschrift-hilfe">Mit Finger oder Stift unterschreiben</span></div></div>
+  <div class="nu-unterschrift is-gezeichnet is-bestaetigt"><div class="nu-unterschrift-kopf"><b>Gast: Max</b><small>bestätigt 19:42</small></div><div class="nu-unterschrift-feld" style="height:150px"><span class="nu-unterschrift-marke"><i data-icon="check" class="klein"></i>Bestätigt</span><svg viewBox="0 0 300 150" style="position:absolute;inset:0;width:100%;height:100%"><path d="M40 100c20-30 30-50 40-30s-10 40 10 20 30-40 40-10 20 10 40-10 20-5 40 0" fill="none" stroke="var(--stift-tinte)" stroke-width="3" stroke-linecap="round"/></svg></div></div>
+  <div class="nu-unterschrift"><div class="nu-unterschrift-kopf"><b>Betreuung: Kim</b><small>noch offen</small></div><div class="nu-unterschrift-feld" style="height:150px"><span class="nu-unterschrift-hilfe">Mit Finger oder Stift unterschreiben</span></div></div>
  </div>
 </div>
 <div class="nu-assistent-fuss"><button class="nu-btn"><i data-icon="zurueck"></i>Zurück</button><span class="nu-beschr" style="align-self:center">Es fehlen Unterschriften.</span><button class="nu-btn nu-btn--primaer" disabled>Weiter<i data-icon="weiter"></i></button></div>
@@ -283,30 +277,30 @@ Die Aufnahme eines neuen Gastes führt in sechs Schritten durch Person, Dauer, S
 
 - Vollbild über dem Plan, Abdunklung dahinter. Links die **Schrittliste** (260 dp, `flaeche-2`): Nummer im Kreis, aktueller Schritt mit `primaer`-Kreis auf `flaeche`, erledigte mit ✓. Erledigte Schritte sind antippbar.
 - Rechts der Schritt mit Titel `titel`; unten fest „Zurück“ (links), Zwischenstand-Hinweis, „Weiter“ (Hauptknopf, rechts). „Weiter“ ist gesperrt, bis der Schritt vollständig ist; der Grund steht daneben.
-- **Person:** Suche mit Bettnummer je Treffer; bei gleichem Vornamen Hinweis „Es gibt schon 3 Personen mit dem Vornamen Ali: Ali (D4), Ali (L5), Ali (Haddad)“ (siehe Gästesuche).
+- **Person:** Suche mit Bettnummer je Treffer; bei gleichem Vornamen Hinweis „Es gibt schon 3 Personen mit dem Vornamen Max: Max (D4), Max (L5), Max (Mustermann)“ (siehe Gästesuche).
 - **Dauer:** „1 Nacht“ oder „Mehrere Nächte“; mehrere Nächte gelten ohne Enddatum, ein Schalter „Enddatum festlegen“ öffnet Datum und Schnellwahl (+3, +7, +14 Nächte). Siehe Auswahlkacheln.
 - **Sprache** wählt die Übersetzung der Hausordnung.
 - **Hausordnung:** deutsche Fassung links (wird unterschrieben), Übersetzung rechts daneben (zum Verständnis). Unterschriften: **Gast und Betreuung**.
 - **Datenschutz:** nur auf Deutsch, Unterschrift **nur vom Gast**.
-- **Abschluss:** Zusammenfassung mit Dauer, Anzeigename („Ali (B2)“, wenn der Vorname schon vorkommt), Übersetzung, Aufnahmenummer und PDF-Name.
+- **Abschluss:** Zusammenfassung mit Dauer, Anzeigename („Max (B2)“, wenn der Vorname schon vorkommt), Übersetzung, Aufnahmenummer und PDF-Name.
 - **Nachholen:** Aus Gastdetails oder Gästedatenbank startet derselbe Assistent verkürzt (Sprache, Hausordnung, Datenschutz, Abschluss) und legt das PDF in der Gästedatenbank ab.
 - Jeder Zwischenstand wird sofort lokal gespeichert. „Abbrechen“ fragt nach. Übergang zwischen Schritten 32 dp in `dauer-mittel`; bei Arabisch und Farsi spiegelt sich nur das Übersetzungsblatt, nicht die App.
 ''', width=1180)
 
 ersetze("Gaestesuche", height=520, html='''<div class="nu nu-vorschau nu-vorschau--spalte" style="max-width:700px">
-<div class="nu-feld" style="width:100%"><label for="q">Vorname, Nachname, Spitzname oder Bettnummer</label><div style="position:relative"><input class="nu-eingabe" id="q" value="Ali" style="padding-left:48px"><span style="position:absolute;left:14px;top:16px;color:var(--tinte-2)"><i data-icon="suche"></i></span></div></div>
-<button class="nu-treffer is-verbot"><span class="nu-treffer-bett"><i data-icon="karte-rot"></i></span><div><b>Alex B.</b><small>Hausverbot bis 21.03. · Gewalt gegen einen anderen Gast</small></div></button>
-<button class="nu-treffer"><span class="nu-treffer-bett">D4</span><div><b>Ali <span style="font-weight:400">„Professor“</span></b><small>Bett D4 · erwartet · Arabisch</small></div></button>
-<button class="nu-treffer"><span class="nu-treffer-bett">L5</span><div><b>Ali</b><small>Bett L5 · da · Farsi</small></div></button>
-<button class="nu-treffer"><span class="nu-treffer-bett is-leer">–</span><div><b>Ali Haddad</b><small>kein Bett · 14 Nächte · Arabisch</small></div></button>
-<div class="nu-zeile" style="width:100%"><i data-icon="personen"></i><div><b>Es gibt schon 3 Personen mit dem Vornamen Ali</b><small>Ali (D4), Ali (L5), Ali (Haddad). Ist es dieselbe Person, oben auswählen. Sonst wird die neue Person mit ihrer Bettnummer angezeigt: Ali (B2).</small></div></div>
+<div class="nu-feld" style="width:100%"><label for="q">Vorname, Nachname, Spitzname oder Bettnummer</label><div style="position:relative"><input class="nu-eingabe" id="q" value="Max" style="padding-left:48px"><span style="position:absolute;left:14px;top:16px;color:var(--tinte-2)"><i data-icon="suche"></i></span></div></div>
+<button class="nu-treffer is-verbot"><span class="nu-treffer-bett"><i data-icon="karte-rot"></i></span><div><b>Maximilian S.</b><small>Hausverbot bis 21.03. · Gewalt gegen einen anderen Gast</small></div></button>
+<button class="nu-treffer"><span class="nu-treffer-bett">D4</span><div><b>Max <span style="font-weight:400">„Professor“</span></b><small>Bett D4 · erwartet · Arabisch</small></div></button>
+<button class="nu-treffer"><span class="nu-treffer-bett">L5</span><div><b>Max</b><small>Bett L5 · da · Farsi</small></div></button>
+<button class="nu-treffer"><span class="nu-treffer-bett is-leer">–</span><div><b>Karl Mustermann</b><small>kein Bett · 14 Nächte · Arabisch</small></div></button>
+<div class="nu-zeile" style="width:100%"><i data-icon="personen"></i><div><b>Es gibt schon 3 Personen mit dem Vornamen Max</b><small>Max (D4), Max (L5), Max (Mustermann). Ist es dieselbe Person, oben auswählen. Sonst wird die neue Person mit ihrer Bettnummer angezeigt: Max (B2).</small></div></div>
 </div>''', readme='''# Gästesuche
 
 Die Suche findet Gäste über Vorname, Nachname, Spitzname und Bettnummer, tolerant bei Tippfehlern, und warnt vor Hausverboten.
 
 - Suchfeld mit Symbol `suche`, Treffer ab dem ersten Buchstaben, Ergebnis in unter einer Sekunde bei 2.000 Gästen.
 - Trefferzeile (`nu-treffer`, 64 dp): links die **Bettnummer** als Marke (`nu-treffer-bett`, 52 × 40 dp, `nummer`), „–“ ohne Bett; daneben Name, Spitzname, Bett mit Status, Sprache.
-- **Gleiche Vornamen unterscheidet die Bettnummer.** Anzeigename überall (Plan, Bericht, Erwähnung, Duschplan, Einblendungen): „Ali (D4)“. Ohne Bett: Nachname, dann Spitzname, dann Aufnahmenummer („Ali (Haddad)“).
+- **Gleiche Vornamen unterscheidet die Bettnummer.** Anzeigename überall (Plan, Bericht, Erwähnung, Duschplan, Einblendungen): „Max (D4)“. Ohne Bett: Nachname, dann Spitzname, dann Aufnahmenummer („Max (Mustermann)“).
 - Wer beim Anlegen einen vorhandenen Vornamen eintippt, sieht sofort die Zeile „Es gibt schon … Personen mit dem Vornamen …“ mit allen Treffern.
 - **Aktives Hausverbot steht immer oben**, mit `karte-rot`, Grund `vorfall-flaeche`, Rahmen `vorfall`. Aufnehmen nur mit Bestätigung und Begründung.
 - Bekannte Personen werden nie doppelt angelegt; bei sehr ähnlichem Namen fragt die App „Meinst du …?“.
@@ -351,34 +345,34 @@ Hausordnung und Datenschutzerklärung erscheinen als helles Blatt, damit sie wie
 ''', subtitle="Deutsch unterschreiben, Übersetzung daneben")
 
 ersetze("Unterschriftsfeld", readme=COMPS[[c['name'] for c in COMPS].index("Unterschriftsfeld")]['readme'].replace(
-    '- Kopf: wer unterschreibt („Gast: Ali“, „Betreuung: Jonas“) und wofür.',
-    '- Kopf: wer unterschreibt („Gast: Ali“, „Betreuung: Jonas“) und wofür. Hausordnung: Gast und Betreuung nebeneinander. Datenschutz: nur der Gast (ein Feld, halbe Breite).'))
+    '- Kopf: wer unterschreibt („Gast: Max“, „Betreuung: Kim“) und wofür.',
+    '- Kopf: wer unterschreibt („Gast: Max“, „Betreuung: Kim“) und wofür. Hausordnung: Gast und Betreuung nebeneinander. Datenschutz: nur der Gast (ein Feld, halbe Breite).'))
 
 # ---------------------------------------------------------------- Gäste
 neu_nach("Laeuseschein", "Gastakte", "Gäste", 760, '''<div class="nu" style="width:1160px;background:var(--grund);padding:20px;display:grid;grid-template-columns:380px minmax(0,1fr);gap:16px;align-items:start">
 <div style="display:grid;gap:6px">
- <div style="position:relative"><input class="nu-eingabe" value="Ali" style="padding-left:48px" aria-label="Suchen"><span style="position:absolute;left:14px;top:16px;color:var(--tinte-2)"><i data-icon="suche"></i></span></div>
+ <div style="position:relative"><input class="nu-eingabe" value="Max" style="padding-left:48px" aria-label="Suchen"><span style="position:absolute;left:14px;top:16px;color:var(--tinte-2)"><i data-icon="suche"></i></span></div>
  <p class="nu-beschr">4 Personen · gleiche Vornamen unterscheidet die Bettnummer</p>
- <button class="nu-treffer" style="background:var(--flaeche)"><span class="nu-treffer-bett">B2</span><div style="flex:1"><b>Ali</b><small>Arabisch · 1 Nacht</small></div><i data-icon="laeuseschein-fehlt" style="color:var(--warnung)"></i></button>
- <button class="nu-treffer" style="background:var(--flaeche)"><span class="nu-treffer-bett">D4</span><div style="flex:1"><b>Ali <span style="font-weight:400">„Professor“</span></b><small>Arabisch · 12 Nächte</small></div></button>
- <button class="nu-treffer" style="background:var(--flaeche);box-shadow:inset 0 0 0 3px var(--tinte)"><span class="nu-treffer-bett">L5</span><div style="flex:1"><b>Ali</b><small>Farsi · 5 Nächte</small></div><i data-icon="unterschrift" style="color:var(--warnung)"></i></button>
- <button class="nu-treffer" style="background:var(--flaeche)"><span class="nu-treffer-bett is-leer">–</span><div style="flex:1"><b>Ali Haddad</b><small>Arabisch · 14 Nächte</small></div></button>
+ <button class="nu-treffer" style="background:var(--flaeche)"><span class="nu-treffer-bett">B2</span><div style="flex:1"><b>Max</b><small>Arabisch · 1 Nacht</small></div><i data-icon="laeuseschein-fehlt" style="color:var(--warnung)"></i></button>
+ <button class="nu-treffer" style="background:var(--flaeche)"><span class="nu-treffer-bett">D4</span><div style="flex:1"><b>Max <span style="font-weight:400">„Professor“</span></b><small>Arabisch · 12 Nächte</small></div></button>
+ <button class="nu-treffer" style="background:var(--flaeche);box-shadow:inset 0 0 0 3px var(--tinte)"><span class="nu-treffer-bett">L5</span><div style="flex:1"><b>Max</b><small>Farsi · 5 Nächte</small></div><i data-icon="unterschrift" style="color:var(--warnung)"></i></button>
+ <button class="nu-treffer" style="background:var(--flaeche)"><span class="nu-treffer-bett is-leer">–</span><div style="flex:1"><b>Karl Mustermann</b><small>Arabisch · 14 Nächte</small></div></button>
 </div>
 <article style="background:var(--flaeche);border-radius:var(--radius-l);padding:20px 24px;display:grid;gap:22px">
- <div style="display:flex;gap:14px;align-items:flex-start"><span class="nu-treffer-bett" style="min-width:64px;height:52px;font-size:20px">L5</span><div style="flex:1"><h2 style="margin:0;font:700 24px/30px var(--font-ui)">Ali</h2><p class="nu-beschr" style="font-size:15px;line-height:22px">Aufnahme 2026-27-0018 · Farsi · 5 Nächte · angezeigt als Ali (L5)</p></div><button class="nu-btn nu-btn--klein nu-btn--rahmen"><i data-icon="bett"></i>Im Plan</button></div>
+ <div style="display:flex;gap:14px;align-items:flex-start"><span class="nu-treffer-bett" style="min-width:64px;height:52px;font-size:20px">L5</span><div style="flex:1"><h2 style="margin:0;font:700 24px/30px var(--font-ui)">Max</h2><p class="nu-beschr" style="font-size:15px;line-height:22px">Aufnahme 2026-27-0018 · Farsi · 5 Nächte · angezeigt als Max (L5)</p></div><button class="nu-btn nu-btn--klein nu-btn--rahmen"><i data-icon="bett"></i>Im Plan</button></div>
  <section class="nu-abschnitt"><h3>Dokumente</h3>
   <div class="nu-dokzeile is-fehlt"><i data-icon="unterschrift"></i><div><b>Hausordnung</b><small>Noch nicht unterschrieben. Kann jederzeit nachgeholt werden.</small></div><button class="nu-btn nu-btn--klein nu-btn--primaer"><i data-icon="stift"></i>Jetzt unterschreiben</button></div>
   <div class="nu-dokzeile is-fehlt"><i data-icon="unterschrift"></i><div><b>Datenschutzerklärung</b><small>wird zusammen mit der Hausordnung unterschrieben</small></div></div>
-  <div class="nu-dokzeile"><i data-icon="laeuseschein"></i><div><b>Läuseschein</b><small>liegt vor · geprüft von Silke · gilt die ganze Saison</small></div></div>
-  <div class="nu-dokzeile"><i data-icon="kamera"></i><div><b>Bescheinigung</b><small>Foto_2026-09-30.jpg · 30.09. · Silke</small></div></div>
+  <div class="nu-dokzeile"><i data-icon="laeuseschein"></i><div><b>Läuseschein</b><small>liegt vor · geprüft von Sam · gilt die ganze Saison</small></div></div>
+  <div class="nu-dokzeile"><i data-icon="kamera"></i><div><b>Bescheinigung</b><small>Foto_2026-09-30.jpg · 30.09. · Sam</small></div></div>
   <button class="nu-btn nu-btn--rahmen" style="justify-self:start"><i data-icon="dokument-plus"></i>Dokument hinterlegen</button></section>
- <section class="nu-abschnitt"><h3>Notizen und Erwähnungen</h3><div class="nu-notiz">Im Vorfall erwähnt: Gelbe Karte für Dimitri (D5), Streit im Flur.<small>01.10. · Jonas · aus Bericht vom 01.10. · erwähnt, keine Sanktion</small></div></section>
+ <section class="nu-abschnitt"><h3>Notizen und Erwähnungen</h3><div class="nu-notiz">Im Vorfall erwähnt: Gelbe Karte für Felix (D5), Streit im Flur.<small>01.10. · Kim · aus Bericht vom 01.10. · erwähnt, keine Sanktion</small></div></section>
 </article></div>''', '''# Gastakte
 
 Die Gästedatenbank ist ein eigener Bereich („Gäste“ in der Navigation): links die Liste, rechts die Akte des gewählten Gastes. Hier wird alles hinterlegt, was nach der Aufnahme dazukommt.
 
 - **Liste:** Suchfeld (Name, Spitzname, Bettnummer), Filter „Alle · Mit Bett · Fehlt etwas · Hausverbot“ (`nu-seg`), Trefferzeilen wie in der Gästesuche mit Bettnummer links. Rechts in der Zeile Warnsymbole in `warnung`: `unterschrift` (Hausordnung fehlt), `laeuseschein-fehlt`.
-- **Kopf der Akte:** Bettnummer groß, Name mit Spitzname, Aufnahmenummer, Sprache, Nächte, „angezeigt als Ali (L5)“ bei gleichem Vornamen; „Im Plan“ springt zum Bett.
+- **Kopf der Akte:** Bettnummer groß, Name mit Spitzname, Aufnahmenummer, Sprache, Nächte, „angezeigt als Max (L5)“ bei gleichem Vornamen; „Im Plan“ springt zum Bett.
 - **Dokumente** als Zeilen (`nu-dokzeile`, 64 dp): Hausordnung, Datenschutzerklärung, Läuseschein, weitere. Fehlt etwas: Grund `warnung-flaeche` und Handlung rechts:
   - „Jetzt unterschreiben“ startet den verkürzten Assistenten (Sprache, Hausordnung zweispaltig, Datenschutz, Abschluss) und legt das PDF ab.
   - „Dokument hinterlegen“ (`dokument-plus`): Art wählen (Hausordnung auf Papier, Läuseschein, Bescheinigung, Sonstiges), Foto oder Datei, Notiz. „Hausordnung auf Papier“ zählt als unterschrieben; „Läuseschein“ setzt den Läuseschein auf „liegt vor“.
@@ -389,18 +383,18 @@ Die Gästedatenbank ist ein eigener Bereich („Gäste“ in der Navigation): li
 
 # ---------------------------------------------------------------- Dienst und Bericht
 ersetze("Berichtsfelder", height=640, html='''<div class="nu nu-vorschau" style="display:block;max-width:1000px"><div class="nu-bericht">
-<div class="nu-bericht-zeile"><span class="nu-feldname">Hat KHT angerufen?</span><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><div class="nu-seg" role="radiogroup"><button role="radio" aria-checked="true">Ja</button><button role="radio" aria-checked="false">Nein</button></div><span class="nu-pille"><i data-icon="telefon" class="klein"></i>Zahlen: 24 belegt · 29 gesamt · 5 frei</span></div></div>
+<div class="nu-bericht-zeile"><span class="nu-feldname">Hat KHT angerufen?</span><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><div class="nu-seg" role="radiogroup"><button role="radio" aria-checked="true">Ja</button><button role="radio" aria-checked="false">Nein</button></div><span class="nu-pille"><i data-icon="telefon" class="klein"></i>KHT-Nummer 25</span></div></div>
 <div class="nu-bericht-zeile"><span class="nu-feldname">Vorfälle</span><div style="display:flex;align-items:center;gap:12px"><div class="nu-seg" role="radiogroup"><button role="radio" aria-checked="false">Ja</button><button role="radio" aria-checked="false">Nein</button></div><span class="nu-pille nu-pille--warnung"><i data-icon="warnung" class="klein"></i>Pflichtfeld</span></div></div>
 <div class="nu-bericht-zeile"><span class="nu-feldname">Fehlt etwas</span><div class="nu-checkliste"><button class="nu-chip" aria-pressed="true"><i data-icon="check" class="klein"></i>Tüten</button><button class="nu-chip">Putzmittel</button><button class="nu-chip" aria-pressed="true"><i data-icon="check" class="klein"></i>Toilettenpapier</button><button class="nu-chip">Decken</button><input class="nu-eingabe" style="flex:1 1 260px" value="Müllbeutel 120 l, Duschgel" aria-label="Was genau fehlt"></div></div>
 <div class="nu-bericht-zeile"><span class="nu-feldname">Schlüssel fehlt</span><div style="display:flex;gap:12px;align-items:center"><div class="nu-seg" role="radiogroup"><button role="radio" aria-checked="true">Ja</button><button role="radio" aria-checked="false">Nein</button></div><input class="nu-eingabe" style="max-width:200px" placeholder="Nummer(n)" value="7"></div></div>
-<div class="nu-bericht-zeile"><span class="nu-feldname">Abwesenheit von Gästen</span><div style="display:grid;gap:6px"><div class="nu-zeile"><i data-icon="schloss"></i><div>Petra · D6 · freigehalten bis 06.10.<small>aus dem Bettenplan</small></div></div><div class="nu-zeile nu-zeile--warnung"><i data-icon="abwesend"></i><div>Kasia · L2 · fehlt unentschuldigt, 1. Nacht<small>aus dem Bettenplan</small></div></div><div class="nu-zeile nu-zeile--warnung"><i data-icon="abwesend"></i><div>Ben · F2 · fehlt 2. Nacht in Folge, Bett zählt als frei<small>aus dem Bettenplan</small></div></div></div></div>
+<div class="nu-bericht-zeile"><span class="nu-feldname">Abwesenheit von Gästen</span><div style="display:grid;gap:6px"><div class="nu-zeile"><i data-icon="schloss"></i><div>Anna · D6 · freigehalten bis 06.10.<small>aus dem Bettenplan</small></div></div><div class="nu-zeile nu-zeile--warnung"><i data-icon="abwesend"></i><div>Julia · L2 · fehlt unentschuldigt, 1. Nacht<small>aus dem Bettenplan</small></div></div><div class="nu-zeile nu-zeile--warnung"><i data-icon="abwesend"></i><div>Simon · F2 · fehlt 2. Nacht in Folge, Bett zählt als frei<small>aus dem Bettenplan</small></div></div></div></div>
 </div></div>''', readme='''# Berichtsfelder
 
 Jedes Feld des Dienstberichts hat eine Zeile mit Beschriftung links und Eingabe rechts.
 
 - Zeile `nu-bericht-zeile`: Beschriftung 220 dp breit (`text-stark` 16 sp), Eingabe daneben. Zwischen Feldern `abstand-6`; keine Linien.
 - **Ja/Nein** (`nu-seg`) für „Hat KHT angerufen?“, Vorfälle, Schlüssel fehlt; keine Vorauswahl. Offene Pflichtfelder zeigen beim Abschließen die Pille „Pflichtfeld“ in `warnung`.
-- **Hat KHT angerufen?** (früher „An KHT gemeldet“): daneben die Pille mit den Zahlen aus dem Bettenplan („24 belegt · 29 gesamt · 5 frei“), antippbar für die Rechnung. So hat man die Zahlen griffbereit, wenn das Kältehilfetelefon anruft.
+- **Hat KHT angerufen?** (früher „An KHT gemeldet“): daneben die Pille „KHT-Nummer 25“ aus dem Bettenplan, griffbereit, wenn das Kältehilfetelefon anruft.
 - **Fehlt etwas:** Chips aus der Liste in den Einstellungen und daneben immer ein **Freitextfeld** „Was genau?“, weil die Kategorien breit sind („Müllbeutel 120 l, Duschgel“). Beides steht im PDF.
 - **Abwesenheit von Gästen:** automatisch aus dem Bettenplan: freigehalten, frei bis Rückkehr und **fehlt unentschuldigt** (1. Nacht, ab 2. Nacht mit „Bett zählt als frei“) als Warnzeilen.
 - **Freitext** (Wichtige Hinweise, Fragen von Gästen, Sonstiges): siehe Erwähnung und Stufenwörter.
@@ -409,11 +403,11 @@ Jedes Feld des Dienstberichts hat eine Zeile mit Beschriftung links und Eingabe 
 
 ersetze("ErwaehnungStufenwoerter", height=640, html='''<div class="nu" style="width:980px;background:var(--grund);padding:20px;display:grid;gap:12px">
 <div class="nu-feld"><label for="t">Wichtige Hinweise</label>
-<div class="nu-eingabe" id="t" style="min-height:120px;padding:14px 16px;border-color:var(--fokus);background:var(--flaeche)"><span class="nu-stufe nu-stufe--gelb"><i data-icon="karte-gelb" class="klein"></i>Gelbe Karte</span> <span class="nu-erwaehnung">@Dimitri</span> und <span class="nu-erwaehnung">@Ali (D4)</span>: Streit im Flur nach 23 Uhr, Dimitri hat geschubst.<br>Frage von <span class="nu-erwaehnung">@Ali (L5)</span> nach einer zweiten Decke. @Al<span style="display:inline-block;width:2px;height:22px;background:var(--tinte);vertical-align:middle;animation:nu-ein 1s steps(2) infinite"></span></div></div>
+<div class="nu-eingabe" id="t" style="min-height:120px;padding:14px 16px;border-color:var(--fokus);background:var(--flaeche)"><span class="nu-stufe nu-stufe--gelb"><i data-icon="karte-gelb" class="klein"></i>Gelbe Karte</span> <span class="nu-erwaehnung">@Felix</span> und <span class="nu-erwaehnung">@Max (D4)</span>: Streit im Flur nach 23 Uhr, Felix hat geschubst.<br>Frage von <span class="nu-erwaehnung">@Max (L5)</span> nach einer zweiten Decke. @Al<span style="display:inline-block;width:2px;height:22px;background:var(--tinte);vertical-align:middle;animation:nu-ein 1s steps(2) infinite"></span></div></div>
 <div style="display:flex;gap:16px;align-items:flex-start">
-<div class="nu-zuordnung" style="flex:1"><div class="nu-zuordnung-kopf"><i data-icon="karte-gelb"></i>Gelbe Karte für<button class="nu-zuordnung-ziel">Dimitri <span class="bett">D5</span><i data-icon="ab" class="klein"></i></button></div><div class="nu-zuordnung-rest">Nur Notiz, keine Sanktion: <span class="nu-pille"><i data-icon="notiz" class="klein"></i>Ali (D4)</span></div></div>
-<div class="nu-vorschlaege" role="listbox"><button role="option" aria-selected="true"><span class="nu-treffer-bett" style="min-width:44px;height:32px;font-size:14px">D4</span>Ali<small>erwartet</small></button><button role="option"><span class="nu-treffer-bett" style="min-width:44px;height:32px;font-size:14px">L5</span>Ali<small>da</small></button><button role="option"><span class="nu-treffer-bett is-leer" style="min-width:44px;height:32px;font-size:14px">–</span>Ali Haddad<small>Gästedatenbank</small></button></div></div>
-<div style="display:flex;gap:6px;flex-wrap:wrap"><span class="nu-pille nu-pille--blau"><i data-icon="notiz" class="klein"></i>Notiz für Ali (L5)</span><span class="nu-pille nu-pille--warnung"><i data-icon="warnung" class="klein"></i>@Ali gibt es 4-mal: Bettnummer ergänzen, z. B. @Ali (D4)</span></div>
+<div class="nu-zuordnung" style="flex:1"><div class="nu-zuordnung-kopf"><i data-icon="karte-gelb"></i>Gelbe Karte für<button class="nu-zuordnung-ziel">Felix <span class="bett">D5</span><i data-icon="ab" class="klein"></i></button></div><div class="nu-zuordnung-rest">Nur Notiz, keine Sanktion: <span class="nu-pille"><i data-icon="notiz" class="klein"></i>Max (D4)</span></div></div>
+<div class="nu-vorschlaege" role="listbox"><button role="option" aria-selected="true"><span class="nu-treffer-bett" style="min-width:44px;height:32px;font-size:14px">D4</span>Max<small>erwartet</small></button><button role="option"><span class="nu-treffer-bett" style="min-width:44px;height:32px;font-size:14px">L5</span>Max<small>da</small></button><button role="option"><span class="nu-treffer-bett is-leer" style="min-width:44px;height:32px;font-size:14px">–</span>Karl Mustermann<small>Gästedatenbank</small></button></div></div>
+<div style="display:flex;gap:6px;flex-wrap:wrap"><span class="nu-pille nu-pille--blau"><i data-icon="notiz" class="klein"></i>Notiz für Max (L5)</span><span class="nu-pille nu-pille--warnung"><i data-icon="warnung" class="klein"></i>@Max gibt es 4-mal: Bettnummer ergänzen, z. B. @Max (D4)</span></div>
 <div style="margin-top:auto;border-radius:14px;overflow:hidden"><div class="nu-tastenleiste"><button class="nu-chip"><b>@</b> Gast</button><button class="nu-chip"><i data-icon="verwarnung" class="klein"></i>Verwarnung</button><button class="nu-chip"><i data-icon="karte-gelb" class="klein"></i>Gelbe Karte</button><button class="nu-chip"><i data-icon="karte-rot" class="klein"></i>Hausverbot</button><button class="nu-btn nu-btn--primaer nu-btn--klein"><i data-icon="check"></i>Fertig</button></div>
 <div style="height:90px;background:var(--flaeche-3);display:grid;place-items:center;color:var(--tinte-3);font-size:14px">Bildschirmtastatur</div></div>
 </div>''', readme='''# Erwähnung und Stufenwörter
@@ -422,13 +416,13 @@ Im Freitext des Berichts erwähnt „@“ einen Gast; ein Absatz, der mit einem 
 
 **Erwähnen**
 - „@“ öffnet die Vorschlagsliste (`nu-vorschlaege`) unter dem Cursor: Treffer mit Bettnummer-Marke, Gäste mit Bett zuerst, dann die Gästedatenbank. Pfeiltasten und Enter funktionieren mit Hardware-Tastatur.
-- Eingefügt wird „@Ali (D4)“, sobald es den Vornamen mehrfach gibt, sonst „@Dimitri“. In der Datenbank speichert die Erwähnung die Gast-ID; die Bettnummer ist nur Anzeige.
-- Tippt jemand „@Ali“ von Hand und es gibt mehrere: Warnpille „@Ali gibt es 4-mal: Bettnummer ergänzen“. Der Bericht lässt sich erst abschließen, wenn jede Erwähnung eindeutig ist.
+- Eingefügt wird „@Max (D4)“, sobald es den Vornamen mehrfach gibt, sonst „@Felix“. In der Datenbank speichert die Erwähnung die Gast-ID; die Bettnummer ist nur Anzeige.
+- Tippt jemand „@Max“ von Hand und es gibt mehrere: Warnpille „@Max gibt es 4-mal: Bettnummer ergänzen“. Der Bericht lässt sich erst abschließen, wenn jede Erwähnung eindeutig ist.
 - Erwähnung im Text: `nu-erwaehnung` (Grund `erwartet-flaeche`, Text `blau`, 600), wird als Ganzes gelöscht. Jeder erwähnte Gast bekommt den Absatz als Notiz mit Verweis auf den Bericht.
 
 **Stufenwörter**
 - Am Absatzanfang: „Verwarnung“, „Gelbe Karte“, „Hausverbot“ (auch „Rote Karte“). Sie werden fett, Karten mit ihrem Symbol.
-- **Die Sanktion bekommt nur eine Person:** standardmäßig die zuerst genannte. Unter dem Feld zeigt die Zuordnung (`nu-zuordnung`, Grund `warnung-flaeche`) „Gelbe Karte für [Dimitri D5 ▾]“; ein Tipp öffnet „Wer bekommt die Gelbe Karte?“ mit allen Genannten und „Niemand (nur Notizen)“.
+- **Die Sanktion bekommt nur eine Person:** standardmäßig die zuerst genannte. Unter dem Feld zeigt die Zuordnung (`nu-zuordnung`, Grund `warnung-flaeche`) „Gelbe Karte für [Felix D5 ▾]“; ein Tipp öffnet „Wer bekommt die Gelbe Karte?“ mit allen Genannten und „Niemand (nur Notizen)“.
 - **Alle anderen Genannten** stehen darunter als „Nur Notiz, keine Sanktion“: Sie bekommen den Absatz in ihre Notizen („erwähnt, keine Sanktion“), nie als Verwarnung, Karte oder Hausverbot.
 - Nach dem Abschließen entsteht der Sanktionseintrag beim gewählten Gast; die Einblendung nennt die Zahl („1 Sanktion angelegt“).
 
@@ -438,10 +432,10 @@ Im Freitext des Berichts erwähnt „@“ einen Gast; ein Absatz, der mit einem 
 ersetze("Duschplan", html='''<div class="nu nu-vorschau nu-vorschau--spalte">
 <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;width:100%"><b class="abschnitt" style="flex:1">Duschplan · Freitag, 2. Oktober</b><div class="nu-seg" role="radiogroup"><button role="radio" aria-checked="true">Heute</button><button role="radio" aria-checked="false">Morgen</button><button role="radio" aria-checked="false">Übermorgen</button><button role="radio" aria-checked="false">In 3 Tagen</button></div></div>
 <div class="nu-dusche" style="width:100%">
-<button class="nu-slot" data-s="erledigt"><span class="zeit">19:00 ✓</span><b>Jonas</b><span class="nu-beschr">D1 · erledigt</span></button>
-<button class="nu-slot" data-s="verpasst"><span class="zeit">19:30</span><b>Mihai</b><span class="nu-beschr">B1 · verpasst</span></button>
-<button class="nu-slot" data-s="geplant"><span class="zeit">20:00</span><b>Samir</b><span class="nu-beschr">F1</span></button>
-<button class="nu-slot" data-s="geplant"><span class="zeit">20:30</span><b>Ali (D4)</b><span class="nu-beschr">D4</span></button>
+<button class="nu-slot" data-s="erledigt"><span class="zeit">19:00 ✓</span><b>Paul</b><span class="nu-beschr">D1 · erledigt</span></button>
+<button class="nu-slot" data-s="verpasst"><span class="zeit">19:30</span><b>Tim</b><span class="nu-beschr">B1 · verpasst</span></button>
+<button class="nu-slot" data-s="geplant"><span class="zeit">20:00</span><b>Moritz</b><span class="nu-beschr">F1</span></button>
+<button class="nu-slot" data-s="geplant"><span class="zeit">20:30</span><b>Max (D4)</b><span class="nu-beschr">D4</span></button>
 <button class="nu-slot" data-s="frei"><span class="zeit">21:00</span><b>frei</b><span class="nu-beschr">antippen</span></button>
 <button class="nu-slot" data-s="frei"><span class="zeit">21:30</span><b>frei</b><span class="nu-beschr">antippen</span></button>
 </div></div>''', readme='''# Duschplan
@@ -452,14 +446,14 @@ Ein Raster aus Zeitslots, in das man Gäste einträgt und das zum Slotbeginn eri
 - Slot `nu-slot` (mindestens 150 × 76 dp): Uhrzeit `nummer`, Name `text-stark` (bei gleichem Vornamen mit Bettnummer), Bett in `text-klein`.
 - Zustände: frei (`flaeche-2`, „frei“ in `tinte-3`), geplant (`erwartet-flaeche`, Rahmen `blau`), erledigt (Rahmen `frei`, ✓ an der Uhrzeit), verpasst (Name durchgestrichen, „verpasst“).
 - Freien Slot antippen → Gast wählen (heute aus den anwesenden, für die nächsten Tage aus allen Gästen mit Bett). Belegten Slot antippen → „Erledigt“, „Verpasst“, „Freigeben“.
-- Zu Slotbeginn eine Einblendung „Dusche 20:30 – Ali, Bett D4“, auch im Hintergrund (AlarmManager), Ton optional.
+- Zu Slotbeginn eine Einblendung „Dusche 20:30 – Max, Bett D4“, auch im Hintergrund (AlarmManager), Ton optional.
 - Raster, Länge und Anzahl in den Einstellungen.
 ''')
 
 ersetze("BerichtAbgeschlossen", html='''<div class="nu nu-vorschau nu-vorschau--spalte" style="max-width:900px">
-<div class="nu-gesperrt" style="width:100%"><i data-icon="schloss" class="zu"></i><div style="flex:1">Bericht abgeschlossen<small>02.10. · 07:42 · Jonas, Silke · PDF gespeichert und abgeglichen</small></div><button class="nu-btn nu-btn--klein nu-btn--rahmen"><i data-icon="pdf"></i>PDF ansehen</button><button class="nu-btn nu-btn--klein nu-btn--rahmen"><i data-icon="teilen"></i>Teilen</button></div>
-<div class="nu-bericht is-vorfall" style="width:100%;gap:12px;padding:18px"><div style="display:flex;align-items:center;gap:8px;color:var(--vorfall);font-weight:700"><i data-icon="vorfall"></i>Bericht mit Vorfall</div><div style="color:var(--tinte-2)">Wichtige Hinweise: <span class="nu-stufe nu-stufe--gelb"><i data-icon="karte-gelb" class="klein"></i>Gelbe Karte</span> <span class="nu-erwaehnung">@Dimitri</span> und <span class="nu-erwaehnung">@Ali (D4)</span> …</div></div>
-<div class="nu-nachtrag" style="width:100%"><b>Nachtrag</b>Dimitri hat sich am Morgen entschuldigt.<small>03.10. · 19:05 · Silke</small></div>
+<div class="nu-gesperrt" style="width:100%"><i data-icon="schloss" class="zu"></i><div style="flex:1">Bericht abgeschlossen<small>02.10. · 07:42 · Kim, Sam · PDF gespeichert und abgeglichen</small></div><button class="nu-btn nu-btn--klein nu-btn--rahmen"><i data-icon="pdf"></i>PDF ansehen</button><button class="nu-btn nu-btn--klein nu-btn--rahmen"><i data-icon="teilen"></i>Teilen</button></div>
+<div class="nu-bericht is-vorfall" style="width:100%;gap:12px;padding:18px"><div style="display:flex;align-items:center;gap:8px;color:var(--vorfall);font-weight:700"><i data-icon="vorfall"></i>Bericht mit Vorfall</div><div style="color:var(--tinte-2)">Wichtige Hinweise: <span class="nu-stufe nu-stufe--gelb"><i data-icon="karte-gelb" class="klein"></i>Gelbe Karte</span> <span class="nu-erwaehnung">@Felix</span> und <span class="nu-erwaehnung">@Max (D4)</span> …</div></div>
+<div class="nu-nachtrag" style="width:100%"><b>Nachtrag</b>Felix hat sich am Morgen entschuldigt.<small>03.10. · 19:05 · Sam</small></div>
 <button class="nu-btn nu-btn--rahmen"><i data-icon="stift"></i>Nachtrag hinzufügen</button>
 </div>''', readme='''# Bericht abgeschlossen
 
@@ -477,8 +471,8 @@ ersetze("Kalender", height=560, html='''<div class="nu" style="width:1160px;back
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><h2 class="titel-gross" style="margin:0;flex:1">KW 40 · 28.09. – 04.10.2026</h2><div class="nu-seg" role="radiogroup" aria-label="Ansicht"><button role="radio" aria-checked="true">7 Tage</button><button role="radio" aria-checked="false">Monat</button></div><button class="nu-iconbtn nu-iconbtn--fl" aria-label="Vorige Woche"><i data-icon="zurueck"></i></button><button class="nu-btn nu-btn--rahmen nu-btn--klein">Heute</button><button class="nu-iconbtn nu-iconbtn--fl" aria-label="Nächste Woche"><i data-icon="weiter"></i></button></div>
 <div class="nu-woche" id="w"></div></div>
 <script>
-var T=["Mo","Di","Mi","Do","Fr","Sa","So"],D=["Flo","Silke, Jessica","Flo","Flo","Jonas, Silke","Jonas, Silke","Flo"],E={4:[["wiederholen","Bettwäschewechsel Zimmer B","Bettwäsche",""]],5:[["kalender","Lieferung Decken","Sondertermin",""]],6:[["einkauf","Morgen Feiertag, heute einkaufen","Feiertag","feiertag"]]};
-document.getElementById("w").innerHTML=T.map(function(t,i){var d=28+i>30?28+i-30:28+i;return '<div class="nu-woche-tag'+(i===4?' is-heute':i<4?' is-vorbei':'')+'"><div class="nu-woche-kopf"><b>'+d+'</b><span>'+t+'</span></div><span class="nu-termin nu-termin--dienst">'+Nu.svg("personen")+'<span>Nachtdienst<small>'+D[i]+'</small></span></span><span class="nu-termin">'+Nu.svg("kueche")+'<span>Küche<small>Hannah</small></span></span>'+(E[i]||[]).map(function(e){return '<span class="nu-termin'+(e[3]?' nu-termin--'+e[3]:'')+'">'+Nu.svg(e[0])+'<span>'+e[1]+'<small>'+e[2]+'</small></span></span>';}).join("")+'<button class="nu-woche-plus">'+Nu.svg("plus","klein")+'Termin</button></div>';}).join("");
+var T=["Mo","Di","Mi","Do","Fr","Sa","So"],D=["Chris","Sam, Robin","Chris","Chris","Kim, Sam","Kim, Sam","Chris"],E={4:[["wiederholen","Bettwäschewechsel Zimmer B","Bettwäsche",""]],5:[["kalender","Lieferung Decken","Sondertermin",""]],6:[["einkauf","Morgen Feiertag, heute einkaufen","Feiertag","feiertag"]]};
+document.getElementById("w").innerHTML=T.map(function(t,i){var d=28+i>30?28+i-30:28+i;return '<div class="nu-woche-tag'+(i===4?' is-heute':i<4?' is-vorbei':'')+'"><div class="nu-woche-kopf"><b>'+d+'</b><span>'+t+'</span></div><span class="nu-termin nu-termin--dienst">'+Nu.svg("personen")+'<span>Nachtdienst<small>'+D[i]+'</small></span></span><span class="nu-termin">'+Nu.svg("kueche")+'<span>Küche<small>Mika</small></span></span>'+(E[i]||[]).map(function(e){return '<span class="nu-termin'+(e[3]?' nu-termin--'+e[3]:'')+'">'+Nu.svg(e[0])+'<span>'+e[1]+'<small>'+e[2]+'</small></span></span>';}).join("")+'<button class="nu-woche-plus">'+Nu.svg("plus","klein")+'Termin</button></div>';}).join("");
 </script>''', readme='''# Kalender
 
 Der Kalender sammelt alles mit Datum; jeder Eintrag erscheint am Tag automatisch unter „Heute“ im Bericht.
@@ -502,8 +496,8 @@ ersetze("Einstellungszeilen", height=620, html='''<div class="nu nu-vorschau nu-
 </div>
 <script>
 function bs(nr,info,an,notbett){return '<div class="nu-bettschalter'+(an?'':' is-aus')+'" style="flex-wrap:wrap"><div style="flex:1;min-width:0"><b>'+nr+'</b><small>'+info+'</small></div><button class="nu-schalter" role="switch" aria-checked="'+an+'" aria-label="Bett '+nr+' in Betrieb"></button>'+(notbett!==undefined?'<button class="nu-chip" style="flex-basis:100%;justify-content:center" aria-pressed="'+notbett+'">'+(notbett?Nu.svg("check","klein"):'')+'Notbett</button>':'')+'</div>';}
-document.getElementById("d").innerHTML=bs("D1","belegt · Jonas",true)+bs("D2","belegt · Marek",true)+bs("D3","gesperrt",false)+bs("D4","belegt · Ali",true)+bs("D5","belegt · Dimitri",true)+bs("D6","belegt · Petra",true);
-document.getElementById("l").innerHTML=bs("L1","belegt · Emil",true,false)+bs("L2","belegt · Kasia",true,false)+bs("L3","in Betrieb",true,true)+bs("L4","belegt · Jana",true,false)+bs("L5","belegt · Ali",true,false);
+document.getElementById("d").innerHTML=bs("D1","belegt · Paul",true)+bs("D2","belegt · Tom",true)+bs("D3","gesperrt",false)+bs("D4","belegt · Max",true)+bs("D5","belegt · Felix",true)+bs("D6","belegt · Anna",true);
+document.getElementById("l").innerHTML=bs("L1","belegt · Noah",true,false)+bs("L2","belegt · Julia",true,false)+bs("L3","in Betrieb",true,true)+bs("L4","belegt · Nina",true,false)+bs("L5","belegt · Max",true,false);
 document.querySelectorAll(".nu-schalter").forEach(function(s){s.onclick=function(){var an=s.getAttribute("aria-checked")!=="true";s.setAttribute("aria-checked",String(an));var p=s.closest(".nu-bettschalter");if(p){p.classList.toggle("is-aus",!an);p.querySelector("small").textContent=an?"in Betrieb":"gesperrt";}}});
 document.querySelectorAll(".nu-bettschalter .nu-chip").forEach(function(c){c.onclick=function(){var an=c.getAttribute("aria-pressed")!=="true";c.setAttribute("aria-pressed",String(an));c.innerHTML=(an?Nu.svg("check","klein"):"")+"Notbett";}});
 </script>''', readme='''# Einstellungszeilen
@@ -511,7 +505,7 @@ document.querySelectorAll(".nu-bettschalter .nu-chip").forEach(function(c){c.onc
 Eine Zeile je Einstellung: Symbol, Name, aktueller Wert, rechts Schalter oder Pfeil. Unter „Betten und Zimmer“ lassen sich ganze Zimmer **und jedes einzelne Bett** sperren.
 
 - `nu-einstellung` mindestens 72 dp, Grund `flaeche`. Name `text-stark`, Wert `text-klein` (`tinte-2`); der Wert ist immer sichtbar, ohne die Zeile zu öffnen.
-- **Zimmerkarte** (`nu-zimmer-einst`): oben die Zimmerzeile mit Schalter („5 von 6 Betten in Betrieb“), darunter alle Betten als **Bettschalter** (`nu-bettschalter`, 56 dp, Raster ab 150 dp): Nummer, Zustand („belegt · Jonas“, „in Betrieb“, „gesperrt“), Schalter. Gesperrt: schraffiert. Ist das Zimmer aus, sind die Bettschalter gesperrt.
+- **Zimmerkarte** (`nu-zimmer-einst`): oben die Zimmerzeile mit Schalter („5 von 6 Betten in Betrieb“), darunter alle Betten als **Bettschalter** (`nu-bettschalter`, 56 dp, Raster ab 150 dp): Nummer, Zustand („belegt · Paul“, „in Betrieb“, „gesperrt“), Schalter. Gesperrt: schraffiert. Ist das Zimmer aus, sind die Bettschalter gesperrt.
 - Ein gesperrtes Bett erscheint im Plan schraffiert, ist nicht antippbar und zählt weder für KHT noch für die Ampel.
 - In Loggien, Esszimmer, Tiny House und weiteren Plätzen trägt jeder Bettschalter den Chip **„Notbett“**: Notbetten zählen nicht für das Kältehilfetelefon.
 - **Weitere Plätze:** Namensfeld und „Platz hinzufügen“ legen Z1, Z2 … an; freie Plätze lassen sich wieder entfernen.
@@ -530,4 +524,4 @@ textfix("Symbole", "| Bettstatus anwesend, erwartet, freigehalten, frei bis, dea
 textfix("Symbole", "| `abwesend`, `auszug`, `tauschen`, `umziehen` | Abwesenheit, Auszug „frei ab“, Tauschen, Umziehen |", "| `abwesend`, `auszug`, `tauschen`, `umziehen` | Abwesenheit und „fehlt“, Bett frei (Auszug), Tauschen, Umziehen |")
 textfix("Symbole", "| `haus`, `standort-2` | Haupthaus, St. Nikolaus |", "| `haus`, `standort-2` | St. Pius, St. Nikolaus |")
 textfix("Symbole", "| `unterschrift`, `stift`, `tastatur`, `scannen`, `kamera` | Unterschrift, Nachtrag, Schreibmodus, Läuseschein scannen |", "| `unterschrift`, `stift`, `tastatur`, `scannen`, `kamera` | Unterschrift (auch: fehlt noch), Nachtrag, Schreibmodus, Läuseschein scannen |\n| `teilen`, `dokument-plus` | PDF teilen (ohne festen Empfänger), Dokument in der Gästedatenbank hinterlegen |")
-textfix("Symbole", "| `ampel`, `telefon` | Ampel, KHT (Kältehilfetelefon) |", "| `ampel`, `telefon` | Ampel, KHT-Zahlen und „Hat KHT angerufen?“ |")
+textfix("Symbole", "| `ampel`, `telefon` | Ampel, KHT (Kältehilfetelefon) |", "| `ampel`, `telefon` | Ampel, KHT-Nummer und „Hat KHT angerufen?“ |")

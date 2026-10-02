@@ -1,6 +1,6 @@
 import os, sys, shutil
 sys.path.insert(0,'gen')
-import comps1, comps2, comps3, comps4, comps5
+import comps1, comps2, comps3, comps4, comps5, comps6
 from comps1 import COMPS
 root='project/components'
 for c in COMPS:

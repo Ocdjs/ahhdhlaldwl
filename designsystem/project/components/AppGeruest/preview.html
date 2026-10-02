@@ -17,10 +17,10 @@
   <span class="nu-kopf-raum"></span>
   <button class="nu-sync" data-s="ok"><i data-icon="wolke-ok"></i>Synchronisiert 21:00</button>
   <button class="nu-iconbtn nu-iconbtn--fl" aria-label="3 offene Erinnerungen"><i data-icon="glocke"></i><span class="nu-zaehler">3</span></button>
-  <div class="nu-dienst"><button class="nu-person" aria-pressed="true"><span class="nu-kuerzel">JO</span>Jonas</button><button class="nu-person" aria-pressed="false"><span class="nu-kuerzel">SI</span>Silke</button></div>
+  <div class="nu-dienst"><button class="nu-person" aria-pressed="true"><span class="nu-kuerzel">KI</span>Kim</button><button class="nu-person" aria-pressed="false"><span class="nu-kuerzel">SA</span>Sam</button></div>
 </header>
 <main class="nu-inhalt" style="display:grid;gap:12px;align-content:start">
-  <div class="nu-kennzahlen"><span class="nu-ampel" data-s="gruen"><span class="nu-ampel-licht">5</span><span class="nu-ampel-wort">5 Betten frei<small>Ampel grün · ohne Notbett</small></span></span><button class="nu-kht"><small>Für das Kältehilfetelefon</small><b>24 belegt · 29 gesamt</b><small>beide Standorte · antippen für Rechnung</small></button><span class="nu-kennzahl">St. Pius<b>11 da · 4 erwartet</b></span><span class="nu-kennzahl">St. Nikolaus<b>7 von 7</b></span></div>
+  <div class="nu-kennzahlen"><span class="nu-ampel" data-s="gruen"><span class="nu-ampel-licht">6</span><span class="nu-ampel-wort">6 Betten frei<small>Ampel grün</small></span></span><button class="nu-kennzahl">KHT-Nummer<b>25</b></button><span class="nu-kennzahl">St. Pius<b>12 da · 4 erwartet</b></span><span class="nu-kennzahl">St. Nikolaus<b>7 von 8</b></span></div>
   <div style="display:flex;align-items:center;gap:12px"><div class="nu-reiter" role="tablist"><button role="tab" aria-selected="true"><i data-icon="haus" class="klein"></i>St. Pius <span class="n">7 frei</span></button><button role="tab" aria-selected="false"><i data-icon="standort-2" class="klein"></i>St. Nikolaus <span class="n">7/7</span></button></div><span style="flex:1"></span><button class="nu-btn nu-btn--primaer"><i data-icon="person-plus"></i>Gast aufnehmen</button></div>
   <div class="nu-plan-raster"><div class="nu-plan-karte" id="gr"></div><div id="pl"></div></div>
 </main>
@@ -54,14 +54,14 @@ function grundriss(B, aus){
   return '<div class="nu-grundriss'+(aus.T&&aus.F?' is-flur-zu':'')+'" role="group" aria-label="Grundriss St. Pius"><svg viewBox="-10 -10 971 800" aria-hidden="true">'+SCHRAFFUR+boeden+GR_FEST+stock+labels+'</svg>'+pl+'</div>';
 }
 var SCHRAFFUR='<defs><pattern id="nu-schraffur" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect class="schraffur-grund" width="8" height="8"/><line class="schraffur-strich" x1="0" y1="0" x2="0" y2="8"/></pattern></defs>';
-var BEISPIEL={D1:{s:"anwesend",name:"Jonas"},D2:{s:"anwesend",name:"Marek"},D3:{s:"frei"},D4:{s:"erwartet",name:"Ali"},D5:{s:"anwesend",name:"Dimitri",symbole:["karte-gelb"]},D6:{s:"gehalten",name:"Petra",bis:"06.10."},
- T1:{s:"fehlt",name:"Yusuf",symbole:["warnung"],warn:true},T2:{s:"freibis",name:"Hamid",bis:"08.10."},T3:{s:"anwesend",name:"Elena"},
- B1:{s:"erwartet",name:"Mihai",symbole:["laeuseschein-fehlt"]},B2:{s:"frei"},B3:{s:"erwartet",name:"Ion"},B4:{s:"anwesend",name:"Olek"},
- F1:{s:"anwesend",name:"Samir",dusche:"20:00"},F2:{s:"fehlt2",name:"Ben",fehltN:2},F3:{s:"anwesend",name:"Lina"},F4:{s:"aus"}};
+var BEISPIEL={D1:{s:"anwesend",name:"Paul"},D2:{s:"anwesend",name:"Tom"},D3:{s:"frei"},D4:{s:"erwartet",name:"Max"},D5:{s:"anwesend",name:"Felix",symbole:["karte-gelb"]},D6:{s:"gehalten",name:"Anna",bis:"06.10."},
+ T1:{s:"fehlt",name:"Jan",symbole:["warnung"],warn:true},T2:{s:"freibis",name:"Leon",bis:"08.10."},T3:{s:"anwesend",name:"Laura"},
+ B1:{s:"erwartet",name:"Tim",symbole:["laeuseschein-fehlt"]},B2:{s:"frei"},B3:{s:"erwartet",name:"Lukas"},B4:{s:"anwesend",name:"Erik"},
+ F1:{s:"anwesend",name:"Moritz",dusche:"20:00"},F2:{s:"fehlt2",name:"Simon",fehltN:2},F3:{s:"anwesend",name:"Lisa"},F4:{s:"aus"}};
 </script>
 <script>
-function plaetze(){var B=Nu.bett;return '<div class="nu-plaetze"><div class="nu-plaetze-titel">Loggien<span>1 von 5 frei</span></div>'+B({nr:"L1",s:"anwesend",name:"Emil",naechte:6})+B({nr:"L2",s:"fehlt",name:"Kasia",naechte:2})+B({nr:"L3",s:"frei"}).replace("<span>Gast aufnehmen</span>","<span>Loggia · Notbett</span>")+B({nr:"L4",s:"anwesend",name:"Jana",naechte:5})+B({nr:"L5",s:"anwesend",name:"Ali",naechte:5})+
-'<div class="nu-plaetze-titel">Esszimmer<span>1 von 1 frei</span></div>'+B({nr:"E1",s:"frei"}).replace("<span>Gast aufnehmen</span>","<span>Esszimmer · Notbett</span>")+'<div class="nu-plaetze-titel">Tiny House<span>0 von 1 frei</span></div>'+B({nr:"TH1",s:"anwesend",name:"Ole",naechte:9})+'</div>';}
+function plaetze(){var B=Nu.bett;return '<div class="nu-plaetze"><div class="nu-plaetze-titel">Loggien<span>1 von 5 frei</span></div>'+B({nr:"L1",s:"anwesend",name:"Noah",naechte:6})+B({nr:"L2",s:"fehlt",name:"Julia",naechte:2})+B({nr:"L3",s:"frei"}).replace("<span>Gast aufnehmen</span>","<span>Loggia · Notbett</span>")+B({nr:"L4",s:"anwesend",name:"Nina",naechte:5})+B({nr:"L5",s:"anwesend",name:"Max",naechte:5})+
+'<div class="nu-plaetze-titel">Esszimmer<span>1 von 1 frei</span></div>'+B({nr:"E1",s:"frei"}).replace("<span>Gast aufnehmen</span>","<span>Esszimmer · Notbett</span>")+'<div class="nu-plaetze-titel">Tiny House<span>0 von 1 frei</span></div>'+B({nr:"TH1",s:"anwesend",name:"Kai",naechte:9})+'</div>';}
 document.getElementById("gr").innerHTML=grundriss(BEISPIEL);document.getElementById("pl").innerHTML=plaetze();Nu.mountIcons();
 </script>
 </body>

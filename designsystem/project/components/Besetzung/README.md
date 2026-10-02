@@ -6,3 +6,5 @@ Wer heute Dienst hat, steht mit Rolle, Name und Unterschrift im Kopf des Bericht
 - Tipp auf den Namen öffnet die Personalliste (Suche, freie Eingabe möglich); geplante und tatsächliche Person werden beide gespeichert.
 - Tipp auf das kleine Feld öffnet das große Unterschriftsfeld als Blatt. Fertig: Rahmen `frei`, „Unterschrieben 18:52“.
 - Ohne alle Unterschriften lässt sich der Bericht nicht abschließen; der Knopf sagt, was fehlt.
+- **Person tauschen** fragt nach dem Grund: Krankheit, Tausch oder Sonstiges. Geplante Person, tatsächliche Person und Grund zählen im Monatsabschluss (krank, abgegeben, Vertretung).
+- Die Unterschrift in der Besetzung ist der Nachweis, dass der Dienst gemacht wurde.

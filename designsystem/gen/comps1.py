@@ -38,7 +38,7 @@ Knöpfe lösen genau eine Handlung aus; ihr Text sagt, was passiert.
 
 comp("Eingaben","Grundlagen",400,'''
 <div class="nu-vorschau" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px">
-  <div class="nu-feld"><label for="v1">Vorname</label><input class="nu-eingabe" id="v1" value="Marek"></div>
+  <div class="nu-feld"><label for="v1">Vorname</label><input class="nu-eingabe" id="v1" value="Tom"></div>
   <div class="nu-feld"><label for="v2">Nachname (freiwillig)</label><input class="nu-eingabe" id="v2" placeholder="Nachname eintragen"></div>
   <div class="nu-feld"><span class="nu-feldname">Vorfälle</span>
     <div class="nu-seg" role="radiogroup"><button role="radio" aria-checked="false">Ja</button><button role="radio" aria-checked="true">Nein</button></div></div>
@@ -111,7 +111,7 @@ comp("Eingabearten","Grundlagen",360,'''
     <p class="nu-beschr">Im Schreibmodus rückt das Feld nach oben, die Leiste sitzt über der Tastatur. Eine Hardware-Tastatur wird mit Tab und Strg+Enter bedient.</p>
   </div>
 </div>
-<script>document.getElementById("b1").innerHTML=Nu.bett({nr:"D4",s:"anwesend",name:"Ali",naechte:12,symbole:["notiz"]});Nu.unterschrift(document.getElementById("u"));</script>''','''# Eingabearten
+<script>document.getElementById("b1").innerHTML=Nu.bett({nr:"D4",s:"anwesend",name:"Max",naechte:12,symbole:["notiz"]});Nu.unterschrift(document.getElementById("u"));</script>''','''# Eingabearten
 
 Die App wird mit Finger, S Pen und Tastatur bedient; jede Ansicht funktioniert mit dem Finger allein.
 
@@ -146,14 +146,14 @@ comp("Bewegung","Grundlagen",520,'''
 <script>
 Nu.mountIcons();
 var s1=document.getElementById("s1"), s2=document.getElementById("s2");
-function bed1(s){s1.innerHTML=Nu.bett(s==="anwesend"?{nr:"B3",s:"anwesend",name:"Ion",naechte:4}:{nr:"B3",s:"erwartet",name:"Ion",naechte:3});}
-bed1("erwartet"); s2.innerHTML=Nu.bett({nr:"F2",s:"anwesend",name:"Samir",naechte:20});
+function bed1(s){s1.innerHTML=Nu.bett(s==="anwesend"?{nr:"B3",s:"anwesend",name:"Lukas",naechte:4}:{nr:"B3",s:"erwartet",name:"Lukas",naechte:3});}
+bed1("erwartet"); s2.innerHTML=Nu.bett({nr:"F2",s:"anwesend",name:"Moritz",naechte:20});
 function re(el,c){el.classList.remove(c);void el.offsetWidth;el.classList.add(c);}
 var runs={
  1:function(){bed1(s1.querySelector(".nu-bett").dataset.s==="anwesend"?"erwartet":"anwesend");var b=s1.querySelector(".nu-bett");b.style.setProperty("--x","30%");b.style.setProperty("--y","60%");re(b,"is-neu");},
  2:function(){var z=document.getElementById("z");z.textContent=+z.textContent+1;re(z,"pop");},
  3:function(){re(document.getElementById("d"),"rein");document.getElementById("d").classList.add("nu-detail");},
- 4:function(){var e=document.getElementById("e");e.innerHTML='<div class="nu-einblendung" style="width:100%">'+Nu.svg("dusche")+'<div><b>Dusche 20:30</b><span>Ali, Bett 5</span></div><span></span><i class="lauf"></i></div>';},
+ 4:function(){var e=document.getElementById("e");e.innerHTML='<div class="nu-einblendung" style="width:100%">'+Nu.svg("dusche")+'<div><b>Dusche 20:30</b><span>Max, Bett 5</span></div><span></span><i class="lauf"></i></div>';},
  5:function(){var s=document.querySelector("#sl")||document.querySelector(".nu-gesperrt .nu-svg");re(s,"zu");},
  6:function(){re(document.getElementById("pp"),"is-falsch");},
  7:function(){re(s2.querySelector(".nu-bett"),"is-gesetzt");},

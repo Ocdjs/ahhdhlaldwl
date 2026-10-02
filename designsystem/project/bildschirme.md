@@ -7,18 +7,18 @@ Navigation: **Bettenplan · Gäste · Dienst & Bericht · Kalender · Einstellun
 ## 1 Bettenplan
 
 **Hauptansicht** (Startbildschirm, zeigt immer den laufenden Diensttag; nie die Zukunft)
-- Oben, beim Scrollen stehend, `nu-kennzahlen`: Ampel („5 Betten frei · Ampel grün · ohne Notbett“), **KHT-Zahlen** („24 belegt · 29 gesamt“, antippen öffnet die Rechnung Bett für Bett), „St. Pius 11 da · 4 erwartet“, „St. Nikolaus 7 von 7“. Kein Knopf „An KHT gemeldet“.
+- Oben, beim Scrollen stehend, `nu-kennzahlen`: Ampel („6 Betten frei · Ampel grün“), **KHT-Nummer** (nur die Zahl der belegten Betten, antippbar für einen Satz zur Regel), „St. Pius 12 da · 4 erwartet“, „St. Nikolaus 7 von 8“.
 - Darunter die Reiter **St. Pius** und **St. Nikolaus** (`nu-reiter`, mit Zahl freier Betten) und rechts der Hauptknopf „Gast aufnehmen“.
 - **St. Pius:** der Grundriss (Baustein **Grundriss**): Zimmer D (zwei Räume), Privaträume, T-Zimmer (Zugang über Zimmer F), Zimmer B, Flur, Bad, Zimmer F, Treppe; Betten als kompakte Bettkarten an ihrer Stelle. Rechts daneben untereinander Loggien L1–L5, Esszimmer E1, Tiny House TH1 und weitere Plätze Z1 …; Notbetten tragen „Notbett“.
-- **St. Nikolaus:** Saal mit N1–N8 in zwei Reihen; Belegung wird jede Nacht fortgeschrieben.
+- **St. Nikolaus:** Saal mit N1–N8 in zwei Reihen, rechts daneben die weiteren Plätze (z. B. N9); Belegung wird jede Nacht fortgeschrieben. Aufnahme dort nur mit Person und Abschluss, ohne Hausordnung und Unterschrift.
 - Unter 900 dp Breite: Zimmerrahmen untereinander statt Grundriss.
 - **Vergangene Tage** (Pfeil zurück): Belegung jener Nacht, Pille „Nur lesen“, niemand „erwartet“; Tipp öffnet Gastdetails mit „Nachtrag hinzufügen“. Der Pfeil nach vorn ist am heutigen Tag gesperrt.
 
 **Schnellauswahl** am Bett (`nu-schnell`) – siehe Baustein. „Nicht da“ fragt: „Weiter warten“, „Hat sich abgemeldet“, „Fehlt unentschuldigt“.
 
-**Gastdetails** (`nu-detail`) rechts – siehe Baustein. Unteransichten im selben Bereich: „Abwesenheit“ (zurück am, Grund, „Bett bis dahin freihalten?“ Ja/Nein), **„Bett frei“** (statt „Auszug“: „Bett L5 freigeben? Ali zieht aus …“), „Bett wechseln“ (Plan im Auswahlmodus), „Sanktion“ (Stufe als `nu-wahl`, Grund Pflicht, bei Hausverbot „gültig bis“ oder unbefristet; gilt nur für diesen Gast), „Duschslot“, „Hausordnung nachholen“.
+**Gastdetails** (`nu-detail`) rechts – siehe Baustein. Unteransichten im selben Bereich: „Abwesenheit“ (zurück am, Grund, „Bett bis dahin freihalten?“ Ja/Nein), **„Bett frei“** (statt „Auszug“: „Bett L5 freigeben? Max zieht aus …“), „Bett wechseln“ (Plan im Auswahlmodus), „Sanktion“ (Stufe als `nu-wahl`, Grund Pflicht, bei Hausverbot „gültig bis“ oder unbefristet; gilt nur für diesen Gast), „Duschslot“, „Hausordnung nachholen“.
 
-**KHT-Rechnung** (Blatt): Belegt, Gesamt, Frei groß; darunter je eine Zeile „Belegt“, „Frei“, „Nicht gezählt“ mit den Bettnummern.
+**KHT-Nummer** (Blatt): Belegt und Frei groß, darunter ein Satz: Notbetten zählen nur, wenn belegt (Kältebus); wer zwei Nächte in Folge unentschuldigt fehlt, zählt nicht.
 
 ## 2 Aufnahme (Assistent, Vollbild)
 
@@ -27,7 +27,7 @@ Navigation: **Bettenplan · Gäste · Dienst & Bericht · Kalender · Einstellun
 3. **Sprache der Übersetzung:** zehn `nu-wahl` mit Eigenname der Sprache.
 4. **Hausordnung:** `nu-dokument-paar` – Deutsch links (wird unterschrieben), Übersetzung rechts; darunter zwei `nu-unterschrift`: Gast, Betreuung.
 5. **Datenschutz:** nur Deutsch, ein `nu-unterschrift`: Gast.
-6. **Abschluss:** Gast, Bett, Dauer, „Angezeigt als Ali (B2)“ bei gleichem Vornamen, Übersetzung, Aufnahmenummer, PDF-Name; Läuseschein-Pflicht bei mehreren Nächten. „Fertig“ setzt das Bett mit `is-neu` auf „anwesend“.
+6. **Abschluss:** Gast, Bett, Dauer, „Angezeigt als Max (B2)“ bei gleichem Vornamen, Übersetzung, Aufnahmenummer, PDF-Name; Läuseschein-Pflicht bei mehreren Nächten. „Fertig“ setzt das Bett mit `is-neu` auf „anwesend“.
 
 Bekannter Gast mit Unterschrift: nur Schritt 1, 2, 6. **Nachholen** (aus Gastdetails oder Gästedatenbank): Schritt 3, 4, 5, 6.
 
@@ -56,7 +56,11 @@ Bekannter Gast mit Unterschrift: nur Schritt 1, 2, 6. **Nachholen** (aus Gastdet
 
 **Archiv** (Reiter): Liste der Berichte, neueste oben, Vorfälle rot umrahmt; Filter und Volltextsuche.
 
-**Hinweis anlegen:** Blatt mit Text, gültig bis, Priorität normal/wichtig.
+**Hinweis anlegen:** Blatt mit „Von“ (Chips: Personen im Dienst, Leitung, übriges Team), Text, gültig bis, Priorität normal/wichtig.
+
+**Monatsabschluss** (Reiter): Monat wählen, Übersicht aller Personen mit Geplant, Gemacht, Abweichung, Status; „Öffnen“ zeigt den **Dienstnachweis** mit Tageszeilen, „Geplante Dienste korrigieren“ (Warnung, Pflichtgrund) und Unterschriftsfeld; darunter die Lohntabelle der unterschriebenen Nachweise. Beim letzten geplanten Dienst einer Person erscheint oben im Bericht ein freiwilliger Hinweis.
+
+**Person tauschen** (Besetzung): Grund Krankheit, Tausch oder Sonstiges, dann die Person.
 
 ## 5 Kalender
 
@@ -68,14 +72,14 @@ Bekannter Gast mit Unterschrift: nur Schritt 1, 2, 6. **Nachholen** (aus Gastdet
 ## 6 Einstellungen (Admin-PIN)
 
 Einstieg über `nu-pin`, dann zweispaltig: links Gruppen, rechts Zeilen (`nu-einstellung`).
-- **Betten und Zimmer:** je Zimmer eine Karte mit Zimmerschalter und **einem Schalter je Bett** (`nu-bettschalter`); in Loggien, Esszimmer, Tiny House und weiteren Plätzen der Chip „Notbett“; „Platz hinzufügen“ für Z1, Z2 …
-- **Ampel und KHT:** Erklärung der Zählung mit „Rechnung“, Liste der Notbetten, Ampel-Schwelle, Meldung an die Ampel.
+- **Betten und Zimmer:** je Zimmer eine Karte mit „Nummern tauschen“, Zimmerschalter und **einem Schalter je Bett** (`nu-bettschalter`); Chip „Notbett“ in Loggien, Esszimmer, Tiny House und weiteren Plätzen; „Platz hinzufügen“ mit Nummer und Bezeichnung für St. Pius und St. Nikolaus, Umbenennen und Entfernen.
+- **Ampel und KHT:** KHT-Nummer mit „Ansehen“, Notbetten (nur Kältebus), Ampel-Schwelle, Meldung an die Ampel.
 - Weitere Gruppen: Darstellung (Nachtmodus), Nextcloud-Verbindung, Abgleich, Hinweise, Texte und Sprachen, Saison und Löschfristen, Duschplan, Liste „Fehlt etwas“, Sicherheit (App-PIN, Sperre, Kiosk).
 - **Löschlauf:** Vorschau „Folgendes wird gelöscht“ mit Anzahlen, Admin-PIN, Knopf `nu-btn--gefahr-voll`.
 
 ## Überall
 
-- **Glocke** (`nu-glocke-liste`): Läuseschein, „Ben, F2 fehlt 2. Nacht“, neue Hinweise, Duschslots.
+- **Glocke** (`nu-glocke-liste`): Läuseschein, „Simon, F2 fehlt 2. Nacht“, neue Hinweise, Duschslots.
 - **Einblendungen** (`nu-einblendung`), **Abgleich-Blatt** (aus `nu-sync`), **Dialoge** (`nu-dialog`).
 - **App-Sperre:** `nu-pin` auf `grund`, über allem, nach 5 Minuten Inaktivität.
 - **Leere Zustände:** ein Satz, was hier erscheint, und ein Knopf, wie man anfängt.

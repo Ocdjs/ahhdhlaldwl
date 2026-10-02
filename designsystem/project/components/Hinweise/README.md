@@ -3,6 +3,7 @@
 Hinweise sind wichtige Informationen fürs Team; sie stehen oben im Bericht und gelten für einen Zeitraum.
 
 - Karte `nu-hinweis` auf `flaeche`, Kopf mit Absender (`tinte`, 600), Herkunft und Gültigkeit in `text-klein`, darunter der Text.
+- **Von wem:** Beim Anlegen wählt man den Absender aus Chips: zuerst die Personen im Dienst, dann **Leitung** (die Schwester, auch wenn sie nicht im Dienstplan steht), dann das übrige Team. Vorgewählt ist die aktive Person. Hinweise der Leitung können auch über Nextcloud kommen.
 - „Wichtig“ (Priorität aus der Tabelle „Hinweise“): Grund `warnung-flaeche`, Symbol `warnung`. Neueste zuerst.
 - **Seit deinem letzten Dienst**: Zusammenstellung für die aktive Betreuungsperson; Berichte mit Vorfall stehen oben mit Rahmen 3 dp `vorfall` und Symbol `vorfall`. Dazu Zeilen für fehlende Schlüssel, neue Sanktionen und offene Läuseschein-Fälle.
 - „Heute“ aus dem Kalender als eigene Karte mit Absender „Kalender“.

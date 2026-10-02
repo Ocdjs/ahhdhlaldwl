@@ -23,7 +23,7 @@ Jede Funktion geht mit dem Finger allein. Stift und Tastatur machen Unterschrift
 
 - Navigationsleiste und Kopfzeile bleiben, Nebenspalten (Hinweise, Seit deinem letzten Dienst) klappen ein; das aktive Feld rückt an den oberen Rand und bleibt vollständig sichtbar (`Modifier.imePadding()`, `bringIntoViewRequester`).
 - Direkt über der Tastatur liegt die Tastenleiste (`nu-tastenleiste`): „@ Gast“, „Verwarnung“, „Gelbe Karte“, „Hausverbot“, rechts „Fertig“. „Fertig“ schließt die Tastatur und speichert.
-- „@“ schlägt Gäste mit Bettnummer vor; gewählt wird „@Ali (D4)“ eingefügt, wenn es den Vornamen mehrfach gibt. Wer selbst tippt, bekommt bei Mehrdeutigkeit eine Warnung unter dem Feld.
+- „@“ schlägt Gäste mit Bettnummer vor; gewählt wird „@Max (D4)“ eingefügt, wenn es den Vornamen mehrfach gibt. Wer selbst tippt, bekommt bei Mehrdeutigkeit eine Warnung unter dem Feld.
 - Feldtypen setzen die passende Tastatur: Namen `KeyboardCapitalization.Words`, Bettnummern und Schlüsselnummern `KeyboardType.Number`, Freitext mit Autokorrektur und `ImeAction.Default` (Enter = neuer Absatz). Einzeilige Felder springen mit `ImeAction.Next` weiter.
 - Jede Eingabe wird nach 300 ms Pause lokal gespeichert; der Zwischenstand steht klein unter dem Feld („Gespeichert 21:14“).
 

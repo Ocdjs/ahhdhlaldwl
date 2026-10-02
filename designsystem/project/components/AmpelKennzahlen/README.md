@@ -1,15 +1,10 @@
-# Ampel und KHT-Zahlen
+# Ampel und KHT-Nummer
 
-Die Leiste über dem Plan zeigt die Ampel und die Zahlen, die das Kältehilfetelefon (KHT) bekommt.
+Über dem Plan stehen nur zwei Zahlen: die freien Betten in der Ampel und die KHT-Nummer.
 
-**KHT-Zahlen** (`nu-kht`, antippbar): „24 belegt · 29 gesamt“. Rechnung (siehe Fachregeln):
-- **Gesamt** = alle Betten in Betrieb in St. Pius und St. Nikolaus, **ohne Notbett** und ohne gesperrte Betten.
-- **Belegt** = anwesend + erwartet + freigehalten + **fehlt in der 1. Nacht unentschuldigt**. Wer zwei Nächte in Folge unentschuldigt fehlt, zählt ab der 2. Nacht nicht mehr.
-- **Frei** = Gesamt − Belegt (frei, frei bis Rückkehr, fehlt ab 2. Nacht).
-- Tipp öffnet ein Blatt mit der Rechnung Bett für Bett, damit niemand nachzählen muss, wenn KHT anruft.
-
-**Ampel**: Kreis 44 dp mit der Zahl freier Betten (gleiche Rechnung), daneben das Wort. Grün ab 3 frei (`ampel-gruen`), gelb bei 1–2 (`ampel-gelb`, Zahl in `auf-gelb`), rot bei 0 (`ampel-rot`). Schwelle in den Einstellungen. Die Ampel ist ein eigenes Meldesystem, getrennt vom Anruf: Gemeldet werden frei, belegt und gesamt, nie Namen.
-
-- Standortzahlen daneben: „St. Pius 11 da · 4 erwartet“, „St. Nikolaus 7 von 7“.
-- Es gibt keinen Knopf „An KHT gemeldet“ mehr. Ob KHT angerufen hat, steht im Bericht („Hat KHT angerufen?“).
+- **Ampel:** Kreis 44 dp mit der Zahl freier Betten, daneben „6 Betten frei · Ampel grün“. Grün ab 3 frei (`ampel-gruen`), gelb bei 1–2 (`ampel-gelb`, Zahl in `auf-gelb`), rot bei 0 (`ampel-rot`). Schwelle in den Einstellungen.
+- **KHT-Nummer:** die Zahl der belegten Betten beider Standorte, als schlichte Kennzahl (`nu-kennzahl`, antippbar). Tipp öffnet ein kurzes Blatt mit Belegt, Frei und einem Satz zur Regel.
+- Regel kurz: Notbetten werden nur über den Kältebus belegt; sie zählen mit, wenn sie belegt sind, freie Notbetten zählen nicht. Wer zwei Nächte in Folge unentschuldigt fehlt, zählt nicht mehr (siehe Fachregeln).
+- Daneben die Standortzahlen „St. Pius 12 da · 4 erwartet“, „St. Nikolaus 7 von 8“.
+- Ob KHT angerufen hat, steht im Bericht („Hat KHT angerufen?“).
 - Ampelwechsel: Farbe blendet in `dauer-mittel` über, die Zahl springt.

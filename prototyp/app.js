@@ -5,7 +5,7 @@ document.body.classList.add("nu");
 var $ = function(s, r){ return (r || document).querySelector(s); };
 var $$ = function(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 var esc = Nu.esc, svg = Nu.svg;
-var KEY = "nu-prototyp-v2";
+var KEY = "nu-prototyp-v3";
 
 // ---------- Datum ----------
 function heute(){ var d = new Date(); if(d.getHours() < 12) d.setDate(d.getDate() - 1); d.setHours(0,0,0,0); return d; }
@@ -29,7 +29,7 @@ var HAUS = [
   {id:"TH", name:"Tiny House", teile:[["TH1"]]},
   {id:"X", name:"Weitere Plätze", teile:[[]]}
 ];
-var NIKO = [{id:"N", name:"Saal", teile:[["N1","N2","N3","N4"],["N5","N6","N7","N8"]]}];
+var NIKO = [{id:"N", name:"Saal", teile:[["N1","N2","N3","N4"],["N5","N6","N7","N8"]]}, {id:"NX", name:"Weitere Plätze", teile:[[]]}];
 // Grundriss St. Pius in den Einheiten des Bettenplans (viewBox -10 -10 971 800); Betten [x, y, Breite, Höhe]
 var GR = {
   boeden:{D:[13,13,314,309], B:[13,328,314,402], T:[746,13,202,274], F:[670,293,278,437]},
@@ -50,10 +50,17 @@ var ORT = {L1:"Loggia",L2:"Loggia",L3:"Loggia",L4:"Loggia",L5:"Loggia",E1:"Esszi
 function alleBetten(plan){ var out = []; plan.forEach(function(z){ z.teile.forEach(function(t){ t.forEach(function(x){ if(Array.isArray(x)) x.forEach(function(y){ out.push({nr:y, zimmer:z.id}); }); else out.push({nr:x, zimmer:z.id}); }); }); }); return out; }
 var BETTEN_HAUS, BETTEN_NIKO = alleBetten(NIKO), ZIMMER_VON = {};
 function betteNeuBerechnen(){
-  HAUS[HAUS.length - 1].teile = [(S && S.extra ? S.extra : []).map(function(x){ ORT[x.id] = x.name; return x.id; })];
-  BETTEN_HAUS = alleBetten(HAUS); ZIMMER_VON = {};
+  var ex = (S && S.extra) || [];
+  ex.forEach(function(x){ ORT[x.id] = x.name; });
+  HAUS[HAUS.length - 1].teile = [ex.filter(function(x){ return x.ort !== "niko"; }).map(function(x){ return x.id; })];
+  NIKO[NIKO.length - 1].teile = [ex.filter(function(x){ return x.ort === "niko"; }).map(function(x){ return x.id; })];
+  BETTEN_HAUS = alleBetten(HAUS); BETTEN_NIKO = alleBetten(NIKO); ZIMMER_VON = {};
   BETTEN_HAUS.concat(BETTEN_NIKO).forEach(function(b){ ZIMMER_VON[b.nr] = b.zimmer; });
 }
+// Nummerntausch: S.lage[nr] = Platz (ursprüngliche Nummer), an dem die Nummer jetzt im Plan steht. Belegung bleibt bei der Nummer.
+function posOf(nr){ return (S.lage && S.lage[nr]) || nr; }
+function anPlatz(platz){ var k = Object.keys(S.lage || {}).find(function(n){ return S.lage[n] === platz; }); return k || platz; }
+function lageVon(nr){ return STOCK[posOf(nr)]; }
 var STOCK = {}; HAUS.concat(NIKO).forEach(function(z){ z.teile.forEach(function(t){ t.forEach(function(x){ if(Array.isArray(x)){ STOCK[x[0]] = "oben"; STOCK[x[1]] = "unten"; } }); }); });
 var SPRACHEN = [["de","Deutsch","Deutsch"],["en","English","Englisch"],["fr","Français","Französisch"],["es","Español","Spanisch"],["ar","العربية","Arabisch"],["fa","فارسی","Farsi"],["pl","Polski","Polnisch"],["ro","Română","Rumänisch"],["bg","Български","Bulgarisch"],["ru","Русский","Russisch"]];
 var SPRACHE = {}; SPRACHEN.forEach(function(s){ SPRACHE[s[0]] = s; });
@@ -64,43 +71,43 @@ function beispiel(){
   function gast(vor, o){ var id = "g" + (++n); G[id] = Object.assign({id:id, vorname:vor, nachname:"", spitz:"", sprache:"de", nr:"2026-27-" + String(n).padStart(4,"0"), erste:iso(plus(H,-20)), naechte:12, laus:"liegt", lausSeit:null, lausFrist:null, unterschrieben:true, uebersetzung:null, dokumente:[], sanktionen:[], notizen:[], extern:false, standort:"haus"}, o || {}); if(G[id].unterschrieben && G[id].sprache !== "de" && G[id].uebersetzung === null) G[id].uebersetzung = G[id].sprache; return id; }
   var b = {};
   function bett(nr, g, s, o){ b[nr] = Object.assign({g:g, s:s}, o || {}); }
-  bett("D1", gast("Jonas", {naechte:21}), "anwesend");
-  bett("D2", gast("Marek", {sprache:"pl", naechte:44, notizen:[{datum:iso(plus(H,-1)), text:"Fragt nach Arbeitsschuhen in Größe 44.", von:"Silke", quelle:"aus Bericht vom " + kurz(plus(H,-1))}]}), "anwesend");
+  bett("D1", gast("Paul", {naechte:21}), "anwesend");
+  bett("D2", gast("Tom", {sprache:"pl", naechte:44, notizen:[{datum:iso(plus(H,-1)), text:"Fragt nach Arbeitsschuhen in Größe 44.", von:"Sam", quelle:"aus Bericht vom " + kurz(plus(H,-1))}]}), "anwesend");
   bett("D3", null, "frei");
-  bett("D4", gast("Ali", {spitz:"Professor", sprache:"ar", naechte:12}), "erwartet");
-  bett("D5", gast("Dimitri", {sprache:"bg", naechte:9, sanktionen:[{stufe:"Gelbe Karte", datum:iso(plus(H,-3)), grund:"Laute Musik nach 23 Uhr nach zwei Hinweisen", von:"Silke"}]}), "anwesend");
-  bett("D6", gast("Petra", {naechte:30}), "gehalten", {bis:iso(plus(H,4)), grund:"Krankenhaus"});
-  bett("T1", gast("Yusuf", {sprache:"fa", naechte:3, laus:"fehlt", lausSeit:iso(plus(H,-3))}), "erwartet");
-  bett("T2", gast("Hamid", {sprache:"ar", naechte:17}), "freibis", {bis:iso(plus(H,6))});
-  bett("T3", gast("Elena", {sprache:"ro", naechte:30}), "anwesend");
-  bett("B1", gast("Mihai", {sprache:"ro", naechte:1, laus:"fehlt", lausSeit:iso(plus(H,-1))}), "erwartet");
+  bett("D4", gast("Max", {spitz:"Professor", sprache:"ar", naechte:12}), "erwartet");
+  bett("D5", gast("Felix", {sprache:"bg", naechte:9, sanktionen:[{stufe:"Gelbe Karte", datum:iso(plus(H,-3)), grund:"Laute Musik nach 23 Uhr nach zwei Hinweisen", von:"Sam"}]}), "anwesend");
+  bett("D6", gast("Anna", {naechte:30}), "gehalten", {bis:iso(plus(H,4)), grund:"Krankenhaus"});
+  bett("T1", gast("Jan", {sprache:"fa", naechte:3, laus:"fehlt", lausSeit:iso(plus(H,-3))}), "erwartet");
+  bett("T2", gast("Leon", {sprache:"ar", naechte:17}), "freibis", {bis:iso(plus(H,6))});
+  bett("T3", gast("Laura", {sprache:"ro", naechte:30}), "anwesend");
+  bett("B1", gast("Tim", {sprache:"ro", naechte:1, laus:"fehlt", lausSeit:iso(plus(H,-1))}), "erwartet");
   bett("B2", null, "frei");
-  bett("B3", gast("Ion", {sprache:"ro", naechte:4}), "erwartet", {vorher:1});
-  bett("B4", gast("Olek", {sprache:"ru", naechte:15}), "anwesend");
-  bett("F1", gast("Samir", {naechte:20}), "anwesend");
-  bett("F2", gast("Ben", {naechte:8}), "fehlt2", {n:2});
-  bett("F3", gast("Lina", {naechte:11, notizen:[{datum:iso(plus(H,-2)), text:"Arzttermin Donnerstag, kommt eventuell später.", von:"Schwester Martha", quelle:"Hinweis"}]}), "anwesend");
+  bett("B3", gast("Lukas", {sprache:"ro", naechte:4}), "erwartet", {vorher:1});
+  bett("B4", gast("Erik", {sprache:"ru", naechte:15}), "anwesend");
+  bett("F1", gast("Moritz", {naechte:20}), "anwesend");
+  bett("F2", gast("Simon", {naechte:8}), "fehlt2", {n:2});
+  bett("F3", gast("Lisa", {naechte:11, notizen:[{datum:iso(plus(H,-2)), text:"Arzttermin Donnerstag, kommt eventuell später.", von:"Leitung", quelle:"Hinweis"}]}), "anwesend");
   bett("F4", null, "frei");
-  bett("L1", gast("Emil", {naechte:6}), "anwesend");
-  bett("L2", gast("Kasia", {sprache:"pl", naechte:2}), "fehlt", {n:1});
-  bett("L3", null, "frei"); bett("L4", gast("Jana", {naechte:5}), "anwesend"); bett("L5", gast("Ali", {sprache:"fa", naechte:5, laus:"liegt", unterschrieben:false, dokumente:[]}), "anwesend");
-  bett("E1", null, "frei"); bett("TH1", gast("Ole", {naechte:9}), "anwesend");
+  bett("L1", gast("Noah", {naechte:6}), "anwesend");
+  bett("L2", gast("Julia", {sprache:"pl", naechte:2}), "fehlt", {n:1});
+  bett("L3", null, "frei"); bett("L4", gast("Nina", {naechte:5}), "anwesend"); bett("L5", gast("Max", {sprache:"fa", naechte:5, laus:"liegt", unterschrieben:false, dokumente:[]}), "anwesend");
+  bett("E1", gast("Otto", {naechte:1, laus:"nicht", notizen:[{datum:iso(H), text:"Mit dem Kältebus gekommen.", von:"Kim", quelle:"Aufnahme"}]}), "anwesend"); bett("TH1", gast("Kai", {naechte:9}), "anwesend");
   // St. Nikolaus: lange bekannte Gäste, fortgeschrieben
-  ["Max","Ida","Aleksander","Wolfgang","Finn","Maria","Zoran"].forEach(function(v, i){
+  ["Karl","Sophie","Alexander","Peter","Hans","Eva","Frank"].forEach(function(v, i){
     var nr = ["N1","N2","N3","N5","N6","N7","N8"][i];
     bett(nr, gast(v, {standort:"nikolaus", naechte:30 + i, unterschrieben:false}), "anwesend", {fort:true});
   });
-  bett("N4", null, "frei");
+  bett("N4", null, "frei"); bett("N9", null, "frei");
   // weitere Personen in der Gästedatenbank
-  gast("Alex", {nachname:"B.", naechte:0, sanktionen:[{stufe:"Hausverbot", datum:iso(plus(H,-10)), grund:"Gewalt gegen einen anderen Gast", von:"Schwester Martha", bis:iso(plus(H,170))}]});
-  gast("Alexandru", {nachname:"Popescu", sprache:"ro", naechte:3});
-  gast("Nadia", {sprache:"fr", naechte:2});
-  gast("Ali", {nachname:"Haddad", sprache:"ar", naechte:14, erste:iso(plus(H,-60))});
-  gast("Tomasz", {sprache:"pl", naechte:7});
+  gast("Maximilian", {nachname:"S.", naechte:0, sanktionen:[{stufe:"Hausverbot", datum:iso(plus(H,-10)), grund:"Gewalt gegen einen anderen Gast", von:"Leitung", bis:iso(plus(H,170))}]});
+  gast("Stefan", {nachname:"Schmidt", sprache:"ro", naechte:3});
+  gast("Sarah", {sprache:"fr", naechte:2});
+  gast("Max", {nachname:"Mustermann", sprache:"ar", naechte:14, erste:iso(plus(H,-60))});
+  gast("Markus", {sprache:"pl", naechte:7});
   var dusche = {}; dusche[iso(H)] = {"19:00":{g:"g1", s:"erledigt"}, "20:00":{g:"g12", s:"geplant"}, "20:30":{g:"g14", s:"geplant"}};
   var hinweise = [
-    {id:"h1", von:"Schwester Martha", text:"Heizung im T-Zimmer ist defekt. Der Handwerker kommt Donnerstag, bis dahin den Heizlüfter nutzen.", bis:iso(plus(H,3)), wichtig:true, quelle:"Nextcloud"},
-    {id:"h2", von:"Silke", text:"Neue Decken liegen im Keller, Regal links.", bis:iso(plus(H,2)), wichtig:false, quelle:"App"}
+    {id:"h1", von:"Leitung", text:"Heizung im T-Zimmer ist defekt. Der Handwerker kommt Donnerstag, bis dahin den Heizlüfter nutzen.", bis:iso(plus(H,3)), wichtig:true, quelle:"Nextcloud"},
+    {id:"h2", von:"Sam", text:"Neue Decken liegen im Keller, Regal links.", bis:iso(plus(H,2)), wichtig:false, quelle:"App"}
   ];
   var termine = [
     {datum:iso(H), art:"Bettwäsche", titel:"Bettwäschewechsel Zimmer B", sym:"wiederholen"},
@@ -109,21 +116,38 @@ function beispiel(){
     {datum:iso(plus(H,7)), art:"Bettwäsche", titel:"Bettwäschewechsel Zimmer D", sym:"wiederholen"},
     {datum:iso(plus(H,10)), art:"Sondertermin", titel:"Handwerker Heizung", sym:"kalender"}
   ];
-  var dienstplan = {}; for(var i = -10; i < 40; i++){ var dd = iso(plus(H,i)); dienstplan[dd] = i % 3 === 0 ? ["Silke","Jessica"] : i % 3 === 1 ? ["Jonas","Silke"] : ["Flo", ""]; }
-  dienstplan[iso(H)] = ["Jonas","Silke"];
+  var dienstplan = {}, kueche = {}, m0 = new Date(H.getFullYear(), H.getMonth() - 1, 1), m2 = new Date(H.getFullYear(), H.getMonth() + 2, 0);
+  for(var d = new Date(m0); d <= m2; d = plus(d, 1)){ var i = Math.round((d - H) / 864e5), r = ((i % 3) + 3) % 3, dd = iso(d);
+    dienstplan[dd] = r === 0 ? ["Sam","Robin"] : r === 1 ? ["Kim","Sam"] : ["Chris", ""]; kueche[dd] = d.getDate() % 2 ? "Mika" : "Jule"; }
+  dienstplan[iso(H)] = ["Kim","Sam"];
+  // Sam: heute ist der letzte geplante Dienst in diesem Monat
+  Object.keys(dienstplan).forEach(function(dd){ var x = pd(dd); if(x > H && x.getMonth() === H.getMonth()) dienstplan[dd] = dienstplan[dd].map(function(n){ return n === "Sam" ? "Jule" : n; }); });
+  // Originalplan (Stand vor Monatsanfang) für Vormonat und laufenden Monat
+  var plan0 = {}, einsaetze = {}, mEnde = new Date(H.getFullYear(), H.getMonth() + 1, 0);
+  for(var d2 = new Date(m0); d2 <= mEnde; d2 = plus(d2, 1)){ var k2 = iso(d2); plan0[k2] = {nacht:dienstplan[k2].slice(), kueche:kueche[k2]}; }
+  // Tatsächliche Einsätze bis gestern, aus unterschriebenen Dienstberichten; zwei Abweichungen im Vormonat
+  var krankTag = null, tauschTag = null;
+  for(var d3 = new Date(m0); d3 < H; d3 = plus(d3, 1)){ var k3 = iso(d3), p3 = plan0[k3];
+    var e3 = p3.nacht.map(function(n, j){ return n ? {name:n, rolle:"Betreuung " + (j + 1), geplant:n, grund:""} : null; }).filter(Boolean).concat([{name:p3.kueche, rolle:"Küche", geplant:p3.kueche, grund:""}]);
+    if(d3.getMonth() === m0.getMonth() && d3.getDate() > 8){
+      if(!krankTag && p3.nacht.indexOf("Robin") >= 0){ krankTag = k3; e3.forEach(function(e){ if(e.name === "Robin"){ e.name = "Chris"; e.grund = "Krankheit"; } }); }
+      else if(krankTag && !tauschTag && d3.getDate() > 15 && p3.nacht.indexOf("Kim") >= 0 && p3.nacht.indexOf("Jule") < 0){ tauschTag = k3; e3.forEach(function(e){ if(e.name === "Kim"){ e.name = "Jule"; e.grund = "Tausch"; } }); }
+    }
+    einsaetze[k3] = e3; }
   var archiv = [
-    {datum:iso(plus(H,-1)), vorfall:false, personen:"Silke, Flo", text:"Ruhige Nacht. Toilettenpapier fehlt."},
-    {datum:iso(plus(H,-3)), vorfall:true, personen:"Silke, Jessica", text:"Gelbe Karte für @Dimitri: laute Musik nach 23 Uhr nach zwei Hinweisen."},
-    {datum:iso(plus(H,-2)), vorfall:false, personen:"Jonas, Flo", text:"Ion (B3) ist nicht gekommen, fehlt unentschuldigt."},
-    {datum:iso(plus(H,-4)), vorfall:false, personen:"Jonas, Silke", text:"Schlüssel 7 fehlt."}
+    {datum:iso(plus(H,-1)), vorfall:false, personen:"Sam, Chris", text:"Ruhige Nacht. Toilettenpapier fehlt."},
+    {datum:iso(plus(H,-3)), vorfall:true, personen:"Sam, Robin", text:"Gelbe Karte für @Felix: laute Musik nach 23 Uhr nach zwei Hinweisen."},
+    {datum:iso(plus(H,-2)), vorfall:false, personen:"Kim, Chris", text:"Lukas (B3) ist nicht gekommen, fehlt unentschuldigt."},
+    {datum:iso(plus(H,-4)), vorfall:false, personen:"Kim, Sam", text:"Schlüssel 7 fehlt."}
   ];
-  return {v:2, theme:"auto", G:G, betten:b, offRooms:{}, offBeds:{N4:true}, notbett:{L3:true, E1:true}, extra:[], dusche:dusche, hinweise:hinweise, termine:termine, dienstplan:dienstplan, archiv:archiv,
+  return {v:3, theme:"auto", G:G, betten:b, offRooms:{}, offBeds:{N4:true}, notbett:{L3:true, E1:true}, extra:[{id:"N9", name:"Matratze Flur", ort:"niko"}], lage:{}, dusche:dusche, hinweise:hinweise, termine:termine, dienstplan:dienstplan, kueche:kueche, plan0:plan0, einsaetze:einsaetze, nachweise:{}, planLog:[], nachweisBeispiel:true, archiv:archiv,
     berichte:{}, aktiv:0, sync:{offline:false, ausstehend:0, zuletzt:"21:00"}, naechsteNr:n + 1, ampel:{gruen:3}, kht:{gemeldet:false, zahl:null, um:null}};
 }
 var S;
-function laden(){ try{ var r = localStorage.getItem(KEY); if(r){ var s = JSON.parse(r); if(s && s.v === 2) return s; } }catch(e){} return beispiel(); }
+function laden(){ try{ var r = localStorage.getItem(KEY); if(r){ var s = JSON.parse(r); if(s && s.v === 3) return s; } }catch(e){} return beispiel(); }
 function speichern(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
 S = laden();
+var nachweisBeispielOffen = !!S.nachweisBeispiel;
 betteNeuBerechnen();
 
 // ---------- Zustand der Oberfläche ----------
@@ -154,7 +178,8 @@ function anzeige(g){ return g.vorname + (gleicherVorname(g) ? " (" + zusatz(g) +
 function naechteText(n){ return n === 1 ? "1 Nacht" : n + " Nächte"; }
 function pdfName(g){ return (g.nr ? g.nr.slice(-4) : "0000") + "_" + g.vorname + (g.nachname ? "_" + g.nachname : "") + "_" + (g.unterschriebenAm || g.erste) + ".pdf"; }
 function khtZahlen(){
-  var alle = BETTEN_HAUS.concat(BETTEN_NIKO).filter(function(b){ return !istAus(b.nr) && !S.notbett[b.nr]; });
+  // Notbetten werden nur über den Kältebus belegt: sie zählen mit, wenn sie belegt sind, freie Notbetten nicht
+  var alle = BETTEN_HAUS.concat(BETTEN_NIKO).filter(function(b){ return !istAus(b.nr) && (!S.notbett[b.nr] || belegtKht(b.nr)); });
   var belegt = alle.filter(function(b){ return belegtKht(b.nr); });
   return {gesamt:alle.length, belegt:belegt.length, frei:alle.length - belegt.length, alle:alle};
 }
@@ -183,7 +208,7 @@ function bettKarte(nr, kompakt){
     else if(a.some(function(x){ return x.stufe === "Gelbe Karte"; })) sym.push("karte-gelb");
     if(g.notizen.length && !kompakt) sym.push("notiz");
   }
-  var data = {nr:nr, s:s, name:g ? g.vorname : "", naechte:g ? g.naechte : null, symbole:sym.slice(0, kompakt ? 2 : 4), dusche:g && s !== "fehlt2" && duschSlot(g.id), warn:warn, bis:b.bis ? kurz(pd(b.bis)) : "", fehltN:b.n || 2, kompakt:kompakt, lage:STOCK[nr] || ""};
+  var data = {nr:nr, s:s, name:g ? g.vorname : "", naechte:g ? g.naechte : null, symbole:sym.slice(0, kompakt ? 2 : 4), dusche:g && s !== "fehlt2" && duschSlot(g.id), warn:warn, bis:b.bis ? kurz(pd(b.bis)) : "", fehltN:b.n || 2, kompakt:kompakt, lage:lageVon(nr) || ""};
   var html = Nu.bett(data);
   if(b.fort && s === "anwesend" && !kompakt) html = html.replace('class="naechte">', 'class="naechte">fortgeschrieben · ');
   if(ortText(nr) && s === "frei" && !kompakt) html = html.replace("<span>Gast aufnehmen</span>", "<span>" + esc(ortText(nr)) + "</span>");
@@ -222,7 +247,9 @@ function kopf(){
     '<button class="nu-iconbtn nu-iconbtn--fl" data-act="glocke" aria-label="' + anz + ' offene Erinnerungen">' + svg("glocke") + (anz ? '<span class="nu-zaehler' + (U.pop ? ' pop' : '') + '">' + anz + '</span>' : '') + '</button>' +
     '<div class="nu-dienst">' + pers + '</div></header>';
 }
-function aktivePerson(){ var dp = S.dienstplan[iso(H)] || ["Jonas"]; return dp[S.aktiv] || dp[0] || "Betreuung"; }
+// Team (Personalliste) und Leitung; im Beispiel anonymisiert
+var TEAM = ["Kim","Sam","Robin","Chris","Jule","Mika"], LEITUNG = "Leitung";
+function aktivePerson(){ var dp = S.dienstplan[iso(H)] || ["Kim"]; return dp[S.aktiv] || dp[0] || "Betreuung"; }
 function erinnerungen(){
   var out = [];
   BETTEN_HAUS.forEach(function(b){ var g = gastVon(b.nr); if(g && g.laus === "fehlt" && status(b.nr) !== "aus" && status(b.nr) !== "frei" && status(b.nr) !== "freibis"){ var t = lausTage(g); if(t >= 1) out.push({sym: t >= 3 ? "warnung" : "laeuseschein-fehlt", warn:true, text:"Läuseschein · " + g.vorname + ", " + b.nr, klein: t >= 3 ? "fehlt seit " + t + " Tagen" : "Tag " + (t + 1), nr:b.nr}); } });
@@ -279,8 +306,8 @@ function zimmerHtml(z){
   var aktiv = betten.filter(function(n){ return !istAus(n); });
   var frei = aktiv.filter(zaehlt).length;
   var teilHtml = function(t){ return t.map(function(x){
-    if(Array.isArray(x)) return '<div class="nu-stockbett"><div class="nu-stockbett-teil"><span>oben</span>' + bettKarte(x[0]) + '</div><div class="nu-stockbett-teil"><span>unten</span>' + bettKarte(x[1]) + '</div></div>';
-    return bettKarte(x); }).join(""); };
+    if(Array.isArray(x)) return '<div class="nu-stockbett"><div class="nu-stockbett-teil"><span>oben</span>' + bettKarte(anPlatz(x[0])) + '</div><div class="nu-stockbett-teil"><span>unten</span>' + bettKarte(anPlatz(x[1])) + '</div></div>';
+    return bettKarte(anPlatz(x)); }).join(""); };
   var inner = z.teile.length > 1 ? '<div class="nu-zimmer-betten">' + z.teile.map(function(t){ return '<div class="nu-zimmer-teil">' + teilHtml(t) + '</div>'; }).join("") + '</div>'
     : '<div class="nu-zimmer-betten">' + teilHtml(z.teile[0]) + '</div>';
   if(z.id === "N") inner = z.teile.map(function(t){ return '<div class="nu-zimmer-betten">' + teilHtml(t) + '</div>'; }).join("");
@@ -296,35 +323,35 @@ function grundrissPius(){
   var stock = GR.stock.map(function(k){ return '<rect class="stockrahmen" x="' + k[2] + '" y="' + k[3] + '" width="' + k[4] + '" height="' + k[5] + '" rx="9"/>'; }).join("");
   var namen = {D:"ZIMMER D", B:"ZIMMER B", T:"T-ZIMMER", F:"ZIMMER F"};
   var labels = Object.keys(GR.labels).map(function(id){ var p = GR.labels[id]; return '<text class="raumname" x="' + p[0] + '" y="' + p[1] + '">' + namen[id] + '</text><text class="raumfrei" x="' + p[0] + '" y="' + (p[1] + 19) + '">' + raumZahl(id) + '</text>'; }).join("");
-  var plaetze = Object.keys(GR.einzel).map(function(nr){ return platz(GR.einzel[nr], bettKarte(nr, true), fw, fh); }).join("") +
-    GR.stock.map(function(k){ var sh = (k[5] - 9) / 2; return platz([k[2] + 3, k[3] + 3, k[4] - 6, sh], bettKarte(k[0], true), fw, fh) + platz([k[2] + 3, k[3] + 6 + sh, k[4] - 6, sh], bettKarte(k[1], true), fw, fh); }).join("");
+  var plaetze = Object.keys(GR.einzel).map(function(p){ return platz(GR.einzel[p], bettKarte(anPlatz(p), true), fw, fh); }).join("") +
+    GR.stock.map(function(k){ var sh = (k[5] - 9) / 2; return platz([k[2] + 3, k[3] + 3, k[4] - 6, sh], bettKarte(anPlatz(k[0]), true), fw, fh) + platz([k[2] + 3, k[3] + 6 + sh, k[4] - 6, sh], bettKarte(anPlatz(k[1]), true), fw, fh); }).join("");
   return '<div class="nu-grundriss' + (flurZu ? ' is-flur-zu' : '') + '" role="group" aria-label="Grundriss St. Pius"><svg viewBox="-10 -10 971 800" aria-hidden="true">' + SCHRAFFUR + boeden + GR_FEST + stock + labels + '</svg>' + plaetze + '</div>';
 }
 function grundrissNiko(){
   var fw = 380, fh = 440;
-  var plaetze = Object.keys(GR_NIKO.einzel).map(function(nr){ return platz(GR_NIKO.einzel[nr], bettKarte(nr, true), fw, fh); }).join("");
+  var plaetze = Object.keys(GR_NIKO.einzel).map(function(p){ return platz(GR_NIKO.einzel[p], bettKarte(anPlatz(p), true), fw, fh); }).join("");
   return '<div class="nu-grundriss" style="--grundriss-format:380 / 440;max-width:460px" role="group" aria-label="St. Nikolaus, Saal"><svg viewBox="-10 -10 380 440" aria-hidden="true">' + SCHRAFFUR +
     '<rect class="boden' + (S.offRooms.N ? ' is-aus' : '') + '" x="13" y="13" width="334" height="394"/><rect class="wand" x="10" y="10" width="340" height="400"/>' +
     '<text class="raumname" x="180" y="204" text-anchor="middle">ST. NIKOLAUS · SAAL</text><text class="raumfrei" x="180" y="224" text-anchor="middle">' + raumZahl("N") + '</text></svg>' + plaetze + '</div>';
 }
-function plaetzeSpalte(){
-  var gruppen = [["L","Loggien"],["E","Esszimmer"],["TH","Tiny House"],["X","Weitere Plätze"]];
-  return '<div class="nu-plaetze">' + gruppen.map(function(gr){ var z = HAUS.filter(function(x){ return x.id === gr[0]; })[0], nrs = z.teile[0];
+function plaetzeSpalte(plan){
+  var gruppen = plan === NIKO ? [["NX","Weitere Plätze"]] : [["L","Loggien"],["E","Esszimmer"],["TH","Tiny House"],["X","Weitere Plätze"]];
+  return '<div class="nu-plaetze">' + gruppen.map(function(gr){ var z = plan.filter(function(x){ return x.id === gr[0]; })[0], nrs = z.teile[0];
     if(!nrs.length) return "";
-    return '<div class="nu-plaetze-titel">' + gr[1] + '<span>' + raumZahl(gr[0]) + '</span></div>' + nrs.map(function(nr){ return bettKarte(nr); }).join(""); }).join("") + '</div>';
+    return '<div class="nu-plaetze-titel">' + gr[1] + '<span>' + raumZahl(gr[0]) + '</span></div>' + nrs.map(function(p){ return bettKarte(anPlatz(p)); }).join(""); }).join("") + '</div>';
 }
 function planAnsicht(){
   var k = kennzahlen();
   var wort = k.frei === 0 ? "Kein Bett frei" : k.frei === 1 ? "1 Bett frei" : k.frei + " Betten frei";
-  var kopfzeile = '<div class="nu-kennzahlen"><span class="nu-ampel" data-s="' + k.ampel + '"><span class="nu-ampel-licht">' + k.frei + '</span><span class="nu-ampel-wort">' + wort + '<small>Ampel ' + {gruen:"grün",gelb:"gelb",rot:"rot"}[k.ampel] + ' · ohne Notbett</small></span></span>' +
-    '<button class="nu-kht" data-act="khtBlatt"><small>Für das Kältehilfetelefon</small><b>' + k.belegt + ' belegt · ' + k.gesamt + ' gesamt</b><small>beide Standorte · antippen für Rechnung</small></button>' +
+  var kopfzeile = '<div class="nu-kennzahlen"><span class="nu-ampel" data-s="' + k.ampel + '"><span class="nu-ampel-licht">' + k.frei + '</span><span class="nu-ampel-wort">' + wort + '<small>Ampel ' + {gruen:"grün",gelb:"gelb",rot:"rot"}[k.ampel] + '</small></span></span>' +
+    '<button class="nu-kennzahl nu-kht-nummer" data-act="khtBlatt">KHT-Nummer<b>' + k.belegt + '</b></button>' +
     '<span class="nu-kennzahl">St. Pius<b>' + k.anwesendHaus + ' da · ' + k.erwartet + ' erwartet</b></span><span class="nu-kennzahl">St. Nikolaus<b>' + k.nikoBelegt + ' von ' + k.niko + '</b></span></div>';
   var reiter = '<div class="p-plan-zeile"><div class="nu-reiter" role="tablist"><button role="tab" data-act="reiter" data-arg="haus" aria-selected="' + (U.reiter === "haus") + '">' + svg("haus","klein") + 'St. Pius <span class="n">' + k.freiHaus + ' frei</span></button><button role="tab" data-act="reiter" data-arg="niko" aria-selected="' + (U.reiter === "niko") + '">' + svg("standort-2","klein") + 'St. Nikolaus <span class="n">' + k.nikoBelegt + '/' + k.niko + '</span></button></div><span style="flex:1"></span>' +
     (U.tag === 0 ? '<button class="nu-btn nu-btn--primaer" data-act="aufnahme">' + svg("person-plus") + 'Gast aufnehmen</button>' : '') + '</div>';
   var auswahl = U.auswahl ? '<div class="p-hinweisbalken">' + svg("tauschen") + 'Neues Bett für ' + esc(gastVon(U.auswahl).vorname) + ' antippen<button class="nu-btn nu-btn--klein nu-btn--rahmen" data-act="auswahlAbbrechen">Abbrechen</button></div>' : '';
   var plan;
-  if(U.reiter === "haus") plan = schmal() ? '<div class="p-raster">' + HAUS.map(zimmerHtml).join("") + '</div>' : '<div class="nu-plan-raster"><div class="nu-plan-karte">' + grundrissPius() + '</div>' + plaetzeSpalte() + '</div>';
-  else plan = schmal() ? '<div class="p-raster">' + NIKO.map(zimmerHtml).join("") + '</div>' : '<div class="nu-plan-karte" style="display:flex;justify-content:center">' + grundrissNiko() + '</div>';
+  if(U.reiter === "haus") plan = schmal() ? '<div class="p-raster">' + HAUS.map(zimmerHtml).join("") + '</div>' : '<div class="nu-plan-raster"><div class="nu-plan-karte">' + grundrissPius() + '</div>' + plaetzeSpalte(HAUS) + '</div>';
+  else plan = schmal() ? '<div class="p-raster">' + NIKO.map(zimmerHtml).join("") + '</div>' : '<div class="nu-plan-raster" style="grid-template-columns:minmax(0,520px) 176px;justify-content:center"><div class="nu-plan-karte">' + grundrissNiko() + '</div>' + plaetzeSpalte(NIKO) + '</div>';
   return '<div class="p-plan-kopf">' + kopfzeile + reiter + auswahl + '</div><div id="plan"' + (U.auswahl ? ' class="p-auswahlmodus"' : '') + '>' + plan + '</div>' +
     (U.reiter === "niko" ? '<p class="nu-beschr" style="margin-top:12px">St. Nikolaus: Wer eingetragen ist, wird jede Nacht fortgeschrieben, bis jemand die Belegung ändert. Aufnahme ohne Hausordnung, Läuseschein und Unterschrift.</p>' : '');
 }
@@ -336,6 +363,7 @@ function schnellauswahl(){
   if(s === "frei" || s === "freibis" || s === "fehlt2"){
     h += '<div class="nu-schnell-kopf"><b>Bett ' + nr + '</b><span>' + (s === "freibis" ? "frei bis " + kurz(pd(b.bis)) : "frei") + (ortText(nr) ? " · " + esc(ortText(nr)) : "") + '</span></div>';
     if(s === "freibis") h += '<div class="nu-zeile">' + svg("rueckkehr") + '<div>' + esc(g.vorname) + ' kommt am ' + kurz(pd(b.bis)) + ' zurück.<small>Bis dahin darf das Bett vergeben werden.</small></div></div>';
+    if(s === "frei" && S.notbett[nr]) h += '<div class="nu-zeile">' + svg("info") + '<div>Notbett<small>Nur über den Kältebus belegen.</small></div></div>';
     if(s === "fehlt2") h += '<div class="nu-zeile nu-zeile--warnung">' + svg("abwesend") + '<div><b>' + esc(g.vorname) + ' fehlt die ' + (b.n || 2) + '. Nacht in Folge</b><small>Unentschuldigt. Das Bett zählt als frei und darf vergeben werden.</small></div></div>';
     h += '<button class="nu-btn nu-btn--primaer" data-act="aufnahme" data-arg="' + nr + '">' + svg("person-plus") + 'Gast aufnehmen</button>';
     if(s === "fehlt2") h += '<button class="nu-btn" data-act="istDa" data-arg="' + nr + '">' + svg("anwesend") + esc(g.vorname) + ' ist doch da</button>';
@@ -380,7 +408,7 @@ function detailBereich(){
   var nr = U.detail, g = gastVon(nr), b = S.betten[nr] || {}, s = status(nr);
   if(!g) return '';
   var ro = U.tag !== 0;
-  var stock = STOCK[nr] ? " · Stockbett " + STOCK[nr] : "";
+  var stock = lageVon(nr) ? " · Stockbett " + lageVon(nr) : "";
   var sStatus = {anwesend:"anwesend", erwartet:"erwartet", fehlt:"fehlt unentschuldigt, 1. Nacht", fehlt2:"fehlt " + (b.n || 2) + " Nächte in Folge, Bett zählt als frei", gehalten:"freigehalten bis " + (b.bis ? kurz(pd(b.bis)) : ""), freibis:"abwesend, Bett frei bis " + (b.bis ? kurz(pd(b.bis)) : "")}[s] || s;
   var warn = "";
   var lt = lausTage(g);
@@ -478,12 +506,12 @@ var SCHRITTE = ["Person","Dauer","Sprache","Hausordnung","Datenschutz","Abschlus
 function nachholenStart(gid){ var g = S.G[gid]; U.wizard = {nachholen:true, schritt:2, g:gid, nr:bettVon(gid) || "", suche:"", neu:{}, dauer:"mehr", sprache:g.sprache, sig:{}, richtung:"vor", verbotOk:true, grund:""}; U.modal = null; U.wizardRein = true; render(); }
 function aufnahmeStart(nr){
   var freieBetten = BETTEN_HAUS.filter(function(b){ return !istAus(b.nr) && status(b.nr) === "frei"; });
-  U.wizard = {schritt:0, nr:nr || (freieBetten[0] && freieBetten[0].nr), suche:"", g:null, neu:{vorname:"", nachname:"", spitz:""}, dauer:null, mitEnde:false, bis:iso(plus(H,7)), sprache:null, sig:{}, richtung:"vor", verbotOk:false, grund:""};
+  U.wizard = {niko:!!nr && (ZIMMER_VON[nr] === "N" || ZIMMER_VON[nr] === "NX"), schritt:0, nr:nr || (freieBetten[0] && freieBetten[0].nr), suche:"", g:null, neu:{vorname:"", nachname:"", spitz:""}, dauer:null, mitEnde:false, bis:iso(plus(H,7)), sprache:null, sig:{}, richtung:"vor", verbotOk:false, grund:""};
   U.schnell = null; U.wizardRein = true; render();
 }
 function wz(){ return U.wizard; }
 function brauchtUnterschrift(){ var w = wz(); return !(w.g && S.G[w.g].unterschrieben); }
-function schrittListe(){ return wz().nachholen ? [2,3,4,5] : brauchtUnterschrift() ? [0,1,2,3,4,5] : [0,1,5]; }
+function schrittListe(){ return wz().nachholen ? [2,3,4,5] : wz().niko ? [0,5] : brauchtUnterschrift() ? [0,1,2,3,4,5] : [0,1,5]; }
 function schrittFertig(i){
   var w = wz();
   if(i === 0) return (w.g && (!hausverbot(S.G[w.g]) || (w.verbotOk && w.grund.trim()))) || (!w.g && (w.neu.vorname.trim() || w.neu.spitz.trim()));
@@ -522,6 +550,7 @@ function padAnbinden(r){
 }
 function padFertig(key, bild){
   if(U.wizard && /^(hg|hb|dg|db)$/.test(key)){ U.wizard.sig[key] = bild; render(); return; }
+  if(key === "mon"){ nachweisUnterschreiben(bild); return; }
   if(key.indexOf("bes") === 0){ var i = +key.slice(3); var b = bericht(); b.besetzung[i].sig = bild; b.besetzung[i].um = uhr(); U.modal = null; commit(); }
 }
 function schrittInhalt(){
@@ -536,7 +565,7 @@ function schrittInhalt(){
       return '<button class="nu-treffer' + (hv ? ' is-verbot' : '') + '" data-act="gastWaehlen" data-arg="' + g.id + '"' + (w.g === g.id ? ' style="box-shadow:inset 0 0 0 3px var(--tinte)"' : '') + '><span class="nu-treffer-bett' + (bett ? '' : ' is-leer') + '" aria-label="' + (bett ? 'Bett ' + bett : 'kein Bett') + '">' + (bett || (hv ? svg("karte-rot") : "–")) + '</span><div><b>' + esc(g.vorname + (g.nachname ? " " + g.nachname : "")) + (g.spitz ? ' <span style="font-weight:400">„' + esc(g.spitz) + '“</span>' : '') + '</b><small>' + (hv ? 'Hausverbot ' + (hv.bis ? 'bis ' + kurz(pd(hv.bis)) : 'unbefristet') + ' · ' + esc(hv.grund) : (bett ? 'Bett ' + bett + ' · ' + statusWort(bett) : 'kein Bett · ' + naechteText(g.naechte) + '') + ' · ' + esc(SPRACHE[g.sprache][2])) + '</small></div></button>'; }).join("");
     var warn = gewaehlt && hausverbot(gewaehlt) ? '<div class="nu-zeile nu-zeile--vorfall">' + svg("karte-rot") + '<div><b>' + esc(gewaehlt.vorname) + ' hat Hausverbot</b><small>Aufnehmen nur mit Bestätigung und Begründung.</small></div></div><div class="nu-feld"><label for="w-grund">Begründung</label><input class="nu-eingabe" id="w-grund" value="' + esc(w.grund) + '" placeholder="Warum wird trotzdem aufgenommen?"></div><div style="display:flex;align-items:center;gap:12px"><button class="nu-schalter" role="switch" aria-checked="' + w.verbotOk + '" data-act="verbotOk" aria-label="Trotzdem aufnehmen"></button><span>Trotzdem aufnehmen</span></div>' : '';
     var neu = !w.g ? '<div id="w-gleich">' + gleichHinweis(w.neu.vorname) + '</div><div class="p-drei"><div class="nu-feld"><label for="w-vor">Vorname</label><input class="nu-eingabe" id="w-vor" autocapitalize="words" value="' + esc(w.neu.vorname) + '"></div><div class="nu-feld"><label for="w-nach">Nachname (freiwillig)</label><input class="nu-eingabe" id="w-nach" autocapitalize="words" value="' + esc(w.neu.nachname) + '"></div><div class="nu-feld"><label for="w-spitz">Spitzname</label><input class="nu-eingabe" id="w-spitz" value="' + esc(w.neu.spitz) + '"></div></div><p class="nu-beschr">Vorname empfohlen, mindestens ein Name oder Spitzname. Bekannte Personen werden nie doppelt angelegt. Gleiche Vornamen unterscheidet die Bettnummer.</p>' : '<button class="nu-btn nu-btn--rahmen" data-act="gastNeu" style="justify-self:start">' + svg("person-plus") + 'Doch eine neue Person anlegen</button>';
-    return '<h2 class="titel" style="margin:0">Person suchen oder anlegen</h2><div class="nu-feld"><label for="w-suche">Vorname, Nachname oder Spitzname</label><div style="position:relative"><input class="nu-eingabe" id="w-suche" value="' + esc(w.suche) + '" placeholder="z. B. Ali" style="padding-left:48px" autocomplete="off"><span style="position:absolute;left:14px;top:16px;color:var(--tinte-2)">' + svg("suche") + '</span></div></div>' +
+    return '<h2 class="titel" style="margin:0">Person suchen oder anlegen</h2><div class="nu-feld"><label for="w-suche">Vorname, Nachname oder Spitzname</label><div style="position:relative"><input class="nu-eingabe" id="w-suche" value="' + esc(w.suche) + '" placeholder="z. B. Max" style="padding-left:48px" autocomplete="off"><span style="position:absolute;left:14px;top:16px;color:var(--tinte-2)">' + svg("suche") + '</span></div></div>' +
       '<div class="p-liste" id="w-treffer">' + liste + (q && !treffer.length ? '<p class="nu-beschr">Keine Person gefunden. Unten neu anlegen.</p>' : '') + '</div>' + warn + (w.g ? '' : '<h3 class="abschnitt" style="margin:8px 0 0">Neue Person</h3>') + neu;
   }
   if(i === 1){
@@ -559,11 +588,12 @@ function schrittInhalt(){
   }
   var nrNeu = "2026-27-" + String(S.naechsteNr).padStart(4, "0");
   var gl = w.g ? gleicherVorname(S.G[w.g]) : vornameDoppelt(w.neu.vorname).length > 0;
+  if(w.niko) return '<h2 class="titel" style="margin:0">Abschluss</h2><dl class="nu-daten" style="font-size:17px;line-height:26px"><dt>Gast</dt><dd>' + esc(gastName()) + '</dd><dt>Bett</dt><dd>' + w.nr + ' · St. Nikolaus</dd></dl><div class="nu-zeile">' + svg("info") + '<div>St. Nikolaus<small>Ohne Hausordnung, Läuseschein und Unterschrift. Wird jede Nacht fortgeschrieben.</small></div></div>';
   if(w.nachholen){ var gn = S.G[w.g];
     return '<h2 class="titel" style="margin:0">Abschluss</h2><dl class="nu-daten" style="font-size:17px;line-height:26px"><dt>Gast</dt><dd>' + esc(anzeige(gn)) + '</dd><dt>Übersetzung</dt><dd>' + (w.sprache && w.sprache !== "de" ? SPRACHE[w.sprache][2] : "keine") + '</dd><dt>Aufnahmenummer</dt><dd>' + (gn.nr || nrNeu) + '</dd></dl>' +
       '<div class="nu-zeile">' + svg("pdf") + '<div>PDF wird in der Gästedatenbank abgelegt<small>Hausordnung (Deutsch, unterschrieben' + (w.sprache && w.sprache !== "de" ? ', Übersetzung als Anlage' : '') + ') und Datenschutzerklärung</small></div></div>';
   }
-  return '<h2 class="titel" style="margin:0">Abschluss</h2><dl class="nu-daten" style="font-size:17px;line-height:26px"><dt>Gast</dt><dd>' + esc(gastName()) + '</dd><dt>Bett</dt><dd>' + w.nr + (STOCK[w.nr] ? ' · Stockbett ' + STOCK[w.nr] : '') + '</dd><dt>Dauer</dt><dd>' + (w.dauer === "1" ? "1 Nacht" : w.dauer === "mehr" ? (w.mitEnde ? "mehrere Nächte, Abreise am " + kurz(pd(w.bis)) : "mehrere Nächte, ohne Enddatum") : "–") + '</dd>' + (gl ? '<dt>Angezeigt als</dt><dd>' + esc(gastName()) + ' (' + w.nr + ')</dd>' : '') + '<dt>Übersetzung</dt><dd>' + (w.sprache ? (w.sprache === "de" ? "keine (Deutsch)" : SPRACHE[w.sprache][2]) : (w.g ? SPRACHE[S.G[w.g].sprache][2] : "–")) + '</dd><dt>Aufnahmenummer</dt><dd>' + (brauchtUnterschrift() ? nrNeu : S.G[w.g].nr + ' (bereits unterschrieben)') + '</dd></dl>' +
+  return '<h2 class="titel" style="margin:0">Abschluss</h2><dl class="nu-daten" style="font-size:17px;line-height:26px"><dt>Gast</dt><dd>' + esc(gastName()) + '</dd><dt>Bett</dt><dd>' + w.nr + (lageVon(w.nr) ? ' · Stockbett ' + lageVon(w.nr) : '') + '</dd><dt>Dauer</dt><dd>' + (w.dauer === "1" ? "1 Nacht" : w.dauer === "mehr" ? (w.mitEnde ? "mehrere Nächte, Abreise am " + kurz(pd(w.bis)) : "mehrere Nächte, ohne Enddatum") : "–") + '</dd>' + (gl ? '<dt>Angezeigt als</dt><dd>' + esc(gastName()) + ' (' + w.nr + ')</dd>' : '') + '<dt>Übersetzung</dt><dd>' + (w.sprache ? (w.sprache === "de" ? "keine (Deutsch)" : SPRACHE[w.sprache][2]) : (w.g ? SPRACHE[S.G[w.g].sprache][2] : "–")) + '</dd><dt>Aufnahmenummer</dt><dd>' + (brauchtUnterschrift() ? nrNeu : S.G[w.g].nr + ' (bereits unterschrieben)') + '</dd></dl>' +
     (brauchtUnterschrift() ? '<div class="nu-zeile">' + svg("pdf") + '<div>PDF wird erstellt<small>' + nrNeu.slice(-4) + '_' + esc(gastName()) + '_' + iso(H) + '.pdf · Hausordnung auf Deutsch mit Unterschrift von Gast und Betreuung' + (w.sprache && w.sprache !== "de" ? ', Übersetzung als Anlage' : '') + ' · Datenschutz mit Unterschrift Gast</small></div></div>' : '') +
     (w.dauer !== "1" ? '<div class="nu-zeile nu-zeile--warnung">' + svg("laeuseschein-fehlt") + '<div><b>Läuseschein-Pflicht beginnt</b><small>Erinnerung an Tag 2 und 3</small></div></div>' : '');
 }
@@ -598,11 +628,12 @@ function aufnahmeAbschliessen(){
   if(w.nachholen){ var gn = S.G[gid]; dokumenteSpeichern(gn, w); gn.notizen.push({datum:iso(H), text:"Hausordnung und Datenschutz nachträglich unterschrieben.", von:aktivePerson(), quelle:"Gästedatenbank"}); U.wizard = null; commit(); toast("pdf", "Unterschrift nachgeholt", pdfName(gn), 4000); return; }
   if(!gid){ gid = "g" + Date.now(); S.G[gid] = {id:gid, vorname:w.neu.vorname.trim() || w.neu.spitz.trim(), nachname:w.neu.nachname.trim(), spitz:w.neu.spitz.trim(), sprache:w.sprache || "de", nr:"", erste:iso(H), naechte:0, laus:"nicht", lausSeit:null, lausFrist:null, unterschrieben:false, uebersetzung:null, dokumente:[], sanktionen:[], notizen:[], extern:false, standort:"haus"}; }
   var g = S.G[gid];
+  if(w.niko){ g.standort = "nikolaus"; g.naechte++; S.betten[w.nr] = {g:gid, s:"anwesend", fort:true}; U.wizard = null; U.neu = w.nr; U.reiter = "niko"; commit(); toast("anwesend", anzeige(g) + " ist aufgenommen", "Bett " + w.nr + " · St. Nikolaus", 4000); return; }
   if(brauchtUnterschrift()) dokumenteSpeichern(g, w);
   if(w.dauer !== "1" && g.laus !== "liegt"){ g.laus = "fehlt"; g.lausSeit = iso(H); }
   if(hausverbot(g)) g.notizen.push({datum:iso(H), text:"Trotz Hausverbot aufgenommen: " + w.grund, von:aktivePerson(), quelle:"Aufnahme"});
   var vorher = S.betten[w.nr];
-  if(vorher && vorher.g && vorher.g !== gid){ var alt = S.G[vorher.g]; alt.notizen.push({datum:iso(H), text:"Bett " + w.nr + " neu vergeben, nachdem " + alt.vorname + " " + (vorher.n || 2) + " Nächte in Folge unentschuldigt gefehlt hat.", von:aktivePerson(), quelle:"Bettenplan"}); }
+  if(vorher && vorher.g && vorher.g !== gid && vorher.s === "fehlt2"){ var alt = S.G[vorher.g]; alt.notizen.push({datum:iso(H), text:"Bett " + w.nr + " neu vergeben, nachdem " + alt.vorname + " " + (vorher.n || 2) + " Nächte in Folge unentschuldigt gefehlt hat.", von:aktivePerson(), quelle:"Bettenplan"}); }
   Object.keys(S.betten).forEach(function(n){ if(S.betten[n].g === gid && n !== w.nr) S.betten[n] = {g:null, s:"frei"}; });
   g.naechte++;
   S.betten[w.nr] = {g:gid, s:"anwesend", dauerhaft:w.dauer !== "1", ende:w.dauer === "mehr" && w.mitEnde ? w.bis : null};
@@ -616,7 +647,7 @@ var FEHLT = ["Tüten","Putzmittel","Toilettenpapier","Decken","Kaffee","Seife"];
 function bericht(d){ return S.berichte[d || iso(tagDatum())]; }
 function dienstBeginnen(){
   var dp = S.dienstplan[iso(H)] || ["",""];
-  S.berichte[iso(H)] = {status:"offen", besetzung:[{rolle:"Betreuung 1", name:dp[0] || "offen", sig:null},{rolle:"Betreuung 2", name:dp[1] || "offen", sig:null},{rolle:"Küche", name:"Hannah", sig:null}],
+  S.berichte[iso(H)] = {status:"offen", besetzung:[{rolle:"Betreuung 1", name:dp[0] || "offen", sig:null},{rolle:"Betreuung 2", name:dp[1] || "offen", sig:null},{rolle:"Küche", name:(S.kueche && S.kueche[iso(H)]) || "offen", sig:null}],
     f:{hinweise:"", kht:null, vorfall:null, fehlt:[], fehltText:"", fragen:"", schluessel:null, schluesselNr:"", extern:[], sonstiges:"", ziele:{}}, nachtraege:[], begonnen:uhr()};
   commit();
 }
@@ -661,16 +692,17 @@ function jaNein(feld, wert, gesperrt){
   return '<div class="nu-seg" role="radiogroup">' + [["ja","Ja"],["nein","Nein"]].map(function(x){ return '<button role="radio" aria-checked="' + (wert === x[0]) + '" data-act="feldJaNein" data-arg="' + feld + ',' + x[0] + '"' + (gesperrt ? ' disabled' : '') + '>' + x[1] + '</button>'; }).join("") + '</div>';
 }
 function dienstAnsicht(){
-  var reiter = '<div class="p-plan-zeile" style="margin-bottom:12px"><h1 class="titel-gross" style="margin:0;flex:1">Dienst &amp; Bericht</h1><div class="nu-reiter" role="tablist">' + [["bericht","Bericht"],["dusche","Duschplan"],["archiv","Archiv"]].map(function(r){ return '<button role="tab" aria-selected="' + (U.dienstReiter === r[0]) + '" data-act="dienstReiter" data-arg="' + r[0] + '">' + r[1] + '</button>'; }).join("") + '</div></div>';
+  var reiter = '<div class="p-plan-zeile" style="margin-bottom:12px"><h1 class="titel-gross" style="margin:0;flex:1">Dienst &amp; Bericht</h1><div class="nu-reiter" role="tablist">' + [["bericht","Bericht"],["dusche","Duschplan"],["monat","Monatsabschluss"],["archiv","Archiv"]].map(function(r){ return '<button role="tab" aria-selected="' + (U.dienstReiter === r[0]) + '" data-act="dienstReiter" data-arg="' + r[0] + '">' + r[1] + '</button>'; }).join("") + '</div></div>';
   if(U.dienstReiter === "dusche") return reiter + duschplan();
   if(U.dienstReiter === "archiv") return reiter + archivListe();
+  if(U.dienstReiter === "monat") return reiter + monatAnsicht();
   var b = bericht();
   if(!b){
     if(U.tag !== 0) return reiter + '<div class="p-leer">' + svg("bericht") + '<b>Kein Bericht für diesen Tag</b><span>Im Prototyp gibt es Berichte nur für den laufenden Dienst und im Archiv.</span></div>';
     return reiter + '<div class="p-leer">' + svg("bericht") + '<b>Noch kein Bericht für heute</b><span>Der Dienst beginnt mit den Hinweisen fürs Team. Besetzung und Termine sind schon eingetragen.</span><button class="nu-btn nu-btn--primaer" data-act="dienstBeginnen">' + svg("personen") + 'Neuen Dienst beginnen</button></div>';
   }
   var zu = b.status === "abgeschlossen", f = b.f;
-  var kopf = '<div class="nu-bericht" style="gap:16px">' +
+  var kopf = letzterDienstHinweis() + '<div class="nu-bericht" style="gap:16px">' +
     (zu ? '<div class="nu-gesperrt">' + svg("schloss", U.geradeZu ? "zu" : "") + '<div style="flex:1">Bericht abgeschlossen<small>' + esc(b.zuUm) + ' · ' + b.besetzung.map(function(x){ return x.name; }).join(", ") + ' · PDF gespeichert' + (S.sync.offline ? ', wartet auf Abgleich' : ' und abgeglichen') + '</small></div><button class="nu-btn nu-btn--klein nu-btn--rahmen" data-act="pdfZeigen">' + svg("pdf") + 'PDF ansehen</button><button class="nu-btn nu-btn--klein nu-btn--rahmen" data-act="teilen">' + svg("teilen") + 'Teilen</button></div>' : '') +
     '<div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><h2 class="titel" style="margin:0;flex:1">' + esc(lang(tagDatum())) + '</h2><span class="nu-beschr">begonnen ' + esc(b.begonnen) + '</span></div>' +
     b.besetzung.map(function(x, i){ return '<div class="nu-besetzung"><span class="rolle">' + esc(x.rolle) + '</span><button class="nu-person" data-act="personTauschen" data-arg="' + i + '"' + (zu ? ' disabled' : '') + ' aria-pressed="false" style="' + (x.name === "offen" ? 'box-shadow:inset 0 0 0 1.5px var(--linie-stark)' : '') + '"><span class="nu-kuerzel">' + esc(x.name === "offen" ? "?" : x.name.slice(0,2).toUpperCase()) + '</span>' + esc(x.name) + (zu ? '' : svg("tauschen","klein")) + '</button>' +
@@ -684,10 +716,10 @@ function dienstAnsicht(){
   var felder = '<div class="nu-bericht' + (f.vorfall === "ja" ? ' is-vorfall' : '') + '" id="bericht">' +
     (f.vorfall === "ja" ? '<div style="display:flex;align-items:center;gap:8px;color:var(--vorfall);font-weight:700">' + svg("vorfall") + 'Bericht mit Vorfall</div>' : '') +
     t("hinweise", "Wichtige Hinweise", "Was sollen die nächsten wissen? @ erwähnt einen Gast. Ein Absatz mit „Verwarnung“, „Gelbe Karte“ oder „Hausverbot“ am Anfang legt eine Sanktion für genau eine Person an, die anderen bekommen nur eine Notiz.") +
-    '<div class="nu-bericht-zeile"><span class="nu-feldname">Hat KHT angerufen?</span><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">' + jaNein("kht", f.kht, zu) + '<button class="nu-pille" data-act="khtBlatt" style="border:0;cursor:pointer">' + svg("telefon","klein") + 'Zahlen: ' + k.belegt + ' belegt · ' + k.gesamt + ' gesamt · ' + k.frei + ' frei</button>' + pflicht(f.kht) + '</div></div>' +
+    '<div class="nu-bericht-zeile"><span class="nu-feldname">Hat KHT angerufen?</span><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">' + jaNein("kht", f.kht, zu) + '<button class="nu-pille" data-act="khtBlatt" style="border:0;cursor:pointer">' + svg("telefon","klein") + 'KHT-Nummer ' + k.belegt + '</button>' + pflicht(f.kht) + '</div></div>' +
     '<div class="nu-bericht-zeile"><span class="nu-feldname">Vorfälle</span><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">' + jaNein("vorfall", f.vorfall, zu) + pflicht(f.vorfall) + (f.vorfall === "ja" ? '<span class="nu-beschr">Einzelheiten unter „Wichtige Hinweise“.</span>' : '') + '</div></div>' +
     '<div class="nu-bericht-zeile"><span class="nu-feldname">Fehlt etwas</span><div class="nu-checkliste">' + FEHLT.map(function(x){ var an = f.fehlt.indexOf(x) >= 0; return '<button class="nu-chip" aria-pressed="' + an + '" data-act="fehlt" data-arg="' + x + '"' + (zu ? ' disabled' : '') + '>' + (an ? svg("check","klein") : '') + x + '</button>'; }).join("") + '<input class="nu-eingabe" data-feld="fehltText" id="f-fehltText" style="flex:1 1 260px" placeholder="Was genau? z. B. Müllbeutel 120 l, Duschgel" value="' + esc(f.fehltText) + '"' + (zu ? ' readonly' : '') + '></div></div>' +
-    t("fragen", "Fragen von Gästen", "z. B. Ali fragt nach einer zweiten Decke") +
+    t("fragen", "Fragen von Gästen", "z. B. Max fragt nach einer zweiten Decke") +
     '<div class="nu-bericht-zeile"><span class="nu-feldname">Abwesenheit von Gästen</span><div class="p-liste">' + abw + '</div></div>' +
     '<div class="nu-bericht-zeile"><span class="nu-feldname">Schlüssel fehlt</span><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">' + jaNein("schluessel", f.schluessel, zu) + (f.schluessel === "ja" ? '<input class="nu-eingabe" data-feld="schluesselNr" id="f-schluesselNr" style="max-width:200px" inputmode="numeric" placeholder="Nummer(n)" value="' + esc(f.schluesselNr) + '"' + (zu ? ' readonly' : '') + '>' : '') + '</div></div>' +
     '<div class="nu-bericht-zeile"><span class="nu-feldname">Externe Gäste</span><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">' + f.extern.map(function(n){ return '<span class="nu-pille">' + svg("person","klein") + esc(n) + '</span>'; }).join("") + (zu ? '' : '<button class="nu-chip" data-act="externBlatt">' + svg("plus","klein") + 'Gast hinzufügen</button>') + '</div></div>' +
@@ -763,6 +795,77 @@ function archivListe(){
   return '<div class="p-liste">' + S.archiv.map(function(a){ return '<div class="nu-bericht" style="gap:8px;padding:18px' + (a.vorfall ? ';box-shadow:inset 0 0 0 3px var(--vorfall)' : '') + '"><div style="display:flex;align-items:center;gap:8px">' + svg(a.vorfall ? "vorfall" : "bericht") + '<b style="flex:1">' + esc(lang(pd(a.datum))) + '</b><span class="nu-beschr">' + esc(a.personen) + '</span><span class="nu-nurlesen">' + svg("schloss","klein") + 'abgeschlossen</span></div><div style="color:var(--tinte-2)">' + esc(a.text) + '</div></div>'; }).join("") + '<p class="nu-beschr">Im Prototyp stehen hier Beispielberichte. Filter, Volltextsuche und „Verlauf exportieren“ sind <span class="nu-bald">' + svg("uhr","klein") + 'noch nicht verfügbar</span></p></div>';
 }
 
+// ---------- Monatsabschluss ----------
+// Geplant = Originalplan vor Monatsanfang (korrigierbar mit Warnung). Gemacht = Dienste mit Unterschrift im Dienstbericht bis zur Unterschrift unter den Nachweis.
+function mKey(d){ return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0"); }
+function monatName(k){ var p = k.split("-"); return new Date(+p[0], +p[1] - 1, 1).toLocaleDateString("de-DE", {month:"long", year:"numeric"}); }
+function tageVon(k){ var p = k.split("-"), out = [], d = new Date(+p[0], +p[1] - 1, 1); while(d.getMonth() === +p[1] - 1){ out.push(iso(d)); d = plus(d, 1); } return out; }
+function planAm(di){ return S.plan0[di] || {nacht:S.dienstplan[di] || [], kueche:S.kueche[di] || ""}; }
+function rollenGeplant(di, name){ var p = planAm(di), r = []; p.nacht.forEach(function(n, i){ if(n === name) r.push("Betreuung " + (i + 1)); }); if(p.kueche === name) r.push("Küche"); return r; }
+function einsaetzeAm(di){
+  if(di === iso(H)){ var b = bericht(di); return b ? b.besetzung.filter(function(x){ return x.sig && x.name !== "offen"; }).map(function(x){ return {name:x.name, rolle:x.rolle, geplant:x.geplant || x.name, grund:x.grund || ""}; }) : []; }
+  return S.einsaetze[di] || [];
+}
+function nachweisDaten(k, name){
+  var zeilen = [], sum = {geplant:0, gemacht:0, krank:0, vertretung:0, abgegeben:0}, h = iso(H);
+  tageVon(k).forEach(function(di){
+    var gp = rollenGeplant(di, name), es = einsaetzeAm(di), selbst = es.filter(function(e){ return e.name === name; }), fuer = es.filter(function(e){ return e.geplant === name && e.name !== name; });
+    if(!gp.length && !selbst.length) return;
+    var z = {datum:di, geplant:gp.length > 0, gemacht:selbst.length > 0, rolle:(selbst[0] || {}).rolle || gp[0], text:""};
+    if(z.geplant) sum.geplant++;
+    if(z.gemacht){ sum.gemacht++; var v = selbst.filter(function(e){ return e.geplant !== name; })[0]; if(v){ sum.vertretung++; z.text = "Vertretung für " + v.geplant + (v.grund ? " · " + v.grund : ""); } }
+    else if(di < h){ var e = fuer[0]; z.text = e ? (e.grund === "Krankheit" ? "krank · vertreten durch " : "vertreten durch ") + e.name + (e.grund && e.grund !== "Krankheit" ? " · " + e.grund : "") : "ohne Unterschrift im Bericht"; if(e && e.grund === "Krankheit") sum.krank++; else if(e) sum.abgegeben++; z.abw = true; }
+    else if(di === h) z.text = "heute · zählt, sobald im Bericht unterschrieben";
+    else z.text = "geplant";
+    if(z.text.indexOf("Vertretung") === 0) z.abw = true;
+    zeilen.push(z);
+  });
+  return {zeilen:zeilen, sum:sum};
+}
+function personenIm(k){ var n = {}; tageVon(k).forEach(function(di){ var p = planAm(di); p.nacht.concat([p.kueche]).forEach(function(x){ if(x) n[x] = 1; }); einsaetzeAm(di).forEach(function(e){ n[e.name] = 1; }); });
+  return Object.keys(n).sort(function(a, b){ return (TEAM.indexOf(a) + 99) % 99 - (TEAM.indexOf(b) + 99) % 99 || a.localeCompare(b); }); }
+function letzterGeplanter(k, name){ var t = tageVon(k).filter(function(di){ return rollenGeplant(di, name).length; }); return t[t.length - 1] || null; }
+function nachweisVon(k, name){ return (S.nachweise[k] || {})[name] || null; }
+function nachweisPdf(k, name){ return k + "_Dienstnachweis_" + name + ".pdf"; }
+function sigBild(seed){ var s = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 100"><path d="M20 70c' + (10 + seed % 7) + '-30 25-45 35-20s-5 30 12 12 28-38 38-8 18 6 34-12 22-4 40 2" fill="none" stroke="#1B3A8C" stroke-width="3" stroke-linecap="round"/></svg>'; return "data:image/svg+xml;utf8," + encodeURIComponent(s); }
+function nachweisSpeichern(k, name, bild, um){ var d = nachweisDaten(k, name); S.nachweise[k] = S.nachweise[k] || {};
+  S.nachweise[k][name] = {um:um, sig:bild, zeilen:d.zeilen, geplant:d.sum.geplant, gemacht:d.sum.gemacht, krank:d.sum.krank, vertretung:d.sum.vertretung, abgegeben:d.sum.abgegeben, pdf:nachweisPdf(k, name)}; }
+if(nachweisBeispielOffen){ var kv = mKey(new Date(H.getFullYear(), H.getMonth() - 1, 1)); ["Kim","Sam","Mika"].forEach(function(n, i){ nachweisSpeichern(kv, n, sigBild(i * 3 + 1), "01." + String(H.getMonth() + 1).padStart(2, "0") + ". 0" + (7 + i) + ":1" + i); }); delete S.nachweisBeispiel; speichern(); }
+function letzterDienstHinweis(){
+  if(U.tag !== 0) return "";
+  var k = mKey(H), heute = iso(H), wer = (S.dienstplan[heute] || []).concat([S.kueche[heute]]).filter(Boolean);
+  return wer.filter(function(n){ return letzterGeplanter(k, n) === heute && !nachweisVon(k, n) && !(U.spaeter || {})[n]; }).map(function(n){
+    return '<div class="nu-banner" style="background:var(--erwartet-flaeche);color:var(--blau)">' + svg("unterschrift") + '<div>' + esc(n) + ': Heute ist dein letzter geplanter Dienst im ' + esc(monatName(k).split(" ")[0]) + '.<small>Dienstnachweis jetzt ansehen und unterschreiben? Freiwillig, geht auch später im Monatsabschluss.</small></div><button class="nu-btn nu-btn--klein" data-act="nachweisSpaeter" data-arg="' + esc(n) + '">Später</button><button class="nu-btn nu-btn--klein nu-btn--primaer" data-act="nachweis" data-arg="' + k + ',' + esc(n) + '">Ansehen</button></div>'; }).join("");
+}
+function monatAnsicht(){
+  var k = U.monat || mKey(H), kv = mKey(new Date(H.getFullYear(), H.getMonth() - 1, 1)), kh = mKey(H);
+  var wahl = '<div class="nu-seg" role="radiogroup" aria-label="Monat">' + [kv, kh].map(function(x){ return '<button role="radio" aria-checked="' + (x === k) + '" data-act="monatWahl" data-arg="' + x + '">' + esc(monatName(x)) + '</button>'; }).join("") + '</div>';
+  var leute = personenIm(k), unterschrieben = leute.filter(function(n){ return nachweisVon(k, n); });
+  var zeilen = leute.map(function(n){ var nw = nachweisVon(k, n), d = nw ? {sum:nw} : nachweisDaten(k, n), s = d.sum, abw = [s.krank ? s.krank + " krank" : "", s.abgegeben ? s.abgegeben + " abgegeben" : "", s.vertretung ? s.vertretung + " Vertretung" : ""].filter(Boolean).join(" · ");
+    return '<tr><td><b>' + esc(n) + '</b></td><td class="zahl">' + s.geplant + '</td><td class="zahl">' + s.gemacht + '</td><td>' + (abw || '–') + '</td><td>' + (nw ? '<span class="nu-pille nu-pille--frei">' + svg("check","klein") + 'unterschrieben ' + esc(nw.um) + '</span>' : '<span class="nu-pille nu-pille--warnung">offen</span>') + '</td><td style="text-align:right"><button class="nu-btn nu-btn--klein nu-btn--rahmen" data-act="nachweis" data-arg="' + k + ',' + esc(n) + '">' + (nw ? 'Ansehen' : 'Öffnen') + '</button></td></tr>'; }).join("");
+  var lohn = unterschrieben.map(function(n){ var nw = nachweisVon(k, n); return '<tr><td><b>' + esc(n) + '</b></td><td class="zahl">' + nw.geplant + '</td><td class="zahl">' + nw.gemacht + '</td><td class="zahl">' + nw.krank + '</td><td class="zahl">' + (nw.abgegeben || 0) + '</td><td class="zahl">' + nw.vertretung + '</td><td>' + esc(nw.um) + '</td><td>' + svg("pdf","klein") + ' ' + esc(nw.pdf) + '</td></tr>'; }).join("");
+  return '<div class="nu-bericht" style="gap:16px"><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><b class="abschnitt" style="flex:1">Monatsabschluss · ' + esc(monatName(k)) + '</b>' + wahl + '</div>' +
+    '<p class="nu-beschr" style="font-size:15px;line-height:22px">Jede Person unterschreibt einmal im Monat: geplante Dienste laut Originalplan, gemachte Dienste mit Unterschrift im Bericht. ' + unterschrieben.length + ' von ' + leute.length + ' unterschrieben.</p>' +
+    '<div style="overflow:auto"><table class="nu-tabelle"><thead><tr><th>Person</th><th class="zahl">Geplant</th><th class="zahl">Gemacht</th><th>Abweichung</th><th>Status</th><th></th></tr></thead><tbody>' + zeilen + '</tbody></table></div></div>' +
+    '<div class="nu-bericht" style="gap:12px;margin-top:16px"><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><b class="abschnitt" style="flex:1">Für die Lohnabrechnung</b><span class="nu-bald">' + svg("uhr","klein") + 'Export als Datei noch nicht verfügbar</span></div>' +
+    (lohn ? '<div style="overflow:auto"><table class="nu-tabelle"><thead><tr><th>Person</th><th class="zahl">Geplant</th><th class="zahl">Gemacht</th><th class="zahl">Krank</th><th class="zahl">Abgegeben</th><th class="zahl">Vertretung</th><th>Unterschrieben</th><th>PDF</th></tr></thead><tbody>' + lohn + '</tbody></table></div>' : '<p class="nu-beschr">Noch niemand hat unterschrieben.</p>') +
+    '<p class="nu-beschr">Nur unterschriebene Nachweise kommen in die Tabelle; sie liegt mit den PDFs in Nextcloud unter Lohnabrechnung_' + k + '.</p></div>';
+}
+function nachweisBlatt(k, name){
+  var nw = nachweisVon(k, name), d = nw ? {zeilen:nw.zeilen, sum:nw} : nachweisDaten(k, name), s = d.sum;
+  var tab = '<div style="overflow:auto;max-height:300px"><table class="nu-tabelle"><thead><tr><th>Datum</th><th>Geplant</th><th>Gemacht</th><th>Bemerkung</th></tr></thead><tbody>' + d.zeilen.map(function(z){
+    return '<tr' + (z.abw ? ' class="is-abweichung"' : '') + '><td class="zahl" style="text-align:left">' + esc(pd(z.datum).toLocaleDateString("de-DE", {weekday:"short"}).replace(".", "") + " " + kurz(pd(z.datum))) + '</td><td>' + (z.geplant ? svg("check","klein") : '–') + '</td><td>' + (z.gemacht ? svg("check","klein") + ' ' + esc(z.rolle || "") : '–') + '</td><td>' + esc(z.text) + '</td></tr>'; }).join("") + '</tbody></table></div>';
+  var kz = '<div class="nu-kennzahlen" style="background:var(--flaeche-2)"><span class="nu-kennzahl">Geplant<b>' + s.geplant + '</b></span><span class="nu-kennzahl">Gemacht<b>' + s.gemacht + '</b></span><span class="nu-kennzahl">Krank<b>' + s.krank + '</b></span><span class="nu-kennzahl">Abgegeben<b>' + (s.abgegeben || 0) + '</b></span><span class="nu-kennzahl">Vertretung<b>' + s.vertretung + '</b></span></div>' +
+    S.planLog.filter(function(l){ return l.monat === k && l.name === name; }).map(function(l){ return '<div class="nu-zeile nu-zeile--warnung">' + svg("stift") + '<div><b>Plan korrigiert: ' + esc(l.aenderungen.join(", ")) + '</b><small>' + esc(l.grund) + ' · ' + esc(l.von) + ' · ' + esc(l.um) + '</small></div></div>'; }).join("");
+  var unten = nw ? '<div class="nu-gesperrt">' + svg("schloss") + '<div style="flex:1">Unterschrieben ' + esc(nw.um) + '<small>' + esc(nw.pdf) + ' · in der Lohntabelle · nicht mehr änderbar</small></div><img src="' + nw.sig + '" alt="Unterschrift ' + esc(name) + '" style="height:48px;background:var(--papier);border-radius:8px;padding:2px 8px"></div>'
+    : '<button class="nu-btn nu-btn--rahmen nu-btn--klein" style="justify-self:start" data-act="planKorrektur" data-arg="' + k + ',' + esc(name) + '">' + svg("stift") + 'Geplante Dienste korrigieren</button>' +
+      '<div class="nu-unterschrift" data-pad="mon"><div class="nu-unterschrift-kopf"><b>' + esc(name) + '</b><small>Die Angaben stimmen</small></div><div class="nu-unterschrift-feld" style="height:150px"><span class="nu-unterschrift-marke">' + svg("check","klein") + 'Bestätigt</span><span class="nu-unterschrift-hilfe">Mit Finger oder Stift unterschreiben</span></div><div class="nu-unterschrift-knoepfe"><button class="nu-btn nu-btn--klein" data-pad-act="leeren">' + svg("rueckgaengig") + 'Löschen</button><button class="nu-btn nu-btn--primaer nu-btn--klein" data-pad-act="ok" disabled>Unterschreiben</button></div></div>';
+  return blatt("Dienstnachweis " + monatName(k) + " · " + name, nw ? "" : "Gemacht zählt jeder Dienst mit Unterschrift im Bericht bis jetzt. Nach der Unterschrift ist der Nachweis gesperrt.", kz + tab + unten, '<button class="nu-btn nu-btn--klein" data-act="modalZu">Schließen</button>').replace('class="p-blatt"', 'class="p-blatt p-blatt--breit"');
+}
+function nachweisUnterschreiben(bild){ var n = U.nachweis; if(!n || nachweisVon(n.k, n.name)) return;
+  nachweisSpeichern(n.k, n.name, bild, kurz(H) + " " + uhr()); U.modal = null; commit(); ACT.nachweis(n.k + "," + n.name);
+  toast("pdf", "Dienstnachweis unterschrieben", nachweisPdf(n.k, n.name) + " · in die Lohntabelle übernommen", 5000); }
+
 // ---------- Kalender ----------
 function kw(d){ var t = new Date(d.getFullYear(), d.getMonth(), d.getDate()); t.setDate(t.getDate() + 3 - (t.getDay() + 6) % 7); var w1 = new Date(t.getFullYear(), 0, 4); return 1 + Math.round(((t - w1) / 864e5 - 3 + (w1.getDay() + 6) % 7) / 7); }
 function terminChip(t, gross){ return '<span class="nu-termin' + (t.art === "Feiertag" ? ' nu-termin--feiertag' : '') + '">' + svg(t.sym) + (gross ? '<span>' + esc(t.titel) + '<small>' + esc(t.art) + '</small></span>' : esc(t.titel)) + '</span>'; }
@@ -771,7 +874,7 @@ function wocheAnsicht(){
   var tage = [0,1,2,3,4,5,6].map(function(i){ var d = plus(start, i), di = iso(d), dp = S.dienstplan[di];
     return '<div class="nu-woche-tag' + (di === iso(H) ? ' is-heute' : d < H ? ' is-vorbei' : '') + '"><div class="nu-woche-kopf"><b>' + d.getDate() + '</b><span>' + d.toLocaleDateString("de-DE", {weekday:"short"}).replace(".", "") + '</span></div>' +
       '<span class="nu-termin nu-termin--dienst">' + svg("personen") + '<span>Nachtdienst<small>' + esc(dp ? (dp.filter(Boolean).join(", ") || "offen") : "offen") + '</small></span></span>' +
-      '<span class="nu-termin">' + svg("kueche") + '<span>Küche<small>Hannah</small></span></span>' +
+      '<span class="nu-termin">' + svg("kueche") + '<span>Küche<small>' + esc(S.kueche[di] || "offen") + '</small></span></span>' +
       S.termine.filter(function(t){ return t.datum === di; }).map(function(t){ return terminChip(t, true); }).join("") +
       '<button class="nu-woche-plus" data-act="terminNeu" data-arg="' + di + '">' + svg("plus","klein") + 'Termin</button></div>'; }).join("");
   return {titel:"KW " + kw(start) + " · " + kurz(start) + " – " + kurz(ende) + ende.getFullYear(), html:'<div class="nu-woche">' + tage + '</div>'};
@@ -793,7 +896,7 @@ function kalenderAnsicht(){
   }
   var sel = pd(U.kalTag), dpSel = S.dienstplan[U.kalTag] || ["",""], evSel = S.termine.filter(function(t){ return t.datum === U.kalTag; });
   var seite = '<aside class="p-tag-detail"><b class="titel" style="font-size:20px">' + esc(lang(sel)) + '</b>' +
-    '<div class="nu-zeile">' + svg("personen") + '<div>Nachtdienst 18:45–08:00<small>' + esc(dpSel.filter(Boolean).join(", ") || "offen") + '</small></div></div><div class="nu-zeile">' + svg("kueche") + '<div>Küche 17:00–21:00<small>Hannah</small></div></div>' +
+    '<div class="nu-zeile">' + svg("personen") + '<div>Nachtdienst 18:45–08:00<small>' + esc(dpSel.filter(Boolean).join(", ") || "offen") + '</small></div></div><div class="nu-zeile">' + svg("kueche") + '<div>Küche 17:00–21:00<small>' + esc(S.kueche[U.kalTag] || "offen") + '</small></div></div>' +
     evSel.map(function(t){ return '<div class="nu-zeile' + (t.art === "Feiertag" ? ' nu-zeile--warnung' : '') + '">' + svg(t.sym) + '<div>' + esc(t.titel) + '<small>' + esc(t.art) + '</small></div></div>'; }).join("") +
     '<button class="nu-btn nu-btn--rahmen nu-btn--klein" data-act="terminBlatt" style="justify-self:start">' + svg("plus") + 'Termin</button></aside>';
   return '<div class="p-plan-zeile" style="margin-bottom:12px"><h1 class="titel-gross" style="margin:0;flex:1">' + esc(titel) + '</h1>' + umschalter + '<button class="nu-iconbtn nu-iconbtn--fl" data-act="monat" data-arg="-1" aria-label="Voriger Monat">' + svg("zurueck") + '</button><button class="nu-iconbtn nu-iconbtn--fl" data-act="monat" data-arg="1" aria-label="Nächster Monat">' + svg("weiter") + '</button><button class="nu-btn nu-btn--rahmen nu-btn--klein" data-act="importBlatt">' + svg("scannen") + 'Dienstplan einlesen</button></div>' +
@@ -814,26 +917,48 @@ function einstellungenAnsicht(){
   var inhalt = "";
   if(U.einst === "darstellung") inhalt = z("mond", "Tag- und Nachtmodus", "Automatisch: Nacht von 20:00 bis 07:00", '<div class="nu-seg" role="radiogroup">' + [["auto","Auto"],["tag","Tag"],["nacht","Nacht"]].map(function(x){ return '<button role="radio" aria-checked="' + (S.theme === x[0]) + '" data-act="thema" data-arg="' + x[0] + '">' + x[1] + '</button>'; }).join("") + '</div>') +
     z("sperren", "App-Sperre", "Nach 5 Minuten ohne Eingabe, App-PIN", bald) + z("tastatur", "Kioskmodus", "App anheften, Lösen nur mit PIN", bald);
-  if(U.einst === "betten") inhalt = '<p class="nu-beschr" style="font-size:15px;line-height:22px">Ganze Zimmer oder einzelne Betten sperren. Gesperrte Betten erscheinen schraffiert und zählen nirgends mit. Notbetten zählen nicht für das Kältehilfetelefon und die Ampel.</p>' +
-    HAUS.concat(NIKO).map(function(r){ var an = !S.offRooms[r.id], nrs = BETTEN_HAUS.concat(BETTEN_NIKO).filter(function(b){ return b.zimmer === r.id; }).map(function(b){ return b.nr; }), extra = r.id === "X";
-      if(!nrs.length && !extra) return "";
-      var inBetrieb = nrs.filter(function(n){ return !istAus(n); }).length, mitNotbett = ["L","E","TH","X"].indexOf(r.id) >= 0;
-      return '<div class="nu-zimmer-einst">' + z(r.id === "N" ? "standort-2" : r.id === "TH" ? "haus" : "bett", r.id === "N" ? "St. Nikolaus · Saal" : esc(r.name), !nrs.length ? "Noch keine weiteren Plätze" : an ? inBetrieb + " von " + nrs.length + " Betten in Betrieb" : "Zimmer gesperrt", nrs.length ? '<button class="nu-schalter" role="switch" aria-checked="' + an + '" data-act="zimmerAus" data-arg="' + r.id + '" aria-label="' + esc(r.name) + ' in Betrieb"></button>' : '') +
-        (nrs.length ? '<div class="nu-bettschalter-liste">' + nrs.map(function(nr){ var aus = istAus(nr), belegt = gastVon(nr) && !zaehlt(nr);
-          return '<div class="nu-bettschalter' + (aus ? ' is-aus' : '') + '" style="flex-wrap:wrap"><div style="flex:1;min-width:0"><b>' + nr + '</b><small>' + (S.offRooms[r.id] ? "Zimmer gesperrt" : S.offBeds[nr] ? "gesperrt" : belegt ? "belegt · " + esc(gastVon(nr).vorname) : (ORT[nr] && extra ? esc(ORT[nr]) : STOCK[nr] ? "Stockbett " + STOCK[nr] : "in Betrieb")) + '</small></div>' +
-            '<button class="nu-schalter" role="switch" aria-checked="' + !S.offBeds[nr] + '" data-act="bettAus" data-arg="' + nr + '"' + (S.offRooms[r.id] ? ' disabled' : '') + ' aria-label="Bett ' + nr + ' in Betrieb"></button>' +
-            (mitNotbett ? '<button class="nu-chip" style="flex-basis:100%;justify-content:center" aria-pressed="' + !!S.notbett[nr] + '" data-act="notbett" data-arg="' + nr + '">' + (S.notbett[nr] ? svg("check","klein") : '') + 'Notbett</button>' : '') +
-            (extra && !belegt ? '<button class="nu-btn nu-btn--klein nu-btn--gefahr" style="flex-basis:100%" data-act="extraWeg" data-arg="' + nr + '">' + svg("loeschen") + 'Entfernen</button>' : '') + '</div>'; }).join("") + '</div>' : '') +
-        (extra ? '<div style="display:flex;gap:8px;padding:0 8px 8px;flex-wrap:wrap"><input class="nu-eingabe" id="extra-name" style="flex:1 1 220px" placeholder="Neuer Platz, z. B. Sofa Wohnzimmer"><button class="nu-btn nu-btn--rahmen" data-act="extraDazu">' + svg("bett-plus") + 'Platz hinzufügen</button></div>' : '') + '</div>'; }).join("");
-  if(U.einst === "ampel") inhalt = z("telefon", "Zahlen für das Kältehilfetelefon", "Gesamt: alle Betten in Betrieb in St. Pius und St. Nikolaus ohne Notbett. Belegt: anwesend, erwartet, freigehalten und 1. Nacht unentschuldigt. Ab der 2. Nacht in Folge zählt das Bett als frei.", '<button class="nu-btn nu-btn--rahmen nu-btn--klein" data-act="khtBlatt">Rechnung</button>') +
-    z("bett", "Notbetten", (BETTEN_HAUS.filter(function(b){ return S.notbett[b.nr]; }).map(function(b){ return b.nr; }).join(", ") || "keine") + " · einstellbar unter Betten und Zimmer", '') +
+  if(U.einst === "betten") inhalt = '<p class="nu-beschr" style="font-size:15px;line-height:22px">Zimmer oder einzelne Betten sperren, Nummern innerhalb eines Zimmers tauschen, weitere Plätze anlegen. Notbetten zählen nur, wenn sie belegt sind.</p>' +
+    HAUS.concat(NIKO).map(einstZimmer).join("");
+  if(U.einst === "ampel") inhalt = z("telefon", "KHT-Nummer", "Belegte Betten beider Standorte. Notbetten nur, wenn belegt.", '<button class="nu-btn nu-btn--rahmen nu-btn--klein" data-act="khtBlatt">Ansehen</button>') +
+    z("bett", "Notbetten", (BETTEN_HAUS.filter(function(b){ return S.notbett[b.nr]; }).map(function(b){ return b.nr; }).join(", ") || "keine") + " · nur über den Kältebus belegt", '') +
     z("ampel", "Ampel grün ab", "freie Betten, gelb darunter, rot bei 0", '<div class="p-stepper"><button class="nu-iconbtn" data-act="ampelSchwelle" data-arg="-1" aria-label="Weniger">' + svg("minus") + '</button><b>' + S.ampel.gruen + '</b><button class="nu-iconbtn" data-act="ampelSchwelle" data-arg="1" aria-label="Mehr">' + svg("plus") + '</button></div>') +
-    z("wolke-ok", "Meldung an die Ampel", "Schnittstelle angelegt; meldet frei, belegt und gesamt, nie Namen", bald);
+    z("wolke-ok", "Meldung an die Ampel", "Freie Betten, nie Namen", bald);
   if(U.einst === "abgleich") inhalt = z("abgleich", "Zeitplan", "17:00–09:00 stündlich, tagsüber Pause, nach „Bericht abschließen“ sofort", bald) +
     z("wolke-aus", "Offline ausprobieren", "Zeigt, wie ausstehende Änderungen angezeigt werden", '<button class="nu-schalter" role="switch" aria-checked="' + S.sync.offline + '" data-act="offline" aria-label="Offline ausprobieren"></button>');
   if(U.einst === "daten") inhalt = z("loeschen", "Beispieldaten zurücksetzen", "Alle Änderungen in diesem Browser verwerfen", '<button class="nu-btn nu-btn--gefahr nu-btn--klein" data-act="reset">Zurücksetzen</button>') +
     '<p class="nu-beschr">Alles, was du im Prototyp änderst, bleibt nur in diesem Browser. Es gibt keine Verbindung zu Nextcloud.</p>';
   return '<div class="p-plan-zeile" style="margin-bottom:12px"><h1 class="titel-gross" style="margin:0;flex:1">Einstellungen</h1><button class="nu-btn nu-btn--rahmen nu-btn--klein" data-act="pinSperren">' + svg("schloss") + 'Sperren</button></div><div class="p-einst-raster">' + nav + '<div class="p-liste">' + inhalt + '</div></div>';
+}
+
+// ---------- Einstellungen: Zimmerkarte ----------
+function einstZimmer(r){
+  var an = !S.offRooms[r.id], extra = r.id === "X" || r.id === "NX", niko = r.id === "N" || r.id === "NX";
+  var plaetze = BETTEN_HAUS.concat(BETTEN_NIKO).filter(function(b){ return b.zimmer === r.id; }).map(function(b){ return b.nr; });
+  if(!plaetze.length && !extra) return "";
+  var nrs = plaetze.map(anPlatz), tausch = U.tausch && U.tausch.zimmer === r.id, verschoben = nrs.some(function(n){ return posOf(n) !== n; });
+  var inBetrieb = nrs.filter(function(n){ return !istAus(n); }).length, mitNotbett = ["L","E","TH","X","NX"].indexOf(r.id) >= 0;
+  var titel = r.id === "N" ? "St. Nikolaus · Saal" : r.id === "NX" ? "St. Nikolaus · Weitere Plätze" : r.id === "X" ? "St. Pius · Weitere Plätze" : esc(r.name);
+  var rechts = (nrs.length > 1 && !tausch ? '<button class="nu-btn nu-btn--klein nu-btn--rahmen" data-act="tauschStart" data-arg="' + r.id + '">' + svg("tauschen") + 'Nummern tauschen</button>' : '') +
+    (nrs.length ? '<button class="nu-schalter" role="switch" aria-checked="' + an + '" data-act="zimmerAus" data-arg="' + r.id + '" aria-label="' + esc(titel) + ' in Betrieb"></button>' : '');
+  var kachel = function(nr){
+    var aus = istAus(nr), belegt = gastVon(nr) && !zaehlt(nr), wo = lageVon(nr) ? "Stockbett " + lageVon(nr) : "";
+    var info = S.offRooms[r.id] ? "Zimmer gesperrt" : S.offBeds[nr] ? "gesperrt" : belegt ? "belegt · " + esc(gastVon(nr).vorname) : (extra && ORT[nr] ? esc(ORT[nr]) : wo || "in Betrieb");
+    if(tausch) return '<button class="nu-bettschalter" style="border:0;font:inherit;text-align:left;cursor:pointer;width:100%' + (U.tausch.a === nr ? ';box-shadow:inset 0 0 0 3px var(--tinte);background:var(--flaeche)' : '') + '" data-act="nummerWahl" data-arg="' + nr + '" aria-pressed="' + (U.tausch.a === nr) + '"><div style="flex:1;min-width:0"><b>' + nr + '</b><small>' + (posOf(nr) !== nr ? "Platz von " + posOf(nr) : (wo || "Einzelbett")) + '</small></div>' + svg("tauschen") + '</button>';
+    return '<div class="nu-bettschalter' + (aus ? ' is-aus' : '') + '" style="flex-wrap:wrap"><div style="flex:1;min-width:0"><b>' + nr + '</b><small>' + info + '</small></div>' +
+      '<button class="nu-schalter" role="switch" aria-checked="' + !S.offBeds[nr] + '" data-act="bettAus" data-arg="' + nr + '"' + (S.offRooms[r.id] ? ' disabled' : '') + ' aria-label="Bett ' + nr + ' in Betrieb"></button>' +
+      (mitNotbett ? '<button class="nu-chip" style="flex-basis:100%;justify-content:center" aria-pressed="' + !!S.notbett[nr] + '" data-act="notbett" data-arg="' + nr + '">' + (S.notbett[nr] ? svg("check","klein") : '') + 'Notbett</button>' : '') +
+      (extra ? '<div style="display:flex;gap:6px;flex-basis:100%"><button class="nu-btn nu-btn--klein nu-btn--rahmen" style="flex:1" data-act="extraUmbenennen" data-arg="' + nr + '">' + svg("stift") + 'Umbenennen</button>' + (belegt ? '' : '<button class="nu-iconbtn nu-iconbtn--fl" data-act="extraWeg" data-arg="' + nr + '" aria-label="Platz ' + nr + ' entfernen">' + svg("loeschen") + '</button>') + '</div>' : '') + '</div>';
+  };
+  return '<div class="nu-zimmer-einst">' + '<div class="nu-einstellung">' + svg(niko ? "standort-2" : r.id === "TH" ? "haus" : "bett") + '<div><b>' + titel + '</b><small>' + (!nrs.length ? "Noch keine weiteren Plätze" : an ? inBetrieb + " von " + nrs.length + " Betten in Betrieb" : "Zimmer gesperrt") + '</small></div>' + rechts + '</div>' +
+    (tausch ? '<div class="nu-zeile" style="margin:0 8px 6px">' + svg("tauschen") + '<div>' + (U.tausch.a ? 'Jetzt das zweite Bett antippen.' : 'Zwei Betten antippen, deren Nummern den Platz tauschen.') + '<small>Belegung, Sperre und Notbett bleiben bei der Nummer.</small></div>' + (verschoben ? '<button class="nu-btn nu-btn--klein" data-act="tauschZurueck" data-arg="' + r.id + '">Ursprünglich</button>' : '') + '<button class="nu-btn nu-btn--klein nu-btn--primaer" data-act="tauschEnde">Fertig</button></div>' : '') +
+    (nrs.length ? '<div class="nu-bettschalter-liste"' + (extra ? ' style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr))"' : '') + '>' + nrs.map(kachel).join("") + '</div>' : '') +
+    (extra ? '<div style="display:flex;gap:8px;padding:0 8px 8px;flex-wrap:wrap;align-items:flex-end"><div class="nu-feld" style="width:120px"><label for="nr-' + r.id + '">Nummer</label><input class="nu-eingabe" id="nr-' + r.id + '" value="' + naechsteNummer(r.id === "NX" ? "N" : "Z") + '" maxlength="6" autocapitalize="characters"></div><div class="nu-feld" style="flex:1 1 220px"><label for="name-' + r.id + '">Bezeichnung</label><input class="nu-eingabe" id="name-' + r.id + '" placeholder="z. B. ' + (r.id === "NX" ? 'Matratze Flur' : 'Sofa Wohnzimmer') + '"></div><button class="nu-btn nu-btn--rahmen" data-act="extraDazu" data-arg="' + (r.id === "NX" ? "niko" : "pius") + '">' + svg("bett-plus") + 'Platz hinzufügen</button></div>' : '') + '</div>';
+}
+function naechsteNummer(p){ var n = p === "N" ? 9 : 1; while(ZIMMER_VON[p + n]) n++; return p + n; }
+function nummerPruefen(neu, alt){ if(!/^[A-Za-zÄÖÜäöü0-9\-]{1,6}$/.test(neu)) return "Nummer: 1–6 Zeichen, Buchstaben und Ziffern."; if(neu !== alt && (ZIMMER_VON[neu] || S.betten[neu])) return "Die Nummer " + neu + " gibt es schon."; return ""; }
+function nummerAendern(alt, neu){
+  ["betten","offBeds","notbett"].forEach(function(k){ if(S[k][alt] !== undefined){ S[k][neu] = S[k][alt]; delete S[k][alt]; } });
+  S.extra.forEach(function(x){ if(x.id === alt) x.id = neu; }); delete ORT[alt];
 }
 
 // ---------- Gästedatenbank ----------
@@ -906,9 +1031,23 @@ var ACT = {
     if(notiz) g.notizen.push({datum:iso(H), text:notiz, von:aktivePerson(), quelle:"Gästedatenbank · " + art});
     U.modal = null; commit(); toast("dokument-plus", art + " hinterlegt", anzeige(g) + " · " + datei, 4000); },
   notbett:function(nr){ if(S.notbett[nr]) delete S.notbett[nr]; else S.notbett[nr] = true; commit(); },
-  extraDazu:function(){ var n = $("#extra-name").value.trim(); if(!n){ $("#extra-name").focus(); return; } var max = S.extra.reduce(function(m, x){ return Math.max(m, +x.id.slice(1)); }, 0), id = "Z" + (max + 1);
-    S.extra.push({id:id, name:n}); S.betten[id] = {g:null, s:"frei"}; betteNeuBerechnen(); commit(); toast("bett-plus", "Platz " + id + " hinzugefügt", n + " · erscheint im Bettenplan unter „Weitere Plätze“", 4000); },
-  extraWeg:function(id){ S.extra = S.extra.filter(function(x){ return x.id !== id; }); delete S.betten[id]; delete S.offBeds[id]; delete S.notbett[id]; betteNeuBerechnen(); commit(); },
+  extraDazu:function(ort){ var id = ort === "niko" ? "NX" : "X", nrEl = $("#nr-" + id), nameEl = $("#name-" + id), nr = nrEl.value.trim(), name = nameEl.value.trim(), f = nummerPruefen(nr);
+    if(f){ toast("warnung", "Platz nicht angelegt", f, 4000); nrEl.focus(); return; }
+    S.extra.push({id:nr, name:name || "Weiterer Platz", ort:ort}); S.betten[nr] = {g:null, s:"frei"}; betteNeuBerechnen(); commit();
+    toast("bett-plus", "Platz " + nr + " hinzugefügt", (name || "Weiterer Platz") + " · " + (ort === "niko" ? "rechts neben dem Saal" : "unter „Weitere Plätze“"), 4000); },
+  extraUmbenennen:function(nr){ var x = S.extra.find(function(e){ return e.id === nr; });
+    modal(blatt("Platz " + nr + " umbenennen", "", '<div class="p-zwei"><div class="nu-feld"><label for="um-nr">Nummer</label><input class="nu-eingabe" id="um-nr" value="' + esc(nr) + '" maxlength="6"></div><div class="nu-feld"><label for="um-name">Bezeichnung</label><input class="nu-eingabe" id="um-name" value="' + esc(x ? x.name : "") + '"></div></div>',
+      '<button class="nu-btn nu-btn--klein" data-act="modalZu">Abbrechen</button><button class="nu-btn nu-btn--primaer nu-btn--klein" data-act="extraUmbenennenOk" data-arg="' + esc(nr) + '">Speichern</button>')); },
+  extraUmbenennenOk:function(alt){ var neu = $("#um-nr").value.trim(), name = $("#um-name").value.trim(), f = nummerPruefen(neu, alt); if(f){ toast("warnung", "Nicht gespeichert", f, 4000); return; }
+    if(neu !== alt) nummerAendern(alt, neu); var x = S.extra.find(function(e){ return e.id === neu; }); if(x && name) x.name = name; U.modal = null; betteNeuBerechnen(); commit(); },
+  tauschStart:function(id){ U.tausch = {zimmer:id, a:null}; render(); },
+  tauschEnde:function(){ U.tausch = null; render(); },
+  tauschZurueck:function(id){ BETTEN_HAUS.concat(BETTEN_NIKO).forEach(function(b){ if(b.zimmer === id) delete S.lage[b.nr]; }); commit(); },
+  nummerWahl:function(nr){ var t = U.tausch; if(!t.a || t.a === nr){ t.a = t.a === nr ? null : nr; render(); return; }
+    modal(dialog(t.a + " und " + nr + " tauschen?", "Im Plan wechseln die beiden Nummern den Platz. Belegung, Sperre und Notbett bleiben bei der Nummer.", '<button class="nu-btn nu-btn--klein" data-act="modalZu">Abbrechen</button><button class="nu-btn nu-btn--primaer nu-btn--klein" data-act="nummernTauschen" data-arg="' + t.a + ',' + nr + '" data-fokus>' + svg("tauschen") + 'Tauschen</button>')); },
+  nummernTauschen:function(arg){ var p = arg.split(","), a = p[0], b = p[1], pa = posOf(a), pb = posOf(b); S.lage[a] = pb; S.lage[b] = pa; if(S.lage[a] === a) delete S.lage[a]; if(S.lage[b] === b) delete S.lage[b];
+    U.tausch.a = null; U.modal = null; commit(); toast("tauschen", a + " und " + b + " getauscht", "Der Plan zeigt die Nummern an den neuen Plätzen.", 4000); },
+  extraWeg:function(id){ S.extra = S.extra.filter(function(x){ return x.id !== id; }); delete S.lage[id]; delete S.betten[id]; delete S.offBeds[id]; delete S.notbett[id]; betteNeuBerechnen(); commit(); },
   bereich:function(a){ U.oben = U.bereich !== a; U.bereich = a; U.detail = null; U.schnell = null; U.glocke = false; U.schreiben = false; render(); },
   themaWechseln:function(){ S.theme = document.documentElement.getAttribute("data-theme") === "nacht" ? "tag" : "nacht"; speichern(); render(); },
   thema:function(a){ S.theme = a; speichern(); render(); },
@@ -923,16 +1062,10 @@ var ACT = {
   offline:function(){ S.sync.offline = !S.sync.offline; if(!S.sync.offline){ S.sync.ausstehend = 0; S.sync.zuletzt = uhr(); } speichern(); if(U.modal) ACT.abgleichBlatt(); else render(); },
   jetztSync:function(){ U.modal = null; render(); var p = $(".nu-sync"); p.dataset.s = "laeuft"; p.innerHTML = svg("abgleich") + "Abgleich läuft …"; setTimeout(function(){ S.sync.zuletzt = uhr(); S.sync.ausstehend = 0; speichern(); render(); }, 1600); },
   khtBlatt:function(){
-    var k = khtZahlen(), gruppe = function(f){ return k.alle.filter(function(b){ return f(status(b.nr)); }); };
-    var liste = function(bs, mitName){ return bs.map(function(b){ var g = gastVon(b.nr); return b.nr + (mitName && g ? " " + g.vorname : ""); }).join(", ") || "–"; };
-    var notbetten = BETTEN_HAUS.filter(function(b){ return S.notbett[b.nr] && !istAus(b.nr); }), gesperrt = BETTEN_HAUS.concat(BETTEN_NIKO).filter(function(b){ return istAus(b.nr); });
-    var zeile = function(sym, titel, text){ return '<div class="nu-zeile">' + svg(sym) + '<div><b>' + titel + '</b><small>' + text + '</small></div></div>'; };
-    modal(blatt("Zahlen für das Kältehilfetelefon", "Beide Standorte, alle Betten in Betrieb, ohne Notbett. Ein Bett zählt als belegt, solange niemand zwei Nächte in Folge unentschuldigt fehlt.",
-      '<div class="nu-kennzahlen" style="background:var(--flaeche-2)"><span class="nu-kennzahl">Belegt<b>' + k.belegt + '</b></span><span class="nu-kennzahl">Gesamt<b>' + k.gesamt + '</b></span><span class="nu-kennzahl">Frei<b>' + k.frei + '</b></span></div>' +
-      zeile("anwesend", "Belegt: " + k.belegt, "anwesend " + gruppe(function(s){ return s === "anwesend"; }).length + " · erwartet " + gruppe(function(s){ return s === "erwartet"; }).length + " · freigehalten " + gruppe(function(s){ return s === "gehalten"; }).length + " · fehlt 1. Nacht: " + esc(liste(gruppe(function(s){ return s === "fehlt"; }), true))) +
-      zeile("plus", "Frei: " + k.frei, "frei: " + esc(liste(gruppe(function(s){ return s === "frei"; }))) + " · frei bis Rückkehr: " + esc(liste(gruppe(function(s){ return s === "freibis"; }), true)) + " · fehlt 2 Nächte: " + esc(liste(gruppe(function(s){ return s === "fehlt2"; }), true))) +
-      zeile("info", "Nicht gezählt", "Notbett: " + esc(liste(notbetten)) + " · gesperrt: " + esc(liste(gesperrt))) +
-      '<p class="nu-beschr">Die Ampel ist davon getrennt: Dort werden dieselben Zahlen gemeldet (frei, belegt, gesamt). Notbetten stellst du unter Einstellungen › Betten und Zimmer ein.</p>',
+    var k = khtZahlen(), nicht = BETTEN_HAUS.concat(BETTEN_NIKO).filter(function(b){ return !istAus(b.nr) && S.notbett[b.nr] && !belegtKht(b.nr); }).map(function(b){ return b.nr; });
+    modal(blatt("KHT-Nummer", "Belegte Betten in St. Pius und St. Nikolaus.",
+      '<div class="nu-kennzahlen" style="background:var(--flaeche-2)"><span class="nu-kennzahl">Belegt<b>' + k.belegt + '</b></span><span class="nu-kennzahl">Frei<b>' + k.frei + '</b></span></div>' +
+      '<p class="nu-beschr" style="font-size:15px;line-height:22px">Notbetten zählen nur, wenn sie belegt sind (Kältebus)' + (nicht.length ? ': ' + esc(nicht.join(", ")) + ' frei, zählt nicht' : '') + '. Wer zwei Nächte in Folge unentschuldigt fehlt, zählt nicht mehr.</p>',
       '<button class="nu-btn nu-btn--primaer nu-btn--klein" data-act="modalZu">Fertig</button>')); },
   bett:function(nr, el){
     if(el && el.dataset.gezogen){ delete el.dataset.gezogen; return; }
@@ -1012,20 +1145,46 @@ var ACT = {
   wWeiter:function(){ var w = wz(), l = schrittListe(), p = l.indexOf(w.schritt); if(!schrittFertig(w.schritt)) return; if(w.schritt === 5){ aufnahmeAbschliessen(); return; } w.schritt = l[p + 1]; w.richtung = "vor"; render(); var s = $("#w-seite"); if(s) s.scrollTop = 0; },
   wZurueck:function(){ var w = wz(), l = schrittListe(), p = l.indexOf(w.schritt); if(p > 0){ w.schritt = l[p - 1]; w.richtung = "zurueck"; render(); } },
   dienstBeginnen:function(){ dienstBeginnen(); },
+  monatWahl:function(k){ U.monat = k; render(); },
+  nachweis:function(a){ var p = a.split(","); U.nachweis = {k:p[0], name:p[1]}; modal(nachweisBlatt(p[0], p[1])); },
+  nachweisSpaeter:function(n){ U.spaeter = U.spaeter || {}; U.spaeter[n] = true; render(); },
+  planKorrektur:function(a){ var p = a.split(","), k = p[0], name = p[1]; if(nachweisVon(k, name)) return;
+    modal(blatt("Geplante Dienste korrigieren · " + name, "", '<div class="nu-banner">' + svg("warnung") + '<div>Der Originalplan ist Grundlage der Lohnabrechnung.<small>Nur korrigieren, wenn er falsch übernommen wurde. Die Änderung wird mit Name und Uhrzeit gespeichert.</small></div></div>' +
+      '<div class="nu-feld"><span class="nu-feldname">Geplante Tage im ' + esc(monatName(k)) + '</span><div class="nu-checkliste">' + tageVon(k).map(function(di){ var an = rollenGeplant(di, name).length > 0; return '<button class="nu-chip" style="min-width:64px;justify-content:center" aria-pressed="' + an + '" data-act="planTag" data-arg="' + di + '">' + kurz(pd(di)) + '</button>'; }).join("") + '</div></div>' +
+      '<div class="nu-feld"><label for="pk-grund">Grund (Pflicht)</label><input class="nu-eingabe" id="pk-grund" placeholder="z. B. Dienstplan falsch abgeschrieben"></div>',
+      '<button class="nu-btn nu-btn--klein" data-act="nachweis" data-arg="' + k + ',' + esc(name) + '">Abbrechen</button><button class="nu-btn nu-btn--gefahr-voll nu-btn--klein" data-act="planSpeichern" data-arg="' + k + ',' + esc(name) + '">Korrektur speichern</button>').replace('class="p-blatt"', 'class="p-blatt p-blatt--breit"')); },
+  planTag:function(a, el){ el.setAttribute("aria-pressed", String(el.getAttribute("aria-pressed") !== "true")); },
+  planSpeichern:function(a){ var p = a.split(","), k = p[0], name = p[1], grund = $("#pk-grund").value.trim(); if(!grund){ $("#pk-grund").focus(); $("#pk-grund").style.borderColor = "var(--warnung)"; return; }
+    var aenderungen = [];
+    $$('[data-act="planTag"]').forEach(function(b){ var di = b.dataset.arg, soll = b.getAttribute("aria-pressed") === "true", ist = rollenGeplant(di, name).length > 0; if(soll === ist) return;
+      var pl = S.plan0[di] = S.plan0[di] || {nacht:(S.dienstplan[di] || []).slice(), kueche:S.kueche[di] || ""};
+      if(soll){ var frei = pl.nacht.indexOf(""); if(frei >= 0) pl.nacht[frei] = name; else pl.nacht.push(name); } else { pl.nacht = pl.nacht.map(function(n){ return n === name ? "" : n; }); if(pl.kueche === name) pl.kueche = ""; }
+      aenderungen.push((soll ? "+" : "−") + kurz(pd(di))); });
+    if(aenderungen.length) S.planLog.push({monat:k, name:name, aenderungen:aenderungen, grund:grund, von:aktivePerson(), um:kurz(H) + " " + uhr()});
+    commit(); ACT.nachweis(k + "," + name); if(aenderungen.length) toast("warnung", "Plan korrigiert", name + ": " + aenderungen.join(", "), 5000); },
   dienstReiter:function(a){ U.oben = true; U.dienstReiter = a; U.schreiben = false; render(); },
   feldJaNein:function(a){ var p = a.split(","), b = bericht(); b.f[p[0]] = b.f[p[0]] === p[1] ? null : p[1]; commit(); },
   fehlt:function(a){ var f = bericht().f.fehlt, i = f.indexOf(a); if(i >= 0) f.splice(i, 1); else f.push(a); commit(); },
   besetzungUnterschrift:function(i){ var x = bericht().besetzung[+i]; modal(blatt("Unterschrift " + x.name, x.rolle + " · Dienst " + kurz(H), '<div class="nu-unterschrift" data-pad="bes' + i + '"><div class="nu-unterschrift-kopf"><b>' + esc(x.name) + '</b><small>' + esc(x.rolle) + '</small></div><div class="nu-unterschrift-feld"><span class="nu-unterschrift-marke">' + svg("check","klein") + 'Bestätigt</span><span class="nu-unterschrift-hilfe">Mit Finger oder Stift unterschreiben</span></div><div class="nu-unterschrift-knoepfe"><button class="nu-btn nu-btn--klein" data-pad-act="leeren">' + svg("rueckgaengig") + 'Löschen</button><button class="nu-btn nu-btn--primaer nu-btn--klein" data-pad-act="ok" disabled>Bestätigen</button></div></div>', '')); },
-  personTauschen:function(i){ var namen = ["Jonas","Silke","Jessica","Flo","Mariandré","Hannah","Schwester Martha"]; modal(blatt("Person tauschen", "Personalliste. Geplante und tatsächliche Person werden beide gespeichert.", '<div class="nu-checkliste">' + namen.map(function(n){ return '<button class="nu-chip" data-act="personSetzen" data-arg="' + i + ',' + n + '">' + esc(n) + '</button>'; }).join("") + '</div>', '<button class="nu-btn nu-btn--klein" data-act="modalZu">Abbrechen</button>')); },
-  personSetzen:function(a){ var p = a.split(","), x = bericht().besetzung[+p[0]]; x.geplant = x.geplant || x.name; x.name = p[1]; x.sig = null; U.modal = null; commit(); },
+  personTauschen:function(i){ modal(blatt("Person tauschen", "Geplante und tatsächliche Person werden beide gespeichert und zählen im Monatsabschluss.",
+    '<div class="nu-feld"><span class="nu-feldname">Grund</span><div class="nu-seg" role="radiogroup">' + ["Krankheit","Tausch","Sonstiges"].map(function(g, k){ return '<button role="radio" aria-checked="' + (k === 0) + '" data-act="grundWahl" data-arg="' + g + '">' + g + '</button>'; }).join("") + '</div></div>' +
+    '<div class="nu-feld"><span class="nu-feldname">Wer macht den Dienst?</span><div class="nu-checkliste">' + TEAM.map(function(n){ return '<button class="nu-chip" data-act="personSetzen" data-arg="' + i + ',' + n + '">' + esc(n) + '</button>'; }).join("") + '</div></div>', '<button class="nu-btn nu-btn--klein" data-act="modalZu">Abbrechen</button>')); },
+  grundWahl:function(a, el){ $$('[data-act="grundWahl"]').forEach(function(b){ b.setAttribute("aria-checked", String(b === el)); }); },
+  personSetzen:function(a){ var p = a.split(","), x = bericht().besetzung[+p[0]], gr = $('[data-act="grundWahl"][aria-checked="true"]'); x.geplant = x.geplant || x.name; x.name = p[1]; x.grund = x.name === x.geplant ? "" : (gr ? gr.dataset.arg : ""); x.sig = null; U.modal = null; commit(); },
   einfuegen:function(a){ einfuegenText(a); },
   erwaehnen:function(gid){ var g = S.G[gid], name = g.vorname + (gleicherVorname(g) ? " (" + zusatz(g) + ")" : ""); var el = $("#f-hinweise"), a = el.selectionStart, v = el.value, start = v.lastIndexOf("@", a - 1); el.value = v.slice(0, start) + "@" + name + " " + v.slice(a); var pos = start + name.length + 2; el.focus(); el.setSelectionRange(pos, pos); el.dispatchEvent(new Event("input")); $("#vorschlaege").hidden = true; },
   schreibenFertig:function(){ U.schreiben = false; if(document.activeElement) document.activeElement.blur(); render(); },
   externBlatt:function(){ var namen = Object.keys(S.G).map(function(k){ return S.G[k]; }).filter(function(g){ return !Object.keys(S.betten).some(function(n){ return S.betten[n].g === g.id && g.standort === "haus"; }); }); modal(blatt("Externe Gäste", "Personen, die nur zum Essen kommen, auch aus St. Nikolaus.", '<div class="nu-checkliste">' + namen.map(function(g){ return '<button class="nu-chip" data-act="externDazu" data-arg="' + esc(g.vorname) + '">' + esc(g.vorname) + (g.standort === "nikolaus" ? " · St. Nikolaus" : "") + '</button>'; }).join("") + '</div>', '<button class="nu-btn nu-btn--klein" data-act="modalZu">Fertig</button>')); },
   externDazu:function(n){ var e = bericht().f.extern; if(e.indexOf(n) < 0) e.push(n); U.modal = null; commit(); },
-  hinweisBlatt:function(){ modal(blatt("Hinweis für die nächsten Tage", "Erscheint bei den nächsten Diensten oben im Bericht.", '<div class="nu-feld"><label for="hw-text">Hinweis</label><textarea class="nu-eingabe" id="hw-text"></textarea></div><div class="p-zwei"><div class="nu-feld"><label for="hw-bis">Gültig bis</label>' + datumsFeld("hw-bis", iso(plus(H,3))) + '</div><div class="nu-feld"><span class="nu-feldname">Priorität</span><div style="display:flex;align-items:center;gap:12px"><button class="nu-schalter" role="switch" aria-checked="false" id="hw-wichtig" data-act="schalter" aria-label="Wichtig"></button>wichtig</div></div></div>', '<button class="nu-btn nu-btn--klein" data-act="modalZu">Abbrechen</button><button class="nu-btn nu-btn--primaer nu-btn--klein" data-act="hinweisSpeichern">Speichern</button>')); },
+  hinweisBlatt:function(){ var dienst = (S.dienstplan[iso(H)] || []).filter(Boolean), wer = aktivePerson();
+    var namen = dienst.concat([LEITUNG]).concat(TEAM.filter(function(n){ return dienst.indexOf(n) < 0; }));
+    modal(blatt("Hinweis für die nächsten Tage", "Erscheint bei den nächsten Diensten oben im Bericht.",
+      '<div class="nu-feld"><span class="nu-feldname">Von</span><div class="nu-checkliste">' + namen.map(function(n){ return '<button class="nu-chip" aria-pressed="' + (n === wer) + '" data-act="vonWahl" data-arg="' + esc(n) + '">' + (n === wer ? svg("check","klein") : '') + esc(n) + (n === LEITUNG ? ' (Schwester)' : '') + '</button>'; }).join("") + '</div></div>' +
+      '<div class="nu-feld"><label for="hw-text">Hinweis</label><textarea class="nu-eingabe" id="hw-text"></textarea></div><div class="p-zwei"><div class="nu-feld"><label for="hw-bis">Gültig bis</label>' + datumsFeld("hw-bis", iso(plus(H,3))) + '</div><div class="nu-feld"><span class="nu-feldname">Priorität</span><div style="display:flex;align-items:center;gap:12px"><button class="nu-schalter" role="switch" aria-checked="false" id="hw-wichtig" data-act="schalter" aria-label="Wichtig"></button>wichtig</div></div></div>',
+      '<button class="nu-btn nu-btn--klein" data-act="modalZu">Abbrechen</button><button class="nu-btn nu-btn--primaer nu-btn--klein" data-act="hinweisSpeichern">Speichern</button>')); },
+  vonWahl:function(a, el){ $$('[data-act="vonWahl"]').forEach(function(b){ var an = b === el; b.setAttribute("aria-pressed", String(an)); b.innerHTML = (an ? svg("check","klein") : '') + esc(b.dataset.arg) + (b.dataset.arg === LEITUNG ? ' (Schwester)' : ''); }); },
   schalter:function(a, el){ el.setAttribute("aria-checked", String(el.getAttribute("aria-checked") !== "true")); },
-  hinweisSpeichern:function(){ var t = $("#hw-text").value.trim(); if(!t) return; S.hinweise.unshift({id:"h" + Date.now(), von:aktivePerson(), text:t, bis:$("#hw-bis").value, wichtig:$("#hw-wichtig").getAttribute("aria-checked") === "true", quelle:"App"}); U.modal = null; commit(); },
+  hinweisSpeichern:function(){ var t = $("#hw-text").value.trim(); if(!t) return; var von = $('[data-act="vonWahl"][aria-pressed="true"]'); S.hinweise.unshift({id:"h" + Date.now(), von:von ? von.dataset.arg : aktivePerson(), text:t, bis:$("#hw-bis").value, wichtig:$("#hw-wichtig").getAttribute("aria-checked") === "true", quelle:"App"}); U.modal = null; commit(); },
   abschliessen:function(){ abschliessen(); },
   nachtragBlatt:function(){ modal(blatt("Nachtrag", "Der Bericht bleibt unverändert; der Nachtrag steht mit Zeit und Namen darunter.", '<div class="nu-feld"><label for="na-text">Nachtrag</label><textarea class="nu-eingabe" id="na-text"></textarea></div>', '<button class="nu-btn nu-btn--klein" data-act="modalZu">Abbrechen</button><button class="nu-btn nu-btn--primaer nu-btn--klein" data-act="nachtragSpeichern">Speichern</button>')); },
   nachtragSpeichern:function(){ var t = $("#na-text").value.trim(); if(!t) return; bericht().nachtraege.push({text:t, um:kurz(pd()) + " · " + uhr(), von:aktivePerson()}); U.modal = null; commit(); },

@@ -11,7 +11,7 @@ KOPF = '''<header class="nu-kopf">
   <span class="nu-kopf-raum"></span>
   <button class="nu-sync" data-s="ok"><i data-icon="wolke-ok"></i>Synchronisiert 21:00</button>
   <button class="nu-iconbtn nu-iconbtn--fl" aria-label="3 offene Erinnerungen"><i data-icon="glocke"></i><span class="nu-zaehler">3</span></button>
-  <div class="nu-dienst"><button class="nu-person" aria-pressed="true"><span class="nu-kuerzel">JO</span>Jonas</button><button class="nu-person" aria-pressed="false"><span class="nu-kuerzel">SI</span>Silke</button></div>
+  <div class="nu-dienst"><button class="nu-person" aria-pressed="true"><span class="nu-kuerzel">KI</span>Kim</button><button class="nu-person" aria-pressed="false"><span class="nu-kuerzel">SA</span>Sam</button></div>
 </header>'''
 
 comp("Navigationsleiste","Grundgerüst",620,f'''<div class="nu" style="height:600px;width:104px;display:flex">{RAIL}</div>''','''# Navigationsleiste
@@ -74,8 +74,8 @@ var B=Nu.bett;
 function zimmer(n,f,inner,st){return '<section class="nu-zimmer"'+(st||'')+'><div class="nu-zimmer-kopf"><span class="nu-zimmer-name">'+n+'</span><span class="nu-zimmer-frei">'+f+'</span></div>'+inner+'</section>';}
 function stock(a,b){return '<div class="nu-stockbett"><div class="nu-stockbett-teil"><span>oben</span>'+B(a)+'</div><div class="nu-stockbett-teil"><span>unten</span>'+B(b)+'</div></div>';}
 document.getElementById("plan").innerHTML=
- zimmer("Zimmer D","1 frei",'<div class="nu-zimmer-betten"><div class="nu-zimmer-teil">'+B({nr:"D1",s:"anwesend",name:"Jonas",naechte:21})+stock({nr:"D2",s:"anwesend",name:"Marek",naechte:44,symbole:["notiz"]},{nr:"D3",s:"frei"})+'</div><div class="nu-zimmer-teil">'+stock({nr:"D4",s:"erwartet",name:"Ali",naechte:12,dusche:"20:30"},{nr:"D5",s:"anwesend",name:"Dimitri",naechte:9,symbole:["karte-gelb"]})+B({nr:"D6",s:"gehalten",name:"Petra",bis:"18.11."})+'</div></div>')+
- zimmer("T-Zimmer","1 frei",'<div class="nu-zimmer-betten">'+stock({nr:"T1",s:"anwesend",name:"Yusuf",naechte:3,symbole:["laeuseschein-fehlt"],warn:true},{nr:"T2",s:"freibis",name:"Hamid",bis:"20.11."})+B({nr:"T3",s:"anwesend",name:"Elena",naechte:30})+'</div>')+
+ zimmer("Zimmer D","1 frei",'<div class="nu-zimmer-betten"><div class="nu-zimmer-teil">'+B({nr:"D1",s:"anwesend",name:"Paul",naechte:21})+stock({nr:"D2",s:"anwesend",name:"Tom",naechte:44,symbole:["notiz"]},{nr:"D3",s:"frei"})+'</div><div class="nu-zimmer-teil">'+stock({nr:"D4",s:"erwartet",name:"Max",naechte:12,dusche:"20:30"},{nr:"D5",s:"anwesend",name:"Felix",naechte:9,symbole:["karte-gelb"]})+B({nr:"D6",s:"gehalten",name:"Anna",bis:"18.11."})+'</div></div>')+
+ zimmer("T-Zimmer","1 frei",'<div class="nu-zimmer-betten">'+stock({nr:"T1",s:"anwesend",name:"Jan",naechte:3,symbole:["laeuseschein-fehlt"],warn:true},{nr:"T2",s:"freibis",name:"Leon",bis:"20.11."})+B({nr:"T3",s:"anwesend",name:"Laura",naechte:30})+'</div>')+
  '<div></div>';
 Nu.mountIcons();
 </script>'''.replace('__RAIL__',RAIL).replace('__KOPF__',KOPF),'''# App-Gerüst
@@ -92,9 +92,9 @@ Das Gerüst jeder Ansicht im Querformat: Navigationsleiste links, Kopfzeile oben
 
 comp("Bettkarte","Bettenplan",460,'''<div class="nu nu-vorschau" id="v" style="display:grid;grid-template-columns:repeat(4,max-content);gap:20px 16px"></div>
 <script>
-var L=[["frei",{nr:"B2",s:"frei"}],["erwartet",{nr:"D4",s:"erwartet",name:"Ali",naechte:12,dusche:"20:30"}],["anwesend",{nr:"D1",s:"anwesend",name:"Jonas",naechte:21}],["freigehalten bis",{nr:"D6",s:"gehalten",name:"Petra",bis:"18.11."}],
-["frei bis",{nr:"T2",s:"freibis",name:"Hamid",bis:"20.11."}],["deaktiviert",{nr:"F4",s:"aus"}],["Läuseschein fehlt seit 3 Tagen",{nr:"T1",s:"anwesend",name:"Yusuf",naechte:3,symbole:["laeuseschein-fehlt"],warn:true}],["Gelbe Karte, Notiz",{nr:"D5",s:"anwesend",name:"Dimitri",naechte:9,symbole:["karte-gelb","notiz"]}],
-["Rote Karte (Hausverbot)",{nr:"L2",s:"erwartet",name:"Kasia",naechte:2,symbole:["karte-rot"]}],["langer Name",{nr:"F1",s:"anwesend",name:"Maximilian-Alexander",naechte:1}],["Neuaufnahme",{nr:"B1",s:"anwesend",name:"Mihai",naechte:1,symbole:["laeuseschein-fehlt"]}],["geöffnet",{nr:"F2",s:"anwesend",name:"Samir",naechte:20}]];
+var L=[["frei",{nr:"B2",s:"frei"}],["erwartet",{nr:"D4",s:"erwartet",name:"Max",naechte:12,dusche:"20:30"}],["anwesend",{nr:"D1",s:"anwesend",name:"Paul",naechte:21}],["freigehalten bis",{nr:"D6",s:"gehalten",name:"Anna",bis:"18.11."}],
+["frei bis",{nr:"T2",s:"freibis",name:"Leon",bis:"20.11."}],["deaktiviert",{nr:"F4",s:"aus"}],["Läuseschein fehlt seit 3 Tagen",{nr:"T1",s:"anwesend",name:"Jan",naechte:3,symbole:["laeuseschein-fehlt"],warn:true}],["Gelbe Karte, Notiz",{nr:"D5",s:"anwesend",name:"Felix",naechte:9,symbole:["karte-gelb","notiz"]}],
+["Rote Karte (Hausverbot)",{nr:"L2",s:"erwartet",name:"Julia",naechte:2,symbole:["karte-rot"]}],["langer Name",{nr:"F1",s:"anwesend",name:"Maximilian-Alexander",naechte:1}],["Neuaufnahme",{nr:"B1",s:"anwesend",name:"Tim",naechte:1,symbole:["laeuseschein-fehlt"]}],["geöffnet",{nr:"F2",s:"anwesend",name:"Moritz",naechte:20}]];
 document.getElementById("v").innerHTML=L.map(function(x){return '<div style="display:grid;gap:8px"><span class="nu-beschr">'+x[0]+'</span>'+Nu.bett(x[1])+'</div>';}).join("");
 document.querySelectorAll(".nu-bett")[11].classList.add("is-offen");
 </script>''','''# Bettkarte
@@ -109,12 +109,12 @@ Eine Bettkarte zeigt auf einen Blick, wer im Bett liegt und was heute zu beachte
 | erwartet | `erwartet-flaeche` | 2 dp `blau` | `erwartet` | „erwartet“, Name | nein |
 | anwesend | `anwesend` | – | `anwesend` | Name in `auf-anwesend` | nein |
 | freigehalten bis | `gehalten-flaeche` | 2 dp `linie-stark` | `schloss` | „bis 18.11.“ | nein |
-| frei bis | `frei-flaeche` | 2 dp `frei` | `rueckkehr` | „frei bis 20.11.“, „Hamid kommt zurück“ | ja |
+| frei bis | `frei-flaeche` | 2 dp `frei` | `rueckkehr` | „frei bis 20.11.“, „Leon kommt zurück“ | ja |
 | deaktiviert | Schraffur `aus-schraffur` auf `aus-flaeche` | 1,5 dp | `deaktiviert` | „aus“ | nicht gezählt |
 
 **Symbolreihe**, in dieser Reihenfolge: `laeuseschein-fehlt` (oder `warnung` ab Tag 3), `karte-rot`, `karte-gelb`, `notiz`, `dusche`. Höchstens vier; das fünfte wird zu „+1“.
 - Läuseschein seit 3 Tagen überfällig: zusätzlich Ring 2 dp `warnung` außen um die Karte (`is-warn`) und der Klartext in der Schnellauswahl.
-- Farbe steht nie allein: jeder Status hat ein Wort oder Symbol, jede Karte eine `contentDescription` („Bett D4, erwartet, Ali, Duschslot 20:30“).
+- Farbe steht nie allein: jeder Status hat ein Wort oder Symbol, jede Karte eine `contentDescription` („Bett D4, erwartet, Max, Duschslot 20:30“).
 - Geöffnet (Detailbereich zeigt diesen Gast): Ring 3 dp `fokus` mit 3 dp Abstand.
 
 **Bedienung:** Tipp auf frei → „Gast aufnehmen“; Tipp auf erwartet → Schnellauswahl „Ist da / Nicht da / Details“; Tipp auf anwesend → Detailbereich. Langes Drücken → Ziehen (siehe Umziehen und Tauschen).
@@ -123,7 +123,7 @@ Eine Bettkarte zeigt auf einen Blick, wer im Bett liegt und was heute zu beachte
 comp("Stockbett","Bettenplan",270,'''<div class="nu nu-vorschau" id="v"></div>
 <script>
 function stock(a,b){return '<div class="nu-stockbett"><div class="nu-stockbett-teil"><span>oben</span>'+Nu.bett(a)+'</div><div class="nu-stockbett-teil"><span>unten</span>'+Nu.bett(b)+'</div></div>';}
-document.getElementById("v").innerHTML=stock({nr:"D2",s:"anwesend",name:"Marek",naechte:44,symbole:["notiz"]},{nr:"D3",s:"frei"})+stock({nr:"B3",s:"erwartet",name:"Ion",naechte:3},{nr:"B4",s:"gehalten",name:"Olek",bis:"16.11."});
+document.getElementById("v").innerHTML=stock({nr:"D2",s:"anwesend",name:"Tom",naechte:44,symbole:["notiz"]},{nr:"D3",s:"frei"})+stock({nr:"B3",s:"erwartet",name:"Lukas",naechte:3},{nr:"B4",s:"gehalten",name:"Erik",bis:"16.11."});
 </script>''','''# Stockbett
 
 Zwei Bettkarten übereinander in einem gemeinsamen Rahmen; oben die kleinere Nummer.
@@ -136,7 +136,7 @@ Zwei Bettkarten übereinander in einem gemeinsamen Rahmen; oben die kleinere Num
 comp("Zimmerrahmen","Bettenplan",300,'''<div class="nu nu-vorschau" id="v" style="flex-wrap:nowrap"></div>
 <script>
 var B=Nu.bett;
-document.getElementById("v").innerHTML='<section class="nu-zimmer"><div class="nu-zimmer-kopf"><span class="nu-zimmer-name">Zimmer B</span><span class="nu-zimmer-frei">1 von 4 frei</span></div><div class="nu-zimmer-betten">'+B({nr:"B1",s:"anwesend",name:"Mihai",naechte:1})+B({nr:"B2",s:"frei"})+'</div><div class="nu-zimmer-betten">'+B({nr:"B3",s:"erwartet",name:"Ion",naechte:3})+B({nr:"B4",s:"anwesend",name:"Olek",naechte:15})+'</div></section>'+
+document.getElementById("v").innerHTML='<section class="nu-zimmer"><div class="nu-zimmer-kopf"><span class="nu-zimmer-name">Zimmer B</span><span class="nu-zimmer-frei">1 von 4 frei</span></div><div class="nu-zimmer-betten">'+B({nr:"B1",s:"anwesend",name:"Tim",naechte:1})+B({nr:"B2",s:"frei"})+'</div><div class="nu-zimmer-betten">'+B({nr:"B3",s:"erwartet",name:"Lukas",naechte:3})+B({nr:"B4",s:"anwesend",name:"Erik",naechte:15})+'</div></section>'+
 '<section class="nu-zimmer is-aus" style="min-width:340px"><div class="nu-zimmer-kopf"><span class="nu-zimmer-name">Zimmer F</span><span class="nu-zimmer-frei">aus bis 01.11.</span></div><div class="nu-zimmer-betten">'+B({nr:"F1",s:"aus"})+B({nr:"F2",s:"aus"})+'</div></section>';
 </script>''','''# Zimmerrahmen
 
@@ -168,7 +168,7 @@ Die Leiste über dem Plan zeigt die Zahl freier Betten, die Belegung und den Sta
 
 comp("Schnellauswahl","Bettenplan",360,'''<div class="nu nu-vorschau" style="position:relative;min-height:330px;gap:200px">
 <div style="position:relative"><div id="b1"></div><div class="nu-schnell" style="left:0;top:100px;--ursprung:20% 0">
-<div class="nu-schnell-kopf"><b>Ali</b><span>D4 · erwartet</span></div>
+<div class="nu-schnell-kopf"><b>Max</b><span>D4 · erwartet</span></div>
 <button class="nu-btn nu-btn--primaer"><i data-icon="anwesend"></i>Ist da</button>
 <button class="nu-btn"><i data-icon="abwesend"></i>Nicht da</button>
 <button class="nu-btn"><i data-icon="person"></i>Details</button>
@@ -178,7 +178,7 @@ comp("Schnellauswahl","Bettenplan",360,'''<div class="nu nu-vorschau" style="pos
 <button class="nu-btn nu-btn--primaer"><i data-icon="person-plus"></i>Gast aufnehmen</button>
 <button class="nu-btn"><i data-icon="umziehen"></i>Gast hierher umziehen</button>
 </div></div></div>
-<script>document.getElementById("b1").innerHTML=Nu.bett({nr:"D4",s:"erwartet",name:"Ali",naechte:12,dusche:"20:30"});document.getElementById("b2").innerHTML=Nu.bett({nr:"B2",s:"frei"});document.querySelector("#b1 .nu-bett").classList.add("is-offen");document.querySelector("#b2 .nu-bett").classList.add("is-offen");Nu.mountIcons();</script>''','''# Schnellauswahl
+<script>document.getElementById("b1").innerHTML=Nu.bett({nr:"D4",s:"erwartet",name:"Max",naechte:12,dusche:"20:30"});document.getElementById("b2").innerHTML=Nu.bett({nr:"B2",s:"frei"});document.querySelector("#b1 .nu-bett").classList.add("is-offen");document.querySelector("#b2 .nu-bett").classList.add("is-offen");Nu.mountIcons();</script>''','''# Schnellauswahl
 
 Eine kleine Auswahl, die am angetippten Bett aufgeht, damit Check-in und Aufnahme in höchstens drei Tipps gehen.
 

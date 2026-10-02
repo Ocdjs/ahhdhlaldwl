@@ -6,7 +6,7 @@ comp("UmziehenTauschen","Bettenplan",430,'''<div class="nu nu-vorschau nu-vorsch
 <div id="dlg"></div>
 </div>
 <script>
-var D=[{nr:"B1",s:"anwesend",name:"Mihai",naechte:1},{nr:"B2",s:"frei"},{nr:"B3",s:"anwesend",name:"Ion",naechte:4},{nr:"B4",s:"anwesend",name:"Olek",naechte:15}];
+var D=[{nr:"B1",s:"anwesend",name:"Tim",naechte:1},{nr:"B2",s:"frei"},{nr:"B3",s:"anwesend",name:"Lukas",naechte:4},{nr:"B4",s:"anwesend",name:"Erik",naechte:15}];
 var feld=document.getElementById("feld"),dlg=document.getElementById("dlg");
 function draw(){feld.innerHTML=D.map(Nu.bett).join("");}
 draw();
@@ -30,23 +30,23 @@ Ein Gast wechselt das Bett, indem man seine Karte auf ein anderes Bett zieht.
 
 - **Anheben:** langes Drücken (400 ms) auf eine belegte Karte. Die Karte hebt sich (105 %, −1°, `schatten-gehoben`), ihr Platz bleibt blass stehen. Ein kurzes Vibrieren (`HapticFeedbackType.LongPress`) bestätigt.
 - **Ziel:** freies Bett → Rahmen 3 dp `frei` (umziehen); belegtes Bett → Rahmen 3 dp `blau` (tauschen). Deaktivierte Betten nehmen nichts an.
-- **Ablegen** öffnet immer eine Bestätigung: „Max (Bett 3) und Ali (Bett 5) tauschen?“ bzw. „Ali von D4 nach B2 umziehen?“. Text darunter: „Gilt ab heute. Bereits unterschriebene PDFs bleiben unverändert.“
+- **Ablegen** öffnet immer eine Bestätigung: „Karl (Bett 3) und Max (Bett 5) tauschen?“ bzw. „Max von D4 nach B2 umziehen?“. Text darunter: „Gilt ab heute. Bereits unterschriebene PDFs bleiben unverändert.“
 - Nach „Tauschen“ wechseln beide Karten auf gebogenen Bahnen den Platz (`dauer-lang`), dann federn sie einmal (`is-gesetzt`).
-- Ohne Ziehen: „Bett wechseln“ in den Gastdetails öffnet den Plan im Auswahlmodus („Neues Bett für Ali antippen“).
+- Ohne Ziehen: „Bett wechseln“ in den Gastdetails öffnet den Plan im Auswahlmodus („Neues Bett für Max antippen“).
 - Mit Stift: Ziehen funktioniert gleich; mit Hardware-Tastatur: Karte fokussieren, Leertaste hebt an, Pfeiltasten wählen das Ziel, Enter legt ab.
 ''', subtitle="Zum Ausprobieren: Karte lange drücken und ziehen")
 
 comp("Gastdetails","Bettenplan",820,'''<div class="nu" style="display:flex;justify-content:flex-end;background:var(--grund);height:800px;padding:0"><aside class="nu-detail" aria-label="Gastdetails">
-<div class="nu-detail-kopf"><div style="flex:1"><span class="nr">D4</span><h2>Ali</h2><p>Aufnahme 2026-27-0042 · seit 03.10. · 12 Nächte</p></div><button class="nu-iconbtn nu-iconbtn--fl" aria-label="Schließen"><i data-icon="schliessen"></i></button></div>
+<div class="nu-detail-kopf"><div style="flex:1"><span class="nr">D4</span><h2>Max</h2><p>Aufnahme 2026-27-0042 · seit 03.10. · 12 Nächte</p></div><button class="nu-iconbtn nu-iconbtn--fl" aria-label="Schließen"><i data-icon="schliessen"></i></button></div>
 <div class="nu-detail-inhalt">
- <div class="nu-zeile nu-zeile--warnung"><i data-icon="laeuseschein-fehlt"></i><div><b>Läuseschein fehlt seit 3 Tagen</b><small>Verbleib entschieden von Jonas bis 16.11.</small></div><button class="nu-btn nu-btn--klein nu-btn--rahmen"><i data-icon="scannen"></i>Scannen</button></div>
- <section class="nu-abschnitt"><h3>Stammdaten</h3><dl class="nu-daten"><dt>Vorname</dt><dd>Ali</dd><dt>Nachname</dt><dd>–</dd><dt>Spitzname</dt><dd>Professor</dd><dt>Sprache</dt><dd>Arabisch</dd><dt>Erste Aufnahme</dt><dd>03.10.2026</dd></dl></section>
+ <div class="nu-zeile nu-zeile--warnung"><i data-icon="laeuseschein-fehlt"></i><div><b>Läuseschein fehlt seit 3 Tagen</b><small>Verbleib entschieden von Kim bis 16.11.</small></div><button class="nu-btn nu-btn--klein nu-btn--rahmen"><i data-icon="scannen"></i>Scannen</button></div>
+ <section class="nu-abschnitt"><h3>Stammdaten</h3><dl class="nu-daten"><dt>Vorname</dt><dd>Max</dd><dt>Nachname</dt><dd>–</dd><dt>Spitzname</dt><dd>Professor</dd><dt>Sprache</dt><dd>Arabisch</dd><dt>Erste Aufnahme</dt><dd>03.10.2026</dd></dl></section>
  <section class="nu-abschnitt"><h3>Aufenthalt</h3><dl class="nu-daten"><dt>Bett</dt><dd>D4 · Stockbett oben</dd><dt>Seit</dt><dd>03.10.</dd><dt>Geplant bis</dt><dd>offen, dauerhaft</dd><dt>Heute</dt><dd>erwartet · Dusche 20:30</dd></dl></section>
- <section class="nu-abschnitt"><h3>Sanktionen</h3><div class="nu-zeile"><i data-icon="karte-gelb"></i><div>Gelbe Karte · 08.11.<small>Laut nach 22 Uhr, eingetragen von Silke · aus Bericht vom 08.11.</small></div></div></section>
+ <section class="nu-abschnitt"><h3>Sanktionen</h3><div class="nu-zeile"><i data-icon="karte-gelb"></i><div>Gelbe Karte · 08.11.<small>Laut nach 22 Uhr, eingetragen von Sam · aus Bericht vom 08.11.</small></div></div></section>
  <section class="nu-abschnitt"><h3>Dokumente</h3><div class="nu-zeile"><i data-icon="pdf"></i><div>0042_Ali_2026-10-03.pdf<small>Hausordnung und Datenschutz, Arabisch und Deutsch</small></div><button class="nu-iconbtn" aria-label="Ansehen"><i data-icon="weiter"></i></button></div></section>
  <section class="nu-abschnitt"><h3>Notizen</h3>
-  <div class="nu-notiz">Hat nach einer zweiten Decke gefragt.<small>14.11. · Jonas · aus Bericht vom 14.11.</small></div>
-  <div class="nu-notiz">Arzttermin am Donnerstag, kommt evtl. später.<small>12.11. · Schwester Martha</small></div>
+  <div class="nu-notiz">Hat nach einer zweiten Decke gefragt.<small>14.11. · Kim · aus Bericht vom 14.11.</small></div>
+  <div class="nu-notiz">Arzttermin am Donnerstag, kommt evtl. später.<small>12.11. · Leitung</small></div>
   <button class="nu-btn nu-btn--rahmen nu-btn--klein" style="justify-self:start"><i data-icon="plus"></i>Notiz hinzufügen</button></section>
 </div>
 <div class="nu-detail-aktionen"><button class="nu-btn nu-btn--primaer"><i data-icon="anwesend"></i>Einchecken</button><button class="nu-btn"><i data-icon="abwesend"></i>Abwesenheit</button><button class="nu-btn"><i data-icon="tauschen"></i>Bett wechseln</button><button class="nu-btn"><i data-icon="dusche"></i>Duschslot</button><button class="nu-btn"><i data-icon="auszug"></i>Auszug</button><button class="nu-btn nu-btn--gefahr"><i data-icon="karte-gelb"></i>Sanktion</button></div>
@@ -69,10 +69,10 @@ comp("Assistent","Aufnahme",640,'''<div class="nu" style="height:640px;width:110
  <li class="nu-schritt" aria-current="step"><i>4</i>Hausordnung</li><li class="nu-schritt"><i>5</i>Datenschutz</li><li class="nu-schritt"><i>6</i>Abschluss</li></ol>
 <div class="nu-assistent-seite" style="display:grid;gap:20px;align-content:start">
  <div style="display:flex;align-items:center;gap:12px"><h2 class="titel" style="margin:0;flex:1">Hausordnung</h2><div class="nu-seg" role="radiogroup"><button role="radio" aria-checked="true">العربية</button><button role="radio" aria-checked="false">Deutsch</button></div></div>
- <div class="nu-dokument" dir="rtl" style="max-height:170px;overflow:auto"><h3>قواعد البيت</h3><p style="margin:0">مرحبًا <mark>علي</mark>. سريرك هو <mark>D4</mark> بتاريخ <mark>14.11.2026</mark>. الهدوء من الساعة 22:00. التدخين ممنوع داخل المبنى.</p></div>
+ <div class="nu-dokument" dir="rtl" style="max-height:170px;overflow:auto"><h3>قواعد البيت</h3><p style="margin:0">مرحبًا <mark>Max</mark>. سريرك هو <mark>D4</mark> بتاريخ <mark>14.11.2026</mark>. الهدوء من الساعة 22:00. التدخين ممنوع داخل المبنى.</p></div>
  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-  <div class="nu-unterschrift is-gezeichnet is-bestaetigt"><div class="nu-unterschrift-kopf"><b>Gast: Ali</b><small>bestätigt 19:42</small></div><div class="nu-unterschrift-feld" style="height:150px"><span class="nu-unterschrift-marke"><i data-icon="check" class="klein"></i>Bestätigt</span><svg viewBox="0 0 300 150" style="position:absolute;inset:0;width:100%;height:100%"><path d="M40 100c20-30 30-50 40-30s-10 40 10 20 30-40 40-10 20 10 40-10 20-5 40 0" fill="none" stroke="var(--stift-tinte)" stroke-width="3" stroke-linecap="round"/></svg></div></div>
-  <div class="nu-unterschrift"><div class="nu-unterschrift-kopf"><b>Betreuung: Jonas</b><small>noch offen</small></div><div class="nu-unterschrift-feld" style="height:150px"><span class="nu-unterschrift-hilfe">Mit Finger oder Stift unterschreiben</span></div></div>
+  <div class="nu-unterschrift is-gezeichnet is-bestaetigt"><div class="nu-unterschrift-kopf"><b>Gast: Max</b><small>bestätigt 19:42</small></div><div class="nu-unterschrift-feld" style="height:150px"><span class="nu-unterschrift-marke"><i data-icon="check" class="klein"></i>Bestätigt</span><svg viewBox="0 0 300 150" style="position:absolute;inset:0;width:100%;height:100%"><path d="M40 100c20-30 30-50 40-30s-10 40 10 20 30-40 40-10 20 10 40-10 20-5 40 0" fill="none" stroke="var(--stift-tinte)" stroke-width="3" stroke-linecap="round"/></svg></div></div>
+  <div class="nu-unterschrift"><div class="nu-unterschrift-kopf"><b>Betreuung: Kim</b><small>noch offen</small></div><div class="nu-unterschrift-feld" style="height:150px"><span class="nu-unterschrift-hilfe">Mit Finger oder Stift unterschreiben</span></div></div>
  </div>
 </div>
 <div class="nu-assistent-fuss"><button class="nu-btn"><i data-icon="zurueck"></i>Zurück</button><span class="nu-beschr" style="align-self:center">Zwischenstand gespeichert 19:42</span><button class="nu-btn nu-btn--primaer" disabled>Weiter<i data-icon="weiter"></i></button></div>
@@ -90,10 +90,10 @@ Die Aufnahme eines neuen Gastes führt in sechs Schritten durch Person, Dauer, S
 
 comp("Gaestesuche","Aufnahme",420,'''<div class="nu nu-vorschau nu-vorschau--spalte" style="max-width:640px">
 <div class="nu-feld" style="width:100%"><label for="q">Person suchen</label><div style="position:relative"><input class="nu-eingabe" id="q" value="Ale" style="padding-left:48px"><span style="position:absolute;left:14px;top:16px;color:var(--tinte-2)"><i data-icon="suche"></i></span></div></div>
-<button class="nu-treffer is-verbot"><i data-icon="karte-rot"></i><div><b>Alex B.</b><small>Hausverbot bis 31.03.2027 · Gewalt gegen Gast · eingetragen 02.11.</small></div></button>
-<button class="nu-treffer"><i data-icon="person"></i><div><b>Ali</b><small>„Professor“ · zuletzt 13.11. · Bett D4</small></div></button>
-<button class="nu-treffer"><i data-icon="person"></i><div><b>Alexandru Popescu</b><small>zuletzt 22.10. · Rumänisch</small></div></button>
-<button class="nu-treffer"><i data-icon="person"></i><div><b>Aleksander</b><small>St. Nikolaus · Bett N3</small></div></button>
+<button class="nu-treffer is-verbot"><i data-icon="karte-rot"></i><div><b>Maximilian S.</b><small>Hausverbot bis 31.03.2027 · Gewalt gegen Gast · eingetragen 02.11.</small></div></button>
+<button class="nu-treffer"><i data-icon="person"></i><div><b>Max</b><small>„Professor“ · zuletzt 13.11. · Bett D4</small></div></button>
+<button class="nu-treffer"><i data-icon="person"></i><div><b>Stefan Schmidt</b><small>zuletzt 22.10. · Rumänisch</small></div></button>
+<button class="nu-treffer"><i data-icon="person"></i><div><b>Alexander</b><small>St. Nikolaus · Bett N3</small></div></button>
 <button class="nu-btn nu-btn--rahmen" style="align-self:flex-start"><i data-icon="person-plus"></i>„Ale“ neu anlegen</button>
 </div>''','''# Gästesuche
 
@@ -102,7 +102,7 @@ Die Suche findet Gäste über Vorname, Nachname und Spitzname, tolerant bei Tipp
 - Suchfeld mit Symbol `suche`, Treffer ab dem ersten Buchstaben, Ergebnis in unter einer Sekunde bei 2.000 Gästen.
 - Trefferzeile (`nu-treffer`) 64 dp: Name in `text-stark`, darunter Spitzname, zuletzt da, Bett, Sprache oder Standort.
 - **Aktives Hausverbot steht immer oben**, mit `karte-rot`, Grund `vorfall-flaeche`, Rahmen `vorfall`, Text „Hausverbot bis …“, Grund und Datum. Auswahl öffnet eine Warnung; aufnehmen nur mit Bestätigung und Begründung.
-- Letzte Zeile: „„Ale“ neu anlegen“. Bekannte Personen werden nie doppelt angelegt; bei sehr ähnlichem Namen fragt die App „Meinst du Ali?“.
+- Letzte Zeile: „„Ale“ neu anlegen“. Bekannte Personen werden nie doppelt angelegt; bei sehr ähnlichem Namen fragt die App „Meinst du Max?“.
 - Die gleiche Suche öffnet sich bei „@“ im Bericht und bei „Externe Gäste“.
 ''')
 
@@ -126,8 +126,8 @@ Große Auswahlflächen für Entscheidungen im Assistenten, die man mit dem Daume
 ''')
 
 comp("Dokument","Aufnahme",430,'''<div class="nu nu-vorschau" style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-<div class="nu-dokument"><h3>Hausordnung</h3><p style="margin:0">Willkommen, <mark>Ali</mark>. Dein Bett ist <mark>D4</mark> ab <mark>14.11.2026</mark>. Ruhe ist ab 22:00 Uhr. Rauchen ist im Haus nicht erlaubt. Aufgenommen von <mark>Jonas</mark>.</p></div>
-<div class="nu-dokument" dir="rtl" lang="ar"><h3>قواعد البيت</h3><p style="margin:0">مرحبًا <mark>علي</mark>. سريرك هو <mark>D4</mark> ابتداءً من <mark>14.11.2026</mark>. الهدوء من الساعة 22:00. التدخين ممنوع داخل المبنى. تم الاستقبال بواسطة <mark>Jonas</mark>.</p></div>
+<div class="nu-dokument"><h3>Hausordnung</h3><p style="margin:0">Willkommen, <mark>Max</mark>. Dein Bett ist <mark>D4</mark> ab <mark>14.11.2026</mark>. Ruhe ist ab 22:00 Uhr. Rauchen ist im Haus nicht erlaubt. Aufgenommen von <mark>Kim</mark>.</p></div>
+<div class="nu-dokument" dir="rtl" lang="ar"><h3>قواعد البيت</h3><p style="margin:0">مرحبًا <mark>Max</mark>. سريرك هو <mark>D4</mark> ابتداءً من <mark>14.11.2026</mark>. الهدوء من الساعة 22:00. التدخين ممنوع داخل المبنى. تم الاستقبال بواسطة <mark>Kim</mark>.</p></div>
 </div>''','''# Dokument
 
 Hausordnung und Datenschutzerklärung erscheinen als helles Blatt, damit sie wie Papier wirken und im PDF gleich aussehen.
@@ -139,15 +139,15 @@ Hausordnung und Datenschutzerklärung erscheinen als helles Blatt, damit sie wie
 ''')
 
 comp("Unterschriftsfeld","Aufnahme",360,'''<div class="nu nu-vorschau" style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-<div class="nu-unterschrift" id="u1"><div class="nu-unterschrift-kopf"><b>Gast: Ali</b><small>Hausordnung</small></div><div class="nu-unterschrift-feld"><span class="nu-unterschrift-marke"><i data-icon="check" class="klein"></i>Bestätigt</span><span class="nu-unterschrift-hilfe">Mit Finger oder Stift unterschreiben</span></div><div class="nu-unterschrift-knoepfe"><button class="nu-btn nu-btn--klein" data-a="leeren"><i data-icon="rueckgaengig"></i>Löschen</button><button class="nu-btn nu-btn--primaer nu-btn--klein" data-a="ok" disabled>Bestätigen</button></div></div>
-<div class="nu-unterschrift" id="u2"><div class="nu-unterschrift-kopf"><b>Betreuung: Jonas</b><small>Hausordnung</small></div><div class="nu-unterschrift-feld"><span class="nu-unterschrift-marke"><i data-icon="check" class="klein"></i>Bestätigt</span><span class="nu-unterschrift-hilfe">Mit Finger oder Stift unterschreiben</span></div><div class="nu-unterschrift-knoepfe"><button class="nu-btn nu-btn--klein" data-a="leeren"><i data-icon="rueckgaengig"></i>Löschen</button><button class="nu-btn nu-btn--primaer nu-btn--klein" data-a="ok" disabled>Bestätigen</button></div></div>
+<div class="nu-unterschrift" id="u1"><div class="nu-unterschrift-kopf"><b>Gast: Max</b><small>Hausordnung</small></div><div class="nu-unterschrift-feld"><span class="nu-unterschrift-marke"><i data-icon="check" class="klein"></i>Bestätigt</span><span class="nu-unterschrift-hilfe">Mit Finger oder Stift unterschreiben</span></div><div class="nu-unterschrift-knoepfe"><button class="nu-btn nu-btn--klein" data-a="leeren"><i data-icon="rueckgaengig"></i>Löschen</button><button class="nu-btn nu-btn--primaer nu-btn--klein" data-a="ok" disabled>Bestätigen</button></div></div>
+<div class="nu-unterschrift" id="u2"><div class="nu-unterschrift-kopf"><b>Betreuung: Kim</b><small>Hausordnung</small></div><div class="nu-unterschrift-feld"><span class="nu-unterschrift-marke"><i data-icon="check" class="klein"></i>Bestätigt</span><span class="nu-unterschrift-hilfe">Mit Finger oder Stift unterschreiben</span></div><div class="nu-unterschrift-knoepfe"><button class="nu-btn nu-btn--klein" data-a="leeren"><i data-icon="rueckgaengig"></i>Löschen</button><button class="nu-btn nu-btn--primaer nu-btn--klein" data-a="ok" disabled>Bestätigen</button></div></div>
 </div>
 <script>Nu.mountIcons();["u1","u2"].forEach(function(id){var r=document.getElementById(id),ok=r.querySelector('[data-a="ok"]');var u=Nu.unterschrift(r,{onChange:function(v){ok.disabled=!v}});r.querySelector('[data-a="leeren"]').onclick=function(){u.leeren()};ok.onclick=function(){if(u.bestaetigen()){ok.disabled=true;r.querySelector('[data-a="leeren"]').disabled=true;r.querySelector(".nu-unterschrift-kopf small").textContent="bestätigt";}}});</script>''','''# Unterschriftsfeld
 
 Ein Feld, in das Gast oder Betreuung mit Finger oder S Pen unterschreibt; es sieht aus wie eine Unterschriftszeile auf Papier.
 
 - Grund `papier` in beiden Modi, Rahmen 2 dp `papier-linie`, `radius-l`, Höhe mindestens `unterschrift-hoehe` (220 dp), volle Spaltenbreite. Linie 2 dp `papier-linie` 52 dp über dem unteren Rand, davor „×“.
-- Kopf: wer unterschreibt („Gast: Ali“, „Betreuung: Jonas“) und wofür. Hilfetext „Mit Finger oder Stift unterschreiben“ in `auf-papier-2`, verschwindet beim ersten Strich.
+- Kopf: wer unterschreibt („Gast: Max“, „Betreuung: Kim“) und wofür. Hilfetext „Mit Finger oder Stift unterschreiben“ in `auf-papier-2`, verschwindet beim ersten Strich.
 - Strich in `stift-tinte` (Kugelschreiberblau), auch im Nachtmodus und im PDF. Finger: 2,6 dp gleichmäßig. Stift: 1,4–4 dp nach Druck. Alle Zwischenpunkte zeichnen (`getCoalescedEvents` bzw. `historical` in Compose), damit Kurven glatt sind.
 - **Handballen:** Sobald im Feld ein Stift erkannt wurde, werden Fingerberührungen ignoriert, bis das Feld geleert wird.
 - Knöpfe darunter rechts: „Löschen“ und „Bestätigen“ (gesperrt, solange leer). Bestätigt: Rahmen 3 dp `frei`, Marke „Bestätigt“ oben rechts, Feld gesperrt.
@@ -155,9 +155,9 @@ Ein Feld, in das Gast oder Betreuung mit Finger oder S Pen unterschreibt; es sie
 ''', subtitle="Zum Ausprobieren: unterschreiben, löschen, bestätigen")
 
 comp("Laeuseschein","Aufnahme",330,'''<div class="nu nu-vorschau nu-vorschau--spalte" style="max-width:720px">
-<div class="nu-zeile nu-zeile--warnung" style="width:100%"><i data-icon="laeuseschein-fehlt"></i><div><b>Läuseschein fehlt (Tag 2)</b><small>Ali · D4 · Erinnerung beim Check-in</small></div><button class="nu-btn nu-btn--klein nu-btn--rahmen"><i data-icon="scannen"></i>Jetzt scannen</button></div>
-<div class="nu-zeile nu-zeile--warnung" style="width:100%"><i data-icon="warnung"></i><div><b>Läuseschein fehlt seit 3 Tagen</b><small>Darf Yusuf trotzdem bleiben? Höchstens 3 weitere Tage.</small></div><button class="nu-btn nu-btn--klein">Nein</button><button class="nu-btn nu-btn--klein nu-btn--primaer">Ja, bis 17.11.</button></div>
-<div class="nu-zeile" style="width:100%"><i data-icon="laeuseschein"></i><div><b>Läuseschein liegt vor</b><small>Geprüft von Silke am 05.11. · gilt die ganze Saison</small></div><button class="nu-btn nu-btn--klein">Foto ansehen</button></div>
+<div class="nu-zeile nu-zeile--warnung" style="width:100%"><i data-icon="laeuseschein-fehlt"></i><div><b>Läuseschein fehlt (Tag 2)</b><small>Max · D4 · Erinnerung beim Check-in</small></div><button class="nu-btn nu-btn--klein nu-btn--rahmen"><i data-icon="scannen"></i>Jetzt scannen</button></div>
+<div class="nu-zeile nu-zeile--warnung" style="width:100%"><i data-icon="warnung"></i><div><b>Läuseschein fehlt seit 3 Tagen</b><small>Darf Jan trotzdem bleiben? Höchstens 3 weitere Tage.</small></div><button class="nu-btn nu-btn--klein">Nein</button><button class="nu-btn nu-btn--klein nu-btn--primaer">Ja, bis 17.11.</button></div>
+<div class="nu-zeile" style="width:100%"><i data-icon="laeuseschein"></i><div><b>Läuseschein liegt vor</b><small>Geprüft von Sam am 05.11. · gilt die ganze Saison</small></div><button class="nu-btn nu-btn--klein">Foto ansehen</button></div>
 </div>''','''# Läuseschein
 
 Erinnerungen und Entscheidungen zum Läuseschein erscheinen als Zeilen mit klarer Handlung.

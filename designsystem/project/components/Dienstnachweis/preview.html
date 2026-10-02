@@ -1,0 +1,23 @@
+<!-- @dsCard group="Dienst und Bericht" height=860 width=820 subtitle="Unterschreiben zum Ausprobieren" -->
+<!doctype html>
+<html lang="de">
+<head><meta charset="utf-8"><title>Dienstnachweis</title></head>
+<body class="nu" style="margin:0;background:var(--grund)">
+<div class="nu" style="width:820px;background:var(--grund);padding:20px">
+<div style="background:var(--flaeche);border-radius:16px;padding:24px;display:grid;gap:16px">
+<div><h2 style="margin:0;font:700 22px/28px var(--font-ui)">Dienstnachweis September 2026 · Robin</h2><p class="nu-beschr" style="font-size:15px;line-height:22px;margin-top:4px">Gemacht zählt jeder Dienst mit Unterschrift im Bericht bis jetzt. Nach der Unterschrift ist der Nachweis gesperrt.</p></div>
+<div class="nu-kennzahlen" style="background:var(--flaeche-2)"><span class="nu-kennzahl">Geplant<b>10</b></span><span class="nu-kennzahl">Gemacht<b>9</b></span><span class="nu-kennzahl">Krank<b>1</b></span><span class="nu-kennzahl">Abgegeben<b>0</b></span><span class="nu-kennzahl">Vertretung<b>0</b></span></div>
+<table class="nu-tabelle"><thead><tr><th>Datum</th><th>Geplant</th><th>Gemacht</th><th>Bemerkung</th></tr></thead><tbody>
+<tr><td class="zahl" style="text-align:left">Di 08.09.</td><td><i data-icon="check" class="klein"></i></td><td><i data-icon="check" class="klein"></i> Betreuung 2</td><td></td></tr>
+<tr class="is-abweichung"><td class="zahl" style="text-align:left">Fr 11.09.</td><td><i data-icon="check" class="klein"></i></td><td>–</td><td>krank · vertreten durch Chris</td></tr>
+<tr><td class="zahl" style="text-align:left">Mo 14.09.</td><td><i data-icon="check" class="klein"></i></td><td><i data-icon="check" class="klein"></i> Betreuung 2</td><td></td></tr></tbody></table>
+<button class="nu-btn nu-btn--rahmen nu-btn--klein" style="justify-self:start" id="kb"><i data-icon="stift"></i>Geplante Dienste korrigieren</button>
+<div class="nu-banner" id="kw" style="display:none"><i data-icon="warnung"></i><div>Der Originalplan ist Grundlage der Lohnabrechnung.<small>Nur korrigieren, wenn er falsch übernommen wurde. Die Änderung wird mit Name und Uhrzeit gespeichert.</small></div></div>
+<div class="nu-unterschrift" id="u"><div class="nu-unterschrift-kopf"><b>Robin</b><small>Die Angaben stimmen</small></div><div class="nu-unterschrift-feld" style="height:150px"><span class="nu-unterschrift-marke"><i data-icon="check" class="klein"></i>Bestätigt</span><span class="nu-unterschrift-hilfe">Mit Finger oder Stift unterschreiben</span></div><div class="nu-unterschrift-knoepfe"><button class="nu-btn nu-btn--klein" data-a="leeren"><i data-icon="rueckgaengig"></i>Löschen</button><button class="nu-btn nu-btn--primaer nu-btn--klein" data-a="ok" disabled>Unterschreiben</button></div></div>
+<div class="nu-gesperrt" id="g" style="display:none"><i data-icon="schloss" class="zu"></i><div style="flex:1">Unterschrieben 02.10. 14:00<small>2026-09_Dienstnachweis_Robin.pdf · in der Lohntabelle · nicht mehr änderbar</small></div></div>
+</div></div>
+<script>Nu.mountIcons();document.getElementById("kb").onclick=function(){document.getElementById("kw").style.display="flex";};
+var r=document.getElementById("u"),ok=r.querySelector('[data-a="ok"]'),u=Nu.unterschrift(r,{onChange:function(v){ok.disabled=!v}});r.querySelector('[data-a="leeren"]').onclick=function(){u.leeren()};
+ok.onclick=function(){if(u.bestaetigen()){document.getElementById("g").style.display="flex";document.getElementById("kb").style.display="none";document.getElementById("kw").style.display="none";r.querySelector(".nu-unterschrift-knoepfe").style.display="none";}};</script>
+</body>
+</html>

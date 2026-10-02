@@ -17,7 +17,7 @@ Die App folgt minimalistischer App-Gestaltung: alles im Bild hat eine Aufgabe, d
 
 ## Sprache
 
-Oberfläche auf Deutsch, du-Form gegenüber dem Team („Seit deinem letzten Dienst“), sachlich, ohne Ausrufezeichen und ohne Emojis. Knöpfe sind Verben, die sagen, was passiert: „Gast aufnehmen“, „Ist da“, „Bericht abschließen“, „Tauschen“. Nie „OK“. Fehlermeldungen sagen, was fehlt und was zu tun ist: „Es fehlt die Unterschrift von Silke.“
+Oberfläche auf Deutsch, du-Form gegenüber dem Team („Seit deinem letzten Dienst“), sachlich, ohne Ausrufezeichen und ohne Emojis. Knöpfe sind Verben, die sagen, was passiert: „Gast aufnehmen“, „Ist da“, „Bericht abschließen“, „Tauschen“. Nie „OK“. Fehlermeldungen sagen, was fehlt und was zu tun ist: „Es fehlt die Unterschrift von Sam.“
 
 Feste Wörter, in App, Datenmodell und PDF gleich:
 
@@ -27,8 +27,8 @@ Feste Wörter, in App, Datenmodell und PDF gleich:
 | St. Pius, St. Nikolaus | die beiden Standorte | Haupthaus |
 | frei, erwartet, anwesend, fehlt, freigehalten bis, frei bis, gesperrt | Bettstatus | reserviert, deaktiviert |
 | fehlt (unentschuldigt) | heute ohne Bescheid nicht gekommen; 1. Nacht zählt belegt, ab der 2. Nacht in Folge frei | No-Show, abwesend |
-| belegt, gesamt, frei | nur die Zahlen für das Kältehilfetelefon und die Ampel | Belegung (als Status) |
-| Notbett | Bett, das nicht für das Kältehilfetelefon zählt (L3, E1) | Reservebett |
+| KHT-Nummer | Zahl der belegten Betten für das Kältehilfetelefon | KHT-Zahlen |
+| Notbett | Bett, das nur über den Kältebus belegt wird; zählt nur, wenn belegt (L3, E1) | Reservebett |
 | Aufnahme | erstes Erfassen mit Hausordnung und Unterschrift | Anmeldung |
 | Check-in, „Ist da“ | ein erwarteter Gast ist heute gekommen | einchecken bestätigen |
 | Abwesenheit, Bett frei | angekündigt weg; ausgezogen, Bett ist ab heute frei | Abmeldung, Auszug |
@@ -40,11 +40,14 @@ Feste Wörter, in App, Datenmodell und PDF gleich:
 | nachholen, hinterlegen | Unterschrift später geben; Dokument später ablegen | nachreichen |
 | Hat KHT angerufen? | Pflichtfeld im Bericht | An KHT gemeldet |
 | Teilen | PDF über den Teilen-Dialog, Empfänger frei wählbar | Senden an … |
+| Leitung | Verfasserin von Hinweisen (die Schwester), wählbar wie das Team | Chefin, Admin |
+| Monatsabschluss, Dienstnachweis | monatliche Unterschrift: geplante gegen gemachte Dienste, Grundlage der Lohnabrechnung | Stundenzettel |
+| krank, abgegeben, Vertretung | Abweichungen vom Originalplan | Ausfall, Einspringen |
 | Abgleich | Synchronisation mit Nextcloud | Sync, Upload |
 
-Abkürzungen nur für Bettnummern (D4, N3, L2, E1, TH1, Z1), Aufnahmenummern (2026-27-0042) und KHT (beim ersten Auftreten „Kältehilfetelefon“). Zählen positiv: „3 von 8 frei“.
+Alle Namen in Beispielen sind Platzhalter (Kim, Sam, Robin, Chris, Jule, Mika im Team; Paul, Max, Felix … als Gäste). Abkürzungen nur für Bettnummern (D4, N3, L2, E1, TH1, Z1, N9), Aufnahmenummern (2026-27-0042) und KHT (beim ersten Auftreten „Kältehilfetelefon“). Zählen positiv: „3 von 8 frei“.
 
-**Gleiche Vornamen** unterscheidet die Bettnummer: „Ali (D4)“, „Ali (L5)“. Ohne Bett steht der Nachname, sonst der Spitzname, sonst die Aufnahmenummer in Klammern. Das gilt überall, auch in Erwähnungen („@Ali (D4)“) und im PDF.
+**Gleiche Vornamen** unterscheidet die Bettnummer: „Max (D4)“, „Max (L5)“. Ohne Bett steht der Nachname, sonst der Spitzname, sonst die Aufnahmenummer in Klammern. Das gilt überall, auch in Erwähnungen („@Max (D4)“) und im PDF.
 
 ## Farben und Zustände
 
@@ -97,7 +100,7 @@ Kurz und erklärend: `dauer-sofort` 90 ms für Druck, `dauer-kurz` 150 ms für A
 
 ## Barrierefreiheit
 
-- Jede Bettkarte, jedes Symbol und jeder Symbolknopf hat eine Beschreibung für TalkBack („Bett D4 oben, erwartet, Ali, Duschslot 20:30“; „Bett L2, fehlt unentschuldigt, zählt als belegt, Kasia“).
+- Jede Bettkarte, jedes Symbol und jeder Symbolknopf hat eine Beschreibung für TalkBack („Bett D4 oben, erwartet, Max, Duschslot 20:30“; „Bett L2, fehlt unentschuldigt, zählt als belegt, Julia“).
 - Schriftgröße folgt der Systemeinstellung bis 130 %; Bettkarten wachsen in der Höhe mit, Namen kürzen mit „…“.
 - Fokusreihenfolge folgt dem Lesefluss: Kopfzeile, Kennzahlen, Zimmer im Grundriss von links oben nach rechts unten, dann die Spalte mit Loggien und weiteren Plätzen, Detailbereich.
 - Arabisch und Farsi laufen nur im Dokument von rechts nach links; die App bleibt linksläufig.

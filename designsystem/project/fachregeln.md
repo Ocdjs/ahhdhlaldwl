@@ -13,10 +13,13 @@ Regeln, die bestimmen, was die Oberfläche zeigt. Sie gehören in die Datenschic
 | | Loggien | L1–L5 |
 | | Esszimmer | E1 |
 | | Tiny House (abschaltbar) | TH1 |
-| | Weitere Plätze | Z1, Z2 … (in den Einstellungen frei benannt) |
+| | Weitere Plätze | Z1, Z2 … (Nummer und Bezeichnung frei wählbar) |
 | **St. Nikolaus** | Saal | N1–N8 |
+| | Weitere Plätze (rechts neben dem Saal) | N9 … (Nummer und Bezeichnung frei wählbar) |
 
-- **Notbett:** Standard L3 und E1; je Bett in den Einstellungen umschaltbar. Notbetten erscheinen im Plan wie andere Betten, zählen aber nicht für das Kältehilfetelefon und die Ampel.
+- **Notbett:** Standard L3 und E1; je Bett in den Einstellungen umschaltbar. Notbetten werden nur über den Kältebus belegt. Belegt zählen sie mit, frei zählen sie nicht (weder in der KHT-Nummer noch in der Ampel).
+- **Weitere Plätze** gibt es an beiden Standorten. Nummer (1–6 Zeichen, eindeutig) und Bezeichnung sind frei wählbar und später änderbar; freie Plätze lassen sich entfernen.
+- **Nummern tauschen:** Innerhalb eines Zimmers lässt sich festlegen, welche Nummer an welchem Platz im Plan steht (`Bett.platz`). Belegung, Sperre und Notbett hängen an der Nummer.
 - **Sperren:** ganze Zimmer und jedes einzelne Bett. Ein Bett ist gesperrt, wenn es selbst oder sein Zimmer gesperrt ist. Gesperrte Betten zählen nirgends.
 - Sind T-Zimmer und Zimmer F gesperrt, zeigt der Grundriss auch Flur 2 als gesperrt (nur Darstellung).
 - Die Geometrie des Grundrisses (Bettflächen, Wände, Türen) liegt in der Datenbank, nicht im Code (siehe Baustein Grundriss).
@@ -38,39 +41,36 @@ Regeln, die bestimmen, was die Oberfläche zeigt. Sie gehören in die Datenschic
 
 **„Nicht da“** fragt immer nach: „Weiter warten“, „Hat sich abgemeldet“ (führt zur Abwesenheit, also entschuldigt) oder „Fehlt unentschuldigt“.
 
-## 3 Zahlen für das Kältehilfetelefon und die Ampel
+## 3 KHT-Nummer und Ampel
 
-- **Gesamt** = alle Betten in Betrieb in St. Pius und St. Nikolaus, ohne Notbett, ohne gesperrte Betten.
-- **Belegt** = Betten mit Zustand anwesend, erwartet, freigehalten oder fehlt (1. Nacht). Ein Bett zählt also als belegt, solange niemand zwei Nächte in Folge unentschuldigt fehlt.
-- **Frei** = Gesamt − Belegt.
-- Das Kältehilfetelefon bekommt die Zahl der belegten Betten und die Gesamtzahl. Die **Ampel** ist ein eigenes Meldesystem: dort werden frei, belegt und gesamt gemeldet; die Ampelfarbe richtet sich nach „frei“ (grün ab Schwelle, Standard 3; gelb 1–2; rot 0).
-- Der Bericht fragt „**Hat KHT angerufen?**“ (Ja/Nein, Pflichtfeld) und zeigt die Zahlen daneben; das PDF hält die Zahlen beim Abschließen fest.
+Es geht darum, wie viele Menschen versorgt werden.
+
+- **KHT-Nummer** = Zahl der belegten Betten in St. Pius und St. Nikolaus. Belegt sind: anwesend, erwartet, freigehalten, fehlt (1. Nacht). Wer zwei Nächte in Folge unentschuldigt fehlt, zählt nicht mehr.
+- **Notbetten** zählen nur, wenn sie belegt sind (Belegung nur über den Kältebus). Ein freies Notbett zählt weder als belegt noch als frei.
+- **Frei** (Ampel) = Betten in Betrieb ohne freie Notbetten − belegte Betten. Ampel grün ab Schwelle (Standard 3), gelb 1–2, rot 0. Die Ampel meldet nur Zahlen, nie Namen.
+- Auf dem Bildschirm stehen nur die Ampel mit den freien Betten und die KHT-Nummer; die Rechnung ist ein kurzer Satz im Blatt hinter der Zahl.
+- Der Bericht fragt „**Hat KHT angerufen?**“ (Ja/Nein, Pflichtfeld) und zeigt die KHT-Nummer daneben; das PDF hält sie beim Abschließen fest.
 
 ```kotlin
-enum class BettStatus { FREI, ERWARTET, ANWESEND, FEHLT, FEHLT_AB_2, FREIGEHALTEN, FREI_BIS, GESPERRT }
-
-data class KhtZahlen(val gesamt: Int, val belegt: Int) { val frei get() = gesamt - belegt }
-
 private val BELEGT = setOf(BettStatus.ANWESEND, BettStatus.ERWARTET, BettStatus.FEHLT, BettStatus.FREIGEHALTEN)
 
-fun khtZahlen(betten: List<Bett>): KhtZahlen {
-    val gezaehlt = betten.filter { !it.gesperrt && !it.notbett }   // St. Pius + St. Nikolaus
-    return KhtZahlen(gesamt = gezaehlt.size, belegt = gezaehlt.count { it.status in BELEGT })
-}
+fun khtNummer(betten: List<Bett>) = betten.count { !it.gesperrt && it.status in BELEGT }   // Notbetten nur, wenn belegt
+
+fun freieBetten(betten: List<Bett>) = betten.count { !it.gesperrt && !it.notbett && it.status !in BELEGT }
 ```
 
-Beispiel aus dem Prototyp: 29 Betten gesamt (31 in Betrieb minus L3 und E1), davon 24 belegt (18 anwesend, 4 erwartet, 1 freigehalten, 1 fehlt 1. Nacht), 5 frei (3 frei, 1 frei bis Rückkehr, 1 fehlt 2. Nacht).
+Beispiel aus dem Prototyp: KHT-Nummer 25 (darunter E1, ein mit dem Kältebus belegtes Notbett), 6 Betten frei; das freie Notbett L3 zählt nicht.
 
 ## 4 Gleiche Vornamen
 
-- **Anzeigename:** Vorname; gibt es den Vornamen in der Gästedatenbank mehr als einmal, mit Zusatz in Klammern: Bettnummer („Ali (D4)“), ohne Bett Nachname, sonst Spitzname, sonst Aufnahmenummer („Ali (Nr. 0042)“).
+- **Anzeigename:** Vorname; gibt es den Vornamen in der Gästedatenbank mehr als einmal, mit Zusatz in Klammern: Bettnummer („Max (D4)“), ohne Bett Nachname, sonst Spitzname, sonst Aufnahmenummer („Max (Nr. 0042)“).
 - Der Anzeigename gilt überall: Plan-Details, Suche, Erwähnungen, Sanktionen, Duschplan, Einblendungen, PDF.
 - Beim Anlegen zeigt die App alle Personen mit demselben Vornamen; ist es dieselbe Person, wird sie ausgewählt, nie doppelt angelegt.
 - Intern zählt immer die Gast-ID. Bettnummern im Text sind nur Anzeige, weil Gäste umziehen.
 
 ## 5 Erwähnungen und Sanktionen im Bericht
 
-- `@Vorname` oder `@Vorname (Bett)` erwähnt einen Gast. Mehrdeutige Erwähnungen („@Ali“ bei mehreren Ali) müssen vor dem Abschließen eindeutig gemacht werden.
+- `@Vorname` oder `@Vorname (Bett)` erwähnt einen Gast. Mehrdeutige Erwähnungen („@Max“ bei mehreren Max) müssen vor dem Abschließen eindeutig gemacht werden.
 - Ein Absatz, der mit „Verwarnung“, „Gelbe Karte“, „Hausverbot“ oder „Rote Karte“ beginnt, legt **genau eine** Sanktion an: für die gewählte Person, standardmäßig die zuerst genannte. „Niemand“ ist wählbar.
 - **Alle anderen Genannten** bekommen den Absatz nur als Notiz mit dem Vermerk „erwähnt, keine Sanktion“. Sie erhalten nie automatisch eine Verwarnung, Karte oder ein Hausverbot.
 - Datenmodell: `Sanktion(gast_id, stufe, grund, datum, von, bericht_id, absatz)`, `Notiz(gast_id, text, datum, von, bericht_id, rolle = BETROFFEN | ERWAEHNT)`.
@@ -98,3 +98,13 @@ Beispiel aus dem Prototyp: 29 Betten gesamt (31 in Betrieb minus L3 und E1), dav
 
 - PDFs werden über den Android-Teilen-Dialog geteilt (`Intent.ACTION_SEND` mit `FileProvider`), **ohne festen Empfänger**; es gibt keinen Knopf, der direkt an eine bestimmte Person sendet.
 - Dienstplan einlesen: Nextcloud-Datei (PDF, ICS) oder Foto. Kein Import aus WhatsApp.
+
+## 10 Monatsabschluss und Dienstnachweis
+
+- Jede Person aus dem Team (Betreuung und Küche) unterschreibt einmal im Monat ihren **Dienstnachweis**.
+- **Geplant** = Originalplan, wie er vor Monatsanfang feststand (aus dem Dienstplan-Import, eingefroren am 1.). Korrigierbar nur vor der Unterschrift, mit Warnhinweis und Pflichtgrund; jede Korrektur wird mit Tagen, Grund, Person und Zeit protokolliert und im Nachweis angezeigt.
+- **Gemacht** = jeder Dienst, bei dem die Person in der Besetzung des Dienstberichts unterschrieben hat, bis zum Moment ihrer Unterschrift unter den Nachweis.
+- Abweichungen ergeben sich aus der Besetzung (geplante und tatsächliche Person, Grund): **krank** (abgegeben wegen Krankheit), **abgegeben** (Tausch, Sonstiges), **Vertretung** (für jemand anderen übernommen).
+- **Hinweis beim letzten geplanten Dienst** des Monats: Banner im Bericht mit „Später“ und „Ansehen“, freiwillig. Jederzeit erreichbar unter Dienst & Bericht › Monatsabschluss (Vormonat und laufender Monat).
+- **Nach der Unterschrift** ist der Nachweis gesperrt: kein Korrigieren, kein zweites Unterschreiben. Es entsteht ein eigenes PDF (`2026-09_Dienstnachweis_Robin.pdf`), und die Zahlen gehen als Zeile in die **Lohntabelle** des Monats (Person, Geplant, Gemacht, Krank, Abgegeben, Vertretung, Unterschrieben, PDF). Tabelle und PDFs liegen in Nextcloud.
+- Datenmodell: `Plan0(datum, rolle, person)`, `Einsatz(datum, rolle, person, geplant_person, grund, unterschrift)`, `PlanKorrektur(monat, person, tage, grund, von, um)`, `Dienstnachweis(monat, person, geplant, gemacht, krank, abgegeben, vertretung, tage_json, unterschrift_png, um, pdf)` – nach dem Anlegen unveränderlich.

@@ -56,7 +56,8 @@ Eigene Stile: `nameBett` (20/24 700), `zahlGross`, `nummerGross`, `nummer` (Mono
 | Kopfzeile | eigene `Row` in `Scaffold.topBar`, keine `TopAppBar`-Höhe |
 | Bettkarte | eigene `Surface` mit `combinedClickable(onClick, onLongClick)`, `semantics { contentDescription = … }`; Parameter `kompakt` für den Grundriss |
 | Grundriss | `BoxWithConstraints` + `Modifier.aspectRatio(971f / 800f)`; Wände, Türen, Privaträume in einem `Canvas`; Betten als `BettKarte(kompakt = true)` mit `offset`/`size` = Grundriss-Einheiten × (Breite ÷ 971) |
-| KHT-Zahlen | eigener `Surface`-Knopf; Werte aus `khtZahlen()` (siehe Fachregeln), Rechnung als `ModalBottomSheet` oder Dialog |
+| KHT-Nummer | schlichte Kennzahl als `TextButton`; Wert aus `khtNummer()` (siehe Fachregeln), kurzes Blatt als `ModalBottomSheet` |
+| Monatsabschluss, Dienstnachweis | `LazyColumn` mit Tabellenzeilen, Unterschrift wie im Assistenten, nach dem Speichern nur lesend |
 | Gastakte | zweispaltig `Row` (Liste 380 dp, Akte `weight(1f)`); Dokumentzeilen als `ListItem` mit eigenem Hintergrund |
 | Ziehen | `Modifier.pointerInput { detectDragGesturesAfterLongPress }`, Ziel per Hit-Test auf gemerkte `LayoutCoordinates` |
 | Schnellauswahl | `Popup` mit `PopupPositionProvider` an der Karte |
@@ -80,7 +81,9 @@ Eigene Stile: `nameBett` (20/24 700), `zahlGross`, `nummerGross`, `nummer` (Mono
 - `Belegung` je Bett und Diensttag: `gast_id`, `status` (`BettStatus`, siehe Fachregeln), `fehlt_naechte`, `fehlte_vornacht`, `bis` (Rückkehr), `ende` (Abreise, darf leer sein), `dauerhaft`.
 - `Gast`: Stammdaten, `anzeigename()` als abgeleitete Funktion (nie gespeichert), `dokumente`, `uebersetzung`, `unterschrieben_am`.
 - `Erwaehnung` und `Sanktion` mit `bericht_id` und `absatz`; eine Sanktion hat genau einen `gast_id`.
-- `khtZahlen()`, `anzeigename()` und die Statuswechsel am Tageswechsel als reine Funktionen mit Unit-Tests.
+- `Bett.platz`: der gezeichnete Platz, an dem die Nummer steht (Nummerntausch in den Einstellungen).
+- Monatsabschluss: `Plan0`, `Einsatz`, `PlanKorrektur`, `Dienstnachweis` (unveränderlich nach dem Anlegen), daraus die Lohntabelle als CSV in Nextcloud (siehe Fachregeln).
+- `khtNummer()`, `freieBetten()`, `anzeigename()`, `nachweisDaten()` und die Statuswechsel am Tageswechsel als reine Funktionen mit Unit-Tests.
 
 ## Symbole
 

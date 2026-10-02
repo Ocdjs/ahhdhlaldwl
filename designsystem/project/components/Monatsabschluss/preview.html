@@ -1,0 +1,20 @@
+<!-- @dsCard group="Dienst und Bericht" height=760 width=1100 subtitle="Übersicht und Lohntabelle" -->
+<!doctype html>
+<html lang="de">
+<head><meta charset="utf-8"><title>Monatsabschluss</title></head>
+<body class="nu" style="margin:0;background:var(--grund)">
+<div class="nu" style="width:1100px;background:var(--grund);padding:20px;display:grid;gap:16px">
+<div class="nu-banner" style="background:var(--erwartet-flaeche);color:var(--blau)"><i data-icon="unterschrift"></i><div>Sam: Heute ist dein letzter geplanter Dienst im Oktober.<small>Dienstnachweis jetzt ansehen und unterschreiben? Freiwillig, geht auch später im Monatsabschluss.</small></div><button class="nu-btn nu-btn--klein">Später</button><button class="nu-btn nu-btn--klein nu-btn--primaer">Ansehen</button></div>
+<div class="nu-bericht" style="gap:14px"><div style="display:flex;align-items:center;gap:12px"><b class="abschnitt" style="flex:1">Monatsabschluss · September 2026</b><div class="nu-seg" role="radiogroup"><button role="radio" aria-checked="true">September 2026</button><button role="radio" aria-checked="false">Oktober 2026</button></div></div>
+<p class="nu-beschr" style="font-size:15px;line-height:22px">Jede Person unterschreibt einmal im Monat. 2 von 4 unterschrieben.</p><table class="nu-tabelle"><thead><tr><th>Person</th><th class="zahl">Geplant</th><th class="zahl">Gemacht</th><th>Abweichung</th><th>Status</th><th></th></tr></thead><tbody>
+<tr><td><b>Kim</b></td><td class="zahl">10</td><td class="zahl">9</td><td>1 abgegeben</td><td><span class="nu-pille nu-pille--frei"><i data-icon="check" class="klein"></i>unterschrieben 01.10. 07:10</span></td><td style="text-align:right"><button class="nu-btn nu-btn--klein nu-btn--rahmen">Ansehen</button></td></tr>
+<tr><td><b>Robin</b></td><td class="zahl">10</td><td class="zahl">9</td><td>1 krank</td><td><span class="nu-pille nu-pille--warnung">offen</span></td><td style="text-align:right"><button class="nu-btn nu-btn--klein nu-btn--rahmen">Öffnen</button></td></tr>
+<tr><td><b>Chris</b></td><td class="zahl">10</td><td class="zahl">11</td><td>1 Vertretung</td><td><span class="nu-pille nu-pille--warnung">offen</span></td><td style="text-align:right"><button class="nu-btn nu-btn--klein nu-btn--rahmen">Öffnen</button></td></tr>
+<tr><td><b>Mika</b></td><td class="zahl">15</td><td class="zahl">15</td><td>–</td><td><span class="nu-pille nu-pille--frei"><i data-icon="check" class="klein"></i>unterschrieben 01.10. 09:12</span></td><td style="text-align:right"><button class="nu-btn nu-btn--klein nu-btn--rahmen">Ansehen</button></td></tr></tbody></table></div>
+<div class="nu-bericht" style="gap:12px"><div style="display:flex;align-items:center;gap:12px"><b class="abschnitt" style="flex:1">Für die Lohnabrechnung</b><span class="nu-bald"><i data-icon="uhr" class="klein"></i>Export als Datei noch nicht verfügbar</span></div><table class="nu-tabelle"><thead><tr><th>Person</th><th class="zahl">Geplant</th><th class="zahl">Gemacht</th><th class="zahl">Krank</th><th class="zahl">Abgegeben</th><th class="zahl">Vertretung</th><th>Unterschrieben</th><th>PDF</th></tr></thead><tbody>
+<tr><td><b>Kim</b></td><td class="zahl">10</td><td class="zahl">9</td><td class="zahl">0</td><td class="zahl">1</td><td class="zahl">0</td><td>01.10. 07:10</td><td><i data-icon="pdf" class="klein"></i> 2026-09_Dienstnachweis_Kim.pdf</td></tr>
+<tr><td><b>Mika</b></td><td class="zahl">15</td><td class="zahl">15</td><td class="zahl">0</td><td class="zahl">0</td><td class="zahl">0</td><td>01.10. 09:12</td><td><i data-icon="pdf" class="klein"></i> 2026-09_Dienstnachweis_Mika.pdf</td></tr></tbody></table></div>
+</div>
+<script>Nu.mountIcons();</script>
+</body>
+</html>

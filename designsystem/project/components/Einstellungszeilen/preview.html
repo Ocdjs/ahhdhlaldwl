@@ -1,22 +1,24 @@
-<!-- @dsCard group="Einstellungen" height=620 subtitle="Betten einzeln sperren, Notbett markieren" -->
+<!-- @dsCard group="Einstellungen" height=760 subtitle="Nummern tauschen zum Ausprobieren" -->
 <!doctype html>
 <html lang="de">
 <head><meta charset="utf-8"><title>Einstellungszeilen</title></head>
 <body class="nu" style="margin:0;background:var(--grund)">
-<div class="nu nu-vorschau nu-vorschau--spalte" style="max-width:860px">
-<div class="nu-zimmer-einst" style="width:100%"><div class="nu-einstellung"><i data-icon="bett"></i><div><b>Zimmer D</b><small>5 von 6 Betten in Betrieb</small></div><button class="nu-schalter" role="switch" aria-checked="true" aria-label="Zimmer D in Betrieb"></button></div>
+<div class="nu nu-vorschau nu-vorschau--spalte" style="max-width:900px">
+<div class="nu-zimmer-einst" style="width:100%"><div class="nu-einstellung"><i data-icon="bett"></i><div><b>Zimmer D</b><small>5 von 6 Betten in Betrieb</small></div><button class="nu-btn nu-btn--klein nu-btn--rahmen" id="ts"><i data-icon="tauschen"></i>Nummern tauschen</button><button class="nu-schalter" role="switch" aria-checked="true" aria-label="Zimmer D in Betrieb"></button></div>
+<div class="nu-zeile" id="th" style="margin:0 8px 6px;display:none"><i data-icon="tauschen"></i><div>Zwei Betten antippen, deren Nummern den Platz tauschen.<small>Belegung, Sperre und Notbett bleiben bei der Nummer.</small></div><button class="nu-btn nu-btn--klein nu-btn--primaer" id="tf">Fertig</button></div>
 <div class="nu-bettschalter-liste" id="d"></div></div>
-<div class="nu-zimmer-einst" style="width:100%"><div class="nu-einstellung"><i data-icon="bett"></i><div><b>Loggien</b><small>5 von 5 Betten in Betrieb</small></div><button class="nu-schalter" role="switch" aria-checked="true" aria-label="Loggien in Betrieb"></button></div>
-<div class="nu-bettschalter-liste" id="l"></div></div>
-<div class="nu-einstellung" style="width:100%"><i data-icon="telefon"></i><div><b>Zahlen für das Kältehilfetelefon</b><small>Gesamt ohne Notbett · belegt inkl. 1. Nacht unentschuldigt</small></div><button class="nu-btn nu-btn--rahmen nu-btn--klein">Rechnung</button></div>
-<div class="nu-einstellung" style="width:100%"><i data-icon="wolke-ok"></i><div><b>Meldung an die Ampel</b><small>meldet frei, belegt und gesamt, nie Namen</small></div><span class="nu-bald"><i data-icon="uhr" class="klein"></i>noch nicht verfügbar</span></div>
+<div class="nu-zimmer-einst" style="width:100%"><div class="nu-einstellung"><i data-icon="standort-2"></i><div><b>St. Nikolaus · Weitere Plätze</b><small>1 von 1 Betten in Betrieb</small></div><button class="nu-schalter" role="switch" aria-checked="true" aria-label="Weitere Plätze in Betrieb"></button></div>
+<div class="nu-bettschalter-liste" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr))"><div class="nu-bettschalter" style="flex-wrap:wrap"><div style="flex:1;min-width:0"><b>N9</b><small>Matratze Flur</small></div><button class="nu-schalter" role="switch" aria-checked="true" aria-label="Bett N9 in Betrieb"></button><button class="nu-chip" style="flex-basis:100%;justify-content:center" aria-pressed="false">Notbett</button><div style="display:flex;gap:6px;flex-basis:100%"><button class="nu-btn nu-btn--klein nu-btn--rahmen" style="flex:1"><i data-icon="stift"></i>Umbenennen</button><button class="nu-iconbtn nu-iconbtn--fl" aria-label="Platz N9 entfernen"><i data-icon="loeschen"></i></button></div></div></div>
+<div style="display:flex;gap:8px;padding:0 8px 8px;flex-wrap:wrap;align-items:flex-end"><div class="nu-feld" style="width:120px"><label for="nn">Nummer</label><input class="nu-eingabe" id="nn" value="N10"></div><div class="nu-feld" style="flex:1 1 220px"><label for="nb">Bezeichnung</label><input class="nu-eingabe" id="nb" placeholder="z. B. Sofa im Saal"></div><button class="nu-btn nu-btn--rahmen"><i data-icon="bett-plus"></i>Platz hinzufügen</button></div></div>
+<div class="nu-einstellung" style="width:100%"><i data-icon="telefon"></i><div><b>KHT-Nummer</b><small>Belegte Betten beider Standorte. Notbetten nur, wenn belegt.</small></div><button class="nu-btn nu-btn--rahmen nu-btn--klein">Ansehen</button></div>
 </div>
 <script>
-function bs(nr,info,an,notbett){return '<div class="nu-bettschalter'+(an?'':' is-aus')+'" style="flex-wrap:wrap"><div style="flex:1;min-width:0"><b>'+nr+'</b><small>'+info+'</small></div><button class="nu-schalter" role="switch" aria-checked="'+an+'" aria-label="Bett '+nr+' in Betrieb"></button>'+(notbett!==undefined?'<button class="nu-chip" style="flex-basis:100%;justify-content:center" aria-pressed="'+notbett+'">'+(notbett?Nu.svg("check","klein"):'')+'Notbett</button>':'')+'</div>';}
-document.getElementById("d").innerHTML=bs("D1","belegt · Jonas",true)+bs("D2","belegt · Marek",true)+bs("D3","gesperrt",false)+bs("D4","belegt · Ali",true)+bs("D5","belegt · Dimitri",true)+bs("D6","belegt · Petra",true);
-document.getElementById("l").innerHTML=bs("L1","belegt · Emil",true,false)+bs("L2","belegt · Kasia",true,false)+bs("L3","in Betrieb",true,true)+bs("L4","belegt · Jana",true,false)+bs("L5","belegt · Ali",true,false);
-document.querySelectorAll(".nu-schalter").forEach(function(s){s.onclick=function(){var an=s.getAttribute("aria-checked")!=="true";s.setAttribute("aria-checked",String(an));var p=s.closest(".nu-bettschalter");if(p){p.classList.toggle("is-aus",!an);p.querySelector("small").textContent=an?"in Betrieb":"gesperrt";}}});
-document.querySelectorAll(".nu-bettschalter .nu-chip").forEach(function(c){c.onclick=function(){var an=c.getAttribute("aria-pressed")!=="true";c.setAttribute("aria-pressed",String(an));c.innerHTML=(an?Nu.svg("check","klein"):"")+"Notbett";}});
+var D=[["D1","belegt · Paul"],["D2","belegt · Tom"],["D3","gesperrt"],["D4","belegt · Max"],["D5","belegt · Felix"],["D6","belegt · Anna"]],modus=false,a=null;
+function zeichnen(){document.getElementById("d").innerHTML=D.map(function(x){return modus?'<button class="nu-bettschalter" data-nr="'+x[0]+'" style="border:0;font:inherit;text-align:left;cursor:pointer;width:100%'+(a===x[0]?';box-shadow:inset 0 0 0 3px var(--tinte);background:var(--flaeche)':'')+'"><div style="flex:1"><b>'+x[0]+'</b><small>'+(x[2]?'Platz von '+x[2]:'antippen')+'</small></div>'+Nu.svg("tauschen")+'</button>':'<div class="nu-bettschalter'+(x[1]==="gesperrt"?' is-aus':'')+'"><div style="flex:1;min-width:0"><b>'+x[0]+'</b><small>'+x[1]+'</small></div><button class="nu-schalter" role="switch" aria-checked="'+(x[1]!=="gesperrt")+'" aria-label="Bett '+x[0]+' in Betrieb"></button></div>';}).join("");
+document.querySelectorAll("#d [data-nr]").forEach(function(b){b.onclick=function(){var nr=b.dataset.nr;if(!a||a===nr){a=a===nr?null:nr;zeichnen();return;}var i=D.findIndex(function(x){return x[0]===a}),j=D.findIndex(function(x){return x[0]===nr});var t=D[i];D[i]=D[j];D[j]=t;D[i][2]=D[i][2]?null:nr;D[j][2]=D[j][2]?null:a;a=null;zeichnen();};});}
+document.getElementById("ts").onclick=function(){modus=true;document.getElementById("th").style.display="flex";this.style.display="none";zeichnen();};
+document.getElementById("tf").onclick=function(){modus=false;a=null;document.getElementById("th").style.display="none";document.getElementById("ts").style.display="";zeichnen();};
+zeichnen();
 </script>
 <script>Nu.mountIcons();</script>
 </body>

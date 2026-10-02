@@ -92,9 +92,8 @@ textarea.nu-eingabe{min-height:132px;padding:14px 16px;resize:vertical}
 .nu-ampel-wort small{display:block;font:400 13px/16px var(--font-ui);color:var(--tinte-2)}
 .nu-kennzahl{display:grid;gap:0;font:400 14px/18px var(--font-ui);color:var(--tinte-2)}
 .nu-kennzahl b{font:600 20px/26px var(--font-zahl);color:var(--tinte)}
-.nu-kht{display:grid;gap:0;padding:4px 14px;border-radius:var(--radius-m);background:var(--flaeche-2);border:0;text-align:left;font:400 14px/18px var(--font-ui);color:var(--tinte-2);cursor:pointer}
-.nu-kht b{font:600 20px/26px var(--font-zahl);color:var(--tinte)}
-.nu-kht small{font:400 13px/16px var(--font-ui)}
+button.nu-kennzahl{border:0;background:transparent;padding:0 4px;margin:0 -4px;min-height:var(--ziel-min);text-align:left;cursor:pointer;border-radius:var(--radius-s)}
+button.nu-kennzahl:active{background:var(--flaeche-2)}
 
 /* ---------- Bettenplan ---------- */
 .nu-reiter{display:inline-flex;gap:4px;padding:4px;border-radius:var(--radius-rund);background:var(--flaeche)}
@@ -325,6 +324,17 @@ textarea.nu-eingabe{min-height:132px;padding:14px 16px;resize:vertical}
 .nu-gesperrt .nu-svg.zu{animation:nu-schloss var(--dauer-lang) var(--kurve-standard)}
 .nu-nachtrag{display:grid;gap:4px;padding:12px 16px;border-radius:var(--radius-m);background:var(--flaeche-2)}
 .nu-nachtrag small{font:400 14px/20px var(--font-ui);color:var(--tinte-2)}
+
+/* ---------- Tabelle (Monatsabschluss, Lohnabrechnung) ---------- */
+.nu-tabelle{width:100%;border-collapse:separate;border-spacing:0;font:400 15px/20px var(--font-ui);color:var(--tinte)}
+.nu-tabelle th{position:sticky;top:0;padding:8px 12px;background:var(--flaeche-2);text-align:left;font:600 13px/16px var(--font-ui);letter-spacing:.04em;text-transform:uppercase;color:var(--tinte-2);white-space:nowrap}
+.nu-tabelle th:first-child{border-radius:var(--radius-s) 0 0 var(--radius-s)}
+.nu-tabelle th:last-child{border-radius:0 var(--radius-s) var(--radius-s) 0}
+.nu-tabelle td{padding:10px 12px;vertical-align:middle;box-shadow:inset 0 -1px 0 var(--linie)}
+.nu-tabelle .zahl{text-align:right;font-family:var(--font-zahl);font-variant-numeric:tabular-nums}
+.nu-tabelle td .nu-svg{width:18px;height:18px;color:var(--frei)}
+.nu-tabelle tr.is-abweichung td{background:var(--warnung-flaeche)}
+.nu-tabelle tr.is-abweichung td:last-child{color:var(--warnung);font-weight:600}
 
 /* ---------- Kalender ---------- */
 .nu-monat{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}

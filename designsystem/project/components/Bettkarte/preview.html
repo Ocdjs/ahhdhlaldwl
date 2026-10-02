@@ -9,12 +9,12 @@
 <div id="k" style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap"></div>
 </div>
 <script>
-var L=[["frei",{nr:"B2",s:"frei"}],["erwartet",{nr:"D4",s:"erwartet",name:"Ali",naechte:12,dusche:"20:30"}],["anwesend",{nr:"D1",s:"anwesend",name:"Jonas",naechte:21}],["freigehalten bis",{nr:"D6",s:"gehalten",name:"Petra",bis:"06.10."}],
-["fehlt, 1. Nacht (zählt belegt)",{nr:"L2",s:"fehlt",name:"Kasia",naechte:2}],["fehlt, 2. Nacht (zählt frei)",{nr:"F2",s:"fehlt2",name:"Ben",fehltN:2}],["frei bis Rückkehr",{nr:"T2",s:"freibis",name:"Hamid",bis:"08.10."}],["gesperrt",{nr:"F4",s:"aus"}],
-["Läuseschein fehlt seit 3 Tagen",{nr:"T1",s:"anwesend",name:"Yusuf",naechte:3,symbole:["warnung"],warn:true}],["Gelbe Karte, Notiz",{nr:"D5",s:"anwesend",name:"Dimitri",naechte:9,symbole:["karte-gelb","notiz"]}],["Hausverbot",{nr:"B3",s:"erwartet",name:"Ion",naechte:2,symbole:["karte-rot"]}],["geöffnet",{nr:"F1",s:"anwesend",name:"Samir",naechte:20}]];
+var L=[["frei",{nr:"B2",s:"frei"}],["erwartet",{nr:"D4",s:"erwartet",name:"Max",naechte:12,dusche:"20:30"}],["anwesend",{nr:"D1",s:"anwesend",name:"Paul",naechte:21}],["freigehalten bis",{nr:"D6",s:"gehalten",name:"Anna",bis:"06.10."}],
+["fehlt, 1. Nacht (zählt belegt)",{nr:"L2",s:"fehlt",name:"Julia",naechte:2}],["fehlt, 2. Nacht (zählt frei)",{nr:"F2",s:"fehlt2",name:"Simon",fehltN:2}],["frei bis Rückkehr",{nr:"T2",s:"freibis",name:"Leon",bis:"08.10."}],["gesperrt",{nr:"F4",s:"aus"}],
+["Läuseschein fehlt seit 3 Tagen",{nr:"T1",s:"anwesend",name:"Jan",naechte:3,symbole:["warnung"],warn:true}],["Gelbe Karte, Notiz",{nr:"D5",s:"anwesend",name:"Felix",naechte:9,symbole:["karte-gelb","notiz"]}],["Hausverbot",{nr:"B3",s:"erwartet",name:"Lukas",naechte:2,symbole:["karte-rot"]}],["geöffnet",{nr:"F1",s:"anwesend",name:"Moritz",naechte:20}]];
 document.getElementById("v").innerHTML=L.map(function(x){return '<div style="display:grid;gap:8px"><span class="nu-beschr">'+x[0]+'</span>'+Nu.bett(x[1])+'</div>';}).join("");
 document.querySelectorAll("#v .nu-bett")[11].classList.add("is-offen");
-var K=[[150,64,{nr:"D1",s:"anwesend",name:"Jonas"}],[150,64,{nr:"D6",s:"gehalten",name:"Petra",bis:"06.10."}],[150,64,{nr:"B2",s:"frei"}],[74,78,{nr:"D4",s:"erwartet",name:"Ali"}],[74,78,{nr:"T1",s:"fehlt",name:"Yusuf",symbole:["warnung"],warn:true}],[74,78,{nr:"T2",s:"freibis",name:"Hamid",bis:"08.10."}],[74,78,{nr:"F2",s:"fehlt2",name:"Ben",fehltN:2}],[74,78,{nr:"D5",s:"anwesend",name:"Dimitri",symbole:["karte-gelb"]}],[74,78,{nr:"F4",s:"aus"}]];
+var K=[[150,64,{nr:"D1",s:"anwesend",name:"Paul"}],[150,64,{nr:"D6",s:"gehalten",name:"Anna",bis:"06.10."}],[150,64,{nr:"B2",s:"frei"}],[74,78,{nr:"D4",s:"erwartet",name:"Max"}],[74,78,{nr:"T1",s:"fehlt",name:"Jan",symbole:["warnung"],warn:true}],[74,78,{nr:"T2",s:"freibis",name:"Leon",bis:"08.10."}],[74,78,{nr:"F2",s:"fehlt2",name:"Simon",fehltN:2}],[74,78,{nr:"D5",s:"anwesend",name:"Felix",symbole:["karte-gelb"]}],[74,78,{nr:"F4",s:"aus"}]];
 document.getElementById("k").innerHTML=K.map(function(x){x[2].kompakt=true;return '<div class="nu-grundriss-platz" style="position:relative;width:'+x[0]+'px;height:'+x[1]+'px">'+Nu.bett(x[2])+'</div>';}).join("");
 </script>
 <script>Nu.mountIcons();</script>

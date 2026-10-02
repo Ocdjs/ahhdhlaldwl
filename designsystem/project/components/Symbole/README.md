@@ -18,6 +18,6 @@
 | `haus`, `standort-2` | St. Pius, St. Nikolaus |
 | `bericht`, `kalender`, `regler`, `glocke` | Navigation und Kopfzeile |
 | `wolke-ok`, `abgleich`, `wolke-wartet`, `wolke-aus` | Abgleich: synchronisiert, läuft, Änderungen ausstehend, offline |
-| `ampel`, `telefon` | Ampel, KHT-Zahlen und „Hat KHT angerufen?“ |
+| `ampel`, `telefon` | Ampel, KHT-Nummer und „Hat KHT angerufen?“ |
 | `unterschrift`, `stift`, `tastatur`, `scannen`, `kamera` | Unterschrift (auch: fehlt noch), Nachtrag, Schreibmodus, Läuseschein scannen |
 | `teilen`, `dokument-plus` | PDF teilen (ohne festen Empfänger), Dokument in der Gästedatenbank hinterlegen |

@@ -18,14 +18,14 @@
 <script>
 Nu.mountIcons();
 var s1=document.getElementById("s1"), s2=document.getElementById("s2");
-function bed1(s){s1.innerHTML=Nu.bett(s==="anwesend"?{nr:"B3",s:"anwesend",name:"Ion",naechte:4}:{nr:"B3",s:"erwartet",name:"Ion",naechte:3});}
-bed1("erwartet"); s2.innerHTML=Nu.bett({nr:"F2",s:"anwesend",name:"Samir",naechte:20});
+function bed1(s){s1.innerHTML=Nu.bett(s==="anwesend"?{nr:"B3",s:"anwesend",name:"Lukas",naechte:4}:{nr:"B3",s:"erwartet",name:"Lukas",naechte:3});}
+bed1("erwartet"); s2.innerHTML=Nu.bett({nr:"F2",s:"anwesend",name:"Moritz",naechte:20});
 function re(el,c){el.classList.remove(c);void el.offsetWidth;el.classList.add(c);}
 var runs={
  1:function(){bed1(s1.querySelector(".nu-bett").dataset.s==="anwesend"?"erwartet":"anwesend");var b=s1.querySelector(".nu-bett");b.style.setProperty("--x","30%");b.style.setProperty("--y","60%");re(b,"is-neu");},
  2:function(){var z=document.getElementById("z");z.textContent=+z.textContent+1;re(z,"pop");},
  3:function(){re(document.getElementById("d"),"rein");document.getElementById("d").classList.add("nu-detail");},
- 4:function(){var e=document.getElementById("e");e.innerHTML='<div class="nu-einblendung" style="width:100%">'+Nu.svg("dusche")+'<div><b>Dusche 20:30</b><span>Ali, Bett 5</span></div><span></span><i class="lauf"></i></div>';},
+ 4:function(){var e=document.getElementById("e");e.innerHTML='<div class="nu-einblendung" style="width:100%">'+Nu.svg("dusche")+'<div><b>Dusche 20:30</b><span>Max, Bett 5</span></div><span></span><i class="lauf"></i></div>';},
  5:function(){var s=document.querySelector("#sl")||document.querySelector(".nu-gesperrt .nu-svg");re(s,"zu");},
  6:function(){re(document.getElementById("pp"),"is-falsch");},
  7:function(){re(s2.querySelector(".nu-bett"),"is-gesetzt");},

@@ -108,3 +108,4 @@ body.nu{overflow:hidden}
   .nu-woche-tag{min-height:0}
   .nu-dokument-paar{grid-template-columns:minmax(0,1fr)}
 }
+.p-blatt--breit{width:780px}
